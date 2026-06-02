@@ -67,9 +67,6 @@ const vertexShader = /* glsl */`
     // The wall remains perfectly flat at Z=0. No global mesh curvature.
     
     // ── Localized Optical Z-Pull Bubble (Luxurious Pressure Field) ──
-    // The focus bubble follows the highly smoothed mouse coordinate.
-    // When the cursor pauses, the bubble softly arrives, gradually enlarging 
-    // the nearby posters and giving them depth, creating a breathing effect.
     vec2 deltaMouse = baseWPos.xy - uMouse;
     float distMouseSq = dot(deltaMouse, deltaMouse);
     float bulgeSpread = 0.015; // Soft, atmospheric focus area
@@ -77,6 +74,12 @@ const vertexShader = /* glsl */`
     float exp_term = exp(-distMouseSq * bulgeSpread);
     displacedWPos.z += exp_term * bulgeAmount;
     
+    // ── Luxurious Cinematic Micro-Parallax ───────────────────────────
+    // Assigns posters to subtle virtual depth layers so they drift at microscopically different speeds.
+    float parallaxDepth = 1.0 + mod(aInstanceIdx, 4.0) * 0.08; 
+    // Shift the poster XY oppositely to the mouse for a premium floating 3D perspective effect.
+    displacedWPos.xy -= (uMouse * 0.012) * parallaxDepth;
+
     // ── Surface Normal Calculation ───────────────────────────
     float dz_dx = -2.0 * deltaMouse.x * bulgeSpread * bulgeAmount * exp_term;
     float dz_dy = -2.0 * deltaMouse.y * bulgeSpread * bulgeAmount * exp_term;
@@ -85,10 +88,18 @@ const vertexShader = /* glsl */`
     vWarpInfluence = exp_term; 
     vHighlight += exp_term * 0.15; // Smooth cinematic brightness lift
 
-    // Ambient breathing
+    // ── Ambient Continuous Breathing ─────────────────────────────────
+    // The wall never fully freezes. A very faint, continuous cinematic float.
     float b1 = sin(baseWPos.x * 0.072 + baseWPos.y * 0.051 + uTime * 0.23 * uWaveSpeed);
     float b2 = sin(baseWPos.x * -0.048 + baseWPos.y * 0.082 + uTime * 0.18 * uWaveSpeed);
+    
+    // Z breathing
     displacedWPos.z += (b1 + b2) * 0.052 * uWaveAmp;
+    
+    // Micro XY drifting (floating posters)
+    float floatX = sin(uTime * 0.15 * uWaveSpeed + aInstanceIdx * 0.1) * 0.015;
+    float floatY = cos(uTime * 0.12 * uWaveSpeed + aInstanceIdx * 0.1) * 0.015;
+    displacedWPos.xy += vec2(floatX, floatY);
 
     vec4 mvPosition = viewMatrix * vec4(displacedWPos, 1.0);
     gl_Position = projectionMatrix * mvPosition;
