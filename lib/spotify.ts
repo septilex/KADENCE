@@ -366,6 +366,33 @@ export async function fetchSongsByVibe(
   return songs
 }
 
+/**
+ * Fetch just the #1 track for a vibe (useful for quick hover previews)
+ */
+export async function fetchTopSongByVibe(vibeId: Vibe): Promise<SongNode | null> {
+  const queries = VIBE_QUERIES[vibeId]
+  if (!queries || queries.length === 0) return null
+
+  // Just grab 1 track from the very first query to be ultra-fast
+  const qObj = queries[0]
+  try {
+    const raw = await spotifyFetch(
+      `/search?q=${encodeURIComponent(qObj.q)}&type=track&limit=1&offset=0&market=US`
+    )
+    const resp = raw as SearchResponse
+    const items = resp.tracks?.items || []
+    if (items.length > 0) {
+      // Find the first track with a preview URL if possible, otherwise just the first
+      const best = items.find(t => t.preview_url) || items[0]
+      return trackToSongNode(best, [qObj.genre])
+    }
+  } catch (e) {
+    console.error('[DIAG:top] fetchTopSongByVibe error', e)
+  }
+  return null
+}
+
+
 export async function searchSongsByMood(query: string): Promise<SongNode[]> {
   try {
     const searchData = await spotifyFetch(
@@ -386,3 +413,41 @@ export async function searchSongsByMood(query: string): Promise<SongNode[]> {
     return []
   }
 }
+
+/**
+ * Fetch a curated list of 8 tracks with valid previews for Chart Hover Rotation
+ */
+export async function fetchChartPreviews(vibeId: Vibe): Promise<SongNode[]> {
+  const queries = VIBE_QUERIES[vibeId]
+  if (!queries || queries.length === 0) return []
+
+  // Grab up to 40 tracks from the primary query to ensure we find 8 good previews
+  const qObj = queries[0]
+  try {
+    const raw = await spotifyFetch(
+      `/search?q=${encodeURIComponent(qObj.q)}&type=track&limit=40&offset=0&market=US`
+    )
+    const resp = raw as SearchResponse
+    const items = resp.tracks?.items || []
+    
+    // Filter strictly for valid preview URLs
+    const validItems = items.filter(t => t.preview_url)
+    
+    // Shuffle the valid items (Fisher-Yates)
+    for (let i = validItems.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      const temp = validItems[i]
+      validItems[i] = validItems[j]
+      validItems[j] = temp
+    }
+    
+    // Select exactly 8 (or fewer if we couldn't find 8)
+    const selected = validItems.slice(0, 8)
+    
+    return selected.map(t => trackToSongNode(t, [qObj.genre]))
+  } catch (e) {
+    console.error('[DIAG:previews] fetchChartPreviews error', e)
+    return []
+  }
+}
+

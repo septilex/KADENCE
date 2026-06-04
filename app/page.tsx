@@ -11,6 +11,8 @@ import { SearchPanel } from '@/components/ui/SearchPanel'
 import { SongDetail } from '@/components/ui/SongDetail'
 import { Navbar } from '@/components/ui/Navbar'
 import { HeroBackgroundVideo } from '@/components/ui/HeroBackgroundVideo'
+import { GlobalAudioPlayer } from '@/components/GlobalAudioPlayer'
+import { useAudioStore } from '@/store/audioStore'
 
 import { ChangeVibeOverlay } from '@/components/ui/ChangeVibeOverlay'
 
@@ -163,85 +165,29 @@ export default function Home() {
   const handleSelectSong    = useCallback((song: SongNode) => selectSong(song), [selectSong])
   const handleCloseSong     = useCallback(() => selectSong(null), [selectSong])
 
-  // ── Audio Preview Crossfading ─────────────────────────────────────────────
-  const audioContextRef = useRef<HTMLAudioElement | null>(null)
-  const audioFadeIntervalRef = useRef<NodeJS.Timeout | null>(null)
+  // ── Global Audio Sync ───────────────────────────────────────────────────
+  const { playUrl } = useAudioStore()
   const audioDebounceRef = useRef<NodeJS.Timeout | null>(null)
-
+  
   useEffect(() => {
-    // Clear any pending audio starts
-    if (audioDebounceRef.current) clearTimeout(audioDebounceRef.current)
+    // Sync Universe selections to global audio player. 
+    // Note: IntroScreen and ChangeVibeOverlay chart cards independently call playUrl()
+    if (introComplete && !isChangingVibe) {
+      if (audioDebounceRef.current) clearTimeout(audioDebounceRef.current)
 
-    if (!hoveredSong || !hoveredSong.previewUrl) {
-      // Fade out and stop existing playing audio
-      const audio = audioContextRef.current
-      if (audio) {
-        let vol = audio.volume
-        if (audioFadeIntervalRef.current) clearInterval(audioFadeIntervalRef.current)
-        audioFadeIntervalRef.current = setInterval(() => {
-          vol -= 0.05
-          if (vol <= 0) {
-            if (audioFadeIntervalRef.current) clearInterval(audioFadeIntervalRef.current)
-            audio.pause()
-            audioContextRef.current = null
-          } else {
-            audio.volume = Math.max(0, vol)
-          }
-        }, 30)
-      }
-      return
-    }
-
-    // Stop current intervals
-    if (audioFadeIntervalRef.current) clearInterval(audioFadeIntervalRef.current)
-
-    // Fade out previous audio if playing
-    const prevAudio = audioContextRef.current
-    if (prevAudio) {
-      let prevVol = prevAudio.volume
-      const fadeOutInterval = setInterval(() => {
-        prevVol -= 0.08
-        if (prevVol <= 0) {
-          clearInterval(fadeOutInterval)
-          prevAudio.pause()
+      audioDebounceRef.current = setTimeout(() => {
+        if (selectedSong) {
+          playUrl(selectedSong.previewUrl || null)
         } else {
-          prevAudio.volume = Math.max(0, prevVol)
+          playUrl(hoveredSong?.previewUrl || null)
         }
-      }, 25)
+      }, 200)
     }
-    
-    audioContextRef.current = null // clear so we don't fade it out again
-
-    // Debounce new audio play to prevent cacophony during rapid mouse sweeps
-    audioDebounceRef.current = setTimeout(() => {
-      // Load and play next audio with a smooth fade-in
-      const newAudio = new Audio(hoveredSong.previewUrl!)
-      newAudio.volume = 0.0
-      audioContextRef.current = newAudio
-
-      newAudio.play().then(() => {
-        let targetVol = 0.35 // Atmospheric volume peak
-        let currentVol = 0.0
-        audioFadeIntervalRef.current = setInterval(() => {
-          currentVol += 0.04
-          if (currentVol >= targetVol) {
-            if (audioFadeIntervalRef.current) clearInterval(audioFadeIntervalRef.current)
-            newAudio.volume = targetVol
-          } else {
-            newAudio.volume = currentVol
-          }
-        }, 30)
-      }).catch(() => {
-        // Ignore autoplay block errors silently
-      })
-    }, 200)
 
     return () => {
-      if (audioFadeIntervalRef.current) clearInterval(audioFadeIntervalRef.current)
       if (audioDebounceRef.current) clearTimeout(audioDebounceRef.current)
     }
-  }, [hoveredSong])
-
+  }, [selectedSong, hoveredSong, introComplete, isChangingVibe, playUrl])
   const handleSearchResults = useCallback((results: SongNode[]) => {
     if (results.length > 0) {
       const map = new Map(songs.map(s => [s.id, s]))
@@ -259,6 +205,7 @@ export default function Home() {
 
   return (
     <main className="fixed inset-0 bg-transparent overflow-hidden">
+      <GlobalAudioPlayer />
       {/* Background Video Layer (Homepage Only) */}
       <HeroBackgroundVideo currentVibe={currentVibe} introComplete={introComplete} />
 

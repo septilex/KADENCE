@@ -2,6 +2,7 @@
 import { motion, AnimatePresence, useSpring, useMotionValue } from 'framer-motion'
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { SongNode } from '@/lib/types'
+import { useAudioStore } from '@/store/audioStore'
 
 interface SongDetailProps {
   song: SongNode | null
@@ -12,53 +13,19 @@ interface SongDetailProps {
 const WAVE_BARS = [4, 8, 12, 6, 14, 10, 5, 13, 7, 11, 9, 15, 6, 8, 12, 4, 10, 7, 13, 9]
 
 export function SongDetail({ song, onClose }: SongDetailProps) {
-  const audioRef  = useRef<HTMLAudioElement>(null)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [progress,  setProgress]  = useState(0)
-  const [duration,  setDuration]  = useState(0)
+  const { isPlaying, progress, duration, togglePlay, seekTo } = useAudioStore()
   const [imageLoaded, setImageLoaded] = useState(false)
-  const animFrame  = useRef<number>(0)
 
-  // Smooth progress using rAF for buttery scrub
-  const updateProgress = useCallback(() => {
-    const el = audioRef.current
-    if (!el || !el.duration) return
-    setProgress((el.currentTime / el.duration) * 100)
-    animFrame.current = requestAnimationFrame(updateProgress)
-  }, [])
-
+  // Reset image loaded on song change
   useEffect(() => {
-    if (isPlaying) {
-      animFrame.current = requestAnimationFrame(updateProgress)
-    } else {
-      cancelAnimationFrame(animFrame.current)
-    }
-    return () => cancelAnimationFrame(animFrame.current)
-  }, [isPlaying, updateProgress])
-
-  // Reset on song change
-  useEffect(() => {
-    setIsPlaying(false)
-    setProgress(0)
     setImageLoaded(false)
-    const el = audioRef.current
-    if (el) { el.pause(); el.currentTime = 0 }
   }, [song?.name])
 
-  const togglePlay = () => {
-    const el = audioRef.current
-    if (!el) return
-    if (isPlaying) { el.pause(); setIsPlaying(false) }
-    else           { el.play();  setIsPlaying(true)  }
-  }
-
-  const seekTo = (e: React.MouseEvent<HTMLDivElement>) => {
-    const el = audioRef.current
-    if (!el || !el.duration) return
+  const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!duration) return
     const rect = e.currentTarget.getBoundingClientRect()
     const pct  = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width))
-    el.currentTime = pct * el.duration
-    setProgress(pct * 100)
+    seekTo(pct * 100)
   }
 
   const formatTime = (secs: number) => {
@@ -245,12 +212,6 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
                     border: `1px solid ${song.color}28`,
                   }}
                 >
-                  <audio
-                    ref={audioRef}
-                    src={song.previewUrl}
-                    onLoadedMetadata={e => setDuration((e.target as HTMLAudioElement).duration)}
-                    onEnded={() => { setIsPlaying(false); setProgress(0) }}
-                  />
 
                   <div className="flex items-center gap-3">
                     {/* Play / pause */}
@@ -282,7 +243,7 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
                     <div className="flex-1 space-y-1">
                       <div
                         className="h-[3px] bg-white/10 rounded-full overflow-hidden cursor-pointer group relative"
-                        onClick={seekTo}
+                        onClick={handleSeek}
                       >
                         <motion.div
                           className="h-full rounded-full origin-left"
