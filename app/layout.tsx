@@ -18,7 +18,7 @@ export const viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -27,7 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
         />
       </head>
-      <body className="bg-[#050508] text-white overflow-hidden" style={{ fontFamily: "'Inter', sans-serif" }}>
+      <body className="bg-[#050508] text-white overflow-hidden" style={{ fontFamily: "'Inter', sans-serif" }} suppressHydrationWarning>
         {children}
       </body>
     </html>

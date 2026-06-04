@@ -29,6 +29,7 @@ export function Universe({
   isRefreshing = false,
   onFps,
 }: UniverseProps) {
+  console.log('[DIAG:Universe] songs.length entering Universe:', songs.length)
   return (
     <Canvas
       gl={{

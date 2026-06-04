@@ -30,7 +30,10 @@ export async function GET(req: NextRequest) {
     process.env.SPOTIFY_CLIENT_SECRET !== 'your_spotify_client_secret_here'
   )
 
+  console.log('[DIAG:route] vibe:', vibe, '| hasSpotify:', hasSpotify, '| refresh:', refresh)
+
   if (!hasSpotify) {
+    console.warn('[DIAG:route] Spotify not configured — returning demo songs')
     const demo = generateDemoSongs(1000, vibe)
     return NextResponse.json({ songs: demo, total: demo.length, demo: true, vibe })
   }
@@ -38,8 +41,10 @@ export async function GET(req: NextRequest) {
   try {
     const cached = vibeCache.get(vibe)
     const isFresh = cached && (Date.now() - cached.time < CACHE_TTL) && !refresh
+    console.log('[DIAG:route] Cache check — has cached entry:', !!cached, '| isFresh:', isFresh, '| cached songs count:', cached?.songs?.length ?? 'n/a')
 
     if (isFresh && cached) {
+      console.log('[DIAG:route] Returning CACHED result:', cached.songs.length, 'songs')
       return NextResponse.json({
         songs: cached.songs,
         total: cached.songs.length,
@@ -58,9 +63,10 @@ export async function GET(req: NextRequest) {
 
     // Fetch a curated set of ~1000 vibe-matched tracks, offset by refresh count to get different seeds
     const songs = await fetchSongsByVibe(vibe, 1000, offset)
+    console.log('[DIAG:route] fetchSongsByVibe returned:', songs.length, 'songs')
 
     vibeCache.set(vibe, { songs, time: Date.now() })
-
+    console.log('[DIAG:route] Responding with', songs.length, 'songs for vibe:', vibe)
     return NextResponse.json({ songs, total: songs.length, vibe })
   } catch (err) {
     console.error('Songs API error, falling back to demo:', err)

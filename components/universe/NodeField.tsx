@@ -190,6 +190,7 @@ const fragmentShader = /* glsl */`
 `;
 
 export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, onSelect }: NodeFieldProps) {
+  console.log('[DIAG:NodeField] songs.length entering NodeField:', songs.length)
   const { camera, gl, size } = useThree()
   const meshRef = useRef<THREE.InstancedMesh>(null)
 
@@ -202,6 +203,8 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
   const count = dims.virtualCount
   const COLS  = dims.COLS
   const ROWS  = dims.ROWS
+  console.log(`[DIAG:NodeField] grid generation output -> size: ${size.width}x${size.height}, COLS: ${COLS}, ROWS: ${ROWS}, count (virtualCount): ${count}`)
+
 
   const rawMouseNDC       = useRef(new THREE.Vector2(-10, -10))
   const rawMouseWorld     = useRef(new THREE.Vector2(0, 0))
@@ -385,7 +388,11 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
 
   // Initialize instance matrices
   useEffect(() => {
-    if (!meshRef.current) return
+    if (!meshRef.current) {
+      console.warn('[DIAG:NodeField] instanceMatrix loop skipped — meshRef is null')
+      return
+    }
+    console.log(`[DIAG:NodeField] Running instanceMatrix loop for count=${count}, meshRef.count=${meshRef.current.count}`)
     const dummy  = new THREE.Object3D()
     const halfC  = (COLS - 1) / 2
     const halfR  = (ROWS - 1) / 2
@@ -401,6 +408,7 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
       meshRef.current.setMatrixAt(i, dummy.matrix)
     }
     meshRef.current.instanceMatrix.needsUpdate = true
+    console.log(`[DIAG:NodeField] Finished populating instanceMatrix for ${count} tiles.`)
   }, [count, COLS, ROWS, geometry])
 
   // Mouse event capturing
@@ -535,7 +543,8 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
       if (c >= 0 && c < COLS && r >= 0 && r < ROWS) {
         hoverIdx = r * COLS + c
         if (hoverIdx < count) {
-          const s   = songs[hoverIdx % songs.length]
+          const mappedIndex = texIndices[hoverIdx]
+          const s   = songs[mappedIndex]
           newHoverId = s?.id ?? null
         }
       }
