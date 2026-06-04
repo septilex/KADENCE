@@ -1,6 +1,7 @@
 'use client'
-import { useRef, useMemo, useEffect } from 'react'
+import { useRef, useMemo, useEffect, useState, useCallback } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
+import { Html } from '@react-three/drei'
 import * as THREE from 'three'
 import { SongNode, Vibe } from '@/lib/types'
 import { SPACING_X, SPACING_Y, CARD_W, CARD_H, computeGrid } from '@/lib/gridCalc'
@@ -16,9 +17,19 @@ interface NodeFieldProps {
 }
 
 // ── Texture atlas config ──────────────────────────────────────────────────────
-const TEXTURE_SIZE  = 256    // px per atlas slot (quality vs VRAM trade-off)
-const TEXTURE_DEPTH = 512    // max unique artworks in the atlas
+const TEXTURE_SIZE  = 256    // px per atlas slot
+const TEXTURE_DEPTH = 256    // max unique artworks in the atlas
+const ATLAS_COLS    = 16     // 16x16 = 256 slots (4096x4096px canvas)
 const MAX_LOADS     = 16     // concurrent in-flight image loads
+
+// ── Motion & Interaction Tuning Constants ─────────────────────────────────────
+const SPRING_STIFFNESS     = 70.0    // Smooth trailing delay
+const SPRING_DAMPING       = 16.8    // Critically damped — no wobble
+const SPRING_MASS          = 1.0     // Physical weight of the wall
+const PARALLAX_STRENGTH    = 0.028   // Amount of background drift
+const MOMENTUM_MULTIPLIER  = 1.0     // Multiplier for velocity retention
+const LENS_RADIUS          = 10.2    // -15% from 12.0
+const LENS_INTENSITY       = 5.3     // +20% from 4.4
 
 const vertexShader = /* glsl */`
   in float aTexIndex;
@@ -32,6 +43,7 @@ const vertexShader = /* glsl */`
   out vec3 vVibeColor;
 
   uniform vec2  uCameraXY;
+  uniform vec2  uRawMouse;
   uniform vec2  uMouse;
   uniform float uHoverIdx;
   uniform float uSelectedIdx;
@@ -51,6 +63,10 @@ const vertexShader = /* glsl */`
     float zOffset    = 0.0;
     vHighlight       = 0.92;
 
+    if (abs(aInstanceIdx - uHoverIdx) < 0.1) {
+      localScale = 1.10;
+    }
+
     if (abs(aInstanceIdx - uSelectedIdx) < 0.1) {
       localScale = 1.14;
       zOffset    = 0.7;
@@ -66,40 +82,42 @@ const vertexShader = /* glsl */`
     // ── Flat Cinematic Wall ─────────────────────────────────────
     // The wall remains perfectly flat at Z=0. No global mesh curvature.
     
-    // ── Localized Optical Z-Pull Bubble (Luxurious Pressure Field) ──
-    vec2 deltaMouse = baseWPos.xy - uMouse;
-    float distMouseSq = dot(deltaMouse, deltaMouse);
-    float bulgeSpread = 0.015; // Soft, atmospheric focus area
-    float bulgeAmount = 10.0;  // Elegant depth attraction (amplified smoothly by arrival)
-    float exp_term = exp(-distMouseSq * bulgeSpread);
-    displacedWPos.z += exp_term * bulgeAmount;
+    // ── Glass Lens (smoothed mouse — lively trailing) ──
+    // uMouse trails behind cursor with spring physics, creating organic follow.
+    // uRawMouse is kept for hover hit-detection only (instant, below).
+    vec2 deltaLens = baseWPos.xy - uMouse;
+    float distLens = length(deltaLens);
     
-    // ── Luxurious Cinematic Micro-Parallax ───────────────────────────
-    // Assigns posters to subtle virtual depth layers so they drift at microscopically different speeds.
-    float parallaxDepth = 1.0 + mod(aInstanceIdx, 4.0) * 0.08; 
-    // Shift the poster XY oppositely to the mouse for a premium floating 3D perspective effect.
-    displacedWPos.xy -= (uMouse * 0.012) * parallaxDepth;
+    float R = ${LENS_RADIUS.toFixed(1)};
+    float lensFactor = smoothstep(R, 0.0, distLens);
+    
+    float maxZ = ${LENS_INTENSITY.toFixed(1)};
+    displacedWPos.z += lensFactor * maxZ;
+    
+    // ── Micro-Parallax ──
+    float parallaxDepth = 1.0 + mod(aInstanceIdx, 4.0) * 0.08;
+    displacedWPos.xy -= (uMouse * ${PARALLAX_STRENGTH.toFixed(3)}) * parallaxDepth;
 
-    // ── Surface Normal Calculation ───────────────────────────
-    float dz_dx = -2.0 * deltaMouse.x * bulgeSpread * bulgeAmount * exp_term;
-    float dz_dy = -2.0 * deltaMouse.y * bulgeSpread * bulgeAmount * exp_term;
-    vNormal = normalize(vec3(-dz_dx, -dz_dy, 1.0));
-    
-    vWarpInfluence = exp_term; 
-    vHighlight += exp_term * 0.15; // Smooth cinematic brightness lift
+    // ── Surface Normal + Subtle Card Tilt ──
+    float dr = 0.0;
+    if (distLens < R) {
+        dr = -6.0 * distLens * (R - distLens) / (R * R * R);
+    }
+    float dz_dx = dr * (deltaLens.x / max(distLens, 0.0001)) * maxZ;
+    float dz_dy = dr * (deltaLens.y / max(distLens, 0.0001)) * maxZ;
 
-    // ── Ambient Continuous Breathing ─────────────────────────────────
-    // The wall never fully freezes. A very faint, continuous cinematic float.
-    float b1 = sin(baseWPos.x * 0.072 + baseWPos.y * 0.051 + uTime * 0.23 * uWaveSpeed);
-    float b2 = sin(baseWPos.x * -0.048 + baseWPos.y * 0.082 + uTime * 0.18 * uWaveSpeed);
-    
-    // Z breathing
-    displacedWPos.z += (b1 + b2) * 0.052 * uWaveAmp;
-    
-    // Micro XY drifting (floating posters)
-    float floatX = sin(uTime * 0.15 * uWaveSpeed + aInstanceIdx * 0.1) * 0.015;
-    float floatY = cos(uTime * 0.12 * uWaveSpeed + aInstanceIdx * 0.1) * 0.015;
-    displacedWPos.xy += vec2(floatX, floatY);
+    // Card tilt: nudge normal toward cursor inside lens boundary
+    float tiltStrength = 0.18;
+    vec2 tiltDir = -normalize(deltaLens + vec2(0.0001));
+    vec3 tiltedNormal = vec3(
+        -dz_dx + tiltDir.x * lensFactor * tiltStrength,
+        -dz_dy + tiltDir.y * lensFactor * tiltStrength,
+        1.0
+    );
+    vNormal = normalize(tiltedNormal);
+
+    vWarpInfluence = lensFactor;
+    vHighlight += lensFactor * 0.12;
 
     vec4 mvPosition = viewMatrix * vec4(displacedWPos, 1.0);
     gl_Position = projectionMatrix * mvPosition;
@@ -109,7 +127,7 @@ const vertexShader = /* glsl */`
 // ── Fragment shader ───────────────────────────────────────────────────────────
 // Pure artwork display for the resting wall. Inject vibe tinting based on active world status.
 const fragmentShader = /* glsl */`
-  precision mediump sampler2DArray;
+  precision mediump sampler2D;
 
   in vec2  vUvCustom;
   in float vTexIndex;
@@ -118,7 +136,7 @@ const fragmentShader = /* glsl */`
   in float vWarpInfluence;
   in vec3  vVibeColor;
 
-  uniform sampler2DArray uTextures;
+  uniform sampler2D uAtlas;
   uniform float uSelectedIdx;
   uniform float uHoverIdx;
 
@@ -138,7 +156,13 @@ const fragmentShader = /* glsl */`
       discard;
     }
 
-    vec4 c = texture(uTextures, vec3(vUvCustom, vTexIndex));
+    // Atlas UV calculation
+    float cols = 16.0;
+    float col = mod(vTexIndex, cols);
+    float row = floor(vTexIndex / cols);
+    vec2 atlasUv = (vUvCustom + vec2(col, cols - 1.0 - row)) / cols;
+
+    vec4 c = texture(uAtlas, atlasUv);
 
     // ── Base colour: gamma-correct multiply by per-tile brightness ────────
     vec3 lin     = pow(c.rgb, vec3(2.2));
@@ -180,79 +204,78 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
   const ROWS  = dims.ROWS
 
   const rawMouseNDC       = useRef(new THREE.Vector2(-10, -10))
+  const rawMouseWorld     = useRef(new THREE.Vector2(0, 0))
   const smoothMouseWorld  = useRef(new THREE.Vector2(0, 0))
+  const mouseVelocity     = useRef(new THREE.Vector2(0, 0))
   const lastHoverId       = useRef<string | null>(null)
   const textureNeedsFlush = useRef(false)
 
   // ── Texture Atlas ─────────────────────────────────────────────────────────
-  const textureArray = useMemo(() => {
-    const data = new Uint8Array(TEXTURE_SIZE * TEXTURE_SIZE * 4 * TEXTURE_DEPTH)
-    for (let i = 0; i < data.length; i += 4) {
-      data[i] = 10; data[i + 1] = 10; data[i + 2] = 14; data[i + 3] = 255
-    }
-    const tex = new THREE.DataArrayTexture(data, TEXTURE_SIZE, TEXTURE_SIZE, TEXTURE_DEPTH)
-    tex.format          = THREE.RGBAFormat
-    tex.type            = THREE.UnsignedByteType
-    tex.minFilter       = THREE.LinearFilter
-    tex.magFilter       = THREE.LinearFilter
-    tex.wrapS           = THREE.ClampToEdgeWrapping
-    tex.wrapT           = THREE.ClampToEdgeWrapping
-    tex.generateMipmaps = false
-    tex.needsUpdate     = true
+  const defaultAtlasTexture = useMemo(() => {
+    const tex = new THREE.Texture()
+    tex.needsUpdate = true
     return tex
   }, [])
 
-  // Offscreen canvas for image→texture upload
-  const offscreenCanvas = useRef<HTMLCanvasElement | null>(null)
+  const [atlas, setAtlas] = useState<{ canvas: HTMLCanvasElement; texture: THREE.CanvasTexture } | null>(null)
+
   useEffect(() => {
     const cvs = document.createElement('canvas')
-    cvs.width = cvs.height = TEXTURE_SIZE
-    offscreenCanvas.current = cvs
+    cvs.width = TEXTURE_SIZE * ATLAS_COLS
+    cvs.height = TEXTURE_SIZE * ATLAS_COLS
+    
+    const ctx = cvs.getContext('2d', { alpha: false })!
+    ctx.fillStyle = '#0a0a0e'
+    ctx.fillRect(0, 0, cvs.width, cvs.height)
+    
+    const tex = new THREE.CanvasTexture(cvs)
+    tex.colorSpace = THREE.NoColorSpace
+    tex.minFilter = THREE.LinearFilter
+    tex.magFilter = THREE.LinearFilter
+    tex.wrapS = THREE.ClampToEdgeWrapping
+    tex.wrapT = THREE.ClampToEdgeWrapping
+    tex.generateMipmaps = false
+    tex.needsUpdate = true
+    
+    setAtlas({ canvas: cvs, texture: tex })
   }, [])
 
   const loadedSet  = useRef(new Set<number>())
   const loadingSet = useRef(new Set<number>())
+  const flushData  = useRef({ lastCount: 0, lastTime: 0 })
 
   // Reset on songs change
   useEffect(() => {
     loadedSet.current.clear()
     loadingSet.current.clear()
+    flushData.current = { lastCount: 0, lastTime: 0 }
   }, [songs])
-
-  const imageLoader = useMemo(() => {
-    const l = new THREE.ImageLoader()
-    l.setCrossOrigin('anonymous')
-    return l
-  }, [])
 
   const loadSlot = (realIdx: number, url: string) => {
     if (!url || loadedSet.current.has(realIdx) || loadingSet.current.has(realIdx)) return
     loadingSet.current.add(realIdx)
-    imageLoader.load(url, (img) => {
-      const upload = () => {
-        const cvs = offscreenCanvas.current
-        if (!cvs) return
-        const ctx = cvs.getContext('2d', { willReadFrequently: true })
-        if (!ctx) return
-        ctx.clearRect(0, 0, TEXTURE_SIZE, TEXTURE_SIZE)
-        ctx.drawImage(img, 0, 0, TEXTURE_SIZE, TEXTURE_SIZE)
-        const imgData = ctx.getImageData(0, 0, TEXTURE_SIZE, TEXTURE_SIZE)
-        const slot    = realIdx % TEXTURE_DEPTH
-        const offset  = slot * TEXTURE_SIZE * TEXTURE_SIZE * 4
-        ;(textureArray.image.data as Uint8Array).set(imgData.data, offset)
-        textureNeedsFlush.current = true
-        loadedSet.current.add(realIdx)
-        loadingSet.current.delete(realIdx)
-      }
-      if (typeof requestIdleCallback !== 'undefined') {
-        requestIdleCallback(upload, { timeout: 200 })
-      } else {
-        setTimeout(upload, 0)
-      }
-    }, undefined, () => {
+    
+    const img = new Image()
+    img.crossOrigin = 'anonymous'
+    img.onload = () => {
+      if (!atlas) return
+      const ctx = atlas.canvas.getContext('2d', { alpha: false })
+      if (!ctx) return
+      
+      const slot = realIdx % TEXTURE_DEPTH
+      const col = slot % ATLAS_COLS
+      const row = Math.floor(slot / ATLAS_COLS)
+      
+      ctx.drawImage(img, col * TEXTURE_SIZE, row * TEXTURE_SIZE, TEXTURE_SIZE, TEXTURE_SIZE)
+      
       loadedSet.current.add(realIdx)
       loadingSet.current.delete(realIdx)
-    })
+    }
+    img.onerror = () => {
+      loadedSet.current.add(realIdx)
+      loadingSet.current.delete(realIdx)
+    }
+    img.src = url
   }
 
   // Progressive texture loading
@@ -343,8 +366,9 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
     vertexShader,
     fragmentShader,
     uniforms: {
-      uTextures:    { value: textureArray },
+      uAtlas:       { value: atlas ? atlas.texture : defaultAtlasTexture },
       uCameraXY:    { value: new THREE.Vector2(0, 0) },
+      uRawMouse:    { value: new THREE.Vector2(0, 0) },
       uMouse:       { value: new THREE.Vector2(0, 0) },
       uHoverIdx:      { value: -1 },
       uSelectedIdx:   { value: -1 },
@@ -357,7 +381,7 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
     transparent: false,
     depthWrite:  true,
     depthTest:   true,
-  }), [textureArray])
+  }), [atlas, defaultAtlasTexture])
 
   // Initialize instance matrices
   useEffect(() => {
@@ -410,9 +434,16 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
 
   // ── Frame Loop ─────────────────────────────────────────────────────────────
   useFrame((state, delta) => {
-    if (textureNeedsFlush.current) {
-      textureArray.needsUpdate = true
-      textureNeedsFlush.current = false
+    if (atlas && flushData.current.lastCount !== loadedSet.current.size) {
+      const now = performance.now()
+      const isComplete = loadedSet.current.size === Math.min(songs.length, TEXTURE_DEPTH)
+      const isInitialBatch = loadedSet.current.size <= 16
+
+      if (now - flushData.current.lastTime > 500 || isComplete || isInitialBatch) {
+        atlas.texture.needsUpdate = true
+        flushData.current.lastTime = now
+        flushData.current.lastCount = loadedSet.current.size
+      }
     }
 
     material.uniforms.uTime.value = state.clock.getElapsedTime()
@@ -436,15 +467,22 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
       targetWorldY   = hit.y
     }
 
-    // ── Cinematic Breathing Parallax ─────────────────────────────────────────
-    // A highly smoothed, luxurious exponential ease (not a bouncy spring).
-    // This allows the focus bubble to gently drift and arrive at the cursor 
-    // when paused, creating the soft progressive enlargement.
-    const easeFactor = 1.0 - Math.exp(-3.5 * dt);
-    smoothMouseWorld.current.x += (targetWorldX - smoothMouseWorld.current.x) * easeFactor;
-    smoothMouseWorld.current.y += (targetWorldY - smoothMouseWorld.current.y) * easeFactor;
+    // ── Spatial Computing Spring Parallax ────────────────────────────────────
+    // Second-order mass-spring-damper system for physical weight and momentum.
+    // This allows the wall to build inertia and elastically settle when you stop moving.
+    const forceX = (targetWorldX - smoothMouseWorld.current.x) * SPRING_STIFFNESS - mouseVelocity.current.x * SPRING_DAMPING;
+    const forceY = (targetWorldY - smoothMouseWorld.current.y) * SPRING_STIFFNESS - mouseVelocity.current.y * SPRING_DAMPING;
+
+    mouseVelocity.current.x += (forceX / SPRING_MASS) * (dt * MOMENTUM_MULTIPLIER);
+    mouseVelocity.current.y += (forceY / SPRING_MASS) * (dt * MOMENTUM_MULTIPLIER);
+
+    smoothMouseWorld.current.x += mouseVelocity.current.x * dt;
+    smoothMouseWorld.current.y += mouseVelocity.current.y * dt;
+
+    rawMouseWorld.current.set(targetWorldX, targetWorldY)
 
     material.uniforms.uMouse.value.copy(smoothMouseWorld.current)
+    material.uniforms.uRawMouse.value.copy(rawMouseWorld.current)
 
     // ── Vibe personality styling ─────────────────────────────────────────────
     // Configure wave values and spring characteristics based on vibe config
