@@ -199,7 +199,7 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
 
               {/* Creator Collection Cue */}
               <div 
-                className="flex flex-col items-center justify-center gap-1 cursor-pointer group z-20 transition-all duration-300 mb-8 bg-[#D4AF37] border-[1.5px] border-[#E5C158] rounded-full px-12 py-4 shadow-[0_8px_30px_rgba(212,175,55,0.35)] hover:-translate-y-[3px] hover:bg-[#DEB841] hover:border-[#F3D068] hover:shadow-[0_15px_40px_rgba(212,175,55,0.65)]"
+                className="flex flex-col items-center justify-center gap-1 cursor-pointer group z-20 transition-all duration-300 mb-8 bg-[#D4AF37] border-[1.5px] border-[#E5C158] rounded-[40px] px-12 py-4 shadow-[0_0_40px_10px_rgba(212,175,55,0.5)] hover:-translate-y-[3px] hover:bg-[#DEB841] hover:border-[#F3D068] hover:shadow-[0_0_60px_15px_rgba(212,175,55,0.8)]"
                 onClick={() => {
                   const section2 = document.getElementById('creator-collection-section');
                   if (section2) {
@@ -236,9 +236,11 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
                       className="relative group flex flex-col justify-end p-4 rounded-[10px] overflow-hidden cursor-pointer text-left outline-none aspect-square"
                       style={{
                         backgroundColor: v.bgColor,
-                        boxShadow: isActive ? `0 12px 24px -8px ${v.bgColor}` : 'none',
+                        boxShadow: isActive 
+                          ? `0 0 40px 10px ${v.bgColor}, inset 0 0 20px ${v.bgColor}` 
+                          : `0 0 20px 2px ${v.bgColor}80, inset 0 0 10px ${v.bgColor}80`,
                         transform: isActive ? 'scale(1.04) translateY(-4px)' : 'scale(1)',
-                        filter: isActive ? 'brightness(1.08)' : 'brightness(1)',
+                        filter: isActive ? 'brightness(1.15)' : 'brightness(1)',
                         transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)'
                       }}
                     >
@@ -246,13 +248,13 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
                       <div className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '12px 12px' }} />
                       
                       {/* Large background number */}
-                      <span className="absolute top-[-14px] left-[-4px] text-[80px] font-black text-white opacity-10 tracking-tighter leading-none pointer-events-none select-none">
+                      <span className="absolute top-[-14px] left-[-4px] text-[80px] font-black text-black opacity-[0.15] tracking-tighter leading-none pointer-events-none select-none">
                         {v.number}
                       </span>
 
                       {/* Badge */}
                       {v.badge && (
-                        <div className="absolute top-3 right-3 px-2 py-0.5 rounded backdrop-blur-md text-[9px] font-bold tracking-widest shadow-sm bg-white/20 text-white">
+                        <div className="absolute top-3 right-3 px-2 py-0.5 rounded backdrop-blur-md text-[9px] font-bold tracking-widest shadow-sm bg-black text-white">
                           {v.badge}
                         </div>
                       )}
@@ -260,12 +262,12 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
                       {/* Text */}
                       <div className="relative z-10 w-full mt-auto translate-y-1 group-hover:translate-y-0 transition-transform duration-300">
                         <span
-                          className="block text-white font-bold text-sm md:text-base leading-tight mb-1"
+                          className="block text-black font-bold text-sm md:text-base leading-tight mb-1"
                           style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                         >
                           {v.label}
                         </span>
-                        <span className="block text-white/60 text-[9px] uppercase font-bold tracking-wider leading-tight">
+                        <span className="block text-black/70 text-[9px] uppercase font-extrabold tracking-wider leading-tight">
                           {v.sub}
                         </span>
                       </div>
