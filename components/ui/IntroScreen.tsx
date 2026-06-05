@@ -54,6 +54,10 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
       'workout': ['Charging high-energy tracks…', 'Pumping heavy BPM…', 'Almost there…'],
       'chill-hits': ['Weaving lo-fi dreams…', 'Filtering soft chords…', 'Almost there…'],
       'dev-special': ['The soundtrack behind Kadence…', 'Curated collection of tracks…', 'Powered late-night coding sessions…', 'Almost there…'],
+      'top-telugu': ['Loading Tollywood blockbusters…', 'Tuning Telugu frequencies…', 'Fetching regional chart toppers…', 'Almost there…'],
+      'top-tamil': ['Loading Kollywood hits…', 'Tuning Tamil frequencies…', 'Fetching chart toppers…', 'Almost there…'],
+      'top-hindi': ['Loading Bollywood chart toppers…', 'Tuning desi frequencies…', 'Fetching Hindi hits…', 'Almost there…'],
+      'top-kpop': ['Loading K-Pop universe…', 'Syncing Korean chart data…', 'Fetching the latest drops…', 'Almost there…'],
     }
     return labels[v] || LOADING_PHRASES
   }
@@ -155,9 +159,9 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
               transition={{ duration: 0.7 }}
             >
               {/* EXACT ORIGINAL HERO LAYOUT - SECTION 1 */}
-              <div className="w-full min-h-[100dvh] flex flex-col items-center justify-center pt-8 pb-16">
+              <div className="relative w-full min-h-[100dvh] flex flex-col items-center justify-center pt-8 pb-16">
                 <motion.div
-                  className="z-10 flex flex-col items-center gap-10 px-6 max-w-4xl w-full mt-10"
+                  className="z-10 flex flex-col items-center gap-10 px-4 max-w-[1200px] w-full mt-10"
                   initial={{ opacity: 0, y: 40 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -30, scale: 0.97 }}
@@ -183,7 +187,7 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
               </div>
 
               {/* Question */}
-              <div className="text-center space-y-1">
+              <div className="text-center space-y-1 mb-2">
                 <h2
                   className="text-white text-2xl md:text-3xl font-light tracking-tight"
                   style={{ fontFamily: "'Space Grotesk', sans-serif" }}
@@ -193,8 +197,29 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
                 <p className="text-white/40 text-sm mt-2">Choose your editorial chart</p>
               </div>
 
-              {/* Vibe grid */}
-              <div className="grid gap-4 w-full" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))' }}>
+              {/* Creator Collection Cue */}
+              <div 
+                className="flex flex-col items-center justify-center gap-1 cursor-pointer group z-20 transition-all duration-300 mb-8 bg-[#D4AF37] border-[1.5px] border-[#E5C158] rounded-full px-12 py-4 shadow-[0_8px_30px_rgba(212,175,55,0.35)] hover:-translate-y-[3px] hover:bg-[#DEB841] hover:border-[#F3D068] hover:shadow-[0_15px_40px_rgba(212,175,55,0.65)]"
+                onClick={() => {
+                  const section2 = document.getElementById('creator-collection-section');
+                  if (section2) {
+                    section2.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+              >
+                <span className="text-[11px] uppercase tracking-[0.25em] font-bold text-[#0A0A0A]/80">
+                  ✨ CREATOR'S PICK
+                </span>
+                <span className="text-[18px] font-extrabold text-[#0A0A0A] tracking-tight mt-0.5">
+                  Explore Prajit's Universe
+                </span>
+                <span className="text-[12px] text-[#0A0A0A]/90 font-semibold mt-0.5">
+                  80 Handpicked Tracks
+                </span>
+              </div>
+
+              {/* Vibe grid — strict 7×2 on desktop */}
+              <div className="grid gap-3 w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
                 {VIBE_CONFIGS.filter(v => v.id !== 'dev-special').map((v, i) => {
                   const isActive = hoveredVibe === v.id || selectedVibe === v.id
 
@@ -310,6 +335,7 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
                 })}
               </div>
               </motion.div>
+
               </div>
 
               {/* Creator Collection Section - SECTION 2 */}
@@ -319,7 +345,7 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
                 const isActive = hoveredVibe === devSpecialVibe.id || selectedVibe === devSpecialVibe.id
                 
                 return (
-                  <div className="w-full min-h-[80dvh] flex flex-col items-center justify-center pb-24 pt-16">
+                  <div id="creator-collection-section" className="w-full min-h-[80dvh] flex flex-col items-center justify-center pb-24 pt-16">
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}

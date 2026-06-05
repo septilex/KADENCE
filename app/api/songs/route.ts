@@ -10,6 +10,7 @@ const VALID_VIBES: Vibe[] = [
   'global-top-50', 'viral-50', 'new-music-friday', 'hip-hop-central',
   'pop-rising', 'dance-hits', 'mood-booster', 'late-night',
   'workout', 'chill-hits', 'dev-special',
+  'top-telugu', 'top-tamil', 'top-hindi', 'top-kpop',
 ]
 
 // Keep track of refresh counts per vibe to shift/rotate seed indices on refresh requests

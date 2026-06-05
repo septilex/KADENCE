@@ -144,5 +144,53 @@ export const SIGNATURE_SONGS: Record<Vibe, Omit<SongNode, 'x' | 'y' | 'z' | 'vx'
     popularity: 96,
     color: "#d4af37",
     genres: ["Tamil", "Dev Special"]
+  },
+  'top-telugu': {
+    id: "telugu-srivalli",
+    name: "Srivalli",
+    artist: "Sid Sriram",
+    album: "Pushpa: The Rise (Original Motion Picture Soundtrack)",
+    albumArt: "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/84/13/b5/8413b5aa-de05-4e68-5d40-04b0cb3cbf82/cover.jpg/600x600bb.jpg",
+    previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/31/00/95/310095a1-8d1a-e1d6-31c5-6ac41c74a73a/mzaf_13017278696327434013.plus.aac.p.m4a",
+    spotifyUrl: "https://open.spotify.com/track/7lEptt4wbM0yJTObx0ANcy",
+    popularity: 94,
+    color: "#059669",
+    genres: ["Telugu", "Tollywood", "Regional"]
+  },
+  'top-tamil': {
+    id: "tamil-enjoy-enjaami",
+    name: "Enjoy Enjaami",
+    artist: "Dhee, Arivu",
+    album: "Enjoy Enjaami",
+    albumArt: "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/20/4c/64/204c6444-5be6-6fa5-0e4f-7f22e8c42e63/cover.jpg/600x600bb.jpg",
+    previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/7b/07/cc/7b07cc3f-ce42-8c9f-0b8e-e9ea0dc44bf0/mzaf_4073454543803060386.plus.aac.p.m4a",
+    spotifyUrl: "https://open.spotify.com/track/5bVSmDFIisRPV5Y1RzP1Nk",
+    popularity: 91,
+    color: "#dc2626",
+    genres: ["Tamil", "Kollywood", "Regional"]
+  },
+  'top-hindi': {
+    id: "hindi-kesariya",
+    name: "Kesariya",
+    artist: "Arijit Singh",
+    album: "Brahmastra",
+    albumArt: "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/9f/27/98/9f279828-b0a1-f31e-e50a-5c24e0a4f40e/cover.jpg/600x600bb.jpg",
+    previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/65/2c/c7/652cc73a-f57d-4e65-85eb-ef3c5a07e413/mzaf_3756600948454337437.plus.aac.p.m4a",
+    spotifyUrl: "https://open.spotify.com/track/53gKaFPKsHLIqhk6p51MVw",
+    popularity: 93,
+    color: "#f97316",
+    genres: ["Hindi", "Bollywood", "Indian Pop"]
+  },
+  'top-kpop': {
+    id: "kpop-dynamite",
+    name: "Dynamite",
+    artist: "BTS",
+    album: "Dynamite",
+    albumArt: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/b1/5d/7a/b15d7a22-c141-9c7a-a74c-2c7d3fbaabb3/cover.jpg/600x600bb.jpg",
+    previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/c1/f3/c0/c1f3c0df-f7da-c1a1-f8f7-b79b7f5bd9e3/mzaf_3720498783097745455.plus.aac.p.m4a",
+    spotifyUrl: "https://open.spotify.com/track/5QDLhrAOJJdNAmCTJ8xMyW",
+    popularity: 97,
+    color: "#8b5cf6",
+    genres: ["K-Pop", "Dance", "Korean"]
   }
 };

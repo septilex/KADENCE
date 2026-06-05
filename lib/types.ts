@@ -35,6 +35,10 @@ export type Vibe =
   | 'workout'
   | 'chill-hits'
   | 'dev-special'
+  | 'top-telugu'
+  | 'top-tamil'
+  | 'top-hindi'
+  | 'top-kpop'
 
 export interface MoodQuery {
   query: string
@@ -57,4 +61,8 @@ export const VIBE_COLORS: Record<Vibe, string> = {
   'workout': '#d65500',
   'chill-hits': '#00b8d6',
   'dev-special': '#d4af37', // Gold
+  'top-telugu': '#059669', // Emerald Green
+  'top-tamil': '#dc2626', // Crimson Red
+  'top-hindi': '#f97316', // Saffron Orange
+  'top-kpop': '#8b5cf6', // Violet
 }
