@@ -132,5 +132,17 @@ export const SIGNATURE_SONGS: Record<Vibe, Omit<SongNode, 'x' | 'y' | 'z' | 'vx'
     popularity: 92,
     color: "#1DB954",
     genres: ["R&B", "Chill"]
+  },
+  'dev-special': {
+    id: "6773013478",
+    name: "God Mode Begins",
+    artist: "Sai Abhyankkar, Gana Muthu & Vishnu Edavan",
+    album: "Karuppu (Original Motion Picture Soundtrack)",
+    albumArt: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/d4/c4/38/d4c43885-7866-3ac4-e323-b9ca6a7621ec/cover.jpg/600x600bb.jpg",
+    previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/38/86/d0/3886d08d-1e96-dc45-d4fd-9138fc7748a3/mzaf_13976698916373719684.plus.aac.p.m4a",
+    spotifyUrl: "https://music.apple.com/us/album/god-mode-begins/6773013206?i=6773013478&uo=4",
+    popularity: 96,
+    color: "#d4af37",
+    genres: ["Tamil", "Dev Special"]
   }
 };

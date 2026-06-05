@@ -9,7 +9,7 @@ export interface VibeConfig {
   gradient: string
   bgClass: string
   number: string
-  badge?: 'LIVE' | 'HOT' | 'NEW'
+  badge?: string
   membranePreset: 'energetic' | 'punchy' | 'glossy' | 'cinematic' | 'elastic' | 'dreamy'
 }
 
@@ -126,5 +126,17 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     bgClass: 'rgba(10, 58, 74, 0.05)',
     number: '10',
     membranePreset: 'dreamy',
+  },
+  {
+    id: 'dev-special',
+    label: '✨ Prajit\'s Universe',
+    sub: 'Curated by Prajit Balaji',
+    bgColor: '#1a1814',
+    accentColor: '#d4af37',
+    gradient: 'from-yellow-600 to-stone-900',
+    bgClass: 'rgba(212, 175, 55, 0.05)',
+    number: '★',
+    badge: '👑 Creator\'s Pick',
+    membranePreset: 'glossy',
   },
 ]

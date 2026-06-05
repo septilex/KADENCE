@@ -1,36 +1,4 @@
-// Spotify API types
-export interface SpotifyImage {
-  url: string
-  height: number | null
-  width: number | null
-}
-
-export interface SpotifyArtist {
-  id: string
-  name: string
-  genres?: string[]
-  images?: SpotifyImage[]
-}
-
-export interface SpotifyAlbum {
-  id: string
-  name: string
-  images: SpotifyImage[]
-  release_date: string
-  artists: SpotifyArtist[]
-}
-
-export interface SpotifyTrack {
-  id: string
-  name: string
-  artists: SpotifyArtist[]
-  album: SpotifyAlbum
-  duration_ms: number
-  popularity: number
-  preview_url: string | null
-  external_urls: { spotify: string }
-  uri: string
-}
+// Spotify specific types removed.
 
 // Internal node type for 3D rendering
 export interface SongNode {
@@ -66,6 +34,7 @@ export type Vibe =
   | 'late-night'
   | 'workout'
   | 'chill-hits'
+  | 'dev-special'
 
 export interface MoodQuery {
   query: string
@@ -87,4 +56,5 @@ export const VIBE_COLORS: Record<Vibe, string> = {
   'late-night': '#762eb8',
   'workout': '#d65500',
   'chill-hits': '#00b8d6',
+  'dev-special': '#d4af37', // Gold
 }

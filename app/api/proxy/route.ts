@@ -8,7 +8,8 @@ export async function GET(request: Request) {
     return new NextResponse('Missing url parameter', { status: 400 })
   }
 
-  const FALLBACK_URL = 'https://i.scdn.co/image/ab67616d0000b2738863bc11d2aa12b54f5aeb36'
+  // Generic album cover placeholder
+  const FALLBACK_URL = 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=600&auto=format&fit=crop'
 
   try {
     let res = await fetch(url)

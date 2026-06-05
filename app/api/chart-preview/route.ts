@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { Vibe } from '@/lib/types'
-import { fetchChartPreviews } from '@/lib/spotify'
+import { fetchChartPreviews } from '@/lib/musicProvider'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)

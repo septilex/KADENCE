@@ -4,7 +4,7 @@ import './globals.css'
 export const metadata: Metadata = {
   title: 'KADENCE — Music Discovery Universe',
   description: 'Explore thousands of songs through an immersive 3D floating music universe. Search by mood, vibe, genre, or artist.',
-  keywords: ['music discovery', 'spotify', 'interactive', 'visualization', '3D', 'songs'],
+  keywords: ['music discovery', 'itunes', 'interactive', 'visualization', '3D', 'songs'],
   openGraph: {
     title: 'KADENCE — Music Discovery Universe',
     description: 'Explore thousands of songs in an immersive 3D floating music universe.',
