@@ -3,6 +3,11 @@
 import { useEffect, useRef } from 'react'
 import { useAudioStore } from '@/store/audioStore'
 
+// Progress update interval — 8Hz (125ms) is imperceptibly smooth for a scrubber
+// and reduces Zustand state updates from 60/sec to 8/sec, eliminating 52 React
+// re-renders per second in SongDetail.
+const PROGRESS_INTERVAL_MS = 125
+
 export function GlobalAudioPlayer() {
   const { 
     currentUrl, 
@@ -16,20 +21,31 @@ export function GlobalAudioPlayer() {
   const audioContextRef = useRef<HTMLAudioElement | null>(null)
   const audioFadeIntervalRef = useRef<NodeJS.Timeout | null>(null)
   const audioDebounceRef = useRef<NodeJS.Timeout | null>(null)
-  const animFrame = useRef<number>(0)
+  // Throttled progress reporter — fires at PROGRESS_INTERVAL_MS, not every rAF
+  const progressTimerRef = useRef<NodeJS.Timeout | null>(null)
 
-  // Scrubbing/Progress Reporting Loop
-  const updateProgress = () => {
-    const el = audioContextRef.current
-    if (el && el.duration && !el.paused) {
-      setProgressState((el.currentTime / el.duration) * 100, el.duration)
+  // Scrubbing/Progress Reporting — throttled to 8Hz instead of 60Hz rAF.
+  // This reduces Zustand set() calls from ~60/sec to ~8/sec while still
+  // feeling instant to the user.
+  const startProgressTimer = () => {
+    if (progressTimerRef.current) return
+    progressTimerRef.current = setInterval(() => {
+      const el = audioContextRef.current
+      if (el && el.duration && !el.paused) {
+        setProgressState((el.currentTime / el.duration) * 100, el.duration)
+      }
+    }, PROGRESS_INTERVAL_MS)
+  }
+
+  const stopProgressTimer = () => {
+    if (progressTimerRef.current) {
+      clearInterval(progressTimerRef.current)
+      progressTimerRef.current = null
     }
-    animFrame.current = requestAnimationFrame(updateProgress)
   }
 
   useEffect(() => {
-    animFrame.current = requestAnimationFrame(updateProgress)
-    return () => cancelAnimationFrame(animFrame.current)
+    return () => stopProgressTimer()
   }, [])
 
   // Handle Seek requests
@@ -40,7 +56,7 @@ export function GlobalAudioPlayer() {
       setProgressState(seekRequest, el.duration)
       clearSeekRequest()
     }
-  }, [seekRequest, clearSeekRequest])
+  }, [seekRequest, clearSeekRequest, setProgressState])
 
   // Handle Play/Pause toggles from the store
   useEffect(() => {
@@ -49,9 +65,12 @@ export function GlobalAudioPlayer() {
 
     if (isPlaying && el.paused) {
       el.play().catch(() => {})
+      startProgressTimer()
     } else if (!isPlaying && !el.paused) {
       el.pause()
+      stopProgressTimer()
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPlaying])
 
   // Handle URL changes (Crossfading)
@@ -70,6 +89,7 @@ export function GlobalAudioPlayer() {
           if (vol <= 0) {
             if (audioFadeIntervalRef.current) clearInterval(audioFadeIntervalRef.current)
             audio.pause()
+            stopProgressTimer()
             setPlayingState(false)
             audioContextRef.current = null
           } else {
@@ -106,14 +126,13 @@ export function GlobalAudioPlayer() {
 
     // Debounce new audio play slightly to yield event loop (caller manages main debounce)
     audioDebounceRef.current = setTimeout(() => {
-      console.log(`[AUDIO] Creating new Audio for: ${currentUrl}`)
       // Load and play next audio with a smooth fade-in
       const newAudio = new Audio(currentUrl)
       newAudio.volume = 0.0
       
       // Keep store updated when it ends
       newAudio.onended = () => {
-        console.log(`[AUDIO] Track ended organically: ${currentUrl}`)
+        stopProgressTimer()
         setPlayingState(false)
         setProgressState(0, newAudio.duration)
       }
@@ -125,8 +144,8 @@ export function GlobalAudioPlayer() {
       audioContextRef.current = newAudio
 
       newAudio.play().then(() => {
-        console.log(`[AUDIO] play success: ${currentUrl}`)
         setPlayingState(true)
+        startProgressTimer()
         let targetVol = 0.35 // Atmospheric volume peak
         let currentVol = 0.0
         const fadeInStep = targetVol / 10 // 10 steps
@@ -140,9 +159,9 @@ export function GlobalAudioPlayer() {
             newAudio.volume = currentVol
           }
         }, 30) // 10 steps * 30ms = 300ms fade in
-      }).catch((e) => {
-        console.log(`[AUDIO] play failed: ${e.message} for ${currentUrl}`)
+      }).catch(() => {
         // Ignore autoplay block errors silently
+        stopProgressTimer()
         setPlayingState(false)
       })
     }, 10) // 10ms yield instead of 250ms delay

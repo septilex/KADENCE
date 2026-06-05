@@ -1,7 +1,6 @@
 'use client'
 import { useRef, useMemo, useEffect, useState, useCallback } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
-import { Html } from '@react-three/drei'
 import * as THREE from 'three'
 import { SongNode, Vibe } from '@/lib/types'
 import { SPACING_X, SPACING_Y, CARD_W, CARD_H, computeGrid } from '@/lib/gridCalc'
@@ -23,8 +22,8 @@ const ATLAS_COLS    = 16     // 16x16 = 256 slots (4096x4096px canvas)
 const MAX_LOADS     = 16     // concurrent in-flight image loads
 
 // ── Motion & Interaction Tuning Constants ─────────────────────────────────────
-const SPRING_STIFFNESS     = 70.0    // Smooth trailing delay
-const SPRING_DAMPING       = 16.8    // Critically damped — no wobble
+const SPRING_STIFFNESS     = 120.0   // Tighter cursor anchoring
+const SPRING_DAMPING       = 22.0    // Critically damped — no wobble
 const SPRING_MASS          = 1.0     // Physical weight of the wall
 const PARALLAX_STRENGTH    = 0.028   // Amount of background drift
 const MOMENTUM_MULTIPLIER  = 1.0     // Multiplier for velocity retention
@@ -64,13 +63,15 @@ const vertexShader = /* glsl */`
     vHighlight       = 0.92;
 
     if (abs(aInstanceIdx - uHoverIdx) < 0.1) {
-      localScale = 1.10;
+      localScale = 1.03;
+      zOffset    = 0.3;
+      vHighlight = 1.25;
     }
 
     if (abs(aInstanceIdx - uSelectedIdx) < 0.1) {
-      localScale = 1.14;
-      zOffset    = 0.7;
-      vHighlight = 1.38;
+      localScale = 1.06;
+      zOffset    = 0.8;
+      vHighlight = 1.45;
     }
 
     localPos.xy *= localScale;
@@ -190,7 +191,6 @@ const fragmentShader = /* glsl */`
 `;
 
 export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, onSelect }: NodeFieldProps) {
-  console.log('[DIAG:NodeField] songs.length entering NodeField:', songs.length)
   const { camera, gl, size } = useThree()
   const meshRef = useRef<THREE.InstancedMesh>(null)
 
@@ -203,8 +203,6 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
   const count = dims.virtualCount
   const COLS  = dims.COLS
   const ROWS  = dims.ROWS
-  console.log(`[DIAG:NodeField] grid generation output -> size: ${size.width}x${size.height}, COLS: ${COLS}, ROWS: ${ROWS}, count (virtualCount): ${count}`)
-
 
   const rawMouseNDC       = useRef(new THREE.Vector2(-10, -10))
   const rawMouseWorld     = useRef(new THREE.Vector2(0, 0))
@@ -212,6 +210,30 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
   const mouseVelocity     = useRef(new THREE.Vector2(0, 0))
   const lastHoverId       = useRef<string | null>(null)
   const textureNeedsFlush = useRef(false)
+
+  // ── Pre-allocated scratch objects to avoid per-frame heap allocation ────────
+  // These are reused every frame via .set() / .copy() — zero GC pressure.
+  const _scratchVec3    = useRef(new THREE.Vector3())
+  const _scratchDir     = useRef(new THREE.Vector3())
+  const _scratchHit     = useRef(new THREE.Vector3())
+
+  // ── Cached DOM rect for mousemove — refreshed only on resize ───────────────
+  const domRectRef = useRef<DOMRect | null>(null)
+
+  // ── Precomputed O(1) lookup maps ───────────────────────────────────────────
+  // Replaces O(n) songs.find() and songs.findIndex() calls inside useFrame.
+  const songMaps = useMemo(() => {
+    const byId    = new Map<string, SongNode>()
+    const idxById = new Map<string, number>()
+    for (let i = 0; i < songs.length; i++) {
+      byId.set(songs[i].id, songs[i])
+      idxById.set(songs[i].id, i)
+    }
+    return { byId, idxById }
+  }, [songs])
+
+  // ── Vibe uniform cache — only write to GPU when values actually change ──────
+  const vibeCache = useRef({ speed: -1, amp: -1, hex: '' })
 
   // ── Texture Atlas ─────────────────────────────────────────────────────────
   const defaultAtlasTexture = useMemo(() => {
@@ -228,7 +250,7 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
     cvs.height = TEXTURE_SIZE * ATLAS_COLS
     
     const ctx = cvs.getContext('2d', { alpha: false })!
-    ctx.fillStyle = '#0a0a0e'
+    ctx.fillStyle = '#15151c' // Premium deep gray for missing textures
     ctx.fillRect(0, 0, cvs.width, cvs.height)
     
     const tex = new THREE.CanvasTexture(cvs)
@@ -254,7 +276,9 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
     flushData.current = { lastCount: 0, lastTime: 0 }
   }, [songs])
 
-  const loadSlot = (realIdx: number, url: string) => {
+  // Wrapped in useCallback so the frame loop always captures a stable reference.
+  // Avoids creating a new function object on every render.
+  const loadSlot = useCallback((realIdx: number, url: string) => {
     if (!url || loadedSet.current.has(realIdx) || loadingSet.current.has(realIdx)) return
     loadingSet.current.add(realIdx)
     
@@ -279,7 +303,7 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
       loadingSet.current.delete(realIdx)
     }
     img.src = url
-  }
+  }, [atlas])
 
   // Progressive texture loading
   useFrame(() => {
@@ -364,12 +388,14 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
     return geo
   }, [texIndices, instanceIndices])
 
-  // ── Material ──────────────────────────────────────────────────────────────
+  // ── Material — created once, atlas updated imperatively ───────────────────
+  // Decoupling material from atlas prevents a full shader recompile every time
+  // the atlas state changes. Instead we update the uniform value directly.
   const material = useMemo(() => new THREE.ShaderMaterial({
     vertexShader,
     fragmentShader,
     uniforms: {
-      uAtlas:       { value: atlas ? atlas.texture : defaultAtlasTexture },
+      uAtlas:       { value: defaultAtlasTexture },
       uCameraXY:    { value: new THREE.Vector2(0, 0) },
       uRawMouse:    { value: new THREE.Vector2(0, 0) },
       uMouse:       { value: new THREE.Vector2(0, 0) },
@@ -384,15 +410,19 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
     transparent: false,
     depthWrite:  true,
     depthTest:   true,
-  }), [atlas, defaultAtlasTexture])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }), []) // No atlas dependency — updated via useEffect below
+
+  // Update atlas uniform without recreating material (avoids shader recompile)
+  useEffect(() => {
+    if (atlas && material) {
+      material.uniforms.uAtlas.value = atlas.texture
+    }
+  }, [atlas, material])
 
   // Initialize instance matrices
   useEffect(() => {
-    if (!meshRef.current) {
-      console.warn('[DIAG:NodeField] instanceMatrix loop skipped — meshRef is null')
-      return
-    }
-    console.log(`[DIAG:NodeField] Running instanceMatrix loop for count=${count}, meshRef.count=${meshRef.current.count}`)
+    if (!meshRef.current) return
     const dummy  = new THREE.Object3D()
     const halfC  = (COLS - 1) / 2
     const halfR  = (ROWS - 1) / 2
@@ -408,14 +438,24 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
       meshRef.current.setMatrixAt(i, dummy.matrix)
     }
     meshRef.current.instanceMatrix.needsUpdate = true
-    console.log(`[DIAG:NodeField] Finished populating instanceMatrix for ${count} tiles.`)
   }, [count, COLS, ROWS, geometry])
 
-  // Mouse event capturing
+  // Mouse event capturing — cache DOMRect to avoid getBoundingClientRect on every move
   useEffect(() => {
     const el = gl.domElement
+
+    // Initial rect capture
+    domRectRef.current = el.getBoundingClientRect()
+
+    // Refresh rect on resize only (not on every mousemove)
+    const ro = new ResizeObserver(() => {
+      domRectRef.current = el.getBoundingClientRect()
+    })
+    ro.observe(el)
+
     const onMove = (e: MouseEvent) => {
-      const r = el.getBoundingClientRect()
+      const r = domRectRef.current
+      if (!r) return
       rawMouseNDC.current.set(
         ((e.clientX - r.left) / r.width)  *  2 - 1,
         ((e.clientY - r.top)  / r.height) * -2 + 1,
@@ -424,7 +464,7 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
     const onLeave = () => { rawMouseNDC.current.set(-10, -10) }
     const onClick = () => {
       if (lastHoverId.current) {
-        const s = songs.find(s => s.id === lastHoverId.current)
+        const s = songMaps.byId.get(lastHoverId.current)
         if (s) onSelect(s)
       }
     }
@@ -432,13 +472,12 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
     el.addEventListener('mouseleave', onLeave)
     el.addEventListener('click', onClick)
     return () => {
+      ro.disconnect()
       el.removeEventListener('mousemove', onMove)
       el.removeEventListener('mouseleave', onLeave)
       el.removeEventListener('click', onClick)
     }
-  }, [gl, onSelect, songs])
-
-  const _vec3 = useMemo(() => new THREE.Vector3(), [])
+  }, [gl, onSelect, songMaps])
 
   // ── Frame Loop ─────────────────────────────────────────────────────────────
   useFrame((state, delta) => {
@@ -462,17 +501,20 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
     // Feed camera XY to shader for centered fisheye effect
     material.uniforms.uCameraXY.value.set(camera.position.x, camera.position.y)
 
-    // ── Mouse to world-space raycasting ──────────────────────────────────────
+    // ── Mouse to world-space raycasting — reuse pre-allocated scratch vectors ──
     let targetWorldX = camera.position.x
     let targetWorldY = camera.position.y
 
     if (rawMouseNDC.current.x > -2) {
-      _vec3.set(rawMouseNDC.current.x, rawMouseNDC.current.y, 0.5).unproject(camera)
-      const dir      = _vec3.sub(camera.position).normalize()
-      const distance = -camera.position.z / dir.z
-      const hit      = camera.position.clone().add(dir.multiplyScalar(distance))
-      targetWorldX   = hit.x
-      targetWorldY   = hit.y
+      // Reuse pre-allocated _scratchVec3 — no heap allocation
+      _scratchVec3.current.set(rawMouseNDC.current.x, rawMouseNDC.current.y, 0.5).unproject(camera)
+      // _scratchDir = direction from camera to unprojected point
+      _scratchDir.current.copy(_scratchVec3.current).sub(camera.position).normalize()
+      const distance = -camera.position.z / _scratchDir.current.z
+      // _scratchHit = camera.position + dir * distance
+      _scratchHit.current.copy(camera.position).addScaledVector(_scratchDir.current, distance)
+      targetWorldX = _scratchHit.current.x
+      targetWorldY = _scratchHit.current.y
     }
 
     // ── Spatial Computing Spring Parallax ────────────────────────────────────
@@ -492,8 +534,7 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
     material.uniforms.uMouse.value.copy(smoothMouseWorld.current)
     material.uniforms.uRawMouse.value.copy(rawMouseWorld.current)
 
-    // ── Vibe personality styling ─────────────────────────────────────────────
-    // Configure wave values and spring characteristics based on vibe config
+    // ── Vibe personality styling — only write to GPU uniforms when values change ─
     let waveSpeed = 1.0
     let waveAmp = 1.0
     let vibeColorHex = '#d63384'
@@ -522,9 +563,20 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
       }
     }
 
-    material.uniforms.uWaveSpeed.value = waveSpeed
-    material.uniforms.uWaveAmp.value = waveAmp
-    material.uniforms.uVibeAccent.value.set(vibeColorHex)
+    // Only write uniforms when values have actually changed (avoids GPU uniform upload every frame)
+    const vc = vibeCache.current
+    if (vc.speed !== waveSpeed) {
+      material.uniforms.uWaveSpeed.value = waveSpeed
+      vc.speed = waveSpeed
+    }
+    if (vc.amp !== waveAmp) {
+      material.uniforms.uWaveAmp.value = waveAmp
+      vc.amp = waveAmp
+    }
+    if (vc.hex !== vibeColorHex) {
+      material.uniforms.uVibeAccent.value.set(vibeColorHex)
+      vc.hex = vibeColorHex
+    }
 
     // ── O(1) Hover detection ─────────────────────────────────────────────────
     let hoverIdx = -1
@@ -552,7 +604,8 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
 
     if (newHoverId !== lastHoverId.current) {
       lastHoverId.current = newHoverId
-      const s = songs.find(s => s.id === newHoverId) || null
+      // O(1) Map lookup — replaces O(n) songs.find()
+      const s = newHoverId ? (songMaps.byId.get(newHoverId) ?? null) : null
       onHover(s)
       gl.domElement.style.cursor = newHoverId ? 'pointer' : 'crosshair'
     }
@@ -561,8 +614,9 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
 
     let selIdx = -1
     if (selectedId) {
-      const idx = songs.findIndex(s => s.id === selectedId)
-      if (idx !== -1) selIdx = idx
+      // O(1) Map lookup — replaces O(n) songs.findIndex()
+      const idx = songMaps.idxById.get(selectedId)
+      if (idx !== undefined) selIdx = idx
     }
     material.uniforms.uSelectedIdx.value = selIdx
   })

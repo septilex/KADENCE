@@ -22,7 +22,7 @@ export const useChartPreviewStore = create<ChartPreviewStoreState>((set, get) =>
 
     const fetchVibe = async (vibeId: Vibe) => {
       try {
-        const res = await fetch(`/api/songs/chart-previews?vibe=${vibeId}`)
+        const res = await fetch(`/api/chart-preview?vibe=${vibeId}`)
         const data = await res.json()
         if (data.songs) {
           newPreviews[vibeId] = data.songs

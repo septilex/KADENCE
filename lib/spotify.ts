@@ -418,6 +418,7 @@ export async function searchSongsByMood(query: string): Promise<SongNode[]> {
  * Fetch a curated list of 8 tracks with valid previews for Chart Hover Rotation
  */
 export async function fetchChartPreviews(vibeId: Vibe): Promise<SongNode[]> {
+  console.log(`[PREVIEW_API] vibe: ${vibeId}`)
   const queries = VIBE_QUERIES[vibeId]
   if (!queries || queries.length === 0) return []
 
@@ -429,9 +430,11 @@ export async function fetchChartPreviews(vibeId: Vibe): Promise<SongNode[]> {
     )
     const resp = raw as SearchResponse
     const items = resp.tracks?.items || []
+    console.log(`[PREVIEW_API] fetched candidate tracks: ${items.length}`)
     
     // Filter strictly for valid preview URLs
     const validItems = items.filter(t => t.preview_url)
+    console.log(`[PREVIEW_API] tracks with previewUrl: ${validItems.length}`)
     
     // Shuffle the valid items (Fisher-Yates)
     for (let i = validItems.length - 1; i > 0; i--) {
@@ -440,11 +443,22 @@ export async function fetchChartPreviews(vibeId: Vibe): Promise<SongNode[]> {
       validItems[i] = validItems[j]
       validItems[j] = temp
     }
+    console.log(`[PREVIEW_API] after shuffle: ${validItems.length}`)
     
     // Select exactly 8 (or fewer if we couldn't find 8)
     const selected = validItems.slice(0, 8)
+    console.log(`[PREVIEW_API] final selected tracks: ${selected.length}`)
+
+    const mapped = selected.map(t => trackToSongNode(t, [qObj.genre]))
+    if (mapped.length > 0) {
+      console.log(`[PREVIEW_API] sample track:`, {
+        name: mapped[0].name,
+        artist: mapped[0].artist,
+        previewUrl: mapped[0].previewUrl
+      })
+    }
     
-    return selected.map(t => trackToSongNode(t, [qObj.genre]))
+    return mapped
   } catch (e) {
     console.error('[DIAG:previews] fetchChartPreviews error', e)
     return []

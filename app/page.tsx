@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef, useCallback, useState } from 'react'
+import { useEffect, useRef, useCallback, memo } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import { useSongStore } from '@/store/songStore'
@@ -13,7 +13,6 @@ import { Navbar } from '@/components/ui/Navbar'
 import { HeroBackgroundVideo } from '@/components/ui/HeroBackgroundVideo'
 import { GlobalAudioPlayer } from '@/components/GlobalAudioPlayer'
 import { useAudioStore } from '@/store/audioStore'
-
 import { ChangeVibeOverlay } from '@/components/ui/ChangeVibeOverlay'
 
 // Dynamic import for 3D (no SSR)
@@ -21,6 +20,69 @@ const Universe = dynamic(
   () => import('@/components/universe/Universe').then(m => m.Universe),
   { ssr: false }
 )
+
+// ── Memoized hover tooltip — only re-renders when hoveredSong/selectedSong/introComplete change ──
+// Extracting this prevents the entire Home from re-rendering on every hover state change.
+const HoverTooltip = memo(function HoverTooltip() {
+  const hoveredSong   = useSongStore(state => state.hoveredSong)
+  const selectedSong  = useSongStore(state => state.selectedSong)
+  const introComplete = useSongStore(state => state.introComplete)
+
+  return (
+    <AnimatePresence>
+      {hoveredSong && introComplete && !selectedSong && (
+        <motion.div
+          initial={{ opacity: 0, y: 15, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 10, scale: 0.95 }}
+          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          className="fixed bottom-8 left-1/2 -translate-x-1/2 z-20 pointer-events-auto"
+        >
+          <div
+            className="px-5 py-3.5 rounded-2xl bg-black/75 border border-white/10 backdrop-blur-2xl flex items-center gap-4 max-w-sm shadow-[0_15px_40px_rgba(0,0,0,0.65)] transition-all duration-300 hover:border-white/20"
+            style={{
+              boxShadow: hoveredSong.color ? `0 10px 30px -10px ${hoveredSong.color}25, 0 15px 40px rgba(0,0,0,0.65)` : undefined
+            }}
+          >
+            <div className="relative w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 border border-white/5">
+              <img
+                src={hoveredSong.albumArt}
+                alt={hoveredSong.name}
+                className="w-full h-full object-cover"
+              />
+              {hoveredSong.previewUrl && (
+                <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-200">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="text-white">
+                    <polygon points="6,4 20,12 6,20" />
+                  </svg>
+                </div>
+              )}
+            </div>
+            <div className="flex-grow min-w-0">
+              <p className="text-white text-sm font-bold truncate tracking-tight">{hoveredSong.name}</p>
+              <p className="text-white/60 text-xs truncate mt-0.5 font-medium">{hoveredSong.artist}</p>
+              <p className="text-white/35 text-[10px] truncate mt-0.5 font-medium uppercase tracking-wider">
+                {hoveredSong.album}
+              </p>
+            </div>
+            
+            <a
+              href={hoveredSong.spotifyUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-9 h-9 rounded-full bg-white/5 hover:bg-[#1db954] hover:text-black flex items-center justify-center text-white/70 transition-all duration-300 flex-shrink-0 hover:scale-105"
+              title="Open in Spotify"
+            >
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm5.586 14.424c-.18.295-.565.387-.86.207-2.377-1.454-5.37-1.783-8.894-.978-.335.076-.668-.135-.744-.47-.076-.335.135-.668.47-.744 3.856-.88 7.15-.506 9.822 1.13.295.18.387.563.206.855zm1.225-2.72c-.226.367-.707.487-1.074.26-2.72-1.672-6.87-2.157-10.078-1.182-.413.125-.847-.107-.972-.52-.125-.413.107-.847.52-.972 3.673-1.114 8.243-.574 11.344 1.334.367.227.487.708.26 1.08zm.105-2.833C14.852 8.94 9.773 8.77 6.83 9.664c-.475.144-.974-.124-1.118-.6-.144-.475.124-.974.6-1.118 3.39-1.03 9.002-.835 12.593 1.297.427.253.567.808.314 1.235-.252.427-.808.567-1.235.314z"/>
+              </svg>
+            </a>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+})
 
 // ── Parallel image preloader ───────────────────────────────────────────────
 // Warms the browser cache for all album artworks before the user enters.
@@ -60,10 +122,13 @@ function preloadImages(
 
 export default function Home() {
   const {
-    songs, selectedSong, hoveredSong, isLoading, loadingProgress, introComplete,
+    songs, isLoading, loadingProgress, introComplete,
     currentVibe, isRefreshing, isChangingVibe,
     setSongs, selectSong, hoverSong, setLoading, setIntroComplete, setVibe, setRefreshing, setChangingVibe,
   } = useSongStore()
+  // selectedSong and hoveredSong are read via targeted selectors only where needed
+  const selectedSong = useSongStore(state => state.selectedSong)
+  const hoveredSong  = useSongStore(state => state.hoveredSong)
 
   const { isSearchOpen, setSearchOpen } = useUIStore()
   const { setFps } = usePerformanceStore()
@@ -170,8 +235,7 @@ export default function Home() {
   const audioDebounceRef = useRef<NodeJS.Timeout | null>(null)
   
   useEffect(() => {
-    // Sync Universe selections to global audio player. 
-    // Note: IntroScreen and ChangeVibeOverlay chart cards independently call playUrl()
+    // Sync Universe selections to global audio player.
     if (introComplete && !isChangingVibe) {
       if (audioDebounceRef.current) clearTimeout(audioDebounceRef.current)
 
@@ -190,13 +254,16 @@ export default function Home() {
   }, [selectedSong, hoveredSong, introComplete, isChangingVibe, playUrl])
   const handleSearchResults = useCallback((results: SongNode[]) => {
     if (results.length > 0) {
-      const map = new Map(songs.map(s => [s.id, s]))
+      // Use getState() to read current songs without adding songs to dependency array.
+      // This prevents the callback from being recreated on every songs array change.
+      const currentSongs = useSongStore.getState().songs
+      const map = new Map(currentSongs.map((s: SongNode) => [s.id, s]))
       for (const res of results) {
         if (!map.has(res.id)) map.set(res.id, res)
       }
       setSongs(Array.from(map.values()))
     }
-  }, [songs, setSongs])
+  }, [setSongs])
 
   const handleSearchSelect = useCallback(
     (song: SongNode) => { selectSong(song); setSearchOpen(false) },
@@ -212,8 +279,11 @@ export default function Home() {
       {/* 3D Universe */}
       <motion.div
         className="absolute inset-0"
-        animate={{ opacity: isRefreshing ? 0.3 : 1 }}
-        transition={{ duration: 0.4, ease: 'easeInOut' }}
+        animate={{ 
+          opacity: isRefreshing ? 0.8 : 1,
+          filter: isRefreshing ? 'blur(12px) brightness(0.8)' : 'blur(0px) brightness(1)'
+        }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       >
         <Universe
           songs={songs}
@@ -277,59 +347,8 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      {/* Richer Hover Tooltip with Framer Motion and Audio Preview */}
-      <AnimatePresence>
-        {hoveredSong && introComplete && !selectedSong && (
-          <motion.div
-            initial={{ opacity: 0, y: 15, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.95 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed bottom-8 left-1/2 -translate-x-1/2 z-20 pointer-events-auto"
-          >
-            <div
-              className="px-5 py-3.5 rounded-2xl bg-black/75 border border-white/10 backdrop-blur-2xl flex items-center gap-4 max-w-sm shadow-[0_15px_40px_rgba(0,0,0,0.65)] transition-all duration-300 hover:border-white/20"
-              style={{
-                boxShadow: hoveredSong.color ? `0 10px 30px -10px ${hoveredSong.color}25, 0 15px 40px rgba(0,0,0,0.65)` : undefined
-              }}
-            >
-              <div className="relative w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 border border-white/5">
-                <img
-                  src={hoveredSong.albumArt}
-                  alt={hoveredSong.name}
-                  className="w-full h-full object-cover"
-                />
-                {hoveredSong.previewUrl && (
-                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-200">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="text-white">
-                      <polygon points="6,4 20,12 6,20" />
-                    </svg>
-                  </div>
-                )}
-              </div>
-              <div className="flex-grow min-w-0">
-                <p className="text-white text-sm font-bold truncate tracking-tight">{hoveredSong.name}</p>
-                <p className="text-white/60 text-xs truncate mt-0.5 font-medium">{hoveredSong.artist}</p>
-                <p className="text-white/35 text-[10px] truncate mt-0.5 font-medium uppercase tracking-wider">
-                  {hoveredSong.album}
-                </p>
-              </div>
-              
-              <a
-                href={hoveredSong.spotifyUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full bg-white/5 hover:bg-[#1db954] hover:text-black flex items-center justify-center text-white/70 transition-all duration-300 flex-shrink-0 hover:scale-105"
-                title="Open in Spotify"
-              >
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm5.586 14.424c-.18.295-.565.387-.86.207-2.377-1.454-5.37-1.783-8.894-.978-.335.076-.668-.135-.744-.47-.076-.335.135-.668.47-.744 3.856-.88 7.15-.506 9.822 1.13.295.18.387.563.206.855zm1.225-2.72c-.226.367-.707.487-1.074.26-2.72-1.672-6.87-2.157-10.078-1.182-.413.125-.847-.107-.972-.52-.125-.413.107-.847.52-.972 3.673-1.114 8.243-.574 11.344 1.334.367.227.487.708.26 1.08zm.105-2.833C14.852 8.94 9.773 8.77 6.83 9.664c-.475.144-.974-.124-1.118-.6-.144-.475.124-.974.6-1.118 3.39-1.03 9.002-.835 12.593 1.297.427.253.567.808.314 1.235-.252.427-.808.567-1.235.314z"/>
-                </svg>
-              </a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Hover Tooltip — rendered by isolated memo component to prevent full-page re-renders */}
+      <HoverTooltip />
     </main>
   )
 }
