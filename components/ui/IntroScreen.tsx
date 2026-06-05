@@ -98,7 +98,7 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
       `}</style>
 
       <motion.div
-        className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-transparent pointer-events-auto overflow-hidden"
+        className="fixed inset-0 z-50 bg-transparent pointer-events-auto overflow-y-auto overflow-x-hidden scrollbar-hide"
         initial={{ opacity: 1 }}
         exit={{ opacity: 0, scale: 0.98 }}
         transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
@@ -107,7 +107,7 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
         {PARTICLES.map(p => (
           <div
             key={p.id}
-            className={`kadence-particle absolute rounded-full pointer-events-none transition-colors duration-700 ${activeVibeData?.id === 'dev-special' ? 'bg-[#d4af37]/60 shadow-[0_0_10px_rgba(212,175,55,0.8)]' : 'bg-white/30'}`}
+            className={`kadence-particle fixed rounded-full pointer-events-none transition-colors duration-700 ${activeVibeData?.id === 'dev-special' ? 'bg-[#d4af37]/60 shadow-[0_0_10px_rgba(212,175,55,0.8)]' : 'bg-white/30'}`}
             style={{
               left:   `${p.x}%`,
               top:    `${p.y}%`,
@@ -125,7 +125,7 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
           {activeVibeData && (
             <motion.div
               key={activeVibeData.id}
-              className="absolute inset-0 pointer-events-none"
+              className="fixed inset-0 pointer-events-none"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -139,21 +139,30 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
         </AnimatePresence>
 
         {/* ── Static ambient glows ─────────────────────────────────────── */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-blue-950/20 blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] rounded-full bg-purple-950/15 blur-[100px] pointer-events-none" />
+        <div className="fixed top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-blue-950/20 blur-[120px] pointer-events-none" />
+        <div className="fixed bottom-1/4 right-1/4 w-[300px] h-[300px] rounded-full bg-purple-950/15 blur-[100px] pointer-events-none" />
 
         <AnimatePresence mode="wait">
 
           {/* ────────────────── STEP 1: Vibe Selection ───────────────── */}
           {step === 'vibe' && (
             <motion.div
-              key="step-vibe"
-              className="relative z-10 flex flex-col items-center gap-10 px-6 max-w-4xl w-full"
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -30, scale: 0.97 }}
-              transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
+              key="step-vibe-container"
+              className="relative w-full"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.7 }}
             >
+              {/* EXACT ORIGINAL HERO LAYOUT - SECTION 1 */}
+              <div className="w-full min-h-[100dvh] flex flex-col items-center justify-center pt-8 pb-16">
+                <motion.div
+                  className="z-10 flex flex-col items-center gap-10 px-6 max-w-4xl w-full mt-10"
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -30, scale: 0.97 }}
+                  transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
+                >
               {/* Logo */}
               <div className="flex flex-col items-center mt-16 mb-8 w-full px-4 overflow-visible">
                 <h1
@@ -300,74 +309,75 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
                   )
                 })}
               </div>
+              </motion.div>
+              </div>
 
-              {/* Creator Collection Section */}
+              {/* Creator Collection Section - SECTION 2 */}
               {(() => {
                 const devSpecialVibe = VIBE_CONFIGS.find(v => v.id === 'dev-special')
                 if (!devSpecialVibe) return null
                 const isActive = hoveredVibe === devSpecialVibe.id || selectedVibe === devSpecialVibe.id
                 
                 return (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
-                    className="absolute top-full left-1/2 -translate-x-1/2 mt-4 flex flex-col items-center w-full px-4"
-                  >
-                    <div className="text-center mb-3">
-                      <h3 className="text-[#d4af37] text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase">Creator Collection</h3>
-                    </div>
+                  <div className="w-full min-h-[80dvh] flex flex-col items-center justify-center pb-24 pt-16">
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+                      className="flex flex-col items-center w-full px-6 max-w-4xl"
+                    >
+                      <div className="text-center mb-10">
+                        <h3 className="text-[#d4af37] text-sm md:text-base font-bold tracking-[0.3em] uppercase mb-2">Creator Collection</h3>
+                        <p className="text-white/40 text-xs tracking-widest uppercase">A personal universe curated by Prajit Balaji</p>
+                      </div>
                     
                     <motion.button
                       id={`vibe-${devSpecialVibe.id}`}
                       onHoverStart={() => handleHoverStart(devSpecialVibe.id)}
                       onHoverEnd={handleHoverEnd}
                       onClick={() => handleVibeSelect(devSpecialVibe.id)}
-                      animate={{
-                        y: isActive ? -4 : 0,
-                      }}
-                      className="relative group flex flex-col justify-end p-4 rounded-[12px] overflow-hidden cursor-pointer text-left outline-none w-full max-w-[420px] h-[90px] border border-[#d4af37]/40 mx-auto shadow-xl"
+                      className="relative group flex flex-col justify-end p-8 rounded-[20px] overflow-hidden cursor-pointer text-left outline-none w-full max-w-[420px] h-[240px] border border-[#d4af37]/60 mx-auto shadow-2xl"
                       style={{
                         backgroundColor: devSpecialVibe.bgColor,
                         boxShadow: isActive
-                          ? '0 0 30px rgba(212,175,55,0.4), inset 0 0 20px rgba(212,175,55,0.15)' 
-                          : '0 0 15px rgba(212, 175, 55, 0.1)',
-                        transform: isActive ? 'scale(1.02)' : 'scale(1)',
-                        filter: isActive ? 'brightness(1.1)' : 'brightness(1)',
+                          ? '0 0 80px rgba(212,175,55,0.7), inset 0 0 50px rgba(212,175,55,0.3)' 
+                          : '0 0 30px rgba(212, 175, 55, 0.2)',
+                        transform: isActive ? 'scale(1.03) translateY(-8px)' : 'scale(1)',
+                        filter: isActive ? 'brightness(1.2)' : 'brightness(1)',
                         transition: 'all 0.5s cubic-bezier(0.22, 1, 0.36, 1)'
                       }}
                     >
                       {/* Animated shimmer overlay */}
-                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-transparent via-[#d4af37]/10 to-transparent -translate-x-full group-hover:animate-[kadence-progress-shimmer_2s_infinite] pointer-events-none" />
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-transparent via-[#d4af37]/25 to-transparent -translate-x-full group-hover:animate-[kadence-progress-shimmer_1.5s_infinite] pointer-events-none" />
                       
                       {/* Geometric overlay pattern */}
                       <div className="absolute inset-0 opacity-[0.2] mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '12px 12px' }} />
                       
                       {/* Large background number */}
-                      <span className="absolute top-[-20px] left-[0px] text-[100px] font-black text-[#d4af37] opacity-10 tracking-tighter leading-none pointer-events-none select-none">
+                      <span className="absolute top-[-20px] left-[0px] text-[120px] font-black text-[#d4af37] opacity-[0.08] tracking-tighter leading-none pointer-events-none select-none">
                         {devSpecialVibe.number}
                       </span>
 
                       {/* Badge */}
                       {devSpecialVibe.badge && (
-                        <div className="absolute top-4 right-4 px-3 py-1 rounded backdrop-blur-md text-[10px] font-bold tracking-widest shadow-sm bg-[#d4af37]/20 text-[#d4af37] border border-[#d4af37]/40">
+                        <div className="absolute top-5 right-5 px-3 py-1 rounded backdrop-blur-md text-[10px] font-bold tracking-widest shadow-sm bg-[#d4af37]/20 text-[#d4af37] border border-[#d4af37]/40">
                           {devSpecialVibe.badge}
                         </div>
                       )}
                       
                       {/* Text */}
-                      <div className="relative z-10 w-full mt-auto translate-y-1 group-hover:translate-y-0 transition-transform duration-400">
+                      <div className="relative z-10 w-full mt-auto translate-y-2 group-hover:translate-y-0 transition-transform duration-400">
                         <span
-                          className="block text-white font-bold text-sm md:text-base leading-tight mb-0.5"
+                          className="block text-white font-bold text-lg md:text-xl leading-tight mb-1"
                           style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                         >
                           {devSpecialVibe.label}
                         </span>
-                        <div className="flex items-center gap-2">
-                          <span className="text-white/70 text-[9px] uppercase font-bold tracking-wider leading-tight">
+                        <div className="flex items-center gap-2 mt-1">
+                          <span className="text-white/70 text-[10px] md:text-xs uppercase font-bold tracking-wider leading-tight">
                             {devSpecialVibe.sub}
                           </span>
-                          <span className="text-[#d4af37] text-[9px] font-bold tracking-[0.1em] uppercase">
+                          <span className="text-[#d4af37] text-[10px] md:text-xs font-bold tracking-[0.1em] uppercase">
                             • 80 handpicked tracks
                           </span>
                         </div>
@@ -434,7 +444,8 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
                         )}
                       </AnimatePresence>
                     </motion.button>
-                  </motion.div>
+                    </motion.div>
+                  </div>
                 )
               })()}
             </motion.div>
@@ -442,14 +453,15 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
 
           {/* ────────────────── STEP 2: Loading / Universe Warming ───── */}
           {step === 'loading' && (
-            <motion.div
-              key="step-loading"
-              className="relative z-10 flex flex-col items-center gap-8 px-6 max-w-sm w-full text-center"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96 }}
-              transition={{ duration: 0.6 }}
-            >
+            <div key="step-loading-container" className="absolute top-[50dvh] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full flex justify-center">
+              <motion.div
+                key="step-loading"
+                className="relative z-10 flex flex-col items-center gap-8 px-6 max-w-sm w-full text-center"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.96 }}
+                transition={{ duration: 0.6 }}
+              >
               {/* Pulsing vibe orb */}
               <div className="relative flex items-center justify-center w-16 h-16">
                 {/* Outer pulse ring */}
@@ -523,7 +535,8 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
                   </p>
                 </div>
               </div>
-            </motion.div>
+              </motion.div>
+            </div>
           )}
 
         </AnimatePresence>
