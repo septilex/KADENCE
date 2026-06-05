@@ -1,6 +1,6 @@
 import { SpotifyTrack, SongNode, Vibe } from './types'
 
-let cachedToken: string | null = null
+let cachedToken: string | null = 'INVALID';
 let tokenExpiry: number = 0
 
 async function getAccessToken(): Promise<string> {
@@ -48,6 +48,9 @@ async function spotifyFetch(endpoint: string): Promise<unknown> {
   })
 
   console.log('[DIAG:fetch] Response status:', res.status, '|', endpoint.substring(0, 80))
+  if (res.status === 429) {
+    console.error('[DIAG:fetch] RATE LIMITED! Retry-After:', res.headers.get('retry-after'), 'seconds')
+  }
 
   const rawText = await res.text()
   console.log(`[DIAG:fetch] Raw response body (first 500 chars): ${rawText.substring(0, 500)}`)
@@ -195,7 +198,7 @@ async function fetchSearchTracks(
   console.log(`[DIAG:search] fetchSearchTracks — q="${q}" genre="${genre}" maxTracks=${maxTracks}`)
   try {
     const raw = await spotifyFetch(
-      `/search?q=${encodeURIComponent(q)}&type=track&limit=10&offset=0&market=US`
+      `/search?q=${encodeURIComponent(q)}&type=track&limit=50&offset=0&market=US`
     )
 
     // ── Shape verification ──────────────────────────────────────────────────
@@ -233,26 +236,24 @@ async function fetchSearchTracks(
       console.warn('[DIAG:search] tracks.items is EMPTY for query:', q)
     }
 
-    // Fetch additional pages in parallel if needed
-    if (firstPage.tracks.total > 10 && maxTracks > 10) {
-      const extraPages = Math.ceil(Math.min(firstPage.tracks.total - 10, maxTracks - 10) / 10)
-      console.log('[DIAG:search] Fetching', extraPages, 'extra pages for q:', q)
-      const offsets = Array.from({ length: extraPages }, (_, i) => (i + 1) * 10)
+    // Fetch additional pages sequentially in small chunks with a delay to prevent 429
+    if (firstPage.tracks.total > 50 && maxTracks > 50) {
+      const extraPages = Math.ceil(Math.min(firstPage.tracks.total - 50, maxTracks - 50) / 50)
+      console.log('[DIAG:search] Fetching', extraPages, 'extra pages sequentially for q:', q)
+      const offsets = Array.from({ length: extraPages }, (_, i) => (i + 1) * 50)
 
-      const extraResults = await Promise.allSettled(
-        offsets.map(offset =>
-          spotifyFetch(
-            `/search?q=${encodeURIComponent(q)}&type=track&limit=10&offset=${offset}&market=US`
-          ) as Promise<SearchResponse>
-        )
-      )
-
-      for (const result of extraResults) {
-        if (result.status === 'fulfilled') {
-          allItems.push(...result.value.tracks.items)
-        } else {
-          console.error('[DIAG:search] Extra page REJECTED:', result.reason)
+      for (const offset of offsets) {
+        try {
+          const res = await spotifyFetch(
+            `/search?q=${encodeURIComponent(q)}&type=track&limit=50&offset=${offset}&market=US`
+          ) as SearchResponse
+          allItems.push(...res.tracks.items)
+        } catch (e) {
+          console.error('[DIAG:search] Extra page REJECTED:', e)
         }
+        
+        // Large delay to prioritize reliability
+        await new Promise(r => setTimeout(r, 800));
       }
     }
 
@@ -311,18 +312,23 @@ export async function fetchSongsByVibe(
   const tracksPerQuery = Math.ceil(targetCount / rotated.length)
   console.log(`[DIAG:vibe] tracksPerQuery=${tracksPerQuery} across ${rotated.length} queries`)
 
-  const results = await Promise.allSettled(
-    rotated.map(({ q, genre }) => fetchSearchTracks(q, genre, tracksPerQuery))
-  )
-
-  // Per-query result summary
-  results.forEach((r, i) => {
-    if (r.status === 'fulfilled') {
-      console.log(`[DIAG:vibe] query[${i}] "${rotated[i].q}": FULFILLED → ${r.value.length} tracks`)
-    } else {
-      console.error(`[DIAG:vibe] query[${i}] "${rotated[i].q}": REJECTED →`, r.reason)
+  const results: PromiseSettledResult<SongNode[]>[] = []
+  
+  for (let i = 0; i < rotated.length; i++) {
+    const { q, genre } = rotated[i]
+    try {
+      const res = await fetchSearchTracks(q, genre, tracksPerQuery)
+      results.push({ status: 'fulfilled', value: res })
+      console.log(`[DIAG:vibe] query[${i}] "${q}": FULFILLED → ${res.length} tracks`)
+    } catch (e) {
+      results.push({ status: 'rejected', reason: e })
+      console.error(`[DIAG:vibe] query[${i}] "${q}": REJECTED →`, e)
     }
-  })
+    // Delay between main vibe queries
+    if (i < rotated.length - 1) {
+      await new Promise(r => setTimeout(r, 1000));
+    }
+  }
 
   const seenTrackIds = new Set<string>()
   const seenArtists = new Map<string, number>()
@@ -396,7 +402,7 @@ export async function fetchTopSongByVibe(vibeId: Vibe): Promise<SongNode | null>
 export async function searchSongsByMood(query: string): Promise<SongNode[]> {
   try {
     const searchData = await spotifyFetch(
-      `/search?q=${encodeURIComponent(query)}&type=track&limit=10&market=US`
+      `/search?q=${encodeURIComponent(query)}&type=track&limit=50&market=US`
     ) as { tracks: { items: SpotifyTrack[] } }
 
     const seen = new Set<string>()

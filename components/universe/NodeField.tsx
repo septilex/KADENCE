@@ -341,7 +341,8 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
       seed ^= seed << 13
       seed ^= seed >> 17
       seed ^= seed << 5
-      return (seed >>> 0) / 0xFFFF_FFFF
+      // Divide by 2^32 to ensure the result is strictly in [0, 1), avoiding out-of-bounds in Fisher-Yates
+      return (seed >>> 0) / 4294967296
     }
 
     // Fisher-Yates shuffle — O(n), stable seed → same layout on every render

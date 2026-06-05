@@ -32,10 +32,9 @@ export const useChartPreviewStore = create<ChartPreviewStoreState>((set, get) =>
       }
     }
 
-    // Process 3 at a time
-    for (let i = 0; i < vibes.length; i += 3) {
-      const chunk = vibes.slice(i, i + 3)
-      await Promise.allSettled(chunk.map(fetchVibe))
+    // Process sequentially to completely eliminate 429 risks
+    for (const vibeId of vibes) {
+      await fetchVibe(vibeId)
     }
 
     set({ previews: newPreviews, isPreloading: false })

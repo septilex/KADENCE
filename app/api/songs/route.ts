@@ -61,9 +61,12 @@ export async function GET(req: NextRequest) {
       refreshCounts.set(vibe, offset)
     }
 
-    // Fetch a curated set of ~1000 vibe-matched tracks, offset by refresh count to get different seeds
     const songs = await fetchSongsByVibe(vibe, 1000, offset)
     console.log('[DIAG:route] fetchSongsByVibe returned:', songs.length, 'songs')
+
+    if (songs.length === 0) {
+      throw new Error('Spotify API returned 0 songs, possibly due to rate limits')
+    }
 
     vibeCache.set(vibe, { songs, time: Date.now() })
     console.log('[DIAG:route] Responding with', songs.length, 'songs for vibe:', vibe)
