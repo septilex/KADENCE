@@ -1,6 +1,7 @@
 'use client'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect, useRef } from 'react'
+import Lenis from 'lenis'
 import { Vibe } from '@/lib/types'
 import { useChartHover } from '@/hooks/useChartHover'
 
@@ -38,6 +39,36 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
 
   // ── Chart Hover Preview ──
   const { hoveredVibe, handleHoverStart, handleHoverEnd, signatureSongs } = useChartHover()
+
+  const scrollWrapperRef = useRef<HTMLDivElement>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
+  const lenisRef = useRef<Lenis | null>(null)
+
+  // ── Smooth Inertial Scrolling (Lenis) ──
+  useEffect(() => {
+    if (!scrollWrapperRef.current || !contentRef.current) return
+
+    const lenis = new Lenis({
+      wrapper: scrollWrapperRef.current,
+      content: contentRef.current,
+      lerp: 0.05, // Heavy, buttery smooth
+      smoothWheel: true,
+      wheelMultiplier: 0.9,
+    })
+    lenisRef.current = lenis
+
+    let rafId: number
+    function raf(time: number) {
+      lenis.raf(time)
+      rafId = requestAnimationFrame(raf)
+    }
+    rafId = requestAnimationFrame(raf)
+
+    return () => {
+      cancelAnimationFrame(rafId)
+      lenis.destroy()
+    }
+  }, [])
 
   // Dynamic loading phrases per selected vibe
   const getLoadingPhrases = (v: Vibe | null) => {
@@ -102,6 +133,7 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
       `}</style>
 
       <motion.div
+        ref={scrollWrapperRef as any}
         className="fixed inset-0 z-50 bg-transparent pointer-events-auto overflow-y-auto overflow-x-hidden scrollbar-hide"
         initial={{ opacity: 1 }}
         exit={{ opacity: 0, scale: 0.98 }}
@@ -146,6 +178,7 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
         <div className="fixed top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-blue-950/20 blur-[120px] pointer-events-none" />
         <div className="fixed bottom-1/4 right-1/4 w-[300px] h-[300px] rounded-full bg-purple-950/15 blur-[100px] pointer-events-none" />
 
+        <div ref={contentRef} className="w-full relative min-h-screen">
         <AnimatePresence mode="wait">
 
           {/* ────────────────── STEP 1: Vibe Selection ───────────────── */}
@@ -199,21 +232,28 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
 
               {/* Creator Collection Cue */}
               <div 
-                className="flex flex-col items-center justify-center gap-1 cursor-pointer group z-20 transition-all duration-300 mb-8 bg-[#D4AF37] border-[1.5px] border-[#E5C158] rounded-[40px] px-12 py-4 shadow-[0_0_40px_10px_rgba(212,175,55,0.5)] hover:-translate-y-[3px] hover:bg-[#DEB841] hover:border-[#F3D068] hover:shadow-[0_0_60px_15px_rgba(212,175,55,0.8)]"
+                className="flex flex-col items-center justify-center gap-1 cursor-pointer group z-20 transition-all duration-300 mb-8 bg-[#0A0A0A] border-[1.5px] border-[#D4AF37]/40 rounded-[40px] px-12 py-4 shadow-[0_0_40px_10px_rgba(212,175,55,0.15)] hover:-translate-y-[3px] hover:bg-[#111] hover:border-[#D4AF37] hover:shadow-[0_0_60px_15px_rgba(212,175,55,0.3)]"
                 onClick={() => {
-                  const section2 = document.getElementById('creator-collection-section');
-                  if (section2) {
-                    section2.scrollIntoView({ behavior: 'smooth' });
+                  if (lenisRef.current) {
+                    lenisRef.current.scrollTo('#creator-collection-section', {
+                      duration: 1.8,
+                      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+                    })
+                  } else {
+                    const section2 = document.getElementById('creator-collection-section');
+                    if (section2) {
+                      section2.scrollIntoView({ behavior: 'smooth' });
+                    }
                   }
                 }}
               >
-                <span className="text-[11px] uppercase tracking-[0.25em] font-bold text-[#0A0A0A]/80">
+                <span className="text-[11px] uppercase tracking-[0.25em] font-bold text-[#D4AF37]">
                   ✨ CREATOR'S PICK
                 </span>
-                <span className="text-[18px] font-extrabold text-[#0A0A0A] tracking-tight mt-0.5">
-                  Explore Prajit's Universe
+                <span className="text-[22px] font-[800] text-white tracking-tight mt-0.5 group-hover:text-[#D4AF37] transition-colors duration-300">
+                  Explore Dev's Universe
                 </span>
-                <span className="text-[12px] text-[#0A0A0A]/90 font-semibold mt-0.5">
+                <span className="text-[13px] text-white/50 font-semibold mt-0.5">
                   80 Handpicked Tracks
                 </span>
               </div>
@@ -248,13 +288,13 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
                       <div className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '12px 12px' }} />
                       
                       {/* Large background number */}
-                      <span className="absolute top-[-14px] left-[-4px] text-[80px] font-black text-black opacity-[0.15] tracking-tighter leading-none pointer-events-none select-none">
+                      <span className="absolute top-[-18px] left-[-6px] text-[100px] font-black text-black opacity-[0.35] tracking-tighter leading-none pointer-events-none select-none">
                         {v.number}
                       </span>
 
                       {/* Badge */}
                       {v.badge && (
-                        <div className="absolute top-3 right-3 px-2 py-0.5 rounded backdrop-blur-md text-[9px] font-bold tracking-widest shadow-sm bg-black text-white">
+                        <div className="absolute top-3 right-3 px-2.5 py-1 rounded backdrop-blur-md text-[10px] font-extrabold tracking-widest shadow-sm bg-black text-white">
                           {v.badge}
                         </div>
                       )}
@@ -262,12 +302,12 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
                       {/* Text */}
                       <div className="relative z-10 w-full mt-auto translate-y-1 group-hover:translate-y-0 transition-transform duration-300">
                         <span
-                          className="block text-black font-bold text-sm md:text-base leading-tight mb-1"
+                          className="block text-black font-[800] text-base md:text-[20px] leading-tight mb-1"
                           style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                         >
                           {v.label}
                         </span>
-                        <span className="block text-black/70 text-[9px] uppercase font-extrabold tracking-wider leading-tight">
+                        <span className="block text-black/90 text-[10px] uppercase font-bold tracking-wider leading-tight">
                           {v.sub}
                         </span>
                       </div>
@@ -347,7 +387,7 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
                 const isActive = hoveredVibe === devSpecialVibe.id || selectedVibe === devSpecialVibe.id
                 
                 return (
-                  <div id="creator-collection-section" className="w-full min-h-[80dvh] flex flex-col items-center justify-center pb-24 pt-16">
+                  <div id="creator-collection-section" className="w-full min-h-[80dvh] flex flex-col items-center justify-center pb-32 pt-40">
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -356,7 +396,7 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
                     >
                       <div className="text-center mb-10">
                         <h3 className="text-[#d4af37] text-sm md:text-base font-bold tracking-[0.3em] uppercase mb-2">Creator Collection</h3>
-                        <p className="text-white/40 text-xs tracking-widest uppercase">A personal universe curated by Prajit Balaji</p>
+                        <p className="text-white/40 text-xs tracking-widest uppercase">A personal universe curated by Dev</p>
                       </div>
                     
                     <motion.button
@@ -568,6 +608,7 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
           )}
 
         </AnimatePresence>
+        </div>
       </motion.div>
     </>
   )

@@ -129,8 +129,8 @@ export const VIBE_CONFIGS: VibeConfig[] = [
   },
   {
     id: 'dev-special',
-    label: '✨ Prajit\'s Universe',
-    sub: 'Curated by Prajit Balaji',
+    label: '✨ Dev\'s Universe',
+    sub: 'Curated by Dev',
     bgColor: '#1a1814',
     accentColor: '#d4af37',
     gradient: 'from-yellow-600 to-stone-900',
