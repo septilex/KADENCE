@@ -232,24 +232,15 @@ export default function Home() {
 
   // ── Global Audio Sync ───────────────────────────────────────────────────
   const { playUrl } = useAudioStore()
-  const audioDebounceRef = useRef<NodeJS.Timeout | null>(null)
   
   useEffect(() => {
-    // Sync Universe selections to global audio player.
+    // Sync Universe selections to global audio player instantly.
     if (introComplete && !isChangingVibe) {
-      if (audioDebounceRef.current) clearTimeout(audioDebounceRef.current)
-
-      audioDebounceRef.current = setTimeout(() => {
-        if (selectedSong) {
-          playUrl(selectedSong.previewUrl || null)
-        } else {
-          playUrl(hoveredSong?.previewUrl || null)
-        }
-      }, 200)
-    }
-
-    return () => {
-      if (audioDebounceRef.current) clearTimeout(audioDebounceRef.current)
+      if (selectedSong) {
+        playUrl(selectedSong.previewUrl || null)
+      } else {
+        playUrl(hoveredSong?.previewUrl || null)
+      }
     }
   }, [selectedSong, hoveredSong, introComplete, isChangingVibe, playUrl])
   const handleSearchResults = useCallback((results: SongNode[]) => {

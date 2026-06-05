@@ -18,19 +18,44 @@ export function GlobalAudioPlayer() {
     setProgressState 
   } = useAudioStore()
 
-  const audioContextRef = useRef<HTMLAudioElement | null>(null)
+  // Single reusable HTMLAudioElement
+  const audioRef = useRef<HTMLAudioElement | null>(null)
   const audioFadeIntervalRef = useRef<NodeJS.Timeout | null>(null)
-  const audioDebounceRef = useRef<NodeJS.Timeout | null>(null)
-  // Throttled progress reporter — fires at PROGRESS_INTERVAL_MS, not every rAF
   const progressTimerRef = useRef<NodeJS.Timeout | null>(null)
 
-  // Scrubbing/Progress Reporting — throttled to 8Hz instead of 60Hz rAF.
-  // This reduces Zustand set() calls from ~60/sec to ~8/sec while still
-  // feeling instant to the user.
+  // Initialize the singleton audio element on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined' && !audioRef.current) {
+      audioRef.current = new Audio()
+      audioRef.current.crossOrigin = 'anonymous'
+
+      // Keep store updated when it ends
+      audioRef.current.onended = () => {
+        stopProgressTimer()
+        setPlayingState(false)
+        if (audioRef.current) setProgressState(0, audioRef.current.duration)
+      }
+
+      audioRef.current.onloadedmetadata = () => {
+        if (audioRef.current) setProgressState(0, audioRef.current.duration)
+      }
+    }
+    // Cleanup on unmount
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause()
+        audioRef.current.src = ''
+        audioRef.current = null
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // Scrubbing/Progress Reporting
   const startProgressTimer = () => {
     if (progressTimerRef.current) return
     progressTimerRef.current = setInterval(() => {
-      const el = audioContextRef.current
+      const el = audioRef.current
       if (el && el.duration && !el.paused) {
         setProgressState((el.currentTime / el.duration) * 100, el.duration)
       }
@@ -50,8 +75,8 @@ export function GlobalAudioPlayer() {
 
   // Handle Seek requests
   useEffect(() => {
-    if (seekRequest !== null && audioContextRef.current && audioContextRef.current.duration) {
-      const el = audioContextRef.current
+    if (seekRequest !== null && audioRef.current && audioRef.current.duration) {
+      const el = audioRef.current
       el.currentTime = (seekRequest / 100) * el.duration
       setProgressState(seekRequest, el.duration)
       clearSeekRequest()
@@ -60,12 +85,15 @@ export function GlobalAudioPlayer() {
 
   // Handle Play/Pause toggles from the store
   useEffect(() => {
-    const el = audioContextRef.current
-    if (!el) return
+    const el = audioRef.current
+    if (!el || !el.src) return
 
     if (isPlaying && el.paused) {
-      el.play().catch(() => {})
-      startProgressTimer()
+      el.play().then(() => {
+        startProgressTimer()
+      }).catch(err => {
+        if (err.name !== 'AbortError') console.error('Audio play error:', err)
+      })
     } else if (!isPlaying && !el.paused) {
       el.pause()
       stopProgressTimer()
@@ -73,104 +101,64 @@ export function GlobalAudioPlayer() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPlaying])
 
-  // Handle URL changes (Crossfading)
+  // Handle URL changes
   useEffect(() => {
-    // Clear any pending audio starts
-    if (audioDebounceRef.current) clearTimeout(audioDebounceRef.current)
+    const audio = audioRef.current
+    if (!audio) return
+
+    if (audioFadeIntervalRef.current) clearInterval(audioFadeIntervalRef.current)
 
     if (!currentUrl) {
-      // Fade out and stop existing playing audio
-      const audio = audioContextRef.current
-      if (audio) {
-        let vol = audio.volume
-        if (audioFadeIntervalRef.current) clearInterval(audioFadeIntervalRef.current)
-        audioFadeIntervalRef.current = setInterval(() => {
-          vol -= 0.05
-          if (vol <= 0) {
-            if (audioFadeIntervalRef.current) clearInterval(audioFadeIntervalRef.current)
-            audio.pause()
-            stopProgressTimer()
-            setPlayingState(false)
-            audioContextRef.current = null
-          } else {
-            audio.volume = Math.max(0, vol)
-          }
-        }, 30)
-      }
+      // Fade out rapidly when leaving a node (100ms fade to prevent clicking)
+      let vol = audio.volume
+      const fadeOutStep = vol / 5 // 5 steps
+      audioFadeIntervalRef.current = setInterval(() => {
+        vol -= fadeOutStep
+        if (vol <= 0) {
+          if (audioFadeIntervalRef.current) clearInterval(audioFadeIntervalRef.current)
+          audio.pause()
+          audio.src = ''
+          stopProgressTimer()
+          setPlayingState(false)
+        } else {
+          audio.volume = Math.max(0, vol)
+        }
+      }, 20) // 5 steps * 20ms = 100ms fade out
       return
     }
 
-    // Stop current intervals
-    if (audioFadeIntervalRef.current) clearInterval(audioFadeIntervalRef.current)
-
-    // Fade out previous audio if playing
-    const prevAudio = audioContextRef.current
-    if (prevAudio) {
-      // If it's the exact same URL, don't restart it
-      if (prevAudio.src === currentUrl) return
-
-      let prevVol = prevAudio.volume
-      const fadeOutStep = prevVol / 10 // 10 steps
-      const fadeOutInterval = setInterval(() => {
-        prevVol -= fadeOutStep
-        if (prevVol <= 0) {
-          clearInterval(fadeOutInterval)
-          prevAudio.pause()
-        } else {
-          prevAudio.volume = Math.max(0, prevVol)
-        }
-      }, 30) // 10 steps * 30ms = 300ms fade out
-    }
-    
-    audioContextRef.current = null // clear so we don't fade it out again
-
-    // Debounce new audio play slightly to yield event loop (caller manages main debounce)
-    audioDebounceRef.current = setTimeout(() => {
-      // Load and play next audio with a smooth fade-in
-      const newAudio = new Audio(currentUrl)
-      newAudio.volume = 0.0
-      
-      // Keep store updated when it ends
-      newAudio.onended = () => {
-        stopProgressTimer()
-        setPlayingState(false)
-        setProgressState(0, newAudio.duration)
-      }
-
-      newAudio.onloadedmetadata = () => {
-        setProgressState(0, newAudio.duration)
-      }
-
-      audioContextRef.current = newAudio
-
-      newAudio.play().then(() => {
+    // New URL to play immediately
+    if (audio.src !== currentUrl) {
+      audio.pause()
+      audio.src = currentUrl
+      audio.volume = 0.05 // start very low but non-zero to fade in fast
+      audio.play().then(() => {
         setPlayingState(true)
         startProgressTimer()
+        
         let targetVol = 0.35 // Atmospheric volume peak
-        let currentVol = 0.0
-        const fadeInStep = targetVol / 10 // 10 steps
+        let currentVol = audio.volume
+        const fadeInStep = (targetVol - currentVol) / 5 // 5 steps
         
         audioFadeIntervalRef.current = setInterval(() => {
           currentVol += fadeInStep
           if (currentVol >= targetVol) {
             if (audioFadeIntervalRef.current) clearInterval(audioFadeIntervalRef.current)
-            newAudio.volume = targetVol
+            audio.volume = targetVol
           } else {
-            newAudio.volume = currentVol
+            audio.volume = Math.min(targetVol, currentVol)
           }
-        }, 30) // 10 steps * 30ms = 300ms fade in
-      }).catch(() => {
-        // Ignore autoplay block errors silently
-        stopProgressTimer()
-        setPlayingState(false)
+        }, 20) // 5 steps * 20ms = 100ms fade in
+      }).catch(err => {
+        if (err.name !== 'AbortError') {
+          // Ignore AbortError caused by rapid hovering
+          console.error('Audio play error:', err)
+          stopProgressTimer()
+          setPlayingState(false)
+        }
       })
-    }, 10) // 10ms yield instead of 250ms delay
-
-    return () => {
-      if (audioFadeIntervalRef.current) clearInterval(audioFadeIntervalRef.current)
-      if (audioDebounceRef.current) clearTimeout(audioDebounceRef.current)
     }
-  }, [currentUrl]) // deliberately omit other deps to only run on URL change
+  }, [currentUrl, setPlayingState])
 
   return null // Audio is completely headless
 }
