@@ -19,7 +19,7 @@ interface NodeFieldProps {
 const TEXTURE_SIZE  = 256    // px per atlas slot
 const TEXTURE_DEPTH = 256    // max unique artworks in the atlas
 const ATLAS_COLS    = 16     // 16x16 = 256 slots (4096x4096px canvas)
-const MAX_LOADS     = 16     // concurrent in-flight image loads
+const MAX_LOADS     = 128    // concurrent in-flight image loads (increased for cached hits)
 
 // ── Motion & Interaction Tuning Constants ─────────────────────────────────────
 const SPRING_STIFFNESS     = 120.0   // Tighter cursor anchoring
@@ -316,7 +316,8 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
           const proxyUrl = `/api/proxy?url=${encodeURIComponent(songs[i].albumArt)}`
           loadSlot(i, proxyUrl)
           launched++
-          if (launched >= 4) break
+          // Allow up to 64 image load requests per frame so cached hits populate the atlas instantly
+          if (launched >= 64) break
         }
       }
     }

@@ -21,6 +21,9 @@ const Universe = dynamic(
   { ssr: false }
 )
 
+// Global in-memory cache for chart data to ensure instant navigation on revisit
+const songCache = new Map<string, SongNode[]>()
+
 // ── Memoized hover tooltip — only re-renders when hoveredSong/selectedSong/introComplete change ──
 // Extracting this prevents the entire Home from re-rendering on every hover state change.
 const HoverTooltip = memo(function HoverTooltip() {
@@ -137,10 +140,17 @@ export default function Home() {
   // Fetch ~1000 songs for a given vibe
   const loadSongs = useCallback(async (vibe: Vibe, forceRefresh = false) => {
     try {
+      if (!forceRefresh && songCache.has(vibe)) {
+        return songCache.get(vibe)!
+      }
       const qs  = forceRefresh ? `?vibe=${vibe}&refresh=1` : `?vibe=${vibe}`
       const res = await fetch(`/api/songs${qs}`)
       const data = await res.json()
-      return (data.songs || []) as SongNode[]
+      const fetchedSongs = (data.songs || []) as SongNode[]
+      if (fetchedSongs.length > 0) {
+        songCache.set(vibe, fetchedSongs)
+      }
+      return fetchedSongs
     } catch {
       return []
     }
@@ -148,37 +158,36 @@ export default function Home() {
 
   /**
    * Gated Universe Entry / Vibe Switch
-   * Optimizes for perceived speed: fetches/preloads only the first ~100 visible tracks,
-   * transitions the user into the universe instantly, and loads the remaining tracks
-   * in the background.
+   * Optimizes for perceived speed: fetches metadata, preloads proxy artworks,
+   * transitions the user into the universe instantly.
    */
   const handleVibeSelect = useCallback(async (vibe: Vibe) => {
     setVibe(vibe)
-    setLoading(true, 10)
+    setLoading(true, 5)
 
-    // Phase 1: Fetch a small fast initial batch for instant render (100 tracks)
-    const initialFetched = await loadSongs(vibe, false)
-    const initialBatch = initialFetched.slice(0, 120)
-    setSongs(initialBatch)
-    setLoading(true, 60)
+    // Phase 1: Fetch ALL metadata (from cache or API)
+    const allFetched = await loadSongs(vibe, false)
+    
+    // We set songs immediately so the NodeField mounts in the background
+    setSongs(allFetched)
+    setLoading(true, 20)
 
-    // Preload ONLY the initial visible batch of artwork
-    const artworks = initialBatch.map(s => s.albumArt).filter(Boolean) as string[]
-    await preloadImages(artworks, () => {}, 30)
+    // Phase 2: Preload proxy artwork URLs (256 covers the entire visible grid/atlas)
+    // We map to the proxy URL so NodeField gets instant cache hits.
+    const preloadBatch = allFetched.slice(0, 256)
+    const artworks = preloadBatch
+      .map(s => s.albumArt ? `/api/proxy?url=${encodeURIComponent(s.albumArt)}` : null)
+      .filter(Boolean) as string[]
+    
+    await preloadImages(artworks, (loaded, total) => {
+      // Progress from 20% to 100%
+      const progress = 20 + (loaded / total) * 80
+      setLoading(true, progress)
+    }, 40)
 
+    // Phase 3: Instant transition
     setLoading(false, 100)
     setIntroComplete(true)
-
-    // Phase 2: Stream remaining tracks silently in the background
-    if (initialFetched.length > initialBatch.length) {
-      setTimeout(() => {
-        // Incrementally update songs array with the full set
-        setSongs(initialFetched)
-        // Background-preload the rest
-        const remainingArtworks = initialFetched.slice(120).map(s => s.albumArt).filter(Boolean) as string[]
-        preloadImages(remainingArtworks, () => {}, 15)
-      }, 1000)
-    }
   }, [setVibe, setLoading, loadSongs, setSongs, setIntroComplete])
 
   // In-universe Vibe Switch pipeline
@@ -187,23 +196,19 @@ export default function Home() {
     setRefreshing(true)
     setVibe(vibe)
 
-    // Load initial fast batch first for speed, then swap and backfill
+    // Warm cache with proxy URLs before swapping songs array
     const newSongs = await loadSongs(vibe, false)
     if (newSongs.length > 0) {
-      const initialBatch = newSongs.slice(0, 120)
-      const artworks = initialBatch.map(s => s.albumArt).filter(Boolean) as string[]
-      await preloadImages(artworks, () => {}, 35)
-      setSongs(initialBatch)
-
-      // Backfill rest
-      setTimeout(() => {
-        setSongs(newSongs)
-        const rest = newSongs.slice(120).map(s => s.albumArt).filter(Boolean) as string[]
-        preloadImages(rest, () => {}, 15)
-      }, 800)
+      const preloadBatch = newSongs.slice(0, 256)
+      const artworks = preloadBatch
+        .map(s => s.albumArt ? `/api/proxy?url=${encodeURIComponent(s.albumArt)}` : null)
+        .filter(Boolean) as string[]
+      await preloadImages(artworks, () => {}, 40)
+      
+      setSongs(newSongs)
     }
 
-    setTimeout(() => setRefreshing(false), 300)
+    setTimeout(() => setRefreshing(false), 200)
   }, [currentVibe, loadSongs, setSongs, setRefreshing, setVibe])
 
   // ── "Refresh Tracks" flow: preload new artwork before swapping ─────────
@@ -216,8 +221,11 @@ export default function Home() {
 
     if (freshSongs.length > 0) {
       // Phase 2: pre-warm the browser image cache so tiles don't flash placeholders
-      const artworks = freshSongs.map(s => s.albumArt).filter(Boolean) as string[]
-      await preloadImages(artworks, () => {}, 30)
+      const preloadBatch = freshSongs.slice(0, 256)
+      const artworks = preloadBatch
+        .map(s => s.albumArt ? `/api/proxy?url=${encodeURIComponent(s.albumArt)}` : null)
+        .filter(Boolean) as string[]
+      await preloadImages(artworks, () => {}, 40)
 
       // Phase 3: swap
       setSongs(freshSongs)
