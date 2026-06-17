@@ -44,7 +44,8 @@ export function GlobalAudioPlayer() {
     return () => {
       if (audioRef.current) {
         audioRef.current.pause()
-        audioRef.current.src = ''
+        audioRef.current.removeAttribute('src')
+        audioRef.current.load()
         audioRef.current = null
       }
     }
@@ -117,7 +118,8 @@ export function GlobalAudioPlayer() {
         if (vol <= 0) {
           if (audioFadeIntervalRef.current) clearInterval(audioFadeIntervalRef.current)
           audio.pause()
-          audio.src = ''
+          audio.removeAttribute('src')
+          audio.load()
           stopProgressTimer()
           setPlayingState(false)
         } else {

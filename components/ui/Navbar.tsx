@@ -25,12 +25,20 @@ export function Navbar({ songCount, currentVibe, onSearchOpen, onRefresh, isRefr
     >
       {/* Logo & Active Vibe Badge */}
       <div className="pointer-events-auto flex items-center gap-4">
-        <span
-          className="text-white font-black text-xl tracking-tighter opacity-80"
-          style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+        <div
+          className="flex items-baseline text-white opacity-90 select-none uppercase"
+          style={{ 
+            fontFamily: "'Syncopate', sans-serif", 
+            fontSize: '1.5rem',
+            letterSpacing: '-0.03em',
+            fontWeight: 700,
+            WebkitFontSmoothing: 'antialiased',
+          }}
         >
-          KADENCE
-        </span>
+          <span>K</span>
+          <span className="inline-block bg-white" style={{ width: '0.75em', height: '0.65em', clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)', margin: '0 0.04em' }} />
+          <span>DENCE</span>
+        </div>
 
         {activeVibe && (
           <motion.div
