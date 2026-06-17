@@ -216,7 +216,7 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
                   <span className="inline-block bg-white" style={{ width: '0.75em', height: '0.65em', clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)', margin: '0 0.04em' }} />
                   <span>DENCE</span>
                 </h1>
-                <p className="text-white/40 text-[10px] md:text-xs tracking-[0.6em] uppercase font-bold mt-2">Spotify Universe</p>
+                <p className="text-white/40 text-[10px] md:text-xs tracking-[0.6em] uppercase font-bold mt-2">iTunes Universe</p>
               </div>
 
               {/* Question */}
@@ -349,11 +349,11 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 onClick={(e) => e.stopPropagation()}
-                                className="w-7 h-7 rounded-full bg-[#1db954] flex items-center justify-center shrink-0 hover:scale-110 transition-transform"
-                                title="Listen Now on Spotify"
+                                className="w-7 h-7 rounded-full bg-[#ea4cc0] text-white flex items-center justify-center shrink-0 hover:scale-110 transition-transform"
+                                title="Listen on iTunes"
                               >
-                                <svg width="11" height="11" viewBox="0 0 24 24" fill="black">
-                                  <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm5.586 14.424c-.18.295-.565.387-.86.207-2.377-1.454-5.37-1.783-8.894-.978-.335.076-.668-.135-.744-.47-.076-.335.135-.668.47-.744 3.856-.88 7.15-.506 9.822 1.13.295.18.387.563.206.855zm1.225-2.72c-.226.367-.707.487-1.074.26-2.72-1.672-6.87-2.157-10.078-1.182-.413.125-.847-.107-.972-.52-.125-.413.107-.847.52-.972 3.673-1.114 8.243-.574 11.344 1.334.367.227.487.708.26 1.08zm.105-2.833C14.852 8.94 9.773 8.77 6.83 9.664c-.475.144-.974-.124-1.118-.6-.144-.475.124-.974.6-1.118 3.39-1.03 9.002-.835 12.593 1.297.427.253.567.808.314 1.235-.252.427-.808.567-1.235.314z"/>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                                  <path d="M21 2.9v10.9a4.8 4.8 0 0 0-2.5-.7c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5V6.1l-9 1.8v8.9a4.8 4.8 0 0 0-2.5-.7c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5V4.2L21 2.9z"/>
                                 </svg>
                               </a>
                             </motion.div>
@@ -488,11 +488,11 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 onClick={(e) => e.stopPropagation()}
-                                className="w-8 h-8 rounded-full bg-[#1db954] flex items-center justify-center shrink-0 hover:scale-110 transition-transform shadow-lg"
-                                title="Listen Now on Spotify"
+                                className="w-8 h-8 rounded-full bg-[#ea4cc0] text-white flex items-center justify-center shrink-0 hover:scale-110 transition-transform shadow-lg"
+                                title="Listen on iTunes"
                               >
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="black">
-                                  <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm5.586 14.424c-.18.295-.565.387-.86.207-2.377-1.454-5.37-1.783-8.894-.978-.335.076-.668-.135-.744-.47-.076-.335.135-.668.47-.744 3.856-.88 7.15-.506 9.822 1.13.295.18.387.563.206.855zm1.225-2.72c-.226.367-.707.487-1.074.26-2.72-1.672-6.87-2.157-10.078-1.182-.413.125-.847-.107-.972-.52-.125-.413.107-.847.52-.972 3.673-1.114 8.243-.574 11.344 1.334.367.227.487.708.26 1.08zm.105-2.833C14.852 8.94 9.773 8.77 6.83 9.664c-.475.144-.974-.124-1.118-.6-.144-.475.124-.974.6-1.118 3.39-1.03 9.002-.835 12.593 1.297.427.253.567.808.314 1.235-.252.427-.808.567-1.235.314z"/>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                  <path d="M21 2.9v10.9a4.8 4.8 0 0 0-2.5-.7c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5V6.1l-9 1.8v8.9a4.8 4.8 0 0 0-2.5-.7c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5V4.2L21 2.9z"/>
                                 </svg>
                               </a>
                             </motion.div>
