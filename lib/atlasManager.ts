@@ -4,7 +4,7 @@ import { SongNode } from './types'
 export const TEXTURE_SIZE  = 256    // px per atlas slot
 export const TEXTURE_DEPTH = 256    // max unique artworks in the atlas
 export const ATLAS_COLS    = 16     // 16x16 = 256 slots (4096x4096px canvas)
-export const CRITICAL_TILES = 64    // number of tiles needed for the initial center camera view
+export const CRITICAL_TILES = 32    // number of tiles needed for the initial center camera view
 
 /**
  * Optimizes image URLs by requesting the exact 256x256 square from Apple CDN,

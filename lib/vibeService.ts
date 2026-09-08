@@ -104,6 +104,28 @@ class VibeService {
     }
   }
 
+  /**
+   * Eagerly prefetches ALL vibe metadata in parallel (staggered).
+   * This pre-warms both server cache (20min TTL) and client cache (30min TTL)
+   * so that clicking any category card resolves instantly from cache.
+   * Safe to call multiple times — deduplicates automatically.
+   */
+  public async prefetchAllVibes(): Promise<void> {
+    const ALL_VIBES = [
+      'global-top-50', 'viral-50', 'new-music-friday', 'hip-hop-central',
+      'pop-rising', 'dance-hits', 'mood-booster', 'late-night',
+      'workout', 'chill-hits', 'dev-special',
+      'top-telugu', 'top-tamil', 'top-hindi', 'top-kpop',
+    ] as const
+
+    // Fire all fetches in parallel — vibeService deduplicates in-flight requests
+    const promises = ALL_VIBES.map(vibe => {
+      if (this.isCached(vibe)) return Promise.resolve()
+      return this.fetchVibeSongs(vibe, false).catch(() => {})
+    })
+    await Promise.allSettled(promises)
+  }
+
   public clearCache(): void {
     this.clientCache.clear()
     this.inFlightFetches.clear()

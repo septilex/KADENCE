@@ -1,8 +1,9 @@
 'use client'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Vibe } from '@/lib/types'
 import { useChartHover } from '@/hooks/useChartHover'
+import { vibeService } from '@/lib/vibeService'
 
 import { VIBE_CONFIGS, VibeConfig } from '@/lib/vibeConfig'
 import { GlowingRingLoader } from './GlowingRingLoader'
@@ -83,19 +84,21 @@ function HomepageVibeCard({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.03 * index, duration: 0.45 }}
-      className="relative aspect-square kadence-3d-wrapper"
+      className="relative aspect-square kadence-3d-wrapper cursor-pointer"
       style={{ zIndex: isHovered ? 70 : undefined }}
+      onClick={() => onSelect(vibe.id)}
     >
       <div
         ref={popRef}
-        className="w-full h-full kadence-3d-pop"
+        className="w-full h-full kadence-3d-pop cursor-pointer"
         onPointerMove={handlePointerMove}
         onPointerEnter={handlePointerEnter}
         onPointerLeave={handlePointerLeave}
+        onClick={(e) => { e.stopPropagation(); onSelect(vibe.id); }}
       >
         <button
           id={`vibe-${vibe.id}`}
-          onClick={() => onSelect(vibe.id)}
+          onClick={(e) => { e.stopPropagation(); onSelect(vibe.id); }}
           className="kadence-3d-card relative group flex flex-col justify-end p-4 rounded-[20px] overflow-hidden cursor-pointer text-left outline-none w-full h-full select-none"
           style={{
             backgroundColor: vibe.bgColor,
@@ -103,6 +106,9 @@ function HomepageVibeCard({
             ['--card-shadow-hover' as string]: `0 34px 70px -4px ${vibe.bgColor}, 0 0 60px 15px ${vibe.bgColor}, 0 0 95px 25px ${vibe.bgColor}99, inset 0 2px 5px rgba(255,255,255,0.9)`,
           }}
         >
+          {/* ✨ FORCE FULL BOUNDING BOX CLICK TARGET ✨ */}
+          <div className="absolute inset-0 w-full h-full z-[999] cursor-pointer" onClick={(e) => { e.stopPropagation(); onSelect(vibe.id); }} />
+
           {/* Subtle glossy 3D sheen overlay following cursor */}
           <div
             className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -201,16 +207,16 @@ function CreatorCueCard({ onClick }: { onClick: () => void }) {
 
   return (
     <div
-      className="kadence-dev-cue-wrapper mb-8 cursor-pointer"
+      className="kadence-dev-cue-wrapper mb-8 cursor-pointer w-full max-w-fit mx-auto"
       onClick={onClick}
     >
       <div
         ref={cueRef}
-        className="kadence-dev-cue-pop cursor-pointer"
+        className="kadence-dev-cue-pop cursor-pointer w-full h-full"
         onPointerEnter={handlePointerEnter}
         onPointerMove={handlePointerMove}
         onPointerLeave={handlePointerLeave}
-        onClick={onClick}
+        onClick={(e) => { e.stopPropagation(); onClick(); }}
       >
         <button
           type="button"
@@ -219,11 +225,14 @@ function CreatorCueCard({ onClick }: { onClick: () => void }) {
             e.stopPropagation()
             onClick()
           }}
-          className="kadence-dev-cue-card relative group flex flex-col items-center justify-center gap-0.5 cursor-pointer rounded-[44px] px-12 py-4 select-none overflow-hidden outline-none w-full"
+          className="kadence-dev-cue-card relative group flex flex-col items-center justify-center gap-0.5 cursor-pointer rounded-[44px] px-12 py-4 select-none overflow-hidden outline-none w-full h-full"
           style={{
             background: 'linear-gradient(135deg, #FFF9A6 0%, #FFDF00 22%, #FFC400 52%, #FFA000 82%, #FF8F00 100%)',
           }}
         >
+          {/* ✨ FORCE FULL BOUNDING BOX CLICK TARGET ✨ */}
+          <div className="absolute inset-0 w-full h-full z-[999] cursor-pointer" onClick={(e) => { e.stopPropagation(); onClick(); }} />
+
           {/* Subtle glossy 3D sheen overlay following cursor */}
           <div
             className="absolute inset-0 pointer-events-none opacity-40 group-hover:opacity-85 transition-opacity duration-300"
@@ -323,24 +332,29 @@ function CreatorCollectionCard({
 
   return (
     <div
-      className="kadence-dev-sec2-wrapper w-full max-w-[440px] mx-auto"
+      className="kadence-dev-sec2-wrapper w-full max-w-[440px] mx-auto cursor-pointer"
       style={{ zIndex: isHovered ? 70 : undefined }}
+      onClick={() => onSelect(vibe.id)}
     >
       <div
         ref={cardRef}
-        className="kadence-dev-sec2-pop w-full"
+        className="kadence-dev-sec2-pop w-full h-full cursor-pointer"
         onPointerMove={handlePointerMove}
         onPointerEnter={handlePointerEnter}
         onPointerLeave={handlePointerLeave}
+        onClick={(e) => { e.stopPropagation(); onSelect(vibe.id); }}
       >
         <button
           id={`vibe-${vibe.id}`}
-          onClick={() => onSelect(vibe.id)}
+          onClick={(e) => { e.stopPropagation(); onSelect(vibe.id); }}
           className="kadence-dev-sec2-card relative group flex flex-col justify-end p-8 rounded-[24px] overflow-hidden cursor-pointer text-left outline-none w-full h-[240px] border border-[#d4af37]/60 select-none"
           style={{
             backgroundColor: vibe.bgColor,
           }}
         >
+          {/* ✨ FORCE FULL BOUNDING BOX CLICK TARGET ✨ */}
+          <div className="absolute inset-0 w-full h-full z-[999] cursor-pointer" onClick={(e) => { e.stopPropagation(); onSelect(vibe.id); }} />
+
           {/* Subtle glossy 3D sheen overlay following cursor */}
           <div
             className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -417,6 +431,13 @@ export function IntroScreen({ onVibeSelect }: IntroScreenProps) {
   const scrollWrapperRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
 
+  // ── Eager Background Prefetch ──
+  // Pre-warm ALL vibe metadata (server + client cache) as soon as the intro mounts.
+  // By the time the user clicks any card, the data is already cached → 0ms API delay.
+  useEffect(() => {
+    vibeService.prefetchAllVibes()
+  }, [])
+
   function handleVibeSelect(vibe: Vibe) {
     setSelectedVibe(vibe)
     setStep('loading')
@@ -439,7 +460,13 @@ export function IntroScreen({ onVibeSelect }: IntroScreenProps) {
   const activeVibeData = VIBE_CONFIGS.find(v => v.id === hoveredVibe) ?? VIBE_CONFIGS.find(v => v.id === selectedVibe)
 
   return (
-    <>
+    <motion.div
+      key="intro-screen"
+      initial={{ opacity: 1 }}
+      exit={{ opacity: 0, transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] } }}
+      className="fixed inset-0 z-30"
+      style={{ pointerEvents: 'none' }}
+    >
       {/* ── CSS keyframes & 3D transforms (GPU-compositor-only) ── */}
       <style>{`
         @keyframes kadence-particle-float {
@@ -641,7 +668,7 @@ export function IntroScreen({ onVibeSelect }: IntroScreenProps) {
       {/* ── Native, Butter-Smooth 60/120 FPS Scroll Container ── */}
       <div
         ref={scrollWrapperRef}
-        className="fixed inset-0 z-50 bg-transparent pointer-events-auto overflow-y-auto overflow-x-hidden scrollbar-hide"
+        className={`fixed inset-0 z-50 bg-transparent overflow-y-auto overflow-x-hidden scrollbar-hide ${step === 'loading' ? 'pointer-events-none' : 'pointer-events-auto'}`}
         style={{
           scrollBehavior: 'smooth',
           WebkitOverflowScrolling: 'touch',
@@ -755,12 +782,12 @@ export function IntroScreen({ onVibeSelect }: IntroScreenProps) {
 
           {/* ────────────────── STEP 2: Loading / Universe Warming ───── */}
           {step === 'loading' && (
-            <GlowingRingLoader size={340} />
+            <GlowingRingLoader key="step-loading" size={340} />
           )}
 
         </AnimatePresence>
         </div>
       </div>
-    </>
+    </motion.div>
   )
 }

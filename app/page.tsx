@@ -118,36 +118,45 @@ export default function Home() {
     setVibe(vibe)
     setLoading(true, 5)
 
-    // Phase 1: Fetch metadata — vibeService deduplicates any in-flight prefetch.
-    // If the user hovered long enough for prefetch to finish, this is instant.
-    const allFetched = await vibeService.fetchVibeSongs(vibe, false)
-    if (!allFetched || allFetched.length === 0) {
+    try {
+      // Phase 1: Fetch metadata — vibeService deduplicates any in-flight prefetch.
+      // If the user hovered long enough for prefetch to finish, this is instant.
+      const allFetched = await vibeService.fetchVibeSongs(vibe, false)
+      if (!allFetched || allFetched.length === 0) {
+        console.warn('[KADENCE] No songs returned for vibe:', vibe, '— completing intro anyway')
+        setLoading(false, 0)
+        setIntroComplete(true)
+        return
+      }
+      setLoading(true, 35)
+
+      // Phase 2: Synchronized Critical Artwork (direct CDN, 256x256, real progress tracking)
+      await atlasManager.prepareCriticalVibe(allFetched, (ratio) => {
+        const progress = Math.round(35 + ratio * 50)
+        setLoading(true, progress)
+      })
+
+      // Phase 3: Set songs and warm WebGL
+      setSongs(allFetched)
+      setLoading(true, 92)
+
+      // Wait two frames so React and Three.js commit the geometry & instances
+      await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))
+      setLoading(true, 100)
+
+      // Fast transition — data is already loaded, no need to delay
+      setTimeout(() => {
+        setLoading(false, 100)
+        setIntroComplete(true)
+        // Phase 4: Progressive background streaming (silent & non-blocking)
+        atlasManager.startBackgroundLoading(allFetched)
+      }, 100)
+    } catch (err) {
+      console.error('[KADENCE] handleVibeSelect pipeline error:', err)
+      // Ensure the UI never gets stuck — always complete the intro
       setLoading(false, 0)
-      return
-    }
-    setLoading(true, 35)
-
-    // Phase 2: Synchronized Critical Artwork (direct CDN, 256x256, real progress tracking)
-    await atlasManager.prepareCriticalVibe(allFetched, (ratio) => {
-      const progress = Math.round(35 + ratio * 50)
-      setLoading(true, progress)
-    })
-
-    // Phase 3: Set songs and warm WebGL
-    setSongs(allFetched)
-    setLoading(true, 92)
-
-    // Wait two frames so React and Three.js commit the geometry & instances
-    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))
-    setLoading(true, 100)
-
-    // Smooth transition
-    setTimeout(() => {
-      setLoading(false, 100)
       setIntroComplete(true)
-      // Phase 4: Progressive background streaming (silent & non-blocking)
-      atlasManager.startBackgroundLoading(allFetched)
-    }, 650)
+    }
   }, [setVibe, setLoading, setSongs, setIntroComplete])
 
   // In-universe Vibe Switch pipeline

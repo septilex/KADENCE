@@ -47,7 +47,7 @@ export async function GET(req: NextRequest) {
       refreshCounts.set(vibe, offset)
     }
 
-    const songs = await fetchSongsByVibe(vibe, 1000, offset)
+    const songs = await fetchSongsByVibe(vibe, 256, offset)
     console.log('[DIAG:route] fetchSongsByVibe returned:', songs.length, 'songs')
 
     if (songs.length === 0) {

@@ -1,10 +1,11 @@
 'use client'
-import { useRef, useMemo, useEffect, useState, useCallback } from 'react'
+import { useRef, useMemo, useEffect, useCallback } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { SongNode, Vibe } from '@/lib/types'
 import { SPACING_X, SPACING_Y, CARD_W, CARD_H, computeGrid } from '@/lib/gridCalc'
 import { VIBE_COLORS } from '@/lib/types'
+import { atlasManager, getOptimizedArtworkUrl } from '@/lib/atlasManager'
 
 interface NodeFieldProps {
   songs: SongNode[]
@@ -235,34 +236,22 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
   // ── Vibe uniform cache — only write to GPU when values actually change ──────
   const vibeCache = useRef({ speed: -1, amp: -1, hex: '' })
 
-  // ── Texture Atlas ─────────────────────────────────────────────────────────
+  // ── Texture Atlas — use the shared atlasManager that was already pre-loaded ─
+  // This eliminates duplicate image loading: atlasManager.prepareCriticalVibe()
+  // already populated the first 64 critical tiles during the loading phase.
   const defaultAtlasTexture = useMemo(() => {
     const tex = new THREE.Texture()
     tex.needsUpdate = true
     return tex
   }, [])
 
-  const [atlas, setAtlas] = useState<{ canvas: HTMLCanvasElement; texture: THREE.CanvasTexture } | null>(null)
-
-  useEffect(() => {
-    const cvs = document.createElement('canvas')
-    cvs.width = TEXTURE_SIZE * ATLAS_COLS
-    cvs.height = TEXTURE_SIZE * ATLAS_COLS
-    
-    const ctx = cvs.getContext('2d', { alpha: false })!
-    ctx.fillStyle = '#15151c' // Premium deep gray for missing textures
-    ctx.fillRect(0, 0, cvs.width, cvs.height)
-    
-    const tex = new THREE.CanvasTexture(cvs)
-    tex.colorSpace = THREE.NoColorSpace
-    tex.minFilter = THREE.LinearFilter
-    tex.magFilter = THREE.LinearFilter
-    tex.wrapS = THREE.ClampToEdgeWrapping
-    tex.wrapT = THREE.ClampToEdgeWrapping
-    tex.generateMipmaps = false
-    tex.needsUpdate = true
-    
-    setAtlas({ canvas: cvs, texture: tex })
+  const atlas = useMemo(() => {
+    try {
+      const result = atlasManager.init()
+      return result
+    } catch {
+      return null
+    }
   }, [])
 
   const loadedSet  = useRef(new Set<number>())
@@ -277,7 +266,7 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
   }, [songs])
 
   // Wrapped in useCallback so the frame loop always captures a stable reference.
-  // Avoids creating a new function object on every render.
+  // Loads images DIRECTLY from Apple CDN (no proxy round-trip).
   const loadSlot = useCallback((realIdx: number, url: string) => {
     if (!url || loadedSet.current.has(realIdx) || loadingSet.current.has(realIdx)) return
     loadingSet.current.add(realIdx)
@@ -305,7 +294,7 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
     img.src = url
   }, [atlas])
 
-  // Progressive texture loading
+  // Progressive texture loading — direct CDN, no proxy round-trip
   useFrame(() => {
     if (songs.length === 0) return
     let launched = 0
@@ -313,8 +302,8 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
       if (loadingSet.current.size >= MAX_LOADS) break
       if (!loadedSet.current.has(i) && !loadingSet.current.has(i)) {
         if (songs[i]?.albumArt) {
-          const proxyUrl = `/api/proxy?url=${encodeURIComponent(songs[i].albumArt)}`
-          loadSlot(i, proxyUrl)
+          const directUrl = getOptimizedArtworkUrl(songs[i].albumArt, 256)
+          loadSlot(i, directUrl)
           launched++
           // Allow up to 64 image load requests per frame so cached hits populate the atlas instantly
           if (launched >= 64) break
@@ -442,42 +431,40 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
     meshRef.current.instanceMatrix.needsUpdate = true
   }, [count, COLS, ROWS, geometry])
 
-  // Mouse event capturing — cache DOMRect to avoid getBoundingClientRect on every move
+  // Mouse event capturing
   useEffect(() => {
     const el = gl.domElement
 
-    // Initial rect capture
-    domRectRef.current = el.getBoundingClientRect()
-
-    // Refresh rect on resize only (not on every mousemove)
-    const ro = new ResizeObserver(() => {
-      domRectRef.current = el.getBoundingClientRect()
-    })
-    ro.observe(el)
-
     const onMove = (e: MouseEvent) => {
-      const r = domRectRef.current
-      if (!r) return
+      // Always compute fresh bounds to account for viewport scaling, CSS transforms, or scroll offsets
+      const r = el.getBoundingClientRect()
+      if (r.width === 0 || r.height === 0) return
+      
+      // Calculate precise NDC coordinates mapping the mouse to the canvas rendering space
       rawMouseNDC.current.set(
         ((e.clientX - r.left) / r.width)  *  2 - 1,
         ((e.clientY - r.top)  / r.height) * -2 + 1,
       )
     }
+    
     const onLeave = () => { rawMouseNDC.current.set(-10, -10) }
-    const onClick = () => {
+    const onClick = (e: MouseEvent) => {
+      // Only process clicks on the WebGL canvas, ignore clicks on floating UI elements
+      if (e.target !== el) return
       if (lastHoverId.current) {
         const s = songMaps.byId.get(lastHoverId.current)
         if (s) onSelect(s)
       }
     }
-    el.addEventListener('mousemove', onMove, { passive: true })
-    el.addEventListener('mouseleave', onLeave)
-    el.addEventListener('click', onClick)
+    
+    // Attach to window so we catch pointer events even if UI overlays are on top of the canvas
+    window.addEventListener('mousemove', onMove, { passive: true })
+    window.addEventListener('mouseleave', onLeave)
+    window.addEventListener('click', onClick)
     return () => {
-      ro.disconnect()
-      el.removeEventListener('mousemove', onMove)
-      el.removeEventListener('mouseleave', onLeave)
-      el.removeEventListener('click', onClick)
+      window.removeEventListener('mousemove', onMove)
+      window.removeEventListener('mouseleave', onLeave)
+      window.removeEventListener('click', onClick)
     }
   }, [gl, onSelect, songMaps])
 
@@ -503,33 +490,30 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
     // Feed camera XY to shader for centered fisheye effect
     material.uniforms.uCameraXY.value.set(camera.position.x, camera.position.y)
 
-    // ── Mouse to world-space raycasting — reuse pre-allocated scratch vectors ──
+    // ── Mouse to world-space raycasting ──
     let targetWorldX = camera.position.x
     let targetWorldY = camera.position.y
+    let isMouseActive = false
 
     if (rawMouseNDC.current.x > -2) {
-      // Reuse pre-allocated _scratchVec3 — no heap allocation
-      _scratchVec3.current.set(rawMouseNDC.current.x, rawMouseNDC.current.y, 0.5).unproject(camera)
-      // _scratchDir = direction from camera to unprojected point
-      _scratchDir.current.copy(_scratchVec3.current).sub(camera.position).normalize()
-      const distance = -camera.position.z / _scratchDir.current.z
-      // _scratchHit = camera.position + dir * distance
-      _scratchHit.current.copy(camera.position).addScaledVector(_scratchDir.current, distance)
-      targetWorldX = _scratchHit.current.x
-      targetWorldY = _scratchHit.current.y
+      // Use THREE.Raycaster for perfectly accurate projection that automatically handles
+      // perspective/orthographic transforms, CSS scaling, and aspect ratios.
+      state.raycaster.setFromCamera(rawMouseNDC.current, camera)
+      const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0)
+      state.raycaster.ray.intersectPlane(plane, _scratchHit.current)
+      
+      if (_scratchHit.current) {
+        targetWorldX = _scratchHit.current.x
+        targetWorldY = _scratchHit.current.y
+        isMouseActive = true
+      }
     }
 
-    // ── Spatial Computing Spring Parallax ────────────────────────────────────
-    // Second-order mass-spring-damper system for physical weight and momentum.
-    // This allows the wall to build inertia and elastically settle when you stop moving.
-    const forceX = (targetWorldX - smoothMouseWorld.current.x) * SPRING_STIFFNESS - mouseVelocity.current.x * SPRING_DAMPING;
-    const forceY = (targetWorldY - smoothMouseWorld.current.y) * SPRING_STIFFNESS - mouseVelocity.current.y * SPRING_DAMPING;
-
-    mouseVelocity.current.x += (forceX / SPRING_MASS) * (dt * MOMENTUM_MULTIPLIER);
-    mouseVelocity.current.y += (forceY / SPRING_MASS) * (dt * MOMENTUM_MULTIPLIER);
-
-    smoothMouseWorld.current.x += mouseVelocity.current.x * dt;
-    smoothMouseWorld.current.y += mouseVelocity.current.y * dt;
+    // ── Zero Delay Cursor Tracking ───────────────────────────────────────────
+    // The user requested ZERO lag/delay between the cursor and the cursor effect.
+    // Directly snap the effect coordinates to the raw target world coordinates.
+    smoothMouseWorld.current.x = targetWorldX;
+    smoothMouseWorld.current.y = targetWorldY;
 
     rawMouseWorld.current.set(targetWorldX, targetWorldY)
 
@@ -586,13 +570,19 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
 
     // Determine hover using actual cursor target (not smoothed spring cursor)
     // to keep hover selection snappy and directly aligned with the cursor coordinate.
-    if (targetWorldX !== -9999) {
-      const camX   = camera.position.x
-      const camY   = camera.position.y
+    if (isMouseActive) {
       const halfC  = (COLS - 1) / 2
       const halfR  = (ROWS - 1) / 2
-      const c      = Math.round((targetWorldX - camX + (halfC * SPACING_X)) / SPACING_X)
-      const r      = Math.round(-(targetWorldY - camY) / SPACING_Y + halfR)
+      
+      // Inverse the vertex shader's micro-parallax to find which grid tile 
+      // is visually residing under the exact mouse cursor coordinate.
+      // Vertex Shader shift: displacedWPos.xy -= uMouse * 0.028
+      const effectiveWorldX = targetWorldX + (targetWorldX * 0.028)
+      const effectiveWorldY = targetWorldY + (targetWorldY * 0.028)
+
+      // Map corrected world coordinates to grid indices (independent of camera position since the wall is static at origin)
+      const c = Math.round((effectiveWorldX + (halfC * SPACING_X)) / SPACING_X)
+      const r = Math.round(-effectiveWorldY / SPACING_Y + halfR)
 
       if (c >= 0 && c < COLS && r >= 0 && r < ROWS) {
         hoverIdx = r * COLS + c

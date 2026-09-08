@@ -88,11 +88,11 @@ export function WallGrid({
     const loop = () => {
       rafRef.current = requestAnimationFrame(loop)
 
-      // Smooth mouse position with spring
+      // Smooth mouse position with spring (REMOVED FOR ZERO DELAY)
       const sm = smoothRef.current
       const rm = mouseRef.current
-      sm.x += (rm.x - sm.x) * WARP_LERP
-      sm.y += (rm.y - sm.y) * WARP_LERP
+      sm.x = rm.x
+      sm.y = rm.y
 
       const { cols } = gridRef.current
       const count = tileRefs.current.length
@@ -124,10 +124,10 @@ export function WallGrid({
           tgtY = (dy / dist) * -strength
         }
 
-        // Spring-lerp toward target
+        // Instant snap to target (zero lag)
         const cur = dispRef.current[i] ?? { x: 0, y: 0 }
-        cur.x += (tgtX - cur.x) * 0.14
-        cur.y += (tgtY - cur.y) * 0.14
+        cur.x = tgtX
+        cur.y = tgtY
 
         // Only apply if meaningful (skip GPU upload for resting tiles)
         if (Math.abs(cur.x) > 0.05 || Math.abs(cur.y) > 0.05) {

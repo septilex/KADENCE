@@ -736,24 +736,9 @@ export async function fetchSongsByVibe(
     }
   }
 
-  // Regional: no padding — quality > quantity
-  if (isRegional) return songs;
-
-  // Global: pad to targetCount with randomised duplicates
-  const finalSongs: SongNode[] = [...songs];
-  let i = 0;
-  while (finalSongs.length < targetCount && songs.length > 0) {
-    const base = songs[i % songs.length];
-    finalSongs.push({
-      ...base,
-      id: `${base.id}-dup-${finalSongs.length}`,
-      x: (Math.random() - 0.5) * 80,
-      y: (Math.random() - 0.5) * 50,
-      z: (Math.random() - 0.5) * 30,
-    });
-    i++;
-  }
-  return finalSongs;
+  // NodeField's texIndices pool algorithm already maps any number of songs
+  // across the massive virtual grid. No need to bloat memory with duplicate objects.
+  return songs;
 }
 
 export async function searchSongsByMood(query: string): Promise<SongNode[]> {
