@@ -14,6 +14,8 @@ import { HeroBackgroundVideo } from '@/components/ui/HeroBackgroundVideo'
 import { GlobalAudioPlayer } from '@/components/GlobalAudioPlayer'
 import { useAudioStore } from '@/store/audioStore'
 import { ChangeVibeOverlay } from '@/components/ui/ChangeVibeOverlay'
+import { atlasManager } from '@/lib/atlasManager'
+import { vibeService } from '@/lib/vibeService'
 
 // Dynamic import for 3D (no SSR)
 const Universe = dynamic(
@@ -21,8 +23,8 @@ const Universe = dynamic(
   { ssr: false }
 )
 
-// Global in-memory cache for chart data to ensure instant navigation on revisit
-const songCache = new Map<string, SongNode[]>()
+// NOTE: The client-side cache is now managed by vibeService (lib/vibeService.ts).
+// vibeService provides: in-flight dedup + prefetch-on-hover + 30-min TTL cache.
 
 // ── Memoized hover tooltip — only re-renders when hoveredSong/selectedSong/introComplete change ──
 // Extracting this prevents the entire Home from re-rendering on every hover state change.
@@ -87,42 +89,6 @@ const HoverTooltip = memo(function HoverTooltip() {
   )
 })
 
-// ── Parallel image preloader ───────────────────────────────────────────────
-// Warms the browser cache for all album artworks before the user enters.
-// Uses a worker-pool pattern: CONCURRENCY workers each pull from a shared queue.
-function preloadImages(
-  urls: string[],
-  onProgress: (loaded: number, total: number) => void,
-  concurrency = 30,
-): Promise<void> {
-  return new Promise((resolve) => {
-    if (urls.length === 0) { resolve(); return }
-    let next = 0
-    let done = 0
-    const total = urls.length
-
-    const runWorker = () => {
-      if (next >= total) return
-      const url = urls[next++]
-      const img  = new Image()
-      img.crossOrigin = 'anonymous'
-      const finish = () => {
-        done++
-        onProgress(done, total)
-        if (done >= total) resolve()
-        else runWorker() // pick up next URL from the queue
-      }
-      img.onload  = finish
-      img.onerror = finish
-      img.src = url
-    }
-
-    // Kick off `concurrency` workers in parallel
-    const workers = Math.min(concurrency, total)
-    for (let i = 0; i < workers; i++) runWorker()
-  })
-}
-
 export default function Home() {
   const {
     songs, isLoading, loadingProgress, introComplete,
@@ -137,103 +103,86 @@ export default function Home() {
   const { setFps } = usePerformanceStore()
   const fpsRef = useRef(60)
 
-  // Fetch ~1000 songs for a given vibe
-  const loadSongs = useCallback(async (vibe: Vibe, forceRefresh = false) => {
-    try {
-      if (!forceRefresh && songCache.has(vibe)) {
-        return songCache.get(vibe)!
-      }
-      const qs  = forceRefresh ? `?vibe=${vibe}&refresh=1` : `?vibe=${vibe}`
-      const res = await fetch(`/api/songs${qs}`)
-      const data = await res.json()
-      const fetchedSongs = (data.songs || []) as SongNode[]
-      if (fetchedSongs.length > 0) {
-        songCache.set(vibe, fetchedSongs)
-      }
-      return fetchedSongs
-    } catch {
-      return []
-    }
-  }, [])
-
   /**
    * Gated Universe Entry / Vibe Switch
-   * Optimizes for perceived speed: fetches metadata, preloads proxy artworks,
-   * transitions the user into the universe instantly.
+   * Synchronized pipeline:
+   * 1. Fetch metadata via vibeService (reuses any in-flight prefetch or cached result)
+   *    → If hover-prefetch already completed: step 1 resolves instantly (0ms).
+   * 2. Direct Apple CDN loading & canvas painting of critical 64 covers (35% → 85%)
+   *    → If browser HTTP cache already primed from hover prefetch: very fast.
+   * 3. WebGL commit & single GPU texture flush (85% → 100%)
+   * 4. Seamless transition with 100% stable, populated tiles
+   * 5. Progressive background streaming of secondary covers
    */
   const handleVibeSelect = useCallback(async (vibe: Vibe) => {
     setVibe(vibe)
     setLoading(true, 5)
 
-    // Phase 1: Fetch ALL metadata (from cache or API)
-    const allFetched = await loadSongs(vibe, false)
-    
-    // We set songs immediately so the NodeField mounts in the background
-    setSongs(allFetched)
-    setLoading(true, 20)
+    // Phase 1: Fetch metadata — vibeService deduplicates any in-flight prefetch.
+    // If the user hovered long enough for prefetch to finish, this is instant.
+    const allFetched = await vibeService.fetchVibeSongs(vibe, false)
+    if (!allFetched || allFetched.length === 0) {
+      setLoading(false, 0)
+      return
+    }
+    setLoading(true, 35)
 
-    // Phase 2: Preload proxy artwork URLs (256 covers the entire visible grid/atlas)
-    // We map to the proxy URL so NodeField gets instant cache hits.
-    const preloadBatch = allFetched.slice(0, 256)
-    const artworks = preloadBatch
-      .map(s => s.albumArt ? `/api/proxy?url=${encodeURIComponent(s.albumArt)}` : null)
-      .filter(Boolean) as string[]
-    
-    await preloadImages(artworks, (loaded, total) => {
-      // Progress from 20% to 100%
-      const progress = 20 + (loaded / total) * 80
+    // Phase 2: Synchronized Critical Artwork (direct CDN, 256x256, real progress tracking)
+    await atlasManager.prepareCriticalVibe(allFetched, (ratio) => {
+      const progress = Math.round(35 + ratio * 50)
       setLoading(true, progress)
-    }, 40)
+    })
 
-    // Phase 3: Instant transition
-    setLoading(false, 100)
-    setIntroComplete(true)
-  }, [setVibe, setLoading, loadSongs, setSongs, setIntroComplete])
+    // Phase 3: Set songs and warm WebGL
+    setSongs(allFetched)
+    setLoading(true, 92)
+
+    // Wait two frames so React and Three.js commit the geometry & instances
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))
+    setLoading(true, 100)
+
+    // Smooth transition
+    setTimeout(() => {
+      setLoading(false, 100)
+      setIntroComplete(true)
+      // Phase 4: Progressive background streaming (silent & non-blocking)
+      atlasManager.startBackgroundLoading(allFetched)
+    }, 650)
+  }, [setVibe, setLoading, setSongs, setIntroComplete])
 
   // In-universe Vibe Switch pipeline
+  // vibeService reuses any in-flight prefetch from ChangeVibeOverlay hover.
   const handleChangeVibe = useCallback(async (vibe: Vibe) => {
     if (vibe === currentVibe) return
     setRefreshing(true)
     setVibe(vibe)
 
-    // Warm cache with proxy URLs before swapping songs array
-    const newSongs = await loadSongs(vibe, false)
+    const newSongs = await vibeService.fetchVibeSongs(vibe, false)
     if (newSongs.length > 0) {
-      const preloadBatch = newSongs.slice(0, 256)
-      const artworks = preloadBatch
-        .map(s => s.albumArt ? `/api/proxy?url=${encodeURIComponent(s.albumArt)}` : null)
-        .filter(Boolean) as string[]
-      await preloadImages(artworks, () => {}, 40)
-      
+      await atlasManager.prepareCriticalVibe(newSongs, () => {})
       setSongs(newSongs)
+      atlasManager.startBackgroundLoading(newSongs)
     }
 
     setTimeout(() => setRefreshing(false), 200)
-  }, [currentVibe, loadSongs, setSongs, setRefreshing, setVibe])
+  }, [currentVibe, setSongs, setRefreshing, setVibe])
 
-  // ── "Refresh Tracks" flow: preload new artwork before swapping ─────────
+  // ── "Refresh Tracks" flow: force-refresh from API, bypass cache ─────────────
   const handleRefresh = useCallback(async () => {
     if (!currentVibe || isRefreshing) return
     setRefreshing(true)
 
-    // Phase 1: fetch fresh tracks
-    const freshSongs = await loadSongs(currentVibe, true)
+    // forceRefresh=true bypasses client cache and fetches fresh data from the API
+    const freshSongs = await vibeService.fetchVibeSongs(currentVibe, true)
 
     if (freshSongs.length > 0) {
-      // Phase 2: pre-warm the browser image cache so tiles don't flash placeholders
-      const preloadBatch = freshSongs.slice(0, 256)
-      const artworks = preloadBatch
-        .map(s => s.albumArt ? `/api/proxy?url=${encodeURIComponent(s.albumArt)}` : null)
-        .filter(Boolean) as string[]
-      await preloadImages(artworks, () => {}, 40)
-
-      // Phase 3: swap
+      await atlasManager.prepareCriticalVibe(freshSongs, () => {})
       setSongs(freshSongs)
+      atlasManager.startBackgroundLoading(freshSongs)
     }
 
-    // Brief hold so the fade-in looks intentional, then restore
-    setTimeout(() => setRefreshing(false), 600)
-  }, [currentVibe, isRefreshing, setRefreshing, loadSongs, setSongs])
+    setTimeout(() => setRefreshing(false), 300)
+  }, [currentVibe, isRefreshing, setRefreshing, setSongs])
 
   const handleSelectSong    = useCallback((song: SongNode) => selectSong(song), [selectSong])
   const handleCloseSong     = useCallback(() => selectSong(null), [selectSong])

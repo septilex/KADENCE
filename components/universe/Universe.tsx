@@ -31,6 +31,7 @@ export function Universe({
 }: UniverseProps) {
   return (
     <Canvas
+      frameloop={songs.length > 0 ? 'always' : 'demand'}
       gl={{
         antialias: false,
         powerPreference: 'high-performance',

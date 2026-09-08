@@ -12,14 +12,12 @@ export function HeroBackgroundVideo({ currentVibe, introComplete = false }: Hero
   return (
     <motion.div
       className="fixed inset-0 w-full h-full -z-10 overflow-hidden pointer-events-none"
+      style={{ contain: 'strict', transform: 'translate3d(0, 0, 0)' }}
       initial={{ opacity: 1 }}
       animate={{ opacity: introComplete ? 0 : 1 }}
       transition={{ duration: 1.5, ease: 'easeInOut' }}
     >
-      <motion.video
-        initial={{ opacity: 0, scale: 1.4 }}
-        animate={{ opacity: 0.6, scale: 1.4 }}
-        transition={{ duration: 1.5, ease: 'easeInOut' }}
+      <video
         autoPlay
         muted
         loop
@@ -27,13 +25,13 @@ export function HeroBackgroundVideo({ currentVibe, introComplete = false }: Hero
         preload="auto"
         className="absolute inset-0 w-full h-full object-cover"
         style={{
-          willChange: 'transform, opacity',
+          transform: 'translate3d(0, 0, 0)',
           objectPosition: 'center top', // Pins the top of the video to show the top half of the globe
           filter: 'contrast(1.3) brightness(1.4) saturate(1.2)'
         }}
       >
         <source src="/videos/globe.mp4" type="video/mp4" />
-      </motion.video>
+      </video>
     </motion.div>
   )
 }

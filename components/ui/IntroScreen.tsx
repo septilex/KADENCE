@@ -1,25 +1,400 @@
 'use client'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useEffect, useRef } from 'react'
-import Lenis from 'lenis'
+import { useState, useRef } from 'react'
 import { Vibe } from '@/lib/types'
 import { useChartHover } from '@/hooks/useChartHover'
 
-import { VIBE_CONFIGS } from '@/lib/vibeConfig'
+import { VIBE_CONFIGS, VibeConfig } from '@/lib/vibeConfig'
+import { GlowingRingLoader } from './GlowingRingLoader'
 
 interface IntroScreenProps {
-  loadingProgress: number
+  loadingProgress?: number
   onVibeSelect: (vibe: Vibe) => void
 }
 
-// Loading phrases — cycle through these while the universe warms up
-const LOADING_PHRASES = [
-  'Mapping your sonic universe…',
-  'Curating 1,000 tracks…',
-  'Warming the starfield…',
-  'Tuning the frequencies…',
-  'Almost there…',
-]
+// ── 3D Bubble Pop Card for the 14 Homepage Editorial Grid Tracks ──
+function HomepageVibeCard({
+  vibe,
+  index,
+  isHovered,
+  onHoverStart,
+  onHoverEnd,
+  onSelect,
+}: {
+  vibe: VibeConfig
+  index: number
+  isHovered: boolean
+  onHoverStart: (id: Vibe) => void
+  onHoverEnd: () => void
+  onSelect: (id: Vibe) => void
+}) {
+  const popRef = useRef<HTMLDivElement>(null)
+  const rectRef = useRef<DOMRect | null>(null)
+
+  const handlePointerEnter = () => {
+    if (popRef.current) {
+      rectRef.current = popRef.current.getBoundingClientRect()
+    }
+    onHoverStart(vibe.id)
+  }
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const el = popRef.current
+    if (!el) return
+    let rect = rectRef.current
+    if (!rect) {
+      rect = el.getBoundingClientRect()
+      rectRef.current = rect
+    }
+    const px = (e.clientX - rect.left) / rect.width - 0.5
+    const py = (e.clientY - rect.top) / rect.height - 0.5
+    // Subtle magnetic attraction + responsive physical 3D tilt
+    const tx = (px * 14).toFixed(1)
+    const ty = (py * 14).toFixed(1)
+    const rx = (-py * 20).toFixed(2)
+    const ry = (px * 20).toFixed(2)
+    const mx = ((px + 0.5) * 100).toFixed(1)
+    const my = ((py + 0.5) * 100).toFixed(1)
+
+    el.style.setProperty('--tx', `${tx}px`)
+    el.style.setProperty('--ty', `${ty}px`)
+    el.style.setProperty('--rx', `${rx}deg`)
+    el.style.setProperty('--ry', `${ry}deg`)
+    el.style.setProperty('--mx', `${mx}%`)
+    el.style.setProperty('--my', `${my}%`)
+  }
+
+  const handlePointerLeave = () => {
+    rectRef.current = null
+    const el = popRef.current
+    if (!el) return
+    el.style.setProperty('--tx', '0px')
+    el.style.setProperty('--ty', '0px')
+    el.style.setProperty('--rx', '0deg')
+    el.style.setProperty('--ry', '0deg')
+    el.style.setProperty('--mx', '50%')
+    el.style.setProperty('--my', '50%')
+    onHoverEnd()
+  }
+
+  return (
+    <motion.div
+      key={vibe.id}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.03 * index, duration: 0.45 }}
+      className="relative aspect-square kadence-3d-wrapper"
+      style={{ zIndex: isHovered ? 70 : undefined }}
+    >
+      <div
+        ref={popRef}
+        className="w-full h-full kadence-3d-pop"
+        onPointerMove={handlePointerMove}
+        onPointerEnter={handlePointerEnter}
+        onPointerLeave={handlePointerLeave}
+      >
+        <button
+          id={`vibe-${vibe.id}`}
+          onClick={() => onSelect(vibe.id)}
+          className="kadence-3d-card relative group flex flex-col justify-end p-4 rounded-[20px] overflow-hidden cursor-pointer text-left outline-none w-full h-full select-none"
+          style={{
+            backgroundColor: vibe.bgColor,
+            ['--card-shadow-rest' as string]: `0 24px 50px -6px ${vibe.bgColor}ee, 0 0 36px 6px ${vibe.bgColor}aa, inset 0 2px 4px rgba(255,255,255,0.75)`,
+            ['--card-shadow-hover' as string]: `0 34px 70px -4px ${vibe.bgColor}, 0 0 60px 15px ${vibe.bgColor}, 0 0 95px 25px ${vibe.bgColor}99, inset 0 2px 5px rgba(255,255,255,0.9)`,
+          }}
+        >
+          {/* Subtle glossy 3D sheen overlay following cursor */}
+          <div
+            className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            style={{
+              background: 'radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.18) 38%, transparent 68%)',
+            }}
+          />
+
+          {/* Geometric overlay pattern */}
+          <div
+            className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none"
+            style={{
+              backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
+              backgroundSize: '12px 12px',
+            }}
+          />
+
+          {/* Large background number */}
+          <span className="absolute top-[-16px] left-[-4px] text-[96px] font-black text-black opacity-[0.35] tracking-tighter leading-none pointer-events-none select-none">
+            {vibe.number}
+          </span>
+
+          {/* Badge */}
+          {vibe.badge && (
+            <div className="absolute top-3 right-3 px-2.5 py-1 rounded-[6px] backdrop-blur-md text-[10px] font-extrabold tracking-widest shadow-sm bg-black text-white pointer-events-none">
+              {vibe.badge}
+            </div>
+          )}
+
+          {/* Text */}
+          <div className="relative z-10 w-full mt-auto pointer-events-none">
+            <span
+              className="block text-black font-[800] text-base md:text-[20px] leading-tight mb-1"
+              style={{ fontFamily: "'Syne', sans-serif" }}
+            >
+              {vibe.label}
+            </span>
+            <span className="block text-black/90 text-[10px] uppercase font-bold tracking-wider leading-tight">
+              {vibe.sub}
+            </span>
+          </div>
+        </button>
+      </div>
+    </motion.div>
+  )
+}
+
+// ── 3D Bubble Pop Cue Button for Creator Collection ──
+function CreatorCueCard({ onClick }: { onClick: () => void }) {
+  const cueRef = useRef<HTMLDivElement>(null)
+  const rectRef = useRef<DOMRect | null>(null)
+
+  const handlePointerEnter = () => {
+    if (cueRef.current) {
+      rectRef.current = cueRef.current.getBoundingClientRect()
+    }
+  }
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const el = cueRef.current
+    if (!el) return
+    let rect = rectRef.current
+    if (!rect) {
+      rect = el.getBoundingClientRect()
+      rectRef.current = rect
+    }
+    const px = (e.clientX - rect.left) / rect.width - 0.5
+    const py = (e.clientY - rect.top) / rect.height - 0.5
+    // Subtle magnetic attraction + responsive 3D tilt
+    const tx = (px * 16).toFixed(1)
+    const ty = (py * 10).toFixed(1)
+    const rx = (-py * 16).toFixed(2)
+    const ry = (px * 16).toFixed(2)
+    const mx = ((px + 0.5) * 100).toFixed(1)
+    const my = ((py + 0.5) * 100).toFixed(1)
+
+    el.style.setProperty('--tx', `${tx}px`)
+    el.style.setProperty('--ty', `${ty}px`)
+    el.style.setProperty('--rx', `${rx}deg`)
+    el.style.setProperty('--ry', `${ry}deg`)
+    el.style.setProperty('--mx', `${mx}%`)
+    el.style.setProperty('--my', `${my}%`)
+  }
+
+  const handlePointerLeave = () => {
+    rectRef.current = null
+    const el = cueRef.current
+    if (!el) return
+    el.style.setProperty('--tx', '0px')
+    el.style.setProperty('--ty', '0px')
+    el.style.setProperty('--rx', '0deg')
+    el.style.setProperty('--ry', '0deg')
+    el.style.setProperty('--mx', '50%')
+    el.style.setProperty('--my', '50%')
+  }
+
+  return (
+    <div
+      className="kadence-dev-cue-wrapper mb-8 cursor-pointer"
+      onClick={onClick}
+    >
+      <div
+        ref={cueRef}
+        className="kadence-dev-cue-pop cursor-pointer"
+        onPointerEnter={handlePointerEnter}
+        onPointerMove={handlePointerMove}
+        onPointerLeave={handlePointerLeave}
+        onClick={onClick}
+      >
+        <button
+          type="button"
+          id="explore-dev-universe-btn"
+          onClick={(e) => {
+            e.stopPropagation()
+            onClick()
+          }}
+          className="kadence-dev-cue-card relative group flex flex-col items-center justify-center gap-0.5 cursor-pointer rounded-[44px] px-12 py-4 select-none overflow-hidden outline-none w-full"
+          style={{
+            background: 'linear-gradient(135deg, #FFF9A6 0%, #FFDF00 22%, #FFC400 52%, #FFA000 82%, #FF8F00 100%)',
+          }}
+        >
+          {/* Subtle glossy 3D sheen overlay following cursor */}
+          <div
+            className="absolute inset-0 pointer-events-none opacity-40 group-hover:opacity-85 transition-opacity duration-300"
+            style={{
+              background: 'radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.2) 35%, transparent 65%)',
+            }}
+          />
+
+          {/* Top gloss curve highlight */}
+          <div className="absolute inset-x-0 top-0 h-[48%] bg-gradient-to-b from-white/35 via-white/10 to-transparent rounded-t-[44px] pointer-events-none" />
+
+          {/* CREATOR'S PICK with Silver Chrome metallic gradient and consistent ✦ sparkle */}
+          <span className="kadence-chrome-text text-[11px] uppercase tracking-[0.26em] font-[900] pointer-events-none z-10 select-none">
+            <span className="mr-1.5 text-[10px]">✦</span>CREATOR'S PICK
+          </span>
+
+          {/* Title: Explore Dev's Universe in pure #000000 bold */}
+          <span
+            className="text-[22px] font-[900] text-[#000000] tracking-tight pointer-events-none z-10 leading-tight"
+            style={{ fontFamily: "'Syne', sans-serif" }}
+          >
+            Explore Dev's Universe
+          </span>
+
+          {/* 80 HANDPICKED TRACKS with Silver Chrome metallic gradient */}
+          <span className="kadence-chrome-text text-[11px] uppercase tracking-[0.22em] font-[800] pointer-events-none z-10 mt-0.5 select-none">
+            80 Handpicked Tracks
+          </span>
+        </button>
+      </div>
+    </div>
+  )
+}
+
+// ── 3D Bubble Pop Card for Section 2 Creator Collection (Dev's Special) ──
+function CreatorCollectionCard({
+  vibe,
+  isHovered,
+  onHoverStart,
+  onHoverEnd,
+  onSelect,
+}: {
+  vibe: VibeConfig
+  isHovered: boolean
+  onHoverStart: (id: Vibe) => void
+  onHoverEnd: () => void
+  onSelect: (id: Vibe) => void
+}) {
+  const cardRef = useRef<HTMLDivElement>(null)
+  const rectRef = useRef<DOMRect | null>(null)
+
+  const handlePointerEnter = () => {
+    if (cardRef.current) {
+      rectRef.current = cardRef.current.getBoundingClientRect()
+    }
+    onHoverStart(vibe.id)
+  }
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const el = cardRef.current
+    if (!el) return
+    let rect = rectRef.current
+    if (!rect) {
+      rect = el.getBoundingClientRect()
+      rectRef.current = rect
+    }
+    const px = (e.clientX - rect.left) / rect.width - 0.5
+    const py = (e.clientY - rect.top) / rect.height - 0.5
+    // Subtle magnetic attraction + responsive 3D tilt
+    const tx = (px * 16).toFixed(1)
+    const ty = (py * 12).toFixed(1)
+    const rx = (-py * 20).toFixed(2)
+    const ry = (px * 20).toFixed(2)
+    const mx = ((px + 0.5) * 100).toFixed(1)
+    const my = ((py + 0.5) * 100).toFixed(1)
+
+    el.style.setProperty('--tx', `${tx}px`)
+    el.style.setProperty('--ty', `${ty}px`)
+    el.style.setProperty('--rx', `${rx}deg`)
+    el.style.setProperty('--ry', `${ry}deg`)
+    el.style.setProperty('--mx', `${mx}%`)
+    el.style.setProperty('--my', `${my}%`)
+  }
+
+  const handlePointerLeave = () => {
+    rectRef.current = null
+    const el = cardRef.current
+    if (!el) return
+    el.style.setProperty('--tx', '0px')
+    el.style.setProperty('--ty', '0px')
+    el.style.setProperty('--rx', '0deg')
+    el.style.setProperty('--ry', '0deg')
+    el.style.setProperty('--mx', '50%')
+    el.style.setProperty('--my', '50%')
+    onHoverEnd()
+  }
+
+  return (
+    <div
+      className="kadence-dev-sec2-wrapper w-full max-w-[440px] mx-auto"
+      style={{ zIndex: isHovered ? 70 : undefined }}
+    >
+      <div
+        ref={cardRef}
+        className="kadence-dev-sec2-pop w-full"
+        onPointerMove={handlePointerMove}
+        onPointerEnter={handlePointerEnter}
+        onPointerLeave={handlePointerLeave}
+      >
+        <button
+          id={`vibe-${vibe.id}`}
+          onClick={() => onSelect(vibe.id)}
+          className="kadence-dev-sec2-card relative group flex flex-col justify-end p-8 rounded-[24px] overflow-hidden cursor-pointer text-left outline-none w-full h-[240px] border border-[#d4af37]/60 select-none"
+          style={{
+            backgroundColor: vibe.bgColor,
+          }}
+        >
+          {/* Subtle glossy 3D sheen overlay following cursor */}
+          <div
+            className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            style={{
+              background: 'radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.4) 0%, rgba(212,175,55,0.15) 45%, transparent 70%)',
+            }}
+          />
+
+          {/* Animated shimmer overlay */}
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-transparent via-[#d4af37]/25 to-transparent -translate-x-full group-hover:animate-[kadence-progress-shimmer_1.5s_infinite] pointer-events-none" />
+
+          {/* Geometric overlay pattern */}
+          <div
+            className="absolute inset-0 opacity-[0.2] mix-blend-overlay pointer-events-none"
+            style={{
+              backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
+              backgroundSize: '12px 12px',
+            }}
+          />
+
+          {/* Large background number */}
+          <span className="absolute top-[-20px] left-[0px] text-[120px] font-black text-[#d4af37] opacity-[0.08] tracking-tighter leading-none pointer-events-none select-none">
+            {vibe.number}
+          </span>
+
+          {/* Badge */}
+          {vibe.badge && (
+            <div className="absolute top-5 right-5 px-3 py-1 rounded-[8px] backdrop-blur-md text-[10px] font-bold tracking-widest shadow-sm bg-[#d4af37]/20 text-[#d4af37] border border-[#d4af37]/40 pointer-events-none">
+              {vibe.badge}
+            </div>
+          )}
+
+          {/* Text */}
+          <div className="relative z-10 w-full mt-auto pointer-events-none">
+            <span
+              className="block text-white font-[800] text-xl md:text-2xl leading-tight mb-1"
+              style={{ fontFamily: "'Syne', sans-serif" }}
+            >
+              {vibe.label}
+            </span>
+            <div className="flex items-center gap-2 mt-1">
+              <span className="text-white/70 text-[10px] md:text-xs uppercase font-bold tracking-wider leading-tight">
+                {vibe.sub}
+              </span>
+              <span className="text-[#d4af37] text-[10px] md:text-xs font-bold tracking-[0.1em] uppercase">
+                • 80 handpicked tracks
+              </span>
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+  )
+}
 
 // ── Deterministic particle data (generated once, stable across renders) ──
 const PARTICLES = Array.from({ length: 22 }, (_, i) => ({
@@ -32,75 +407,15 @@ const PARTICLES = Array.from({ length: 22 }, (_, i) => ({
   driftY: 30 + ((i * 17) % 50),     // 30–80 px upward drift
 }))
 
-export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps) {
+export function IntroScreen({ onVibeSelect }: IntroScreenProps) {
   const [step, setStep]               = useState<'vibe' | 'loading'>('vibe')
   const [selectedVibe, setSelectedVibe] = useState<Vibe | null>(null)
-  const [phraseIdx, setPhraseIdx]      = useState(0)
 
   // ── Chart Hover Preview ──
   const { hoveredVibe, handleHoverStart, handleHoverEnd, signatureSongs } = useChartHover()
 
   const scrollWrapperRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
-  const lenisRef = useRef<Lenis | null>(null)
-
-  // ── Smooth Inertial Scrolling (Lenis) ──
-  useEffect(() => {
-    if (!scrollWrapperRef.current || !contentRef.current) return
-
-    const lenis = new Lenis({
-      wrapper: scrollWrapperRef.current,
-      content: contentRef.current,
-      lerp: 0.05, // Heavy, buttery smooth
-      smoothWheel: true,
-      wheelMultiplier: 0.9,
-    })
-    lenisRef.current = lenis
-
-    let rafId: number
-    function raf(time: number) {
-      lenis.raf(time)
-      rafId = requestAnimationFrame(raf)
-    }
-    rafId = requestAnimationFrame(raf)
-
-    return () => {
-      cancelAnimationFrame(rafId)
-      lenis.destroy()
-    }
-  }, [])
-
-  // Dynamic loading phrases per selected vibe
-  const getLoadingPhrases = (v: Vibe | null) => {
-    if (!v) return LOADING_PHRASES
-    const labels: Record<Vibe, string[]> = {
-      'global-top-50': ['Gathering global hits…', 'Tuning trending frequencies…', 'Almost there…'],
-      'viral-50': ['Finding viral sounds…', 'Loading TikTok hits…', 'Almost there…'],
-      'new-music-friday': ['Unboxing fresh drops…', 'Curating new releases…', 'Almost there…'],
-      'hip-hop-central': ['Tuning rap frequencies…', 'Loading trap beats…', 'Almost there…'],
-      'pop-rising': ['Gathering pop anthems…', 'Tuning upbeat frequencies…', 'Almost there…'],
-      'dance-hits': ['Charging EDM buffers…', 'Pumping high-energy BPM…', 'Almost there…'],
-      'mood-booster': ['Gathering feel-good hits…', 'Tuning happy frequencies…', 'Almost there…'],
-      'late-night': ['Setting late-night mood…', 'Pouring smooth R&B…', 'Almost there…'],
-      'workout': ['Charging high-energy tracks…', 'Pumping heavy BPM…', 'Almost there…'],
-      'chill-hits': ['Weaving lo-fi dreams…', 'Filtering soft chords…', 'Almost there…'],
-      'dev-special': ['The soundtrack behind Kadence…', 'Curated collection of tracks…', 'Powered late-night coding sessions…', 'Almost there…'],
-      'top-telugu': ['Loading Tollywood blockbusters…', 'Tuning Telugu frequencies…', 'Fetching regional chart toppers…', 'Almost there…'],
-      'top-tamil': ['Loading Kollywood hits…', 'Tuning Tamil frequencies…', 'Fetching chart toppers…', 'Almost there…'],
-      'top-hindi': ['Loading Bollywood chart toppers…', 'Tuning desi frequencies…', 'Fetching Hindi hits…', 'Almost there…'],
-      'top-kpop': ['Loading K-Pop universe…', 'Syncing Korean chart data…', 'Fetching the latest drops…', 'Almost there…'],
-    }
-    return labels[v] || LOADING_PHRASES
-  }
-
-  const currentPhrases = getLoadingPhrases(selectedVibe)
-
-  // Cycle loading phrases every 2.2s
-  useEffect(() => {
-    if (step !== 'loading') return
-    const id = setInterval(() => setPhraseIdx(p => (p + 1) % currentPhrases.length), 2200)
-    return () => clearInterval(id)
-  }, [step, currentPhrases])
 
   function handleVibeSelect(vibe: Vibe) {
     setSelectedVibe(vibe)
@@ -108,11 +423,24 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
     onVibeSelect(vibe)
   }
 
+  const scrollToCreatorCollection = () => {
+    const section2 = document.getElementById('creator-collection-section')
+    const container = scrollWrapperRef.current
+    if (section2 && container) {
+      const containerRect = container.getBoundingClientRect()
+      const sectionRect = section2.getBoundingClientRect()
+      const targetTop = container.scrollTop + (sectionRect.top - containerRect.top)
+      container.scrollTo({ top: targetTop, behavior: 'smooth' })
+    } else if (section2) {
+      section2.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   const activeVibeData = VIBE_CONFIGS.find(v => v.id === hoveredVibe) ?? VIBE_CONFIGS.find(v => v.id === selectedVibe)
 
   return (
     <>
-      {/* ── CSS keyframes for particles (GPU-compositor-only: transform+opacity) */}
+      {/* ── CSS keyframes & 3D transforms (GPU-compositor-only) ── */}
       <style>{`
         @keyframes kadence-particle-float {
           0%,100% { transform: translateY(0px) scale(1);   opacity: 0.25; }
@@ -130,20 +458,144 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
           0%   { transform: translateX(-100%); }
           100% { transform: translateX(200%); }
         }
+
+        /* ── Metallic Silver Chrome Text Treatment ── */
+        .kadence-chrome-text {
+          background: linear-gradient(180deg, #FFFFFF 0%, #E2E8F0 18%, #64748B 46%, #1E293B 52%, #94A3B8 75%, #FFFFFF 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          color: transparent;
+          display: inline-flex;
+          align-items: center;
+          filter: drop-shadow(0 1px 0px rgba(255, 255, 255, 0.65)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
+        }
+
+        /* ── 3D Bubble Pop & Tilt for Homepage Grid Cards ── */
+        .kadence-3d-wrapper {
+          perspective: 850px;
+          transform-style: preserve-3d;
+          position: relative;
+          z-index: 1;
+          transition: z-index 0s 0.45s;
+        }
+        .kadence-3d-wrapper:hover,
+        .kadence-3d-wrapper:focus-within {
+          z-index: 60;
+          transition: z-index 0s 0s;
+        }
+
+        .kadence-3d-pop {
+          width: 100%;
+          height: 100%;
+          transform-style: preserve-3d;
+          transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+          transition: transform 0.45s cubic-bezier(0.34, 1.35, 0.64, 1);
+        }
+        .kadence-3d-wrapper:hover .kadence-3d-pop {
+          will-change: transform;
+          transform: translate3d(0, -14px, 60px) scale3d(1.16, 1.16, 1.16);
+          transition: transform 0.32s cubic-bezier(0.34, 1.65, 0.64, 1);
+        }
+
+        .kadence-3d-card {
+          width: 100%;
+          height: 100%;
+          transform-style: preserve-3d;
+          transform: translate3d(var(--tx, 0px), var(--ty, 0px), 0px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+          box-shadow: var(--card-shadow-rest);
+          transition: transform 0.4s cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 0.35s cubic-bezier(0.34, 1.5, 0.64, 1), filter 0.3s ease;
+        }
+        .kadence-3d-wrapper:hover .kadence-3d-card {
+          will-change: transform, box-shadow, filter;
+          transition: transform 0.1s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.34, 1.5, 0.64, 1), filter 0.3s ease;
+          box-shadow: var(--card-shadow-hover);
+          filter: brightness(1.22);
+        }
+
+        /* ── 3D Bubble Pop & Magnetic Cue Button (Explore Dev's Universe) ── */
+        .kadence-dev-cue-wrapper {
+          perspective: 850px;
+          transform-style: preserve-3d;
+          position: relative;
+          z-index: 20;
+        }
+        .kadence-dev-cue-pop {
+          transform-style: preserve-3d;
+          transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+          transition: transform 0.45s cubic-bezier(0.34, 1.35, 0.64, 1);
+        }
+        .kadence-dev-cue-wrapper:hover .kadence-dev-cue-pop {
+          will-change: transform;
+          transform: translate3d(0, -8px, 45px) scale3d(1.08, 1.08, 1.08);
+          transition: transform 0.32s cubic-bezier(0.34, 1.65, 0.64, 1);
+        }
+        .kadence-dev-cue-card {
+          transform-style: preserve-3d;
+          transform: translate3d(var(--tx, 0px), var(--ty, 0px), 0px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+          border: 1.5px solid rgba(255, 255, 255, 0.75);
+          box-shadow: 
+            0 10px 35px rgba(255, 180, 0, 0.45),
+            0 0 45px 8px rgba(255, 215, 0, 0.35),
+            0 0 16px 2px rgba(255, 240, 100, 0.5),
+            inset 0 2px 3px rgba(255, 255, 255, 0.85),
+            inset 0 -2px 3px rgba(180, 110, 0, 0.35);
+          transition: transform 0.4s cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 0.35s ease, border-color 0.3s ease;
+        }
+        .kadence-dev-cue-wrapper:hover .kadence-dev-cue-card {
+          will-change: transform, box-shadow, border-color;
+          border-color: rgba(255, 255, 255, 0.95);
+          box-shadow: 
+            0 16px 55px 10px rgba(255, 180, 0, 0.75),
+            0 0 70px 18px rgba(255, 215, 0, 0.6),
+            0 0 28px 6px rgba(255, 245, 120, 0.85),
+            inset 0 2px 4px rgba(255, 255, 255, 0.95),
+            inset 0 -2px 4px rgba(180, 110, 0, 0.45);
+          transition: transform 0.1s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.3s ease;
+        }
+
+        /* ── 3D Bubble Pop & Magnetic Section 2 Card ── */
+        .kadence-dev-sec2-wrapper {
+          perspective: 1000px;
+          transform-style: preserve-3d;
+          position: relative;
+          z-index: 10;
+        }
+        .kadence-dev-sec2-pop {
+          width: 100%;
+          transform-style: preserve-3d;
+          transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+          transition: transform 0.5s cubic-bezier(0.34, 1.35, 0.64, 1);
+        }
+        .kadence-dev-sec2-wrapper:hover .kadence-dev-sec2-pop {
+          will-change: transform;
+          transform: translate3d(0, -14px, 60px) scale3d(1.10, 1.10, 1.10);
+          transition: transform 0.35s cubic-bezier(0.34, 1.65, 0.64, 1);
+        }
+        .kadence-dev-sec2-card {
+          transform-style: preserve-3d;
+          transform: translate3d(var(--tx, 0px), var(--ty, 0px), 0px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+          box-shadow: 0 15px 45px rgba(212, 175, 55, 0.4), 0 0 35px 6px rgba(212, 175, 55, 0.3);
+          transition: transform 0.45s cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 0.35s ease, filter 0.3s ease;
+        }
+        .kadence-dev-sec2-wrapper:hover .kadence-dev-sec2-card {
+          will-change: transform, box-shadow, filter;
+          transition: transform 0.1s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, filter 0.3s ease;
+          box-shadow: 0 32px 85px rgba(212, 175, 55, 0.8), 0 0 75px 18px rgba(212, 175, 55, 0.6), inset 0 0 35px rgba(212, 175, 55, 0.35);
+          filter: brightness(1.22);
+        }
       `}</style>
 
-      <motion.div
-        ref={scrollWrapperRef as any}
-        className="fixed inset-0 z-50 bg-transparent pointer-events-auto overflow-y-auto overflow-x-hidden scrollbar-hide"
-        initial={{ opacity: 1 }}
-        exit={{ opacity: 0, scale: 0.98 }}
-        transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
+      {/* ── Fixed Ambient Background Layer (Compositor-isolated, 0 scroll overhead) ── */}
+      <div
+        className="fixed inset-0 pointer-events-none overflow-hidden"
+        style={{ contain: 'strict', transform: 'translate3d(0, 0, 0)' }}
       >
-        {/* ── Floating particles (CSS-only, compositor thread) ─────────── */}
+        {/* Floating particles */}
         {PARTICLES.map(p => (
           <div
             key={p.id}
-            className={`kadence-particle fixed rounded-full pointer-events-none transition-colors duration-700 ${activeVibeData?.id === 'dev-special' ? 'bg-[#d4af37]/60 shadow-[0_0_10px_rgba(212,175,55,0.8)]' : 'bg-white/30'}`}
+            className={`kadence-particle absolute rounded-full pointer-events-none transition-colors duration-700 ${activeVibeData?.id === 'dev-special' ? 'bg-[#d4af37]/60 shadow-[0_0_10px_rgba(212,175,55,0.8)]' : 'bg-white/30'}`}
             style={{
               left:   `${p.x}%`,
               top:    `${p.y}%`,
@@ -156,30 +608,48 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
           />
         ))}
 
-        {/* ── Dynamic vibe background glow ─────────────────────────────── */}
+        {/* Dynamic vibe background glow */}
         <AnimatePresence mode="wait">
           {activeVibeData && (
             <motion.div
               key={activeVibeData.id}
-              className="fixed inset-0 pointer-events-none"
+              className="absolute inset-0 pointer-events-none"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.6 }}
             >
               <div
-                className={`absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full blur-[160px] bg-gradient-to-br ${activeVibeData.gradient} opacity-60`}
+                className={`absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[45px] bg-gradient-to-br ${activeVibeData.gradient} opacity-50`}
+                style={{ contain: 'paint' }}
               />
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* ── Static ambient glows ─────────────────────────────────────── */}
-        <div className="fixed top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-blue-950/20 blur-[120px] pointer-events-none" />
-        <div className="fixed bottom-1/4 right-1/4 w-[300px] h-[300px] rounded-full bg-purple-950/15 blur-[100px] pointer-events-none" />
+        {/* Static ambient glows */}
+        <div
+          className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] rounded-full bg-blue-950/20 blur-[40px] pointer-events-none"
+          style={{ contain: 'paint' }}
+        />
+        <div
+          className="absolute bottom-1/4 right-1/4 w-[280px] h-[280px] rounded-full bg-purple-950/15 blur-[35px] pointer-events-none"
+          style={{ contain: 'paint' }}
+        />
+      </div>
 
+      {/* ── Native, Butter-Smooth 60/120 FPS Scroll Container ── */}
+      <div
+        ref={scrollWrapperRef}
+        className="fixed inset-0 z-50 bg-transparent pointer-events-auto overflow-y-auto overflow-x-hidden scrollbar-hide"
+        style={{
+          scrollBehavior: 'smooth',
+          WebkitOverflowScrolling: 'touch',
+          overscrollBehaviorY: 'contain',
+        }}
+      >
         <div ref={contentRef} className="w-full relative min-h-screen">
-        <AnimatePresence mode="wait">
+        <AnimatePresence>
 
           {/* ────────────────── STEP 1: Vibe Selection ───────────────── */}
           {step === 'vibe' && (
@@ -188,8 +658,8 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
               className="relative w-full"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.7 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
             >
               {/* EXACT ORIGINAL HERO LAYOUT - SECTION 1 */}
               <div className="relative w-full min-h-[100dvh] flex flex-col items-center justify-center pt-8 pb-16">
@@ -230,161 +700,31 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
                 <p className="text-white/40 text-sm mt-2">Choose your editorial chart</p>
               </div>
 
-              {/* Creator Collection Cue */}
-              <div 
-                className="flex flex-col items-center justify-center gap-1 cursor-pointer group z-20 transition-all duration-300 mb-8 bg-[#0A0A0A] border-[1.5px] border-[#D4AF37]/40 rounded-[40px] px-12 py-4 shadow-[0_0_40px_10px_rgba(212,175,55,0.15)] hover:-translate-y-[3px] hover:bg-[#111] hover:border-[#D4AF37] hover:shadow-[0_0_60px_15px_rgba(212,175,55,0.3)]"
-                onClick={() => {
-                  if (lenisRef.current) {
-                    lenisRef.current.scrollTo('#creator-collection-section', {
-                      duration: 1.8,
-                      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-                    })
-                  } else {
-                    const section2 = document.getElementById('creator-collection-section');
-                    if (section2) {
-                      section2.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }
-                }}
-              >
-                <span className="text-[11px] uppercase tracking-[0.25em] font-bold text-[#D4AF37]">
-                  ✨ CREATOR'S PICK
-                </span>
-                <span className="text-[22px] font-[800] text-white tracking-tight mt-0.5 group-hover:text-[#D4AF37] transition-colors duration-300">
-                  Explore Dev's Universe
-                </span>
-                <span className="text-[13px] text-white/50 font-semibold mt-0.5">
-                  80 Handpicked Tracks
-                </span>
-              </div>
+              {/* Creator Collection Cue with 3D Bubble Pop & Magnetic Nav */}
+              <CreatorCueCard onClick={scrollToCreatorCollection} />
 
-              {/* Vibe grid — strict 7×2 on desktop */}
+              {/* Vibe grid — strict 7×2 on desktop with 3D Bubble Pop Hover */}
               <div className="grid gap-3 w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
-                {VIBE_CONFIGS.filter(v => v.id !== 'dev-special').map((v, i) => {
-                  const isActive = hoveredVibe === v.id || selectedVibe === v.id
-
-                  return (
-                    <motion.button
-                      key={v.id}
-                      id={`vibe-${v.id}`}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.04 * i, duration: 0.5 }}
-                      onHoverStart={() => handleHoverStart(v.id)}
-                      onHoverEnd={handleHoverEnd}
-                      onClick={() => handleVibeSelect(v.id)}
-                      className="relative group flex flex-col justify-end p-4 rounded-[10px] overflow-hidden cursor-pointer text-left outline-none aspect-square"
-                      style={{
-                        backgroundColor: v.bgColor,
-                        boxShadow: isActive 
-                          ? `0 0 40px 10px ${v.bgColor}, inset 0 0 20px ${v.bgColor}` 
-                          : `0 0 20px 2px ${v.bgColor}80, inset 0 0 10px ${v.bgColor}80`,
-                        transform: isActive ? 'scale(1.04) translateY(-4px)' : 'scale(1)',
-                        filter: isActive ? 'brightness(1.15)' : 'brightness(1)',
-                        transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)'
-                      }}
-                    >
-                      {/* Geometric overlay pattern */}
-                      <div className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '12px 12px' }} />
-                      
-                      {/* Large background number */}
-                      <span className="absolute top-[-18px] left-[-6px] text-[100px] font-black text-black opacity-[0.35] tracking-tighter leading-none pointer-events-none select-none">
-                        {v.number}
-                      </span>
-
-                      {/* Badge */}
-                      {v.badge && (
-                        <div className="absolute top-3 right-3 px-2.5 py-1 rounded backdrop-blur-md text-[10px] font-extrabold tracking-widest shadow-sm bg-black text-white">
-                          {v.badge}
-                        </div>
-                      )}
-                      
-                      {/* Text */}
-                      <div className="relative z-10 w-full mt-auto translate-y-1 group-hover:translate-y-0 transition-transform duration-300">
-                        <span
-                          className="block text-black font-[800] text-base md:text-[20px] leading-tight mb-1"
-                          style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-                        >
-                          {v.label}
-                        </span>
-                        <span className="block text-black/90 text-[10px] uppercase font-bold tracking-wider leading-tight">
-                          {v.sub}
-                        </span>
-                      </div>
-
-                      {/* Song Preview Overlay */}
-                      <AnimatePresence>
-                        {isActive && signatureSongs[v.id] && (
-                          <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="absolute inset-0 z-20 flex flex-col justify-end p-3 overflow-hidden bg-black/80"
-                          >
-                            <motion.img 
-                              key={`img-${signatureSongs[v.id].id}`}
-                              src={signatureSongs[v.id].albumArt} 
-                              className="absolute inset-0 w-full h-full object-cover opacity-40 blur-[2px]" 
-                              alt=""
-                              initial={{ opacity: 0, scale: 1.1 }}
-                              animate={{ opacity: 0.4, scale: 1 }}
-                              transition={{ duration: 0.6 }}
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent" />
-                            
-                            <motion.div 
-                              key={`info-${signatureSongs[v.id].id}`}
-                              initial={{ opacity: 0, y: 5 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{ duration: 0.4 }}
-                              className="relative z-10 flex items-end justify-between w-full"
-                            >
-                              <div className="flex-1 min-w-0 pr-2">
-                                <p className="text-white font-bold text-xs truncate leading-tight">{signatureSongs[v.id].name}</p>
-                                <p className="text-white/70 text-[10px] truncate mt-0.5">{signatureSongs[v.id].artist}</p>
-                              </div>
-                              <a
-                                href={signatureSongs[v.id].spotifyUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                onClick={(e) => e.stopPropagation()}
-                                className="w-7 h-7 rounded-full bg-[#ea4cc0] text-white flex items-center justify-center shrink-0 hover:scale-110 transition-transform"
-                                title="Listen on iTunes"
-                              >
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-                                  <path d="M21 2.9v10.9a4.8 4.8 0 0 0-2.5-.7c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5V6.1l-9 1.8v8.9a4.8 4.8 0 0 0-2.5-.7c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5V4.2L21 2.9z"/>
-                                </svg>
-                              </a>
-                            </motion.div>
-                            
-                            {signatureSongs[v.id].previewUrl && (
-                              <div className="relative z-10 w-full h-[2px] bg-white/20 rounded-full mt-2 overflow-hidden">
-                                <motion.div 
-                                  key={`progress-${signatureSongs[v.id].id}`}
-                                  className="absolute top-0 left-0 bottom-0 bg-[#1db954]"
-                                  initial={{ width: '0%' }}
-                                  animate={{ width: '100%' }}
-                                  transition={{ duration: 10, ease: 'linear' }}
-                                />
-                              </div>
-                            )}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </motion.button>
-                  )
-                })}
+                {VIBE_CONFIGS.filter(v => v.id !== 'dev-special').map((v, i) => (
+                  <HomepageVibeCard
+                    key={v.id}
+                    vibe={v}
+                    index={i}
+                    isHovered={hoveredVibe === v.id}
+                    onHoverStart={handleHoverStart}
+                    onHoverEnd={handleHoverEnd}
+                    onSelect={handleVibeSelect}
+                  />
+                ))}
               </div>
               </motion.div>
 
               </div>
 
-              {/* Creator Collection Section - SECTION 2 */}
+              {/* Creator Collection Section - SECTION 2 with 3D Bubble Pop */}
               {(() => {
                 const devSpecialVibe = VIBE_CONFIGS.find(v => v.id === 'dev-special')
                 if (!devSpecialVibe) return null
-                const isActive = hoveredVibe === devSpecialVibe.id || selectedVibe === devSpecialVibe.id
                 
                 return (
                   <div id="creator-collection-section" className="w-full min-h-[80dvh] flex flex-col items-center justify-center pb-32 pt-40">
@@ -399,119 +739,13 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
                         <p className="text-white/40 text-xs tracking-widest uppercase">A personal universe curated by Dev</p>
                       </div>
                     
-                    <motion.button
-                      id={`vibe-${devSpecialVibe.id}`}
-                      onHoverStart={() => handleHoverStart(devSpecialVibe.id)}
-                      onHoverEnd={handleHoverEnd}
-                      onClick={() => handleVibeSelect(devSpecialVibe.id)}
-                      className="relative group flex flex-col justify-end p-8 rounded-[20px] overflow-hidden cursor-pointer text-left outline-none w-full max-w-[420px] h-[240px] border border-[#d4af37]/60 mx-auto shadow-2xl"
-                      style={{
-                        backgroundColor: devSpecialVibe.bgColor,
-                        boxShadow: isActive
-                          ? '0 0 80px rgba(212,175,55,0.7), inset 0 0 50px rgba(212,175,55,0.3)' 
-                          : '0 0 30px rgba(212, 175, 55, 0.2)',
-                        transform: isActive ? 'scale(1.03) translateY(-8px)' : 'scale(1)',
-                        filter: isActive ? 'brightness(1.2)' : 'brightness(1)',
-                        transition: 'all 0.5s cubic-bezier(0.22, 1, 0.36, 1)'
-                      }}
-                    >
-                      {/* Animated shimmer overlay */}
-                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-transparent via-[#d4af37]/25 to-transparent -translate-x-full group-hover:animate-[kadence-progress-shimmer_1.5s_infinite] pointer-events-none" />
-                      
-                      {/* Geometric overlay pattern */}
-                      <div className="absolute inset-0 opacity-[0.2] mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '12px 12px' }} />
-                      
-                      {/* Large background number */}
-                      <span className="absolute top-[-20px] left-[0px] text-[120px] font-black text-[#d4af37] opacity-[0.08] tracking-tighter leading-none pointer-events-none select-none">
-                        {devSpecialVibe.number}
-                      </span>
-
-                      {/* Badge */}
-                      {devSpecialVibe.badge && (
-                        <div className="absolute top-5 right-5 px-3 py-1 rounded backdrop-blur-md text-[10px] font-bold tracking-widest shadow-sm bg-[#d4af37]/20 text-[#d4af37] border border-[#d4af37]/40">
-                          {devSpecialVibe.badge}
-                        </div>
-                      )}
-                      
-                      {/* Text */}
-                      <div className="relative z-10 w-full mt-auto translate-y-2 group-hover:translate-y-0 transition-transform duration-400">
-                        <span
-                          className="block text-white font-bold text-lg md:text-xl leading-tight mb-1"
-                          style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-                        >
-                          {devSpecialVibe.label}
-                        </span>
-                        <div className="flex items-center gap-2 mt-1">
-                          <span className="text-white/70 text-[10px] md:text-xs uppercase font-bold tracking-wider leading-tight">
-                            {devSpecialVibe.sub}
-                          </span>
-                          <span className="text-[#d4af37] text-[10px] md:text-xs font-bold tracking-[0.1em] uppercase">
-                            • 80 handpicked tracks
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Song Preview Overlay */}
-                      <AnimatePresence>
-                        {isActive && signatureSongs[devSpecialVibe.id] && (
-                          <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="absolute inset-0 z-20 flex flex-col justify-end p-4 overflow-hidden bg-black/80"
-                          >
-                            <motion.img 
-                              key={`img-${signatureSongs[devSpecialVibe.id].id}`}
-                              src={signatureSongs[devSpecialVibe.id].albumArt} 
-                              className="absolute inset-0 w-full h-full object-cover opacity-50 blur-[3px]" 
-                              alt=""
-                              initial={{ opacity: 0, scale: 1.1 }}
-                              animate={{ opacity: 0.5, scale: 1 }}
-                              transition={{ duration: 0.6 }}
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent" />
-                            
-                            <motion.div 
-                              key={`info-${signatureSongs[devSpecialVibe.id].id}`}
-                              initial={{ opacity: 0, y: 5 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{ duration: 0.4 }}
-                              className="relative z-10 flex items-end justify-between w-full"
-                            >
-                              <div className="flex-1 min-w-0 pr-2">
-                                <p className="text-[#d4af37] font-bold text-sm truncate leading-tight">{signatureSongs[devSpecialVibe.id].name}</p>
-                                <p className="text-white/80 text-xs truncate mt-0.5">{signatureSongs[devSpecialVibe.id].artist}</p>
-                              </div>
-                              <a
-                                href={signatureSongs[devSpecialVibe.id].spotifyUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                onClick={(e) => e.stopPropagation()}
-                                className="w-8 h-8 rounded-full bg-[#ea4cc0] text-white flex items-center justify-center shrink-0 hover:scale-110 transition-transform shadow-lg"
-                                title="Listen on iTunes"
-                              >
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                                  <path d="M21 2.9v10.9a4.8 4.8 0 0 0-2.5-.7c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5V6.1l-9 1.8v8.9a4.8 4.8 0 0 0-2.5-.7c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5V4.2L21 2.9z"/>
-                                </svg>
-                              </a>
-                            </motion.div>
-                            
-                            {signatureSongs[devSpecialVibe.id].previewUrl && (
-                              <div className="relative z-10 w-full h-[2px] bg-white/20 rounded-full mt-3 overflow-hidden">
-                                <motion.div 
-                                  key={`progress-${signatureSongs[devSpecialVibe.id].id}`}
-                                  className="absolute top-0 left-0 bottom-0 bg-[#d4af37]"
-                                  initial={{ width: '0%' }}
-                                  animate={{ width: '100%' }}
-                                  transition={{ duration: 10, ease: 'linear' }}
-                                />
-                              </div>
-                            )}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </motion.button>
+                      <CreatorCollectionCard
+                        vibe={devSpecialVibe}
+                        isHovered={hoveredVibe === devSpecialVibe.id}
+                        onHoverStart={handleHoverStart}
+                        onHoverEnd={handleHoverEnd}
+                        onSelect={handleVibeSelect}
+                      />
                     </motion.div>
                   </div>
                 )
@@ -521,95 +755,12 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
 
           {/* ────────────────── STEP 2: Loading / Universe Warming ───── */}
           {step === 'loading' && (
-            <div key="step-loading-container" className="absolute top-[50dvh] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full flex justify-center">
-              <motion.div
-                key="step-loading"
-                className="relative z-10 flex flex-col items-center gap-8 px-6 max-w-sm w-full text-center"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.96 }}
-                transition={{ duration: 0.6 }}
-              >
-              {/* Pulsing vibe orb */}
-              <div className="relative flex items-center justify-center w-16 h-16">
-                {/* Outer pulse ring */}
-                <div
-                  className="absolute inset-0 rounded-full border border-white/20"
-                  style={{ animation: 'kadence-pulse-ring 2.4s ease-in-out infinite' }}
-                />
-                {/* Second ring — offset phase */}
-                <div
-                  className="absolute inset-[-6px] rounded-full border border-white/10"
-                  style={{ animation: 'kadence-pulse-ring 2.4s 0.8s ease-in-out infinite' }}
-                />
-                {/* Core dot */}
-                <div className="w-3 h-3 rounded-full bg-white/70 blur-[1px]" />
-              </div>
-
-              {/* Title */}
-              <div className="space-y-2">
-                <h2
-                  className="text-white text-3xl font-black tracking-tighter"
-                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-                >
-                  Creating Your Universe
-                </h2>
-
-                {/* Animated phrase */}
-                <div className="h-5 overflow-hidden relative">
-                  <AnimatePresence mode="wait">
-                    <motion.p
-                      key={phraseIdx}
-                      className="text-white/40 text-xs tracking-widest uppercase absolute inset-0 flex items-center justify-center"
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.4 }}
-                    >
-                      {currentPhrases[phraseIdx]}
-                    </motion.p>
-                  </AnimatePresence>
-                </div>
-              </div>
-
-              {/* Progress bar with shimmer */}
-              <div className="w-full space-y-2">
-                <div className="relative h-[2px] bg-white/8 rounded-full overflow-hidden">
-                  {/* Fill */}
-                  <motion.div
-                    className={`absolute inset-y-0 left-0 bg-gradient-to-r ${activeVibeData ? activeVibeData.gradient : 'from-blue-500 to-purple-500'} rounded-full`}
-                    initial={{ width: '0%' }}
-                    animate={{ width: `${loadingProgress}%` }}
-                    transition={{ duration: 0.6, ease: 'easeOut' }}
-                  />
-                  {/* Shimmer overlay — only visible while loading */}
-                  {loadingProgress < 100 && (
-                    <div
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                      style={{ animation: 'kadence-progress-shimmer 1.6s linear infinite' }}
-                    />
-                  )}
-                </div>
-
-                {/* Progress label */}
-                <div className="flex items-center justify-between">
-                  <p className="text-white/20 text-[10px] tracking-widest uppercase">
-                    {loadingProgress < 60  ? 'Fetching tracks'    :
-                     loadingProgress < 93  ? 'Loading artwork'    :
-                     loadingProgress < 100 ? 'Warming universe'   : 'Ready'}
-                  </p>
-                  <p className="text-white/20 text-[10px] font-mono">
-                    {Math.round(loadingProgress)}%
-                  </p>
-                </div>
-              </div>
-              </motion.div>
-            </div>
+            <GlowingRingLoader size={340} />
           )}
 
         </AnimatePresence>
         </div>
-      </motion.div>
+      </div>
     </>
   )
 }
