@@ -17,10 +17,23 @@ interface WallGridProps {
 // We overfill by 1 tile on each side so edges are always covered.
 const TILE_PX = 180
 
-// Warp effect constants (all GPU-composited via CSS transform)
-const WARP_RADIUS = 280          // px — influence radius around cursor
-const WARP_STRENGTH = 22         // px — max displacement magnitude
-const WARP_LERP = 0.12           // spring speed (0–1 per frame)
+// ── Centralized Physics Settings ──────────────────────────────────────────
+const PHYSICS = {
+  // Global Surface Physics (The Giant Lake)
+  mass: 1.0,                 // Inertia of the entire surface
+  stiffness: 0.0015,         // Very soft spring returning the surface to perfectly flat/centered (0,0)
+  damping: 0.035,            // Dissipates energy slowly over time
+  velocityInfluence: 0.045,  // How much energy the cursor movement injects into the water
+  maxDisplacement: 120,      // Max physical pan
+  maxTilt: 12,               // Subtle 3D tilt caused by movement
+  
+  // Local Wave Propagation (The Ripples)
+  waveStiffness: 0.015,
+  waveDamping: 0.04,
+  waveRadius: 700,           // Very wide spatial propagation
+  waveDrag: 0.08,            // Local dragging by cursor
+  zDepth: 0.25,              // Downward pressure
+}
 
 export function WallGrid({
   songs,
@@ -32,9 +45,14 @@ export function WallGrid({
 }: WallGridProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const tileRefs = useRef<(HTMLDivElement | null)[]>([])
-  const mouseRef = useRef({ x: -9999, y: -9999 })
-  const smoothRef = useRef({ x: -9999, y: -9999 })
-  const dispRef = useRef<{ x: number; y: number }[]>([])
+  // Pure physics state, no smooth positions needed
+  const mouseRef = useRef({ x: 0, y: 0, lastX: 0, lastY: 0, vx: 0, vy: 0, active: false })
+  const globalPhysicsRef = useRef({
+    x: 0, y: 0, vx: 0, vy: 0, // Pan
+    rx: 0, ry: 0, vrx: 0, vry: 0, // Tilt
+    lastTime: typeof performance !== 'undefined' ? performance.now() : 0
+  })
+  const dispRef = useRef<{ x: number; y: number; z: number; scale: number; vx: number; vy: number; vz: number; vScale: number }[]>([])
   const rafRef = useRef<number>(0)
   const gridRef = useRef({ cols: 0, rows: 0, count: 0 })
   const [dims, setDims] = useState({ cols: 0, rows: 0, count: 0 })
@@ -60,17 +78,27 @@ export function WallGrid({
 
   // ── Initialize displacement buffer ───────────────────────────────────────
   useEffect(() => {
-    dispRef.current = Array.from({ length: dims.count }, () => ({ x: 0, y: 0 }))
+    dispRef.current = Array.from({ length: dims.count }, () => ({
+      x: 0, y: 0, z: 0, scale: 1,
+      vx: 0, vy: 0, vz: 0, vScale: 0
+    }))
     tileRefs.current = new Array(dims.count).fill(null)
   }, [dims.count])
 
   // ── Mouse tracking ────────────────────────────────────────────────────────
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY }
+      const isFirst = !mouseRef.current.active
+      mouseRef.current.x = e.clientX
+      mouseRef.current.y = e.clientY
+      if (isFirst) {
+        mouseRef.current.lastX = e.clientX
+        mouseRef.current.lastY = e.clientY
+      }
+      mouseRef.current.active = true
     }
     const onLeave = () => {
-      mouseRef.current = { x: -9999, y: -9999 }
+      mouseRef.current.active = false
     }
     window.addEventListener('mousemove', onMove, { passive: true })
     document.addEventListener('mouseleave', onLeave)
@@ -81,21 +109,115 @@ export function WallGrid({
   }, [])
 
   // ── RAF warp loop ─────────────────────────────────────────────────────────
-  // Pure GPU path: only CSS transform is touched, no layout properties.
+  // Physics-based fluid interaction
   useEffect(() => {
     if (dims.count === 0) return
 
     const loop = () => {
       rafRef.current = requestAnimationFrame(loop)
 
-      // Smooth mouse position with spring (REMOVED FOR ZERO DELAY)
-      const sm = smoothRef.current
-      const rm = mouseRef.current
-      sm.x = rm.x
-      sm.y = rm.y
+      const now = performance.now()
+      const delta = now - globalPhysicsRef.current.lastTime
+      globalPhysicsRef.current.lastTime = now
+      // Cap dt to prevent physics explosions after tab switching/lag
+      const dt = Math.min(Math.max(delta / 16.666, 0.1), 3)
 
+      const gp = globalPhysicsRef.current
+      const vw = window.innerWidth
+      const vh = window.innerHeight
+
+      // Calculate mouse velocity for drag and wake effect
+      if (mouseRef.current.active) {
+        const mDx = mouseRef.current.x - mouseRef.current.lastX
+        const mDy = mouseRef.current.y - mouseRef.current.lastY
+        const rawVx = mDx / dt
+        const rawVy = mDy / dt
+        
+        // Smooth the velocity slightly to avoid jitter
+        mouseRef.current.vx += (rawVx - mouseRef.current.vx) * 0.2
+        mouseRef.current.vy += (rawVy - mouseRef.current.vy) * 0.2
+        
+        // Cap max velocity to prevent chaotic spikes
+        mouseRef.current.vx = Math.max(-60, Math.min(60, mouseRef.current.vx))
+        mouseRef.current.vy = Math.max(-60, Math.min(60, mouseRef.current.vy))
+        
+        mouseRef.current.lastX = mouseRef.current.x
+        mouseRef.current.lastY = mouseRef.current.y
+      } else {
+        mouseRef.current.vx *= 0.9
+        mouseRef.current.vy *= 0.9
+      }
+
+      const mSpeed = Math.sqrt(mouseRef.current.vx**2 + mouseRef.current.vy**2)
+
+      // ── 1. Global Surface Physics (The Giant Lake) ──
+      
+      // Cursor velocity injects ENERGY (force) into the system
+      let extForceX = mouseRef.current.active ? (mouseRef.current.vx * PHYSICS.velocityInfluence) : 0
+      let extForceY = mouseRef.current.active ? (mouseRef.current.vy * PHYSICS.velocityInfluence) : 0
+
+      // The surface always wants to return to a calm, flat state (0,0)
+      const springForceX = -PHYSICS.stiffness * gp.x
+      const springForceY = -PHYSICS.stiffness * gp.y
+
+      // F = ma -> a = F/m
+      const accX = (extForceX + springForceX) / PHYSICS.mass
+      const accY = (extForceY + springForceY) / PHYSICS.mass
+
+      // Integrate acceleration to velocity
+      gp.vx += accX * dt
+      gp.vy += accY * dt
+
+      // Apply viscous damping (fluid resistance)
+      const dampingFactor = Math.pow(1 - PHYSICS.damping, dt)
+      gp.vx *= dampingFactor
+      gp.vy *= dampingFactor
+
+      // Integrate velocity to position
+      gp.x += gp.vx * dt
+      gp.y += gp.vy * dt
+
+      // Soft clamp max displacement
+      const distFromCenter = Math.sqrt(gp.x**2 + gp.y**2)
+      if (distFromCenter > PHYSICS.maxDisplacement) {
+        const ratio = PHYSICS.maxDisplacement / distFromCenter
+        gp.x *= ratio
+        gp.y *= ratio
+        // Absorb energy
+        gp.vx *= 0.8
+        gp.vy *= 0.8
+      }
+
+      // Tilt is a natural consequence of the surface's VELOCITY, not position
+      const targetTiltX = -(gp.vy * 0.4) // Moving down (positive Y) tilts the top backwards (negative X)
+      const targetTiltY = (gp.vx * 0.4)  // Moving right (positive X) tilts the right side backwards (positive Y)
+
+      // Soft spring for tilt
+      gp.rx += (targetTiltX - gp.rx) * 0.05 * dt
+      gp.ry += (targetTiltY - gp.ry) * 0.05 * dt
+      
+      gp.rx = Math.max(-PHYSICS.maxTilt, Math.min(PHYSICS.maxTilt, gp.rx))
+      gp.ry = Math.max(-PHYSICS.maxTilt, Math.min(PHYSICS.maxTilt, gp.ry))
+
+      // Apply to container
+      if (containerRef.current) {
+        const gridEl = containerRef.current.firstElementChild as HTMLElement
+        if (gridEl) {
+          // Hardware accelerated 3D transform for the whole grid
+          gridEl.style.transform = `translate3d(${gp.x.toFixed(2)}px, ${gp.y.toFixed(2)}px, 0) rotateX(${gp.rx.toFixed(2)}deg) rotateY(${gp.ry.toFixed(2)}deg)`
+        }
+      }
+
+      // ── 2. Local Wave Propagation (The Ripples) ──
       const { cols } = gridRef.current
       const count = tileRefs.current.length
+
+      // Use actual mouse position to calculate physical distance to tiles
+      const mX = mouseRef.current.active ? mouseRef.current.x - gp.x : -9999
+      const mY = mouseRef.current.active ? mouseRef.current.y - gp.y : -9999
+
+      const waveDampingFactor = Math.pow(1 - PHYSICS.waveDamping, dt)
+      const time = now * 0.001
 
       for (let i = 0; i < count; i++) {
         const el = tileRefs.current[i]
@@ -104,42 +226,61 @@ export function WallGrid({
         const col = i % cols
         const row = Math.floor(i / cols)
 
-        // Tile center in screen space (offset grid is centered via CSS margin)
         const cx = col * TILE_PX - TILE_PX / 2
         const cy = row * TILE_PX - TILE_PX / 2
 
-        const dx = cx - sm.x
-        const dy = cy - sm.y
+        const dx = cx - mX
+        const dy = cy - mY
         const dist = Math.sqrt(dx * dx + dy * dy)
 
-        let tgtX = 0
-        let tgtY = 0
+        const cur = dispRef.current[i]
+        
+        let forceX = 0
+        let forceY = 0
+        let forceZ = 0
 
-        if (dist < WARP_RADIUS && dist > 0) {
-          // Smooth falloff: 1 at centre → 0 at WARP_RADIUS
-          const t = 1 - dist / WARP_RADIUS
-          const strength = t * t * WARP_STRENGTH
-          // Push tiles away from cursor (repulsion)
-          tgtX = (dx / dist) * -strength
-          tgtY = (dy / dist) * -strength
+        // Local spring: tiles always want to be perfectly flat (0,0,0)
+        forceX += PHYSICS.waveStiffness * (0 - cur.x)
+        forceY += PHYSICS.waveStiffness * (0 - cur.y)
+        forceZ += PHYSICS.waveStiffness * (0 - cur.z)
+
+        // Mouse injects force into nearby tiles, which travels outward
+        if (mouseRef.current.active && dist < PHYSICS.waveRadius && dist > 0) {
+          const t = 1 - dist / PHYSICS.waveRadius
+          const strength = t * t * (3 - 2 * t) // Smooth cubic falloff
+          
+          // Cursor drags the local surface along with its velocity
+          forceX += mouseRef.current.vx * PHYSICS.waveDrag * strength
+          forceY += mouseRef.current.vy * PHYSICS.waveDrag * strength
+
+          // Plunge depth based on cursor speed
+          forceZ += (mSpeed * PHYSICS.zDepth * -strength)
         }
 
-        // Instant snap to target (zero lag)
-        const cur = dispRef.current[i] ?? { x: 0, y: 0 }
-        cur.x = tgtX
-        cur.y = tgtY
+        // Integrate
+        cur.vx += forceX * dt
+        cur.vy += forceY * dt
+        cur.vz += forceZ * dt
 
-        // Only apply if meaningful (skip GPU upload for resting tiles)
-        if (Math.abs(cur.x) > 0.05 || Math.abs(cur.y) > 0.05) {
-          el.style.transform = `translate(${cur.x.toFixed(2)}px, ${cur.y.toFixed(2)}px)`
-        } else if (cur.x !== 0 || cur.y !== 0) {
-          el.style.transform = 'none'
-          cur.x = 0
-          cur.y = 0
-        }
+        // Dampen
+        cur.vx *= waveDampingFactor
+        cur.vy *= waveDampingFactor
+        cur.vz *= waveDampingFactor
+
+        // Move
+        cur.x += cur.vx * dt
+        cur.y += cur.vy * dt
+        cur.z += cur.vz * dt
+
+        // Extremely subtle scaling to show physical deformation without chaos
+        cur.scale = 1 + (cur.z * 0.0015)
+
+        el.style.transform = `translate3d(${cur.x.toFixed(2)}px, ${cur.y.toFixed(2)}px, ${cur.z.toFixed(2)}px) scale(${cur.scale.toFixed(3)})`
       }
     }
 
+    // Reset timestamp before starting loop to avoid jump if mounted but inactive
+    globalPhysicsRef.current.lastTime = performance.now()
     rafRef.current = requestAnimationFrame(loop)
     return () => cancelAnimationFrame(rafRef.current)
   }, [dims.count])
@@ -154,7 +295,7 @@ export function WallGrid({
     <div
       ref={containerRef}
       className="absolute inset-0 overflow-hidden"
-      style={{ background: '#050508' }}
+      style={{ background: '#050508', perspective: '1200px' }}
     >
       {/* Grid container — offset by half a tile so edges are always covered */}
       <div
@@ -170,6 +311,7 @@ export function WallGrid({
           gridTemplateRows: `repeat(${rows}, ${TILE_PX}px)`,
           gap: '0px',
           willChange: 'transform',
+          transformStyle: 'preserve-3d',
         }}
       >
         {Array.from({ length: count }, (_, i) => {
