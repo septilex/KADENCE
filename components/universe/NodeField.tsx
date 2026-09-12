@@ -6,6 +6,7 @@ import { SongNode, Vibe } from '@/lib/types'
 import { SPACING_X, SPACING_Y, CARD_W, CARD_H, computeGrid } from '@/lib/gridCalc'
 import { VIBE_COLORS } from '@/lib/types'
 import { atlasManager, getOptimizedArtworkUrl } from '@/lib/atlasManager'
+import { JellyField } from '@/lib/jellyField'
 
 interface NodeFieldProps {
   songs: SongNode[]
@@ -14,6 +15,7 @@ interface NodeFieldProps {
   selectedId: string | null
   onHover: (song: SongNode | null) => void
   onSelect: (song: SongNode) => void
+  onPreview: (song: SongNode | null) => void
 }
 
 // ── Texture atlas config ──────────────────────────────────────────────────────
@@ -41,21 +43,27 @@ const vertexShader = /* glsl */`
   out vec3 vNormal;
   out float vWarpInfluence;
   out vec3 vVibeColor;
+  out float vPopProgress;
 
   uniform vec2  uCameraXY;
   uniform vec2  uRawMouse;
   uniform vec2  uMouse;
   uniform float uHoverIdx;
   uniform float uSelectedIdx;
+  uniform float uPopIdx;
+  uniform float uPopProgress;
   uniform float uTime;
   uniform vec3  uVibeAccent;
   uniform float uWaveSpeed;
   uniform float uWaveAmp;
+  uniform sampler2D uJellyMap;
+  uniform vec4 uGridExtent;
 
   void main() {
     vUvCustom = uv;
     vTexIndex = aTexIndex;
     vVibeColor = uVibeAccent;
+    vPopProgress = 0.0;
 
     vec3 localPos = position;
 
@@ -63,16 +71,19 @@ const vertexShader = /* glsl */`
     float zOffset    = 0.0;
     vHighlight       = 0.92;
 
-    if (abs(aInstanceIdx - uHoverIdx) < 0.1) {
-      localScale = 1.03;
-      zOffset    = 0.3;
-      vHighlight = 1.25;
+    if (abs(aInstanceIdx - uPopIdx) < 0.1) {
+      // Soft pop bubble: scale grows, pushing out slightly in Z
+      // Using an ease-out curve in JS already, so simple linear mix here is fine
+      localScale = mix(1.0, 1.25, uPopProgress);
+      zOffset    = mix(0.0, 0.4, uPopProgress);
+      vHighlight = mix(0.92, 1.35, uPopProgress);
+      vPopProgress = uPopProgress;
     }
 
     if (abs(aInstanceIdx - uSelectedIdx) < 0.1) {
-      localScale = 1.06;
-      zOffset    = 0.8;
-      vHighlight = 1.45;
+      localScale = max(localScale, 1.06);
+      zOffset    = max(zOffset, 0.8);
+      vHighlight = max(vHighlight, 1.45);
     }
 
     localPos.xy *= localScale;
@@ -80,6 +91,11 @@ const vertexShader = /* glsl */`
 
     vec3 baseWPos = (modelMatrix * instanceMatrix * vec4(localPos, 1.0)).xyz;
     vec3 displacedWPos = baseWPos;
+
+    // ── Jelly Displacement Field ──
+    vec2 gridUV = (baseWPos.xy - uGridExtent.xy) / (uGridExtent.zw - uGridExtent.xy);
+    vec2 jellyDisp = texture(uJellyMap, clamp(gridUV, 0.0, 1.0)).rg;
+    displacedWPos.xy += jellyDisp;
     
     // ── Flat Cinematic Wall ─────────────────────────────────────
     // The wall remains perfectly flat at Z=0. No global mesh curvature.
@@ -87,7 +103,7 @@ const vertexShader = /* glsl */`
     // ── Glass Lens (smoothed mouse — lively trailing) ──
     // uMouse trails behind cursor with spring physics, creating organic follow.
     // uRawMouse is kept for hover hit-detection only (instant, below).
-    vec2 deltaLens = baseWPos.xy - uMouse;
+    vec2 deltaLens = displacedWPos.xy - uMouse;
     float distLens = length(deltaLens);
     
     float R = ${LENS_RADIUS.toFixed(1)};
@@ -137,6 +153,7 @@ const fragmentShader = /* glsl */`
   in vec3  vNormal;
   in float vWarpInfluence;
   in vec3  vVibeColor;
+  in float vPopProgress;
 
   uniform sampler2D uAtlas;
   uniform float uSelectedIdx;
@@ -159,12 +176,24 @@ const fragmentShader = /* glsl */`
     }
 
     // Atlas UV calculation
+    // Subtly zoom out artwork to reveal a frame while the tile grows
+    float artworkZoomScale = mix(1.0, 1.15, vPopProgress);
+    vec2 scaledUv = centeredUv * artworkZoomScale;
+    vec2 textureUv = scaledUv + 0.5;
+
     float cols = 16.0;
     float col = mod(vTexIndex, cols);
     float row = floor(vTexIndex / cols);
-    vec2 atlasUv = (vUvCustom + vec2(col, cols - 1.0 - row)) / cols;
-
-    vec4 c = texture(uAtlas, atlasUv);
+    
+    // Check bounds for the "expanding frame" effect
+    vec4 c;
+    if (textureUv.x < 0.0 || textureUv.x > 1.0 || textureUv.y < 0.0 || textureUv.y > 1.0) {
+      // Solid color background mimicking the vibe accent behind the image
+      c = vec4(vVibeColor * 0.15, 1.0);
+    } else {
+      vec2 atlasUv = (textureUv + vec2(col, cols - 1.0 - row)) / cols;
+      c = texture(uAtlas, atlasUv);
+    }
 
     // ── Base colour: gamma-correct multiply by per-tile brightness ────────
     vec3 lin     = pow(c.rgb, vec3(2.2));
@@ -191,7 +220,7 @@ const fragmentShader = /* glsl */`
   }
 `;
 
-export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, onSelect }: NodeFieldProps) {
+export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, onSelect, onPreview }: NodeFieldProps) {
   const { camera, gl, size } = useThree()
   const meshRef = useRef<THREE.InstancedMesh>(null)
 
@@ -211,6 +240,12 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
   const mouseVelocity     = useRef(new THREE.Vector2(0, 0))
   const lastHoverId       = useRef<string | null>(null)
   const textureNeedsFlush = useRef(false)
+  const jellyFieldRef = useRef<JellyField | null>(null)
+  const prevMouseWorldRef = useRef(new THREE.Vector2(0, 0))
+  const prevMouseActiveRef = useRef(false)
+  const hoverStartTime    = useRef<number | null>(null)
+  const activePopId       = useRef<string | null>(null)
+  const popProgress       = useRef(0)
 
   // ── Pre-allocated scratch objects to avoid per-frame heap allocation ────────
   // These are reused every frame via .set() / .copy() — zero GC pressure.
@@ -392,10 +427,14 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
       uMouse:       { value: new THREE.Vector2(0, 0) },
       uHoverIdx:      { value: -1 },
       uSelectedIdx:   { value: -1 },
+      uPopIdx:        { value: -1 },
+      uPopProgress:   { value: 0 },
       uTime:          { value: 0 },
       uVibeAccent:    { value: new THREE.Color('#d63384') },
       uWaveSpeed:     { value: 1.0 },
       uWaveAmp:       { value: 1.0 },
+      uJellyMap:      { value: null },
+      uGridExtent:    { value: new THREE.Vector4(0, 0, 1, 1) },
     },
     glslVersion: THREE.GLSL3,
     transparent: false,
@@ -453,7 +492,17 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
       if (e.target !== el) return
       if (lastHoverId.current) {
         const s = songMaps.byId.get(lastHoverId.current)
-        if (s) onSelect(s)
+        if (s) {
+          // If the tile is already "popped", start preview. Otherwise select/open.
+          if (activePopId.current === lastHoverId.current) {
+            onPreview(s)
+          } else {
+            onSelect(s)
+          }
+        }
+      } else {
+        // Clicked empty space
+        onPreview(null)
       }
     }
     
@@ -467,6 +516,11 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
       window.removeEventListener('click', onClick)
     }
   }, [gl, onSelect, songMaps])
+
+  // ── Jelly field cleanup ────────────────────────────────────────────────────
+  useEffect(() => {
+    return () => { jellyFieldRef.current?.dispose() }
+  }, [])
 
   // ── Frame Loop ─────────────────────────────────────────────────────────────
   useFrame((state, delta) => {
@@ -509,16 +563,66 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
       }
     }
 
-    // ── Zero Delay Cursor Tracking ───────────────────────────────────────────
-    // The user requested ZERO lag/delay between the cursor and the cursor effect.
-    // Directly snap the effect coordinates to the raw target world coordinates.
-    smoothMouseWorld.current.x = targetWorldX;
-    smoothMouseWorld.current.y = targetWorldY;
+    // ── Smooth Delayed Cursor Tracking ──────────────────────────────────────
+    // Add smooth spring lag to the cursor interaction so tiles have weight, delay,
+    // and a luxurious fluid follow instead of snapping rigidly to the pointer.
+    if (isMouseActive) {
+      if (!prevMouseActiveRef.current) {
+        // First frame active: snap so there is no wild jump from offscreen
+        smoothMouseWorld.current.set(targetWorldX, targetWorldY)
+        mouseVelocity.current.set(0, 0)
+      } else {
+        // Damped spring-follow towards actual cursor position
+        // Gives the "drag through honey/liquid" delayed follow
+        const followSpeed = 9.0 // Smooth delayed follow rate
+        const alpha = 1.0 - Math.exp(-followSpeed * dt)
+        smoothMouseWorld.current.x += (targetWorldX - smoothMouseWorld.current.x) * alpha
+        smoothMouseWorld.current.y += (targetWorldY - smoothMouseWorld.current.y) * alpha
+      }
+    }
 
     rawMouseWorld.current.set(targetWorldX, targetWorldY)
 
     material.uniforms.uMouse.value.copy(smoothMouseWorld.current)
     material.uniforms.uRawMouse.value.copy(rawMouseWorld.current)
+
+    // ── Jelly Field Physics Update ──────────────────────────────────────────
+    // Lazy-init the jelly field on first frame (avoids creation if no frames run)
+    if (!jellyFieldRef.current) {
+      jellyFieldRef.current = new JellyField()
+      material.uniforms.uJellyMap.value = jellyFieldRef.current.texture
+    }
+
+    // Compute grid world-space extents from current tile layout
+    const halfC_j = (COLS - 1) / 2
+    const halfR_j = (ROWS - 1) / 2
+    const gMinX = -halfC_j * SPACING_X
+    const gMinY = -halfR_j * SPACING_Y
+    const gMaxX = halfC_j * SPACING_X
+    const gMaxY = halfR_j * SPACING_Y
+    material.uniforms.uGridExtent.value.set(gMinX, gMinY, gMaxX, gMaxY)
+
+    // Compute velocity of the smoothed interaction point for jelly physics
+    // Using smoothed coordinates provides fluid, organic momentum without jerky jitter
+    let jellyVelX = 0
+    let jellyVelY = 0
+    if (isMouseActive && prevMouseActiveRef.current && dt > 0) {
+      jellyVelX = (smoothMouseWorld.current.x - prevMouseWorldRef.current.x) / dt
+      jellyVelY = (smoothMouseWorld.current.y - prevMouseWorldRef.current.y) / dt
+    }
+    prevMouseActiveRef.current = isMouseActive
+    if (isMouseActive) {
+      prevMouseWorldRef.current.copy(smoothMouseWorld.current)
+    }
+
+    // Run spring-mass simulation and upload displacement texture to GPU
+    jellyFieldRef.current.update(
+      smoothMouseWorld.current.x, smoothMouseWorld.current.y,
+      jellyVelX, jellyVelY,
+      isMouseActive,
+      dt,
+      gMinX, gMinY, gMaxX, gMaxY,
+    )
 
     // ── Vibe personality styling — only write to GPU uniforms when values change ─
     let waveSpeed = 1.0
@@ -596,12 +700,45 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
 
     if (newHoverId !== lastHoverId.current) {
       lastHoverId.current = newHoverId
+      hoverStartTime.current = newHoverId ? state.clock.getElapsedTime() : null
+      activePopId.current = null
+      
       // O(1) Map lookup — replaces O(n) songs.find()
       const s = newHoverId ? (songMaps.byId.get(newHoverId) ?? null) : null
       onHover(s)
       gl.domElement.style.cursor = newHoverId ? 'pointer' : 'crosshair'
     }
 
+    // ── Hover Dwell & Pop Animation ──────────────────────────────────────────
+    const currentElapsedTime = state.clock.getElapsedTime()
+    if (lastHoverId.current && hoverStartTime.current) {
+      if (currentElapsedTime - hoverStartTime.current >= 1.0) { // 1 second dwell
+        activePopId.current = lastHoverId.current
+      }
+    }
+
+    let targetPopProgress = 0
+    let currentPopIdx = -1
+
+    if (activePopId.current === lastHoverId.current && lastHoverId.current !== null) {
+      targetPopProgress = 1
+      currentPopIdx = hoverIdx
+    } else if (popProgress.current > 0.01) {
+      // Keep rendering the previous pop index while it shrinks back
+      currentPopIdx = material.uniforms.uPopIdx.value
+    }
+
+    // Ease pop progress
+    // Growth ~500ms, Shrink ~350ms
+    const popSpeed = targetPopProgress === 1 ? 6.0 : 8.0
+    popProgress.current += (targetPopProgress - popProgress.current) * (dt * popSpeed)
+
+    if (popProgress.current < 0.001) {
+      popProgress.current = 0
+    }
+
+    material.uniforms.uPopIdx.value = currentPopIdx
+    material.uniforms.uPopProgress.value = popProgress.current
     material.uniforms.uHoverIdx.value = hoverIdx
 
     let selIdx = -1

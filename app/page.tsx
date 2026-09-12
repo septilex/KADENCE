@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef, useCallback, memo } from 'react'
+import { useEffect, useRef, useCallback, useState, memo } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import { useSongStore } from '@/store/songStore'
@@ -11,6 +11,7 @@ import { SearchPanel } from '@/components/ui/SearchPanel'
 import { SongDetail } from '@/components/ui/SongDetail'
 import { Navbar } from '@/components/ui/Navbar'
 import { HeroBackgroundVideo } from '@/components/ui/HeroBackgroundVideo'
+import { PreviewVideoLayer } from '@/components/ui/PreviewVideoLayer'
 import { GlobalAudioPlayer } from '@/components/GlobalAudioPlayer'
 import { useAudioStore } from '@/store/audioStore'
 import { ChangeVibeOverlay } from '@/components/ui/ChangeVibeOverlay'
@@ -101,6 +102,7 @@ export default function Home() {
 
   const { isSearchOpen, setSearchOpen } = useUIStore()
   const { setFps } = usePerformanceStore()
+  const [previewSong, setPreviewSong] = useState<SongNode | null>(null)
   const fpsRef = useRef(60)
 
   /**
@@ -233,6 +235,9 @@ export default function Home() {
       {/* Background Video Layer (Homepage Only) */}
       <HeroBackgroundVideo currentVibe={currentVibe} introComplete={introComplete} />
 
+      {/* Song Preview Video Layer */}
+      {introComplete && <PreviewVideoLayer song={previewSong} />}
+
       {/* 3D Universe */}
       <motion.div
         className="absolute inset-0"
@@ -249,6 +254,7 @@ export default function Home() {
           currentVibe={currentVibe}
           onHover={hoverSong}
           onSelect={handleSelectSong}
+          onPreview={setPreviewSong}
           isDetailOpen={!!selectedSong}
           isRefreshing={isRefreshing}
           onFps={(f) => { fpsRef.current = f; setFps(f) }}

@@ -1,8 +1,8 @@
 'use client'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback, memo } from 'react'
 import { Vibe } from '@/lib/types'
-import { useChartHover } from '@/hooks/useChartHover'
+import { useChartHover, CATEGORY_PREVIEW_VIDEOS } from '@/hooks/useChartHover'
 import { vibeService } from '@/lib/vibeService'
 
 import { VIBE_CONFIGS, VibeConfig } from '@/lib/vibeConfig'
@@ -14,7 +14,7 @@ interface IntroScreenProps {
 }
 
 // ── 3D Bubble Pop Card for the 14 Homepage Editorial Grid Tracks ──
-function HomepageVibeCard({
+const HomepageVibeCard = memo(function HomepageVibeCard({
   vibe,
   index,
   isHovered,
@@ -154,10 +154,18 @@ function HomepageVibeCard({
       </div>
     </motion.div>
   )
-}
+})
 
 // ── 3D Bubble Pop Cue Button for Creator Collection ──
-function CreatorCueCard({ onClick }: { onClick: () => void }) {
+function CreatorCueCard({
+  onClick,
+  onHoverStart,
+  onHoverEnd,
+}: {
+  onClick: () => void
+  onHoverStart?: () => void
+  onHoverEnd?: () => void
+}) {
   const cueRef = useRef<HTMLDivElement>(null)
   const rectRef = useRef<DOMRect | null>(null)
 
@@ -165,6 +173,7 @@ function CreatorCueCard({ onClick }: { onClick: () => void }) {
     if (cueRef.current) {
       rectRef.current = cueRef.current.getBoundingClientRect()
     }
+    onHoverStart?.()
   }
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -203,6 +212,7 @@ function CreatorCueCard({ onClick }: { onClick: () => void }) {
     el.style.setProperty('--ry', '0deg')
     el.style.setProperty('--mx', '50%')
     el.style.setProperty('--my', '50%')
+    onHoverEnd?.()
   }
 
   return (
@@ -421,12 +431,190 @@ const PARTICLES = Array.from({ length: 22 }, (_, i) => ({
   driftY: 30 + ((i * 17) % 50),     // 30–80 px upward drift
 }))
 
+// ── Zoom/Crop Configuration for Hardcoded Letterbox Videos ─────────────────
+// The 8 specified categories whose local 30s clips have baked-in letterbox bars.
+// Applying targeted, minimal scale values crops out the black bars while preserving
+// natural cinematic framing and 100% full-viewport coverage without distortion.
+const ZOOMED_CATEGORIES = new Set([
+  'Pop Rising',
+  'Dance Hits',
+  'Mood Booster',
+  'Late Night',
+  'Top Telugu',
+  'Top Tamil',
+  'Top Hindi',
+  'Top K-Pop',
+])
+
+const CATEGORY_ZOOM_SCALES: Record<string, number> = {
+  '/videos/Kiss Kiss Bang Bang_30s.mp4':    1.37, // 05 — Pop Rising (Omi Ba Pop / 2.40:1)
+  '/videos/Yeshanagula_30s.mp4':            1.37, // 06 — Dance Hits (Yeshanagula / 2.40:1)
+  '/videos/Sunflower_30s.mp4':             1.37, // 07 — Mood Booster (Sunflower / 2.39:1)
+  '/videos/One Of The Girls_30s.mp4':       1.16, // 08 — Late Night (Roses / 2:1 Univisium)
+  '/videos/God Mode_30s.mp4':               1.35, // Dev Special (God Mode / 2.40:1)
+  "/videos/Baby Won't You Tell Me_30s.mp4": 1.35, // 11 — Top Telugu (Baby Don't You Love Me / 2.35:1)
+  '/videos/Monica_30s.mp4':                1.37, // 12 — Top Tamil (Monica / 2.40:1)
+  '/videos/Gehra Hua_30s.mp4':              1.38, // 13 — Top Hindi (Gehra Hua / 2.40:1)
+  '/videos/Dynamite_30s.mp4':               1.35, // 14 — Top K-Pop (Dynamite / 2.35:1)
+}
+
+function getCategoryVideoScale(url: string | null): number {
+  if (!url) return 1
+  return CATEGORY_ZOOM_SCALES[url] ?? 1
+}
+// All unique video URLs for the persistent pool — computed once at module level.
+// Used by CategoryVideoBackground to pre-create one <video> per category MP4.
+const ALL_POOL_URLS: string[] = Object.values(CATEGORY_PREVIEW_VIDEOS).filter((v): v is string => Boolean(v))
+
+// ── Full-Screen Category Video Background ─────────────────────────────────
+// Persistent video pool: 15 <video> elements, each permanently bound to one MP4.
+// On hover, we show/play the target and hide/pause the previous — no src swap,
+// no re-initialization, no repeated decode. Videos start with preload="none"
+// (zero network cost) and are promoted to preload="auto" lazily.
+function CategoryVideoBackground({ url }: { url: string | null }) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const poolRef = useRef<Map<string, HTMLVideoElement> | null>(null)
+  const activeUrlRef = useRef<string | null>(null)
+  const isAudioBlocked = useRef(false)
+
+  // ── Create persistent video pool on mount ────────────────────────────────
+  // Each video element is created once, permanently bound to its MP4 src.
+  // Initial preload="none" means zero network requests at page load.
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container || poolRef.current) return
+
+    const pool = new Map<string, HTMLVideoElement>()
+    for (const videoUrl of ALL_POOL_URLS) {
+      const video = document.createElement('video')
+      video.src = videoUrl
+      video.playsInline = true
+      video.preload = 'none'
+      video.style.cssText = [
+        'position:absolute',
+        'top:0', 'left:0', 'width:100%', 'height:100%',
+        'object-fit:cover',
+        'display:none',
+        `transform:translate3d(0,0,0) scale(${getCategoryVideoScale(videoUrl)})`,
+        'transform-origin:center center',
+      ].join(';')
+      container.appendChild(video)
+      pool.set(videoUrl, video)
+    }
+    poolRef.current = pool
+
+    // ── Progressive background preloading ─────────────────────────────────
+    // After 3s page idle, promote one video every 800ms from preload="none"
+    // to preload="auto". This spreads network load over ~12 seconds and lets
+    // the browser buffer initial frames without blocking initial page render.
+    let cancelled = false
+    let intervalId: ReturnType<typeof setInterval> | null = null
+    const preloadDelay = setTimeout(() => {
+      if (cancelled) return
+      let idx = 0
+      intervalId = setInterval(() => {
+        // Skip videos already promoted by hover or earlier iterations
+        while (idx < ALL_POOL_URLS.length) {
+          const v = pool.get(ALL_POOL_URLS[idx])
+          if (v && v.preload !== 'auto') break
+          idx++
+        }
+        if (idx >= ALL_POOL_URLS.length) {
+          if (intervalId) clearInterval(intervalId)
+          return
+        }
+        const v = pool.get(ALL_POOL_URLS[idx])
+        if (v) v.preload = 'auto'
+        idx++
+      }, 800)
+    }, 3000)
+
+    return () => {
+      cancelled = true
+      clearTimeout(preloadDelay)
+      if (intervalId) clearInterval(intervalId)
+      pool.forEach(video => {
+        video.pause()
+        video.removeAttribute('src')
+        video.remove()
+      })
+      pool.clear()
+      poolRef.current = null
+    }
+  }, [])
+
+  // ── Handle hover target changes — fully imperative, zero React state ────
+  useEffect(() => {
+    const pool = poolRef.current
+    if (!pool) return
+
+    const prevUrl = activeUrlRef.current
+    activeUrlRef.current = url
+
+    // Pause and hide previous video immediately
+    if (prevUrl && prevUrl !== url) {
+      const prevVideo = pool.get(prevUrl)
+      if (prevVideo) {
+        prevVideo.pause()
+        prevVideo.style.display = 'none'
+      }
+    }
+
+    if (!url) return
+
+    const video = pool.get(url)
+    if (!video) return
+
+    // Promote to eager preload on first hover (if background preload hasn't reached it)
+    if (video.preload !== 'auto') {
+      video.preload = 'auto'
+    }
+
+    // Show and play immediately — do NOT wait for canplay/canplaythrough.
+    // The browser will render frames as soon as decoded data is available.
+    video.style.display = 'block'
+    video.currentTime = 0
+
+    // Capture current target for stale-check in async catch
+    const currentTarget = url
+    if (isAudioBlocked.current) {
+      video.muted = true
+      video.play().catch(() => {})
+    } else {
+      video.muted = false
+      const p = video.play()
+      if (p && typeof p.catch === 'function') {
+        p.catch((e) => {
+          // If user already moved to a different category, don't retry —
+          // the stale video was already paused by the newer hover
+          if (activeUrlRef.current !== currentTarget) return
+          if (e && e.name === 'NotAllowedError') {
+            isAudioBlocked.current = true
+          }
+          video.muted = true
+          video.play().catch(() => {})
+        })
+      }
+    }
+  }, [url])
+
+  const isAnyActive = Boolean(url)
+
+  return (
+    <div
+      ref={containerRef}
+      className={`fixed inset-0 z-[1] pointer-events-none overflow-hidden bg-black transition-opacity duration-300 ${isAnyActive ? 'opacity-100' : 'opacity-0'}`}
+      style={{ contain: 'strict', transform: 'translate3d(0, 0, 0)' }}
+    />
+  )
+}
+
 export function IntroScreen({ onVibeSelect }: IntroScreenProps) {
   const [step, setStep]               = useState<'vibe' | 'loading'>('vibe')
   const [selectedVibe, setSelectedVibe] = useState<Vibe | null>(null)
 
   // ── Chart Hover Preview ──
-  const { hoveredVibe, handleHoverStart, handleHoverEnd, signatureSongs } = useChartHover()
+  const { hoveredVibe, activeVideoUrl, handleHoverStart, handleHoverEnd, signatureSongs } = useChartHover()
 
   const scrollWrapperRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
@@ -438,11 +626,11 @@ export function IntroScreen({ onVibeSelect }: IntroScreenProps) {
     vibeService.prefetchAllVibes()
   }, [])
 
-  function handleVibeSelect(vibe: Vibe) {
+  const handleVibeSelect = useCallback((vibe: Vibe) => {
     setSelectedVibe(vibe)
     setStep('loading')
     onVibeSelect(vibe)
-  }
+  }, [onVibeSelect])
 
   const scrollToCreatorCollection = () => {
     const section2 = document.getElementById('creator-collection-section')
@@ -615,7 +803,7 @@ export function IntroScreen({ onVibeSelect }: IntroScreenProps) {
 
       {/* ── Fixed Ambient Background Layer (Compositor-isolated, 0 scroll overhead) ── */}
       <div
-        className="fixed inset-0 pointer-events-none overflow-hidden"
+        className={`fixed inset-0 pointer-events-none overflow-hidden transition-opacity duration-300 ${activeVideoUrl ? 'opacity-0' : 'opacity-100'}`}
         style={{ contain: 'strict', transform: 'translate3d(0, 0, 0)' }}
       >
         {/* Floating particles */}
@@ -636,7 +824,7 @@ export function IntroScreen({ onVibeSelect }: IntroScreenProps) {
         ))}
 
         {/* Dynamic vibe background glow */}
-        <AnimatePresence mode="wait">
+        <AnimatePresence>
           {activeVibeData && (
             <motion.div
               key={activeVibeData.id}
@@ -664,6 +852,9 @@ export function IntroScreen({ onVibeSelect }: IntroScreenProps) {
           style={{ contain: 'paint' }}
         />
       </div>
+
+      {/* ── Full-Screen Category Video Background (Phase 1: hover dwell → video) ── */}
+      <CategoryVideoBackground url={activeVideoUrl} />
 
       {/* ── Native, Butter-Smooth 60/120 FPS Scroll Container ── */}
       <div
@@ -713,11 +904,11 @@ export function IntroScreen({ onVibeSelect }: IntroScreenProps) {
                   <span className="inline-block bg-white" style={{ width: '0.75em', height: '0.65em', clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)', margin: '0 0.04em' }} />
                   <span>DENCE</span>
                 </h1>
-                <p className="text-white/40 text-[10px] md:text-xs tracking-[0.6em] uppercase font-bold mt-2">iTunes Universe</p>
+                <p className={`text-white/40 text-[10px] md:text-xs tracking-[0.6em] uppercase font-bold mt-2 transition-opacity duration-300 ${activeVideoUrl ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>iTunes Universe</p>
               </div>
 
               {/* Question */}
-              <div className="text-center space-y-1 mb-2">
+              <div className={`text-center space-y-1 mb-2 transition-opacity duration-300 ${activeVideoUrl ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
                 <h2
                   className="text-white text-2xl md:text-3xl font-light tracking-tight"
                   style={{ fontFamily: "'Space Grotesk', sans-serif" }}
@@ -728,7 +919,13 @@ export function IntroScreen({ onVibeSelect }: IntroScreenProps) {
               </div>
 
               {/* Creator Collection Cue with 3D Bubble Pop & Magnetic Nav */}
-              <CreatorCueCard onClick={scrollToCreatorCollection} />
+              <div className={`transition-opacity duration-300 ${activeVideoUrl && hoveredVibe !== 'dev-special' ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+                <CreatorCueCard
+                  onClick={scrollToCreatorCollection}
+                  onHoverStart={() => handleHoverStart('dev-special')}
+                  onHoverEnd={handleHoverEnd}
+                />
+              </div>
 
               {/* Vibe grid — strict 7×2 on desktop with 3D Bubble Pop Hover */}
               <div className="grid gap-3 w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
@@ -749,6 +946,7 @@ export function IntroScreen({ onVibeSelect }: IntroScreenProps) {
               </div>
 
               {/* Creator Collection Section - SECTION 2 with 3D Bubble Pop */}
+              <div className={`transition-opacity duration-300 ${activeVideoUrl && hoveredVibe !== 'dev-special' ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
               {(() => {
                 const devSpecialVibe = VIBE_CONFIGS.find(v => v.id === 'dev-special')
                 if (!devSpecialVibe) return null
@@ -777,6 +975,7 @@ export function IntroScreen({ onVibeSelect }: IntroScreenProps) {
                   </div>
                 )
               })()}
+              </div>
             </motion.div>
           )}
 

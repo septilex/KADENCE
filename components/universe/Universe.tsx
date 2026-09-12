@@ -13,6 +13,7 @@ interface UniverseProps {
   currentVibe: Vibe | null
   onHover: (song: SongNode | null) => void
   onSelect: (song: SongNode) => void
+  onPreview: (song: SongNode | null) => void
   isDetailOpen?: boolean
   isRefreshing?: boolean
   onFps?: (fps: number) => void
@@ -25,6 +26,7 @@ export function Universe({
   currentVibe,
   onHover,
   onSelect,
+  onPreview,
   isDetailOpen = false,
   isRefreshing = false,
   onFps,
@@ -58,6 +60,7 @@ export function Universe({
             selectedId={selectedSong?.id ?? null}
             onHover={onHover}
             onSelect={onSelect}
+            onPreview={onPreview}
           />
         )}
         <CameraController
