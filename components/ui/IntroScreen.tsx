@@ -7,6 +7,8 @@ import { vibeService } from '@/lib/vibeService'
 
 import { VIBE_CONFIGS, VibeConfig } from '@/lib/vibeConfig'
 import { GlowingRingLoader } from './GlowingRingLoader'
+import { globalAudioManager } from '@/lib/audioManager'
+import { NCSReactor } from './NCSReactor'
 
 interface IntroScreenProps {
   loadingProgress?: number
@@ -31,6 +33,7 @@ const HomepageVibeCard = memo(function HomepageVibeCard({
 }) {
   const popRef = useRef<HTMLDivElement>(null)
   const rectRef = useRef<DOMRect | null>(null)
+  const rafRef = useRef<number | null>(null)
 
   const handlePointerEnter = () => {
     if (popRef.current) {
@@ -47,25 +50,38 @@ const HomepageVibeCard = memo(function HomepageVibeCard({
       rect = el.getBoundingClientRect()
       rectRef.current = rect
     }
-    const px = (e.clientX - rect.left) / rect.width - 0.5
-    const py = (e.clientY - rect.top) / rect.height - 0.5
-    // Subtle magnetic attraction + responsive physical 3D tilt
-    const tx = (px * 14).toFixed(1)
-    const ty = (py * 14).toFixed(1)
-    const rx = (-py * 20).toFixed(2)
-    const ry = (px * 20).toFixed(2)
-    const mx = ((px + 0.5) * 100).toFixed(1)
-    const my = ((py + 0.5) * 100).toFixed(1)
+    const clientX = e.clientX
+    const clientY = e.clientY
 
-    el.style.setProperty('--tx', `${tx}px`)
-    el.style.setProperty('--ty', `${ty}px`)
-    el.style.setProperty('--rx', `${rx}deg`)
-    el.style.setProperty('--ry', `${ry}deg`)
-    el.style.setProperty('--mx', `${mx}%`)
-    el.style.setProperty('--my', `${my}%`)
+    if (rafRef.current) return
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = null
+      if (!el || !rectRef.current) return
+      const currentRect = rectRef.current
+      const px = (clientX - currentRect.left) / currentRect.width - 0.5
+      const py = (clientY - currentRect.top) / currentRect.height - 0.5
+      // Subtle magnetic attraction + responsive physical 3D tilt
+      const tx = (px * 14).toFixed(1)
+      const ty = (py * 14).toFixed(1)
+      const rx = (-py * 20).toFixed(2)
+      const ry = (px * 20).toFixed(2)
+      const mx = ((px + 0.5) * 100).toFixed(1)
+      const my = ((py + 0.5) * 100).toFixed(1)
+
+      el.style.setProperty('--tx', `${tx}px`)
+      el.style.setProperty('--ty', `${ty}px`)
+      el.style.setProperty('--rx', `${rx}deg`)
+      el.style.setProperty('--ry', `${ry}deg`)
+      el.style.setProperty('--mx', `${mx}%`)
+      el.style.setProperty('--my', `${my}%`)
+    })
   }
 
   const handlePointerLeave = () => {
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current)
+      rafRef.current = null
+    }
     rectRef.current = null
     const el = popRef.current
     if (!el) return
@@ -168,6 +184,7 @@ function CreatorCueCard({
 }) {
   const cueRef = useRef<HTMLDivElement>(null)
   const rectRef = useRef<DOMRect | null>(null)
+  const rafRef = useRef<number | null>(null)
 
   const handlePointerEnter = () => {
     if (cueRef.current) {
@@ -184,25 +201,38 @@ function CreatorCueCard({
       rect = el.getBoundingClientRect()
       rectRef.current = rect
     }
-    const px = (e.clientX - rect.left) / rect.width - 0.5
-    const py = (e.clientY - rect.top) / rect.height - 0.5
-    // Subtle magnetic attraction + responsive 3D tilt
-    const tx = (px * 16).toFixed(1)
-    const ty = (py * 10).toFixed(1)
-    const rx = (-py * 16).toFixed(2)
-    const ry = (px * 16).toFixed(2)
-    const mx = ((px + 0.5) * 100).toFixed(1)
-    const my = ((py + 0.5) * 100).toFixed(1)
+    const clientX = e.clientX
+    const clientY = e.clientY
 
-    el.style.setProperty('--tx', `${tx}px`)
-    el.style.setProperty('--ty', `${ty}px`)
-    el.style.setProperty('--rx', `${rx}deg`)
-    el.style.setProperty('--ry', `${ry}deg`)
-    el.style.setProperty('--mx', `${mx}%`)
-    el.style.setProperty('--my', `${my}%`)
+    if (rafRef.current) return
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = null
+      if (!el || !rectRef.current) return
+      const currentRect = rectRef.current
+      const px = (clientX - currentRect.left) / currentRect.width - 0.5
+      const py = (clientY - currentRect.top) / currentRect.height - 0.5
+      // Subtle magnetic attraction + responsive 3D tilt
+      const tx = (px * 16).toFixed(1)
+      const ty = (py * 10).toFixed(1)
+      const rx = (-py * 16).toFixed(2)
+      const ry = (px * 16).toFixed(2)
+      const mx = ((px + 0.5) * 100).toFixed(1)
+      const my = ((py + 0.5) * 100).toFixed(1)
+
+      el.style.setProperty('--tx', `${tx}px`)
+      el.style.setProperty('--ty', `${ty}px`)
+      el.style.setProperty('--rx', `${rx}deg`)
+      el.style.setProperty('--ry', `${ry}deg`)
+      el.style.setProperty('--mx', `${mx}%`)
+      el.style.setProperty('--my', `${my}%`)
+    })
   }
 
   const handlePointerLeave = () => {
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current)
+      rafRef.current = null
+    }
     rectRef.current = null
     const el = cueRef.current
     if (!el) return
@@ -293,6 +323,7 @@ function CreatorCollectionCard({
 }) {
   const cardRef = useRef<HTMLDivElement>(null)
   const rectRef = useRef<DOMRect | null>(null)
+  const rafRef = useRef<number | null>(null)
 
   const handlePointerEnter = () => {
     if (cardRef.current) {
@@ -309,25 +340,38 @@ function CreatorCollectionCard({
       rect = el.getBoundingClientRect()
       rectRef.current = rect
     }
-    const px = (e.clientX - rect.left) / rect.width - 0.5
-    const py = (e.clientY - rect.top) / rect.height - 0.5
-    // Subtle magnetic attraction + responsive 3D tilt
-    const tx = (px * 16).toFixed(1)
-    const ty = (py * 12).toFixed(1)
-    const rx = (-py * 20).toFixed(2)
-    const ry = (px * 20).toFixed(2)
-    const mx = ((px + 0.5) * 100).toFixed(1)
-    const my = ((py + 0.5) * 100).toFixed(1)
+    const clientX = e.clientX
+    const clientY = e.clientY
 
-    el.style.setProperty('--tx', `${tx}px`)
-    el.style.setProperty('--ty', `${ty}px`)
-    el.style.setProperty('--rx', `${rx}deg`)
-    el.style.setProperty('--ry', `${ry}deg`)
-    el.style.setProperty('--mx', `${mx}%`)
-    el.style.setProperty('--my', `${my}%`)
+    if (rafRef.current) return
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = null
+      if (!el || !rectRef.current) return
+      const currentRect = rectRef.current
+      const px = (clientX - currentRect.left) / currentRect.width - 0.5
+      const py = (clientY - currentRect.top) / currentRect.height - 0.5
+      // Subtle magnetic attraction + responsive 3D tilt
+      const tx = (px * 16).toFixed(1)
+      const ty = (py * 12).toFixed(1)
+      const rx = (-py * 20).toFixed(2)
+      const ry = (px * 20).toFixed(2)
+      const mx = ((px + 0.5) * 100).toFixed(1)
+      const my = ((py + 0.5) * 100).toFixed(1)
+
+      el.style.setProperty('--tx', `${tx}px`)
+      el.style.setProperty('--ty', `${ty}px`)
+      el.style.setProperty('--rx', `${rx}deg`)
+      el.style.setProperty('--ry', `${ry}deg`)
+      el.style.setProperty('--mx', `${mx}%`)
+      el.style.setProperty('--my', `${my}%`)
+    })
   }
 
   const handlePointerLeave = () => {
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current)
+      rafRef.current = null
+    }
     rectRef.current = null
     const el = cardRef.current
     if (!el) return
@@ -431,6 +475,28 @@ const PARTICLES = Array.from({ length: 22 }, (_, i) => ({
   driftY: 30 + ((i * 17) % 50),     // 30–80 px upward drift
 }))
 
+const AmbientParticles = memo(function AmbientParticles({ isDevSpecial }: { isDevSpecial: boolean }) {
+  return (
+    <>
+      {PARTICLES.map(p => (
+        <div
+          key={p.id}
+          className={`kadence-particle absolute rounded-full pointer-events-none transition-colors duration-700 ${isDevSpecial ? 'bg-[#d4af37]/60 shadow-[0_0_10px_rgba(212,175,55,0.8)]' : 'bg-white/30'}`}
+          style={{
+            left:   `${p.x}%`,
+            top:    `${p.y}%`,
+            width:  `${p.size}px`,
+            height: `${p.size}px`,
+            ['--dur'   as string]: `${p.duration}s`,
+            ['--delay' as string]: `${p.delay}s`,
+            ['--drift' as string]: `-${p.driftY}px`,
+          }}
+        />
+      ))}
+    </>
+  )
+})
+
 // ── Zoom/Crop Configuration for Hardcoded Letterbox Videos ─────────────────
 // The 8 specified categories whose local 30s clips have baked-in letterbox bars.
 // Applying targeted, minimal scale values crops out the black bars while preserving
@@ -462,140 +528,163 @@ function getCategoryVideoScale(url: string | null): number {
   if (!url) return 1
   return CATEGORY_ZOOM_SCALES[url] ?? 1
 }
-// All unique video URLs for the persistent pool — computed once at module level.
-// Used by CategoryVideoBackground to pre-create one <video> per category MP4.
-const ALL_POOL_URLS: string[] = Object.values(CATEGORY_PREVIEW_VIDEOS).filter((v): v is string => Boolean(v))
-
-// ── Full-Screen Category Video Background ─────────────────────────────────
-// Persistent video pool: 15 <video> elements, each permanently bound to one MP4.
-// On hover, we show/play the target and hide/pause the previous — no src swap,
-// no re-initialization, no repeated decode. Videos start with preload="none"
-// (zero network cost) and are promoted to preload="auto" lazily.
+// ── Full-Screen Category Video Background (Dual-Slot High-Performance Engine) ──
+// Exactly 2 video elements in DOM (slot 0 and slot 1).
+// Exactly 1 video element active/decoding at any given time.
+// Zero background preload storm, zero decoder contention, zero socket hogging.
+// Audio is played unmuted as soon as browser permits or immediately upon first user interaction.
 function CategoryVideoBackground({ url }: { url: string | null }) {
   const containerRef = useRef<HTMLDivElement>(null)
-  const poolRef = useRef<Map<string, HTMLVideoElement> | null>(null)
+  const slotsRef = useRef<[HTMLVideoElement | null, HTMLVideoElement | null]>([null, null])
+  const activeSlotIdxRef = useRef<number>(0)
   const activeUrlRef = useRef<string | null>(null)
-  const isAudioBlocked = useRef(false)
+  const userActivatedRef = useRef<boolean>(false)
 
-  // ── Create persistent video pool on mount ────────────────────────────────
-  // Each video element is created once, permanently bound to its MP4 src.
-  // Initial preload="none" means zero network requests at page load.
+  // ── Global User Activation Listener for Instant Audio Unlocking ──────────
+  useEffect(() => {
+    // Check if user already activated this document
+    if (typeof navigator !== 'undefined' && (navigator as any).userActivation?.hasBeenActive) {
+      userActivatedRef.current = true
+    }
+
+    const unlockAudio = () => {
+      userActivatedRef.current = true
+
+      // If an active video is currently playing muted, immediately unmute it!
+      const activeSlot = slotsRef.current[activeSlotIdxRef.current]
+      if (activeSlot && !activeSlot.paused && activeSlot.muted) {
+        activeSlot.muted = false
+        activeSlot.volume = 1.0
+      }
+
+      // Resume AudioContext after user interaction
+      globalAudioManager.resume()
+
+      // Remove listeners once activated
+      window.removeEventListener('pointerdown', unlockAudio, true)
+      window.removeEventListener('keydown', unlockAudio, true)
+      window.removeEventListener('touchstart', unlockAudio, true)
+    }
+
+    window.addEventListener('pointerdown', unlockAudio, { capture: true, passive: true })
+    window.addEventListener('keydown', unlockAudio, { capture: true, passive: true })
+    window.addEventListener('touchstart', unlockAudio, { capture: true, passive: true })
+
+    return () => {
+      window.removeEventListener('pointerdown', unlockAudio, true)
+      window.removeEventListener('keydown', unlockAudio, true)
+      window.removeEventListener('touchstart', unlockAudio, true)
+    }
+  }, [])
+
+  // ── Create Dual-Slot Video Elements on Mount ─────────────────────────────
   useEffect(() => {
     const container = containerRef.current
-    if (!container || poolRef.current) return
+    if (!container || slotsRef.current[0]) return
 
-    const pool = new Map<string, HTMLVideoElement>()
-    for (const videoUrl of ALL_POOL_URLS) {
-      const video = document.createElement('video')
-      video.src = videoUrl
-      video.playsInline = true
-      video.preload = 'none'
-      video.style.cssText = [
+    const createSlot = () => {
+      const v = document.createElement('video')
+      v.playsInline = true
+      v.loop = true
+      v.preload = 'auto'
+      v.style.cssText = [
         'position:absolute',
         'top:0', 'left:0', 'width:100%', 'height:100%',
         'object-fit:cover',
         'display:none',
-        `transform:translate3d(0,0,0) scale(${getCategoryVideoScale(videoUrl)})`,
         'transform-origin:center center',
       ].join(';')
-      container.appendChild(video)
-      pool.set(videoUrl, video)
+      container.appendChild(v)
+      // Safely route to AudioContext exactly once
+      globalAudioManager.connectVideo(v)
+      return v
     }
-    poolRef.current = pool
 
-    // ── Progressive background preloading ─────────────────────────────────
-    // After 3s page idle, promote one video every 800ms from preload="none"
-    // to preload="auto". This spreads network load over ~12 seconds and lets
-    // the browser buffer initial frames without blocking initial page render.
-    let cancelled = false
-    let intervalId: ReturnType<typeof setInterval> | null = null
-    const preloadDelay = setTimeout(() => {
-      if (cancelled) return
-      let idx = 0
-      intervalId = setInterval(() => {
-        // Skip videos already promoted by hover or earlier iterations
-        while (idx < ALL_POOL_URLS.length) {
-          const v = pool.get(ALL_POOL_URLS[idx])
-          if (v && v.preload !== 'auto') break
-          idx++
-        }
-        if (idx >= ALL_POOL_URLS.length) {
-          if (intervalId) clearInterval(intervalId)
-          return
-        }
-        const v = pool.get(ALL_POOL_URLS[idx])
-        if (v) v.preload = 'auto'
-        idx++
-      }, 800)
-    }, 3000)
+    slotsRef.current = [createSlot(), createSlot()]
 
     return () => {
-      cancelled = true
-      clearTimeout(preloadDelay)
-      if (intervalId) clearInterval(intervalId)
-      pool.forEach(video => {
-        video.pause()
-        video.removeAttribute('src')
-        video.remove()
+      slotsRef.current.forEach(v => {
+        if (v) {
+          v.pause()
+          v.removeAttribute('src')
+          v.load()
+          v.remove()
+        }
       })
-      pool.clear()
-      poolRef.current = null
+      slotsRef.current = [null, null]
     }
   }, [])
 
-  // ── Handle hover target changes — fully imperative, zero React state ────
+  // ── Handle Video URL Changes (Immediate, Authoritative, 0 Competing Decoders) ──
   useEffect(() => {
-    const pool = poolRef.current
-    if (!pool) return
+    const [slot0, slot1] = slotsRef.current
+    if (!slot0 || !slot1) return
 
-    const prevUrl = activeUrlRef.current
     activeUrlRef.current = url
+    const targetUrl = url
 
-    // Pause and hide previous video immediately
-    if (prevUrl && prevUrl !== url) {
-      const prevVideo = pool.get(prevUrl)
-      if (prevVideo) {
-        prevVideo.pause()
-        prevVideo.style.display = 'none'
-      }
+    if (!targetUrl) {
+      // User moved away from cards to empty space:
+      // Immediately pause and hide both slots
+      slot0.pause()
+      slot1.pause()
+      slot0.style.display = 'none'
+      slot1.style.display = 'none'
+      return
     }
 
-    if (!url) return
+    // Toggle between slot 0 and slot 1
+    const currentIdx = activeSlotIdxRef.current
+    const currentSlot = currentIdx === 0 ? slot0 : slot1
+    const nextIdx = currentIdx === 0 ? 1 : 0
+    const nextSlot = nextIdx === 0 ? slot0 : slot1
 
-    const video = pool.get(url)
-    if (!video) return
-
-    // Promote to eager preload on first hover (if background preload hasn't reached it)
-    if (video.preload !== 'auto') {
-      video.preload = 'auto'
+    // If target video is already playing on current slot, keep it
+    if (currentSlot.getAttribute('data-src') === targetUrl && !currentSlot.paused) {
+      return
     }
 
-    // Show and play immediately — do NOT wait for canplay/canplaythrough.
-    // The browser will render frames as soon as decoded data is available.
-    video.style.display = 'block'
-    video.currentTime = 0
+    // Prepare next slot
+    activeSlotIdxRef.current = nextIdx
+    nextSlot.setAttribute('data-src', targetUrl)
+    nextSlot.src = targetUrl
+    nextSlot.style.transform = `translate3d(0,0,0) scale(${getCategoryVideoScale(targetUrl)})`
+    nextSlot.currentTime = 0
 
-    // Capture current target for stale-check in async catch
-    const currentTarget = url
-    if (isAudioBlocked.current) {
-      video.muted = true
-      video.play().catch(() => {})
+    // Determine audio permission
+    const hasActivation = userActivatedRef.current || (typeof navigator !== 'undefined' && (navigator as any).userActivation?.hasBeenActive)
+
+    if (hasActivation) {
+      nextSlot.muted = false
+      nextSlot.volume = 1.0
+      nextSlot.play().catch(() => {
+        if (activeUrlRef.current !== targetUrl) return
+        nextSlot.muted = true
+        nextSlot.play().catch(() => {})
+      })
     } else {
-      video.muted = false
-      const p = video.play()
+      // Try unmuted first
+      nextSlot.muted = false
+      nextSlot.volume = 1.0
+      const p = nextSlot.play()
       if (p && typeof p.catch === 'function') {
-        p.catch((e) => {
-          // If user already moved to a different category, don't retry —
-          // the stale video was already paused by the newer hover
-          if (activeUrlRef.current !== currentTarget) return
-          if (e && e.name === 'NotAllowedError') {
-            isAudioBlocked.current = true
-          }
-          video.muted = true
-          video.play().catch(() => {})
+        p.catch(() => {
+          if (activeUrlRef.current !== targetUrl) return
+          // If browser policy blocks unmuted hover autoplay, fallback to muted immediately
+          // so video is not delayed, and global listener will unmute as soon as user clicks
+          nextSlot.muted = true
+          nextSlot.play().catch(() => {})
         })
       }
     }
+
+    // Show next slot, pause & release previous slot's hardware decoder
+    nextSlot.style.display = 'block'
+    currentSlot.pause()
+    currentSlot.style.display = 'none'
+    // Release previous slot decoder resources immediately
+    currentSlot.removeAttribute('src')
+    currentSlot.load()
   }, [url])
 
   const isAnyActive = Boolean(url)
@@ -619,12 +708,6 @@ export function IntroScreen({ onVibeSelect }: IntroScreenProps) {
   const scrollWrapperRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
 
-  // ── Eager Background Prefetch ──
-  // Pre-warm ALL vibe metadata (server + client cache) as soon as the intro mounts.
-  // By the time the user clicks any card, the data is already cached → 0ms API delay.
-  useEffect(() => {
-    vibeService.prefetchAllVibes()
-  }, [])
 
   const handleVibeSelect = useCallback((vibe: Vibe) => {
     setSelectedVibe(vibe)
@@ -655,6 +738,11 @@ export function IntroScreen({ onVibeSelect }: IntroScreenProps) {
       className="fixed inset-0 z-30"
       style={{ pointerEvents: 'none' }}
     >
+      <NCSReactor
+        color={activeVibeData ? (activeVibeData.id === 'dev-special' ? activeVibeData.accentColor : activeVibeData.bgColor) : '#ffffff'}
+        isActive={Boolean(activeVideoUrl)}
+      />
+      
       {/* ── CSS keyframes & 3D transforms (GPU-compositor-only) ── */}
       <style>{`
         @keyframes kadence-particle-float {
@@ -807,21 +895,7 @@ export function IntroScreen({ onVibeSelect }: IntroScreenProps) {
         style={{ contain: 'strict', transform: 'translate3d(0, 0, 0)' }}
       >
         {/* Floating particles */}
-        {PARTICLES.map(p => (
-          <div
-            key={p.id}
-            className={`kadence-particle absolute rounded-full pointer-events-none transition-colors duration-700 ${activeVibeData?.id === 'dev-special' ? 'bg-[#d4af37]/60 shadow-[0_0_10px_rgba(212,175,55,0.8)]' : 'bg-white/30'}`}
-            style={{
-              left:   `${p.x}%`,
-              top:    `${p.y}%`,
-              width:  `${p.size}px`,
-              height: `${p.size}px`,
-              ['--dur'   as string]: `${p.duration}s`,
-              ['--delay' as string]: `${p.delay}s`,
-              ['--drift' as string]: `-${p.driftY}px`,
-            }}
-          />
-        ))}
+        <AmbientParticles isDevSpecial={activeVibeData?.id === 'dev-special'} />
 
         {/* Dynamic vibe background glow */}
         <AnimatePresence>

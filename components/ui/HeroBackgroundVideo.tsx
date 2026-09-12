@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Vibe } from '@/lib/types'
 import { useUIStore } from '@/store/uiStore'
@@ -12,6 +13,22 @@ interface HeroBackgroundVideoProps {
 export function HeroBackgroundVideo({ currentVibe, introComplete = false }: HeroBackgroundVideoProps) {
   const activeCategoryVideo = useUIStore((s) => s.activeCategoryVideo)
   const isSongActive = Boolean(activeCategoryVideo)
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    if (isSongActive || introComplete) {
+      if (!video.paused) {
+        video.pause()
+      }
+    } else {
+      if (video.paused) {
+        video.play().catch(() => {})
+      }
+    }
+  }, [isSongActive, introComplete])
 
   return (
     <motion.div
@@ -22,6 +39,7 @@ export function HeroBackgroundVideo({ currentVibe, introComplete = false }: Hero
       transition={{ duration: isSongActive ? 0.15 : 1.5, ease: 'easeInOut' }}
     >
       <video
+        ref={videoRef}
         autoPlay
         muted
         loop
@@ -40,3 +58,4 @@ export function HeroBackgroundVideo({ currentVibe, introComplete = false }: Hero
     </motion.div>
   )
 }
+

@@ -73,16 +73,15 @@ export function useChartHover() {
     if (hoverDwellTimeoutRef.current) clearTimeout(hoverDwellTimeoutRef.current)
     if (prefetchDebounceRef.current)  clearTimeout(prefetchDebounceRef.current)
 
-    hoveredVibeRef.current = null
-    setHoveredVibe(null)
-
-    // 70ms grace period on hover exit: allows cursor to traverse the 12px gap
-    // between cards without flashing the Earth or resetting the video.
+    // 50ms grace period on hover exit: allows cursor to traverse the 12px gap
+    // between cards without flashing or triggering double re-renders.
     // If entering another card, handleHoverStart cancels this timer immediately (0ms).
     if (exitTimeoutRef.current) clearTimeout(exitTimeoutRef.current)
     exitTimeoutRef.current = setTimeout(() => {
+      hoveredVibeRef.current = null
+      setHoveredVibe(null)
       useUIStore.getState().setActiveCategoryVideo(null)
-    }, 70)
+    }, 50)
   }, [])
 
   return {
