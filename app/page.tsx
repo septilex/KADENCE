@@ -12,6 +12,7 @@ import { SongDetail } from '@/components/ui/SongDetail'
 import { Navbar } from '@/components/ui/Navbar'
 import { HeroBackgroundVideo } from '@/components/ui/HeroBackgroundVideo'
 import { PreviewVideoLayer } from '@/components/ui/PreviewVideoLayer'
+import { CategoryVideoBackground } from '@/components/ui/CategoryVideoBackground'
 import { GlobalAudioPlayer } from '@/components/GlobalAudioPlayer'
 import { useAudioStore } from '@/store/audioStore'
 import { ChangeVibeOverlay } from '@/components/ui/ChangeVibeOverlay'
@@ -234,6 +235,7 @@ export default function Home() {
       <GlobalAudioPlayer />
       {/* Background Video Layer (Homepage Only) */}
       <HeroBackgroundVideo currentVibe={currentVibe} introComplete={introComplete} />
+      <CategoryVideoBackground />
 
       {/* Song Preview Video Layer */}
       {introComplete && <PreviewVideoLayer song={previewSong} />}

@@ -170,54 +170,7 @@ const ChangeVibeCard = memo(function ChangeVibeCard({
             </span>
           </div>
 
-          {/* Song Preview Overlay */}
-          <AnimatePresence>
-            {isHovered && signatureSong && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className="absolute inset-0 z-20 flex flex-col justify-end p-3 overflow-hidden bg-black/80 pointer-events-none"
-              >
-                <motion.img 
-                  key={`img-${signatureSong.id}`}
-                  src={signatureSong.albumArt} 
-                  className="absolute inset-0 w-full h-full object-cover opacity-40 blur-[2px]" 
-                  alt=""
-                  initial={{ opacity: 0, scale: 1.1 }}
-                  animate={{ opacity: 0.4, scale: 1 }}
-                  transition={{ duration: 0.6 }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent" />
-                
-                <motion.div 
-                  key={`info-${signatureSong.id}`}
-                  initial={{ opacity: 0, y: 5 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4 }}
-                  className="relative z-10 flex items-end justify-between w-full"
-                >
-                  <div className="flex-1 min-w-0 pr-2">
-                    <p className="text-white font-bold text-xs truncate leading-tight">{signatureSong.name}</p>
-                    <p className="text-white/70 text-[10px] truncate mt-0.5">{signatureSong.artist}</p>
-                  </div>
-                </motion.div>
-                
-                {signatureSong.previewUrl && (
-                  <div className="relative z-10 w-full h-[2px] bg-white/20 rounded-full mt-2 overflow-hidden">
-                    <motion.div 
-                      key={`progress-${signatureSong.id}`}
-                      className="absolute top-0 left-0 bottom-0 bg-[#1db954]"
-                      initial={{ width: '0%' }}
-                      animate={{ width: '100%' }}
-                      transition={{ duration: 10, ease: 'linear' }}
-                    />
-                  </div>
-                )}
-              </motion.div>
-            )}
-          </AnimatePresence>
+
         </button>
       </div>
     </motion.div>
