@@ -7,8 +7,6 @@ import { vibeService } from '@/lib/vibeService'
 
 import { VIBE_CONFIGS, VibeConfig } from '@/lib/vibeConfig'
 import { GlowingRingLoader } from './GlowingRingLoader'
-import { globalAudioManager } from '@/lib/audioManager'
-import { NCSReactor } from './NCSReactor'
 
 interface IntroScreenProps {
   loadingProgress?: number
@@ -557,9 +555,6 @@ function CategoryVideoBackground({ url }: { url: string | null }) {
         activeSlot.volume = 1.0
       }
 
-      // Resume AudioContext after user interaction
-      globalAudioManager.resume()
-
       // Remove listeners once activated
       window.removeEventListener('pointerdown', unlockAudio, true)
       window.removeEventListener('keydown', unlockAudio, true)
@@ -595,8 +590,6 @@ function CategoryVideoBackground({ url }: { url: string | null }) {
         'transform-origin:center center',
       ].join(';')
       container.appendChild(v)
-      // Safely route to AudioContext exactly once
-      globalAudioManager.connectVideo(v)
       return v
     }
 
@@ -738,11 +731,6 @@ export function IntroScreen({ onVibeSelect }: IntroScreenProps) {
       className="fixed inset-0 z-30"
       style={{ pointerEvents: 'none' }}
     >
-      <NCSReactor
-        color={activeVibeData ? (activeVibeData.id === 'dev-special' ? activeVibeData.accentColor : activeVibeData.bgColor) : '#ffffff'}
-        isActive={Boolean(activeVideoUrl)}
-      />
-      
       {/* ── CSS keyframes & 3D transforms (GPU-compositor-only) ── */}
       <style>{`
         @keyframes kadence-particle-float {
@@ -974,11 +962,9 @@ export function IntroScreen({ onVibeSelect }: IntroScreenProps) {
                     WebkitFontSmoothing: 'antialiased',
                   }}
                 >
-                  <span>K</span>
-                  <span className="inline-block bg-white" style={{ width: '0.75em', height: '0.65em', clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)', margin: '0 0.04em' }} />
-                  <span>DENCE</span>
+                  <img src="/kadence-chrome-logo.png" alt="KADENCE" style={{ height: '2.04em', width: 'auto', transform: 'scaleX(1.25)', marginBottom: '-0.6em' }} className="pointer-events-none select-none" />
                 </h1>
-                <p className={`text-white/40 text-[10px] md:text-xs tracking-[0.6em] uppercase font-bold mt-2 transition-opacity duration-300 ${activeVideoUrl ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>iTunes Universe</p>
+                <p className={`text-white/40 text-[20px] md:text-[24px] tracking-[0.6em] uppercase font-bold transition-opacity duration-300 ${activeVideoUrl ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>iTunes Universe</p>
               </div>
 
               {/* Question */}

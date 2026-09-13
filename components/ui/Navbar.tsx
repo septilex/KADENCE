@@ -35,9 +35,7 @@ export function Navbar({ songCount, currentVibe, onSearchOpen, onRefresh, isRefr
             WebkitFontSmoothing: 'antialiased',
           }}
         >
-          <span>K</span>
-          <span className="inline-block bg-white" style={{ width: '0.75em', height: '0.65em', clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)', margin: '0 0.04em' }} />
-          <span>DENCE</span>
+          <img src="/kadence-chrome-logo.png" alt="KADENCE" style={{ height: '2.04em', width: 'auto', transform: 'scaleX(1.25)', transformOrigin: 'left' }} className="pointer-events-none select-none pr-8" />
         </div>
 
         {activeVibe && (

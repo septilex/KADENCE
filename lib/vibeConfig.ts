@@ -65,10 +65,10 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     id: 'pop-rising',
     label: 'Pop Rising',
     sub: 'Next-gen pop hits',
-    bgColor: '#FF0033', // deep red
-    accentColor: '#cc0029',
-    gradient: 'from-red-500 to-rose-700',
-    bgClass: 'rgba(255, 0, 51, 0.05)',
+    bgColor: '#FFFFFF', // white glowing
+    accentColor: '#e0e0e0',
+    gradient: 'from-white to-gray-200',
+    bgClass: 'rgba(255, 255, 255, 0.05)',
     number: '05',
     membranePreset: 'energetic',
   },
