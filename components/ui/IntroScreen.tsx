@@ -1020,8 +1020,13 @@ export function IntroScreen({ onVibeSelect }: IntroScreenProps) {
                       className="flex flex-col items-center w-full px-6 max-w-4xl"
                     >
                       <div className="text-center mb-10">
-                        <h3 className="text-[#d4af37] text-sm md:text-base font-bold tracking-[0.3em] uppercase mb-2">Creator Collection</h3>
-                        <p className="text-white/40 text-xs tracking-widest uppercase">A personal universe curated by Dev</p>
+                        <h3
+                          className="text-[#d4af37] text-2xl md:text-4xl font-[900] tracking-[0.2em] uppercase mb-3 drop-shadow-[0_0_25px_rgba(212,175,55,0.4)]"
+                          style={{ fontFamily: "'Syne', sans-serif" }}
+                        >
+                          Creator Collection
+                        </h3>
+                        <p className="text-white/40 text-xs md:text-sm tracking-[0.25em] uppercase font-medium">A personal universe curated by Dev</p>
                       </div>
                     
                       <CreatorCollectionCard

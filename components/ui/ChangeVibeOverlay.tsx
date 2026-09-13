@@ -59,6 +59,7 @@ export function ChangeVibeOverlay({ currentVibe, onSelectVibe, onClose }: Change
         <div className="grid gap-4 w-full" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))' }}>
           {VIBE_CONFIGS.map((v, i) => {
             const isActive = currentVibe === v.id
+            const glowColor = v.id === 'dev-special' ? v.accentColor : v.bgColor
             return (
               <motion.button
                 key={v.id}
@@ -71,32 +72,38 @@ export function ChangeVibeOverlay({ currentVibe, onSelectVibe, onClose }: Change
                 }}
                 onHoverStart={() => handleHoverStart(v.id)}
                 onHoverEnd={handleHoverEnd}
-                className="relative group flex flex-col justify-end p-4 rounded-[10px] overflow-hidden cursor-pointer text-left aspect-square outline-none"
+                className="relative group flex flex-col justify-end p-4 rounded-[12px] overflow-hidden cursor-pointer text-left aspect-square outline-none border bg-black/60 backdrop-blur-xl"
                 style={{
-                  backgroundColor: v.bgColor,
-                  boxShadow: isActive ? `0 12px 24px -8px ${v.bgColor}` : 'none',
+                  borderColor: isActive ? glowColor : 'rgba(255, 255, 255, 0.08)',
+                  boxShadow: isActive ? `0 12px 32px -8px ${glowColor}60, inset 0 0 24px ${glowColor}15` : 'none',
                   transform: isActive ? 'scale(1.04) translateY(-4px)' : 'scale(1)',
-                  filter: isActive ? 'brightness(1.08)' : 'brightness(1)',
                   transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)'
                 }}
                 whileHover={!isActive ? {
                   scale: 1.04,
                   y: -4,
-                  filter: 'brightness(1.08)',
-                  boxShadow: `0 12px 24px -8px ${v.bgColor}`
+                  borderColor: `${glowColor}80`,
+                  boxShadow: `0 12px 24px -8px ${glowColor}40, inset 0 0 16px ${glowColor}10`
                 } : undefined}
               >
                 {/* Geometric overlay pattern */}
                 <div className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '12px 12px' }} />
                 
                 {/* Large background number */}
-                <span className="absolute top-[-14px] left-[-4px] text-[80px] font-black text-white opacity-10 tracking-tighter leading-none pointer-events-none select-none">
+                <span className="absolute top-[-14px] left-[-4px] text-[80px] font-black opacity-[0.15] tracking-tighter leading-none pointer-events-none select-none" style={{ color: glowColor }}>
                   {v.number}
                 </span>
 
                 {/* Badge */}
                 {v.badge && (
-                  <div className="absolute top-3 right-3 px-2 py-0.5 rounded bg-white/20 backdrop-blur-md text-[9px] font-bold text-white tracking-widest shadow-sm">
+                  <div 
+                    className="absolute top-3 right-3 px-2 py-0.5 rounded backdrop-blur-md text-[9px] font-bold tracking-widest shadow-sm border"
+                    style={{ 
+                      backgroundColor: `${glowColor}20`, 
+                      color: glowColor === '#FFFFFF' ? '#FFFFFF' : glowColor, 
+                      borderColor: `${glowColor}40` 
+                    }}
+                  >
                     {v.badge}
                   </div>
                 )}
