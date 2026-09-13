@@ -126,7 +126,16 @@ export function CategoryVideoBackground({ url }: { url?: string | null }) {
     activeSlotIdxRef.current = nextIdx
     nextSlot.setAttribute('data-src', targetUrl)
     nextSlot.src = targetUrl
-    nextSlot.style.transform = `translate3d(0,0,0) scale(${getCategoryVideoScale(targetUrl)})`
+    
+    // Fix: Remove transform: scale() to prevent low-res texture rasterization.
+    // Use native width/height/left/top for crisp high-resolution playback.
+    const scale = getCategoryVideoScale(targetUrl)
+    nextSlot.style.width = `${scale * 100}%`
+    nextSlot.style.height = `${scale * 100}%`
+    nextSlot.style.left = `-${(scale - 1) * 50}%`
+    nextSlot.style.top = `-${(scale - 1) * 50}%`
+    nextSlot.style.transform = 'none'
+    
     nextSlot.currentTime = 0
 
     const hasActivation = userActivatedRef.current || (typeof navigator !== 'undefined' && (navigator as any).userActivation?.hasBeenActive)

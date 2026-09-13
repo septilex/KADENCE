@@ -192,7 +192,7 @@ export function ChangeVibeOverlay({ currentVibe, onSelectVibe, onClose }: Change
 
   return (
     <motion.div
-      className="fixed inset-0 z-40 flex items-center justify-center backdrop-blur-3xl bg-black/75 pointer-events-auto"
+      className="fixed inset-0 z-40 flex items-center justify-center bg-black/75 pointer-events-auto"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
