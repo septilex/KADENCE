@@ -265,7 +265,7 @@ export default function Home() {
 
       {/* Vignette (Only for Universe) */}
       {introComplete && (
-        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(5,5,8,0.7)_100%)] z-10" />
+        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_50%,rgba(5,5,8,0.45)_100%)] z-10" />
       )}
 
       {/* UI Layer */}

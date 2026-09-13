@@ -69,21 +69,21 @@ const vertexShader = /* glsl */`
 
     float localScale = 1.0;
     float zOffset    = 0.0;
-    vHighlight       = 0.92;
+    vHighlight       = 1.05;
 
     if (abs(aInstanceIdx - uPopIdx) < 0.1) {
       // Soft pop bubble: scale grows, pushing out slightly in Z
       // Using an ease-out curve in JS already, so simple linear mix here is fine
       localScale = mix(1.0, 1.25, uPopProgress);
       zOffset    = mix(0.0, 0.4, uPopProgress);
-      vHighlight = mix(0.92, 1.35, uPopProgress);
+      vHighlight = mix(1.05, 1.45, uPopProgress);
       vPopProgress = uPopProgress;
     }
 
     if (abs(aInstanceIdx - uSelectedIdx) < 0.1) {
       localScale = max(localScale, 1.06);
       zOffset    = max(zOffset, 0.8);
-      vHighlight = max(vHighlight, 1.45);
+      vHighlight = max(vHighlight, 1.55);
     }
 
     localPos.xy *= localScale;
@@ -198,9 +198,8 @@ const fragmentShader = /* glsl */`
     // ── Base colour: gamma-correct multiply by per-tile brightness ────────
     vec3 lin     = pow(c.rgb, vec3(2.2));
     
-    // Smooth vibe ambient glow color grading / tint overlay (very subtle so covers are readable)
-    vec3 tint = mix(vec3(1.0), vVibeColor, 0.04);
-    vec3 baseRgb = lin * vHighlight * tint;
+    // Direct highlight application (no artificial vibe tinting, preserving natural colors)
+    vec3 baseRgb = lin * vHighlight;
 
     // ── Localized specular sheen — ONLY inside the warp deformation field ─
     float spec = 0.0;
