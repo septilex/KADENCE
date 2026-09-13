@@ -8,7 +8,7 @@ import { INTRO_Z, FOV_DEG } from '@/lib/gridCalc'
 
 interface UniverseProps {
   songs: SongNode[]
-  hoveredSong: SongNode | null
+
   selectedSong: SongNode | null
   currentVibe: Vibe | null
   onHover: (song: SongNode | null) => void
@@ -21,7 +21,7 @@ interface UniverseProps {
 
 export function Universe({
   songs,
-  hoveredSong,
+
   selectedSong,
   currentVibe,
   onHover,
@@ -56,7 +56,7 @@ export function Universe({
           <NodeField
             songs={songs}
             currentVibe={currentVibe}
-            hoveredId={hoveredSong?.id ?? null}
+
             selectedId={selectedSong?.id ?? null}
             onHover={onHover}
             onSelect={onSelect}

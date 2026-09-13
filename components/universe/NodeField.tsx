@@ -22,7 +22,7 @@ interface NodeFieldProps {
 const TEXTURE_SIZE  = 256    // px per atlas slot
 const TEXTURE_DEPTH = 256    // max unique artworks in the atlas
 const ATLAS_COLS    = 16     // 16x16 = 256 slots (4096x4096px canvas)
-const MAX_LOADS     = 128    // concurrent in-flight image loads (increased for cached hits)
+const MAX_LOADS     = 6      // reduced to prevent HTTP queue starvation (was 128)
 
 // ── Motion & Interaction Tuning Constants ─────────────────────────────────────
 const SPRING_STIFFNESS     = 120.0   // Tighter cursor anchoring

@@ -245,7 +245,7 @@ function CreatorCueCard({
 
   return (
     <div
-      className="kadence-dev-cue-wrapper mb-8 cursor-pointer w-full max-w-fit mx-auto"
+      className="kadence-dev-cue-wrapper mb-[clamp(0.5rem,2dvh,1rem)] cursor-pointer w-full max-w-fit mx-auto"
       onClick={onClick}
     >
       <div
@@ -263,7 +263,7 @@ function CreatorCueCard({
             e.stopPropagation()
             onClick()
           }}
-          className="kadence-dev-cue-card relative group flex flex-col items-center justify-center gap-0.5 cursor-pointer rounded-[44px] px-12 py-4 select-none overflow-hidden outline-none w-full h-full"
+          className="kadence-dev-cue-card relative group flex flex-col items-center justify-center gap-0.5 cursor-pointer rounded-[44px] px-8 py-2.5 md:px-12 md:py-4 select-none overflow-hidden outline-none w-full h-full"
           style={{
             background: 'linear-gradient(135deg, #FFF9A6 0%, #FFDF00 22%, #FFC400 52%, #FFA000 82%, #FF8F00 100%)',
           }}
@@ -732,7 +732,7 @@ export function IntroScreen({ onVibeSelect }: IntroScreenProps) {
           overscrollBehaviorY: 'contain',
         }}
       >
-        <div ref={contentRef} className="w-full relative min-h-screen">
+        <div ref={contentRef} className="w-full relative min-h-[100dvh]">
         <AnimatePresence>
 
           {/* ────────────────── STEP 1: Vibe Selection ───────────────── */}
@@ -746,33 +746,34 @@ export function IntroScreen({ onVibeSelect }: IntroScreenProps) {
               transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
             >
               {/* EXACT ORIGINAL HERO LAYOUT - SECTION 1 */}
-              <div className="relative w-full min-h-[100dvh] flex flex-col items-center justify-center pt-8 pb-16">
+              <div className="relative w-full min-h-[100dvh] flex flex-col items-center justify-center py-[clamp(0.5rem,2dvh,2rem)]">
                 <motion.div
-                  className="z-10 flex flex-col items-center gap-10 px-4 max-w-[1200px] w-full mt-10"
+                  className="z-10 flex flex-col items-center gap-[clamp(0.5rem,2.5dvh,2rem)] px-4 w-full mx-auto"
+                  style={{ maxWidth: 'clamp(800px, 160dvh, 1200px)' }}
                   initial={{ opacity: 0, y: 40 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -30, scale: 0.97 }}
                   transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
                 >
               {/* Logo */}
-              <div className="flex flex-col items-center mt-16 mb-8 w-full px-4 overflow-visible">
+              <div className="flex flex-col items-center mt-[clamp(0.5rem,3dvh,2rem)] mb-[clamp(0.25rem,1.5dvh,1rem)] w-full px-4 overflow-visible">
                 <h1
                   className="text-white leading-tight text-center select-none uppercase whitespace-nowrap flex justify-center items-baseline"
                   style={{ 
                     fontFamily: "'Syncopate', sans-serif", 
-                    fontSize: 'clamp(4rem, 10.5vw, 12rem)', // Naturally wide font, so 10.5vw creates a massive span
+                    fontSize: 'clamp(4rem, min(10.5vw, 15.5dvh), 12rem)', // Constrain by dvh to prevent cutoff on short screens
                     letterSpacing: '-0.03em', // Tight, clean kerning
                     fontWeight: 700,
                     WebkitFontSmoothing: 'antialiased',
                   }}
                 >
-                  <img src="/kadence-chrome-logo.png" alt="KADENCE" style={{ height: '2.04em', width: 'auto', transform: 'scaleX(1.25)', marginBottom: '-0.6em' }} className="pointer-events-none select-none" />
+                  <img src="/kadence-chrome-logo.png" alt="KADENCE" style={{ height: '2.04em', width: 'auto', marginBottom: '-0.6em' }} className="pointer-events-none select-none" />
                 </h1>
                 <p className={`text-white/40 text-[20px] md:text-[24px] tracking-[0.6em] uppercase font-bold transition-opacity duration-300 ${activeVideoUrl ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>iTunes Universe</p>
               </div>
 
               {/* Question */}
-              <div className={`text-center space-y-1 mb-2 transition-opacity duration-300 ${activeVideoUrl ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+              <div className={`text-center space-y-1 mb-[clamp(0.5rem,1.5dvh,1rem)] transition-opacity duration-300 ${activeVideoUrl ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
                 <h2
                   className="text-white text-2xl md:text-3xl font-light tracking-tight"
                   style={{ fontFamily: "'Space Grotesk', sans-serif" }}

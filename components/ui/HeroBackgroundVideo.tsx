@@ -47,7 +47,8 @@ export function HeroBackgroundVideo({ currentVibe, introComplete = false }: Hero
         preload="auto"
         className="absolute inset-0 w-full h-full object-cover"
         style={{
-          transform: 'translate3d(0, 0, 0)',
+          transform: 'translate3d(0, 0, 0) scale(1.85)',
+          transformOrigin: 'center top',
           objectPosition: 'center top', // Pins the top of the video to show the top half of the globe
           filter: 'contrast(1.3) brightness(1.4) saturate(1.2)',
           display: isSongActive ? 'none' : 'block',

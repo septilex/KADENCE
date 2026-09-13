@@ -92,14 +92,24 @@ const HoverTooltip = memo(function HoverTooltip() {
 })
 
 export default function Home() {
-  const {
-    songs, isLoading, loadingProgress, introComplete,
-    currentVibe, isRefreshing, isChangingVibe,
-    setSongs, selectSong, hoverSong, setLoading, setIntroComplete, setVibe, setRefreshing, setChangingVibe,
-  } = useSongStore()
-  // selectedSong and hoveredSong are read via targeted selectors only where needed
+  // Use targeted selectors to prevent full-page re-renders on hover state changes
+  const songs = useSongStore(s => s.songs)
+  const loadingProgress = useSongStore(s => s.loadingProgress)
+  const introComplete = useSongStore(s => s.introComplete)
+  const currentVibe = useSongStore(s => s.currentVibe)
+  const isRefreshing = useSongStore(s => s.isRefreshing)
+  const isChangingVibe = useSongStore(s => s.isChangingVibe)
+  
+  const setSongs = useSongStore(s => s.setSongs)
+  const selectSong = useSongStore(s => s.selectSong)
+  const hoverSong = useSongStore(s => s.hoverSong)
+  const setLoading = useSongStore(s => s.setLoading)
+  const setIntroComplete = useSongStore(s => s.setIntroComplete)
+  const setVibe = useSongStore(s => s.setVibe)
+  const setRefreshing = useSongStore(s => s.setRefreshing)
+  const setChangingVibe = useSongStore(s => s.setChangingVibe)
+
   const selectedSong = useSongStore(state => state.selectedSong)
-  const hoveredSong  = useSongStore(state => state.hoveredSong)
 
   const { isSearchOpen, setSearchOpen } = useUIStore()
   const { setFps } = usePerformanceStore()
@@ -202,16 +212,18 @@ export default function Home() {
   // ── Global Audio Sync ───────────────────────────────────────────────────
   const { playUrl } = useAudioStore()
   
+  // Extract just the target audio URL using a stable selector.
+  // This causes page.tsx to re-render ONLY when the target audio URL actually changes.
+  const targetAudioUrl = useSongStore((state) => {
+    if (!state.introComplete || state.isChangingVibe) return null
+    return state.selectedSong 
+      ? state.selectedSong.previewUrl || null 
+      : state.hoveredSong?.previewUrl || null
+  })
+
   useEffect(() => {
-    // Sync Universe selections to global audio player instantly.
-    if (introComplete && !isChangingVibe) {
-      if (selectedSong) {
-        playUrl(selectedSong.previewUrl || null)
-      } else {
-        playUrl(hoveredSong?.previewUrl || null)
-      }
-    }
-  }, [selectedSong, hoveredSong, introComplete, isChangingVibe, playUrl])
+    playUrl(targetAudioUrl)
+  }, [targetAudioUrl, playUrl])
   const handleSearchResults = useCallback((results: SongNode[]) => {
     if (results.length > 0) {
       // Use getState() to read current songs without adding songs to dependency array.
@@ -251,7 +263,6 @@ export default function Home() {
       >
         <Universe
           songs={songs}
-          hoveredSong={hoveredSong}
           selectedSong={selectedSong}
           currentVibe={currentVibe}
           onHover={hoverSong}

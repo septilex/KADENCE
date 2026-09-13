@@ -89,6 +89,13 @@ export function GlobalAudioPlayer() {
     const el = audioRef.current
     if (!el || !el.src) return
 
+    // Prevent race condition: if the URL changed in the same render cycle, 
+    // the audio element's src is out of sync. Skip the play call here and 
+    // let the URL change effect (below) handle it.
+    if (currentUrl && el.src !== currentUrl) {
+      return
+    }
+
     if (isPlaying && el.paused) {
       el.play().then(() => {
         startProgressTimer()
@@ -134,13 +141,22 @@ export function GlobalAudioPlayer() {
       audio.pause()
       audio.src = currentUrl
       audio.volume = 0.05 // start very low but non-zero to fade in fast
+      
+      const targetUrl = currentUrl
+      
       audio.play().then(() => {
+        // Prevent race condition: if the URL changed while waiting for play() to resolve, abort.
+        // Reading audio.src could include host/port injection from the browser, so we compare with the store state.
+        if (targetUrl !== useAudioStore.getState().currentUrl) return
+        
         setPlayingState(true)
         startProgressTimer()
         
         let targetVol = 0.35 // Atmospheric volume peak
         let currentVol = audio.volume
         const fadeInStep = (targetVol - currentVol) / 5 // 5 steps
+        
+        if (audioFadeIntervalRef.current) clearInterval(audioFadeIntervalRef.current)
         
         audioFadeIntervalRef.current = setInterval(() => {
           currentVol += fadeInStep
