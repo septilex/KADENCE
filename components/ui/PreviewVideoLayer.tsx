@@ -1,126 +1,161 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { SongNode } from '@/lib/types'
+import { useSongStore } from '@/store/songStore'
 
 interface PreviewVideoLayerProps {
   song: SongNode | null
 }
 
+const PRELOAD_COUNT = 32
+
 export function PreviewVideoLayer({ song }: PreviewVideoLayerProps) {
   const containerRef = useRef<HTMLDivElement>(null)
-  const slotsRef = useRef<[HTMLVideoElement | null, HTMLVideoElement | null]>([null, null])
-  const activeSlotIdxRef = useRef<number>(0)
+  
+  const songs = useSongStore(state => state.songs)
+  const poolRef = useRef<Map<string, HTMLVideoElement>>(new Map())
+  const activeVideoRef = useRef<HTMLVideoElement | null>(null)
   const activeUrlRef = useRef<string | null>(null)
   
-  // Create Dual-Slot Video Elements on Mount
+  // Maintain the Ready Pool for videos
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const topSongs = songs.slice(0, PRELOAD_COUNT)
+    const newPool = new Map<string, HTMLVideoElement>()
+    
+    topSongs.forEach(s => {
+      const vidUrl = `/videos/${s.id}.mp4`
+      let v = poolRef.current.get(vidUrl)
+      if (!v) {
+        v = document.createElement('video')
+        v.playsInline = true
+        v.loop = true
+        v.muted = true
+        v.preload = 'auto' // Immediately start downloading
+        v.src = vidUrl
+        v.setAttribute('data-src', vidUrl)
+        v.style.cssText = [
+          'position:absolute',
+          'top:0', 'left:0', 'width:100%', 'height:100%',
+          'object-fit:cover',
+          'opacity:0',
+          'mix-blend-mode:screen',
+          'transition:opacity 0.5s ease-in-out',
+          'pointer-events:none'
+        ].join(';')
+        v.load()
+      }
+      newPool.set(vidUrl, v)
+    })
+    
+    // Cleanup old items
+    for (const [url, v] of poolRef.current.entries()) {
+      if (!newPool.has(url) && v !== activeVideoRef.current) {
+        v.pause()
+        v.removeAttribute('src')
+        v.load()
+        if (v.parentNode) {
+          v.parentNode.removeChild(v)
+        }
+      }
+    }
+    
+    poolRef.current = newPool
+  }, [songs])
+
+  // Handle URL changes imperatively
   useEffect(() => {
     const container = containerRef.current
-    if (!container || slotsRef.current[0]) return
-
-    const createSlot = () => {
-      const v = document.createElement('video')
-      v.playsInline = true
-      v.loop = true
-      v.muted = true
-      v.preload = 'auto'
-      v.style.cssText = [
-        'position:absolute',
-        'top:0', 'left:0', 'width:100%', 'height:100%',
-        'object-fit:cover',
-        'opacity:0',
-        'mix-blend-mode:screen',
-        'transition:opacity 0.5s ease-in-out',
-        'pointer-events:none'
-      ].join(';')
-      container.appendChild(v)
-      return v
-    }
-
-    slotsRef.current = [createSlot(), createSlot()]
-
-    return () => {
-      slotsRef.current.forEach(v => {
-        if (v) {
-          v.pause()
-          v.removeAttribute('src')
-          v.load()
-          v.remove()
-        }
-      })
-      slotsRef.current = [null, null]
-    }
-  }, [])
-
-  // Handle URL changes imperatively (instant switch, no timeouts)
-  useEffect(() => {
-    const [slot0, slot1] = slotsRef.current
-    if (!slot0 || !slot1) return
+    if (!container) return
 
     const targetUrl = song ? `/videos/${song.id}.mp4` : null
     activeUrlRef.current = targetUrl
 
     if (!targetUrl) {
-      // Fade out both slots if closing
-      slot0.style.opacity = '0'
-      slot1.style.opacity = '0'
-      
-      // Stop playback after fade finishes to free resources
-      const t = setTimeout(() => {
-        if (!activeUrlRef.current) {
-          slot0.pause()
-          slot1.pause()
-        }
-      }, 500)
-      return () => clearTimeout(t)
-    }
-
-    const currentIdx = activeSlotIdxRef.current
-    const currentSlot = currentIdx === 0 ? slot0 : slot1
-    const nextIdx = currentIdx === 0 ? 1 : 0
-    const nextSlot = nextIdx === 0 ? slot0 : slot1
-
-    // If the target is already playing in the active slot, do nothing
-    if (currentSlot.getAttribute('data-src') === targetUrl && !currentSlot.paused) {
-      currentSlot.style.opacity = '0.45'
+      if (activeVideoRef.current) {
+        const v = activeVideoRef.current
+        v.style.opacity = '0'
+        const t = setTimeout(() => {
+          if (!activeUrlRef.current) {
+             v.pause()
+          }
+        }, 500)
+        return () => clearTimeout(t)
+      }
       return
     }
 
-    // Switch active slot
-    activeSlotIdxRef.current = nextIdx
-    nextSlot.setAttribute('data-src', targetUrl)
-    nextSlot.src = targetUrl
-    nextSlot.currentTime = 0
-    
-    // Only fade in once the video has enough data to play, preventing black flashes
-    nextSlot.oncanplay = () => {
-      if (activeUrlRef.current === targetUrl) {
-        nextSlot.style.opacity = '0.45'
-      }
+    const previousVideo = activeVideoRef.current
+    if (previousVideo && previousVideo.getAttribute('data-src') === targetUrl && !previousVideo.paused) {
+      previousVideo.style.opacity = '0.45'
+      return
+    }
+
+    let nextVideo = poolRef.current.get(targetUrl)
+    if (!nextVideo) {
+       nextVideo = document.createElement('video')
+       nextVideo.playsInline = true
+       nextVideo.loop = true
+       nextVideo.muted = true
+       nextVideo.preload = 'auto'
+       nextVideo.src = targetUrl
+       nextVideo.setAttribute('data-src', targetUrl)
+       nextVideo.style.cssText = [
+          'position:absolute',
+          'top:0', 'left:0', 'width:100%', 'height:100%',
+          'object-fit:cover',
+          'opacity:0',
+          'mix-blend-mode:screen',
+          'transition:opacity 0.5s ease-in-out',
+          'pointer-events:none'
+        ].join(';')
     }
     
-    nextSlot.onerror = () => {
-      // Gracefully skip missing MP4s
+    if (nextVideo.parentNode !== container) {
+       container.appendChild(nextVideo)
+    }
+
+    activeVideoRef.current = nextVideo
+
+    // Fade in
+    if (nextVideo.readyState >= 3) {
+       nextVideo.style.opacity = '0.45'
+    } else {
+       nextVideo.oncanplay = () => {
+         if (activeUrlRef.current === targetUrl) {
+           nextVideo.style.opacity = '0.45'
+         }
+       }
+    }
+    
+    nextVideo.onerror = () => {
       console.log(`[Preview] No local video found for ${targetUrl}, gracefully skipping.`)
-      nextSlot.style.opacity = '0'
+      nextVideo.style.opacity = '0'
     }
 
-    // Play immediately. The browser will handle network queues and AbortErrors if overridden rapidly.
-    const p = nextSlot.play()
+    // Play immediately
+    const p = nextVideo.play()
     if (p && typeof p.catch === 'function') {
-      p.catch(() => {}) // Ignore AbortError on rapid hover
+      p.catch(() => {})
     }
 
-    // Fade out and pause the previous slot
-    currentSlot.style.opacity = '0'
-    const t = setTimeout(() => {
-      if (activeSlotIdxRef.current !== currentIdx) {
-        currentSlot.pause()
-        currentSlot.removeAttribute('src')
-        currentSlot.load()
-      }
-    }, 500)
+    // Fade out previous
+    if (previousVideo && previousVideo !== nextVideo) {
+       previousVideo.style.opacity = '0'
+       const t = setTimeout(() => {
+         if (activeVideoRef.current !== previousVideo) {
+            previousVideo.pause()
+            // If it's not in the pool anymore, remove it
+            if (!poolRef.current.has(previousVideo.getAttribute('data-src') || '')) {
+               previousVideo.removeAttribute('src')
+               previousVideo.load()
+               if (previousVideo.parentNode) previousVideo.parentNode.removeChild(previousVideo)
+            }
+         }
+       }, 500)
+       return () => clearTimeout(t)
+    }
     
-    return () => clearTimeout(t)
   }, [song])
 
   return (

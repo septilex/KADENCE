@@ -1,6 +1,6 @@
 'use client'
-import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useRef, useEffect, useCallback, memo } from 'react'
+import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion'
+import React, { useState, useRef, useEffect, useCallback, memo } from 'react'
 import { Vibe } from '@/lib/types'
 import { useChartHover, CATEGORY_PREVIEW_VIDEOS } from '@/hooks/useChartHover'
 import { vibeService } from '@/lib/vibeService'
@@ -113,57 +113,37 @@ const HomepageVibeCard = memo(function HomepageVibeCard({
         <button
           id={`vibe-${vibe.id}`}
           onClick={(e) => { e.stopPropagation(); onSelect(vibe.id); }}
-          className="kadence-3d-card relative group flex flex-col justify-end p-4 rounded-[20px] overflow-hidden cursor-pointer text-left outline-none w-full h-full select-none"
+          className="kadence-3d-card relative group rounded-[20px] overflow-hidden cursor-pointer text-left outline-none w-full h-full select-none"
           style={{
-            backgroundColor: vibe.bgColor,
-            ['--card-shadow-rest' as string]: `0 24px 50px -6px ${vibe.bgColor}ee, 0 0 36px 6px ${vibe.bgColor}aa, inset 0 2px 4px rgba(255,255,255,0.75)`,
-            ['--card-shadow-hover' as string]: `0 34px 70px -4px ${vibe.bgColor}, 0 0 60px 15px ${vibe.bgColor}, 0 0 95px 25px ${vibe.bgColor}99, inset 0 2px 5px rgba(255,255,255,0.9)`,
+            ['--card-shadow-rest' as string]: `0 6px 16px -2px ${vibe.bgColor}, 0 0 12px 2px ${vibe.bgColor}ee`,
+            ['--card-shadow-hover' as string]: `0 10px 25px -2px ${vibe.bgColor}, 0 0 25px 5px ${vibe.bgColor}, 0 0 45px 8px ${vibe.bgColor}aa`,
           }}
         >
-          {/* ✨ FORCE FULL BOUNDING BOX CLICK TARGET ✨ */}
+          {/* Full click target */}
           <div className="absolute inset-0 w-full h-full z-[999] cursor-pointer" onClick={(e) => { e.stopPropagation(); onSelect(vibe.id); }} />
 
-          {/* Subtle glossy 3D sheen overlay following cursor */}
-          <div
-            className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            style={{
-              background: 'radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.18) 38%, transparent 68%)',
-            }}
-          />
-
-          {/* Geometric overlay pattern */}
-          <div
-            className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none"
-            style={{
-              backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
-              backgroundSize: '12px 12px',
-            }}
-          />
-
-          {/* Large background number */}
-          <span className="absolute top-[-16px] left-[-4px] text-[96px] font-black text-black opacity-[0.35] tracking-tighter leading-none pointer-events-none select-none">
-            {vibe.number}
-          </span>
-
-          {/* Badge */}
-          {vibe.badge && (
-            <div className="absolute top-3 right-3 px-2.5 py-1 rounded-[6px] backdrop-blur-md text-[10px] font-extrabold tracking-widest shadow-sm bg-black text-white pointer-events-none">
-              {vibe.badge}
-            </div>
+          {/* Reference tile image — contains all visual elements */}
+          {vibe.tileImage && (
+            <img
+              src={vibe.tileImage}
+              alt={vibe.label}
+              className="absolute inset-0 w-full h-full object-cover object-center"
+              style={{ transform: 'scale(1.04)' }}
+              draggable={false}
+              loading={index < 7 ? 'eager' : 'lazy'}
+            />
           )}
 
-          {/* Text */}
-          <div className="relative z-10 w-full mt-auto pointer-events-none">
-            <span
-              className="block text-black font-[800] text-base md:text-[20px] leading-tight mb-1"
-              style={{ fontFamily: "'Syne', sans-serif" }}
-            >
-              {vibe.label}
-            </span>
-            <span className="block text-black/90 text-[10px] uppercase font-bold tracking-wider leading-tight">
-              {vibe.sub}
-            </span>
-          </div>
+          {/* Subtle cursor-reactive gloss on hover */}
+          <div
+            className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[20px]"
+            style={{
+              background: 'radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.08) 40%, transparent 70%)',
+            }}
+          />
+
+          {/* Brighter edge/reflection matching the enhanced glow states */}
+          <div className="absolute inset-0 pointer-events-none rounded-[20px] transition-shadow duration-[400ms] ease-out shadow-[inset_0_0_0_1.5px_rgba(255,255,255,0.3),inset_0_2px_15px_rgba(255,255,255,0.05)] group-hover:shadow-[inset_0_0_0_2.5px_rgba(255,255,255,0.65),inset_0_4px_30px_rgba(255,255,255,0.25)]" />
         </button>
       </div>
     </motion.div>
@@ -495,9 +475,61 @@ const AmbientParticles = memo(function AmbientParticles({ isDevSpecial }: { isDe
   )
 })
 
+function MagneticChromeText({ children, className, style }: any) {
+  const ref = useRef<HTMLHeadingElement>(null)
+  
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  
+  const springX = useSpring(x, { stiffness: 150, damping: 15, mass: 0.1 })
+  const springY = useSpring(y, { stiffness: 150, damping: 15, mass: 0.1 })
+  
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!ref.current) return
+      const rect = ref.current.getBoundingClientRect()
+      const centerX = rect.left + rect.width / 2
+      const centerY = rect.top + rect.height / 2
+      const distanceX = e.clientX - centerX
+      const distanceY = e.clientY - centerY
+      
+      const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY)
+      const maxDistance = 350
+      
+      if (distance < maxDistance) {
+        const force = 1 - Math.pow(distance / maxDistance, 2)
+        const pull = 0.15 * force
+        x.set(distanceX * pull)
+        y.set(distanceY * pull)
+      } else {
+        x.set(0)
+        y.set(0)
+      }
+    }
+    
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [x, y])
 
+  return (
+    <motion.h3
+      ref={ref}
+      style={{
+        x: springX,
+        y: springY,
+        background: 'linear-gradient(180deg, #FFE670 0%, #FFB800 35%, #5c4100 45%, #FFF9B0 50%, #FFC600 70%, #E59600 100%)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        ...style
+      }}
+      className={className}
+    >
+      {children}
+    </motion.h3>
+  )
+}
 
-export function IntroScreen({ onVibeSelect }: IntroScreenProps) {
+export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps) {
   const [step, setStep]               = useState<'vibe' | 'loading'>('vibe')
   const [selectedVibe, setSelectedVibe] = useState<Vibe | null>(null)
 
@@ -825,12 +857,12 @@ export function IntroScreen({ onVibeSelect }: IntroScreenProps) {
                       className="flex flex-col items-center w-full px-6 max-w-4xl"
                     >
                       <div className="text-center mb-10">
-                        <h3
-                          className="text-[#d4af37] text-2xl md:text-4xl font-[900] tracking-[0.2em] uppercase mb-3 drop-shadow-[0_0_25px_rgba(212,175,55,0.4)]"
+                        <MagneticChromeText
+                          className="text-2xl md:text-4xl font-[900] tracking-[0.2em] uppercase mb-3 drop-shadow-[0_0_25px_rgba(212,175,55,0.4)]"
                           style={{ fontFamily: "'Syne', sans-serif" }}
                         >
                           Creator Collection
-                        </h3>
+                        </MagneticChromeText>
                         <p className="text-white/40 text-xs md:text-sm tracking-[0.25em] uppercase font-medium">A personal universe curated by Dev</p>
                       </div>
                     

@@ -10,6 +10,8 @@ export interface VibeConfig {
   bgClass: string
   number: string
   badge?: string
+  numberColor: string
+  tileImage?: string
   membranePreset: 'energetic' | 'punchy' | 'glossy' | 'cinematic' | 'elastic' | 'dreamy'
 }
 
@@ -24,6 +26,8 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     bgClass: 'rgba(21, 255, 64, 0.05)',
     number: '01',
     badge: 'LIVE',
+    numberColor: '#003d10',
+    tileImage: '/images/vibes/01-global-top-50.webp',
     membranePreset: 'energetic',
   },
   {
@@ -36,6 +40,8 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     bgClass: 'rgba(255, 0, 229, 0.05)',
     number: '02',
     badge: 'HOT',
+    numberColor: '#4d0040',
+    tileImage: '/images/vibes/02-viral-50.webp',
     membranePreset: 'punchy',
   },
   {
@@ -48,6 +54,8 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     bgClass: 'rgba(0, 85, 255, 0.05)',
     number: '03',
     badge: 'NEW',
+    numberColor: '#001a66',
+    tileImage: '/images/vibes/03-new-music-friday.webp',
     membranePreset: 'glossy',
   },
   {
@@ -59,6 +67,8 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     gradient: 'from-amber-400 to-orange-600',
     bgClass: 'rgba(255, 179, 0, 0.05)',
     number: '04',
+    numberColor: '#3d2800',
+    tileImage: '/images/vibes/04-hip-hop-central.webp',
     membranePreset: 'energetic',
   },
   {
@@ -70,6 +80,8 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     gradient: 'from-white to-gray-200',
     bgClass: 'rgba(255, 255, 255, 0.05)',
     number: '05',
+    numberColor: '#808090',
+    tileImage: '/images/vibes/05-pop-rising.webp',
     membranePreset: 'energetic',
   },
   {
@@ -81,6 +93,8 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     gradient: 'from-indigo-500 to-blue-700',
     bgClass: 'rgba(51, 0, 255, 0.05)',
     number: '06',
+    numberColor: '#0d0045',
+    tileImage: '/images/vibes/06-dance-hits.webp',
     membranePreset: 'punchy',
   },
   {
@@ -92,6 +106,8 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     gradient: 'from-lime-400 to-green-600',
     bgClass: 'rgba(119, 255, 0, 0.05)',
     number: '07',
+    numberColor: '#1a3d00',
+    tileImage: '/images/vibes/07-mood-booster.webp',
     membranePreset: 'energetic',
   },
   {
@@ -103,6 +119,8 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     gradient: 'from-purple-600 to-fuchsia-800',
     bgClass: 'rgba(153, 0, 255, 0.05)',
     number: '08',
+    numberColor: '#2a0055',
+    tileImage: '/images/vibes/08-late-night.webp',
     membranePreset: 'cinematic',
   },
   {
@@ -114,6 +132,8 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     gradient: 'from-orange-500 to-red-600',
     bgClass: 'rgba(255, 102, 0, 0.05)',
     number: '09',
+    numberColor: '#3d1500',
+    tileImage: '/images/vibes/09-workout.webp',
     membranePreset: 'elastic',
   },
   {
@@ -125,6 +145,8 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     gradient: 'from-cyan-500 to-blue-700',
     bgClass: 'rgba(0, 179, 255, 0.05)',
     number: '10',
+    numberColor: '#003355',
+    tileImage: '/images/vibes/10-chill-hits.webp',
     membranePreset: 'dreamy',
   },
   {
@@ -137,6 +159,7 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     bgClass: 'rgba(212, 175, 55, 0.05)',
     number: '★',
     badge: '👑 Creator\'s Pick',
+    numberColor: '#5c3d00',
     membranePreset: 'glossy',
   },
   {
@@ -149,6 +172,8 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     bgClass: 'rgba(0, 212, 106, 0.05)',
     number: '11',
     badge: 'REGIONAL',
+    numberColor: '#003d20',
+    tileImage: '/images/vibes/11-top-telugu.webp',
     membranePreset: 'energetic',
   },
   {
@@ -161,6 +186,8 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     bgClass: 'rgba(212, 0, 43, 0.05)',
     number: '12',
     badge: 'REGIONAL',
+    numberColor: '#400015',
+    tileImage: '/images/vibes/12-top-tamil.webp',
     membranePreset: 'punchy',
   },
   {
@@ -173,6 +200,8 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     bgClass: 'rgba(212, 122, 0, 0.05)',
     number: '13',
     badge: 'HOT',
+    numberColor: '#3d2200',
+    tileImage: '/images/vibes/13-top-hindi.webp',
     membranePreset: 'energetic',
   },
   {
@@ -185,6 +214,8 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     bgClass: 'rgba(139, 0, 255, 0.05)',
     number: '14',
     badge: 'NEW',
+    numberColor: '#240055',
+    tileImage: '/images/vibes/14-top-k-pop.webp',
     membranePreset: 'glossy',
   },
 ]

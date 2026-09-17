@@ -163,11 +163,12 @@ export default function Home() {
 
       try {
         logAudioDebug('tracks request started', vibe)
+        const t0 = performance.now()
         const allFetched = await vibeService.fetchVibeSongs(vibe, false)
-        logAudioDebug('tracks response received', { 
+        const t1 = performance.now()
+        logAudioDebug(`[PERF] JSON response received in ${(t1 - t0).toFixed(1)}ms`, { 
           count: allFetched?.length, 
-          firstTrackName: allFetched?.[0]?.name,
-          firstTrackPreviewUrl: allFetched?.[0]?.previewUrl 
+          firstTrackName: allFetched?.[0]?.name 
         })
 
         if (!allFetched || allFetched.length === 0) {
@@ -176,6 +177,11 @@ export default function Home() {
           setIntroComplete(true)
           return
         }
+
+        // IMMEDIATE AUDIO PRELOAD DISPATCH (Decoupled from WebGL)
+        const urlsToPreload = allFetched.map(s => s.previewUrl).filter(Boolean) as string[]
+        useAudioStore.getState().setPreloadUrls(urlsToPreload)
+        logAudioDebug(`[PERF] Dispatched ${urlsToPreload.length} URLs for preloading at ${(performance.now() - t0).toFixed(1)}ms`)
 
         // Fallback: if in-memory signature track had no audio URL, use first API track
         if (!firstTrack?.previewUrl && allFetched[0]?.previewUrl) {
@@ -236,6 +242,10 @@ export default function Home() {
 
     const newSongs = await vibeService.fetchVibeSongs(vibe, false)
     if (newSongs.length > 0) {
+      // Immediate Preload Dispatch
+      const urlsToPreload = newSongs.map(s => s.previewUrl).filter(Boolean) as string[]
+      useAudioStore.getState().setPreloadUrls(urlsToPreload)
+      
       if (!firstTrack?.previewUrl && newSongs[0]?.previewUrl) {
         selectSong(newSongs[0])
         playUrl(newSongs[0].previewUrl)
@@ -257,6 +267,10 @@ export default function Home() {
     const freshSongs = await vibeService.fetchVibeSongs(currentVibe, true)
 
     if (freshSongs.length > 0) {
+      // Immediate Preload Dispatch
+      const urlsToPreload = freshSongs.map(s => s.previewUrl).filter(Boolean) as string[]
+      useAudioStore.getState().setPreloadUrls(urlsToPreload)
+
       await atlasManager.prepareCriticalVibe(freshSongs, () => {})
       setSongs(freshSongs)
       atlasManager.startBackgroundLoading(freshSongs)

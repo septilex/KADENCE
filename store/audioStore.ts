@@ -20,6 +20,10 @@ interface AudioStoreState {
   // Request a seek (player listens to this)
   seekRequest: number | null
   clearSeekRequest: () => void
+  
+  // Preload URLs managed independently of visual UI
+  preloadedUrls: string[]
+  setPreloadUrls: (urls: string[]) => void
 }
 
 export const useAudioStore = create<AudioStoreState>((set, get) => ({
@@ -46,4 +50,7 @@ export const useAudioStore = create<AudioStoreState>((set, get) => ({
   setProgressState: (progress, duration) => set({ progress, duration }),
   
   clearSeekRequest: () => set({ seekRequest: null }),
+  
+  preloadedUrls: [],
+  setPreloadUrls: (urls) => set({ preloadedUrls: urls }),
 }))

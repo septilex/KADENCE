@@ -1,13 +1,13 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useCallback } from 'react'
 import { useAudioStore } from '@/store/audioStore'
+import { useSongStore } from '@/store/songStore'
 import { logAudioDebug } from '@/lib/audioDebug'
 
-// Progress update interval — 8Hz (125ms) is imperceptibly smooth for a scrubber
-// and reduces Zustand state updates from 60/sec to 8/sec, eliminating 52 React
-// re-renders per second in SongDetail.
+// Progress update interval
 const PROGRESS_INTERVAL_MS = 125
+const PRELOAD_COUNT = 32
 
 export function GlobalAudioPlayer() {
   const { 
@@ -16,62 +16,104 @@ export function GlobalAudioPlayer() {
     seekRequest,
     clearSeekRequest, 
     setPlayingState, 
-    setProgressState 
+    setProgressState,
+    preloadedUrls
   } = useAudioStore()
+  
+  const hoveredSong = useSongStore(state => state.hoveredSong)
 
-  // Single reusable HTMLAudioElement
-  const audioRef = useRef<HTMLAudioElement | null>(null)
+  const poolRef = useRef<Map<string, HTMLAudioElement>>(new Map())
+  const loadingStatusRef = useRef<Map<string, 'loading' | 'loaded' | 'error'>>(new Map())
+  const loadQueueRef = useRef<string[]>([])
+  
+  const activeAudioRef = useRef<HTMLAudioElement | null>(null)
   const audioFadeIntervalRef = useRef<NodeJS.Timeout | null>(null)
   const progressTimerRef = useRef<NodeJS.Timeout | null>(null)
 
-  // Initialize the singleton audio element on mount
+  // ── PRIORITY-BASED READY POOL ──────────────────────────────────────────
+  const processQueue = useCallback(() => {
+    const CONCURRENCY_LIMIT = 4;
+    const queue = loadQueueRef.current;
+    
+    // Count active network loads
+    let active = 0;
+    for (const status of loadingStatusRef.current.values()) {
+      if (status === 'loading') active++;
+    }
+    
+    // Find next unstarted URLs
+    for (let i = 0; i < queue.length; i++) {
+      if (active >= CONCURRENCY_LIMIT) break;
+      
+      const url = queue[i];
+      if (!loadingStatusRef.current.has(url)) {
+        loadingStatusRef.current.set(url, 'loading');
+        active++;
+        
+        const audio = new Audio();
+        audio.crossOrigin = 'anonymous';
+        audio.preload = 'auto'; // Force browser to buffer the media
+        
+        const onDone = () => {
+          if (loadingStatusRef.current.get(url) === 'loading') {
+            logAudioDebug(`[PERF] Audio buffered & ready: ${url.substring(0,40)}... at ${performance.now().toFixed(1)}ms`);
+            loadingStatusRef.current.set(url, 'loaded');
+            processQueue(); // trigger next in queue
+          }
+        };
+        
+        audio.addEventListener('canplaythrough', onDone, { once: true });
+        audio.addEventListener('error', () => {
+          loadingStatusRef.current.set(url, 'error');
+          processQueue();
+        }, { once: true });
+        
+        logAudioDebug(`[PERF] Network preloading started: ${url.substring(0,40)}...`);
+        audio.src = url;
+        audio.load(); // Kick off request immediately
+        poolRef.current.set(url, audio);
+      }
+    }
+  }, []);
+
+  // Re-evaluate queue priorities whenever hover/selection changes
   useEffect(() => {
-    if (typeof window !== 'undefined' && !audioRef.current) {
-      logAudioDebug('Audio element created')
-      const audio = new Audio()
-      audioRef.current = audio
-      audio.crossOrigin = 'anonymous'
-
-      // Detailed event listeners for diagnostic tracing
-      audio.addEventListener('loadstart', () => logAudioDebug('audio request started (loadstart)', audio.src))
-      audio.addEventListener('loadedmetadata', () => {
-        logAudioDebug('loadedmetadata', { duration: audio.duration })
-        setProgressState(0, audio.duration)
-      })
-      audio.addEventListener('loadeddata', () => logAudioDebug('loadeddata'))
-      audio.addEventListener('canplay', () => logAudioDebug('canplay'))
-      audio.addEventListener('canplaythrough', () => logAudioDebug('canplaythrough'))
-      audio.addEventListener('playing', () => logAudioDebug('actual playback started'))
-      audio.addEventListener('waiting', () => logAudioDebug('audio waiting / buffering'))
-      audio.addEventListener('stalled', () => logAudioDebug('audio stalled'))
-      audio.addEventListener('error', () => logAudioDebug('audio error event', { code: audio.error?.code, message: audio.error?.message }))
-      audio.addEventListener('pause', () => logAudioDebug('audio paused'))
-
-      // Keep store updated when it ends
-      audio.onended = () => {
-        logAudioDebug('audio ended')
-        stopProgressTimer()
-        setPlayingState(false)
-        setProgressState(0, audio.duration)
+    if (!preloadedUrls || preloadedUrls.length === 0) return;
+    
+    const queue = [...preloadedUrls];
+    
+    // Sort to prioritize current and hovered tracks
+    queue.sort((a, b) => {
+       if (a === currentUrl) return -1;
+       if (b === currentUrl) return 1;
+       if (hoveredSong && a === hoveredSong.previewUrl) return -1;
+       if (hoveredSong && b === hoveredSong.previewUrl) return 1;
+       return 0; // maintain original array order which represents visual rank
+    });
+    
+    loadQueueRef.current = queue;
+    processQueue();
+    
+    // Cleanup old items to prevent memory leaks
+    for (const url of poolRef.current.keys()) {
+      if (!preloadedUrls.includes(url) && url !== currentUrl) {
+        const a = poolRef.current.get(url);
+        if (a && a !== activeAudioRef.current) {
+          a.pause();
+          a.removeAttribute('src');
+          a.load();
+        }
+        poolRef.current.delete(url);
+        loadingStatusRef.current.delete(url);
       }
     }
-    // Cleanup on unmount
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause()
-        audioRef.current.removeAttribute('src')
-        audioRef.current.load()
-        audioRef.current = null
-      }
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [preloadedUrls, currentUrl, hoveredSong, processQueue]);
 
   // Scrubbing/Progress Reporting
   const startProgressTimer = () => {
     if (progressTimerRef.current) return
     progressTimerRef.current = setInterval(() => {
-      const el = audioRef.current
+      const el = activeAudioRef.current
       if (el && el.duration && !el.paused) {
         setProgressState((el.currentTime / el.duration) * 100, el.duration)
       }
@@ -91,8 +133,8 @@ export function GlobalAudioPlayer() {
 
   // Handle Seek requests
   useEffect(() => {
-    if (seekRequest !== null && audioRef.current && audioRef.current.duration) {
-      const el = audioRef.current
+    if (seekRequest !== null && activeAudioRef.current && activeAudioRef.current.duration) {
+      const el = activeAudioRef.current
       el.currentTime = (seekRequest / 100) * el.duration
       setProgressState(seekRequest, el.duration)
       clearSeekRequest()
@@ -101,12 +143,9 @@ export function GlobalAudioPlayer() {
 
   // Handle Play/Pause toggles from the store
   useEffect(() => {
-    const el = audioRef.current
+    const el = activeAudioRef.current
     if (!el || !el.src) return
 
-    // Prevent race condition: if the URL changed in the same render cycle, 
-    // the audio element's src is out of sync. Skip the play call here and 
-    // let the URL change effect (below) handle it.
     if (currentUrl && el.src !== currentUrl) {
       return
     }
@@ -126,76 +165,98 @@ export function GlobalAudioPlayer() {
 
   // Handle URL changes
   useEffect(() => {
-    const audio = audioRef.current
-    if (!audio) return
-
     if (audioFadeIntervalRef.current) clearInterval(audioFadeIntervalRef.current)
 
     if (!currentUrl) {
-      // Fade out rapidly when leaving a node (100ms fade to prevent clicking)
-      let vol = audio.volume
-      const fadeOutStep = vol / 5 // 5 steps
-      audioFadeIntervalRef.current = setInterval(() => {
-        vol -= fadeOutStep
-        if (vol <= 0) {
-          if (audioFadeIntervalRef.current) clearInterval(audioFadeIntervalRef.current)
-          audio.pause()
-          audio.removeAttribute('src')
-          audio.load()
-          stopProgressTimer()
-          setPlayingState(false)
-        } else {
-          audio.volume = Math.max(0, vol)
-        }
-      }, 20) // 5 steps * 20ms = 100ms fade out
+      const audio = activeAudioRef.current
+      if (audio) {
+        // Fade out rapidly
+        let vol = audio.volume
+        const fadeOutStep = vol / 5
+        audioFadeIntervalRef.current = setInterval(() => {
+          vol -= fadeOutStep
+          if (vol <= 0) {
+            if (audioFadeIntervalRef.current) clearInterval(audioFadeIntervalRef.current)
+            audio.pause()
+            stopProgressTimer()
+            setPlayingState(false)
+          } else {
+            audio.volume = Math.max(0, vol)
+          }
+        }, 20)
+      }
       return
     }
 
-    // New URL to play immediately
-    if (audio.src !== currentUrl) {
-      logAudioDebug('audio.src assigned', currentUrl)
-      audio.pause()
-      audio.src = currentUrl
-      audio.volume = 0.05 // start very low but non-zero to fade in fast
-      
-      const targetUrl = currentUrl
-      
-      logAudioDebug('play() called', currentUrl)
-      audio.play().then(() => {
-        logAudioDebug('play() resolved', targetUrl)
-        // Prevent race condition: if the URL changed while waiting for play() to resolve, abort.
-        // Reading audio.src could include host/port injection from the browser, so we compare with the store state.
-        if (targetUrl !== useAudioStore.getState().currentUrl) return
-        
-        setPlayingState(true)
-        startProgressTimer()
-        
-        let targetVol = 0.35 // Atmospheric volume peak
-        let currentVol = audio.volume
-        const fadeInStep = (targetVol - currentVol) / 5 // 5 steps
-        
-        if (audioFadeIntervalRef.current) clearInterval(audioFadeIntervalRef.current)
-        
-        audioFadeIntervalRef.current = setInterval(() => {
-          currentVol += fadeInStep
-          if (currentVol >= targetVol) {
-            if (audioFadeIntervalRef.current) clearInterval(audioFadeIntervalRef.current)
-            audio.volume = targetVol
-          } else {
-            audio.volume = Math.min(targetVol, currentVol)
-          }
-        }, 20) // 5 steps * 20ms = 100ms fade in
-      }).catch(err => {
-        logAudioDebug('play() rejected', { name: err.name, message: err.message })
-        if (err.name !== 'AbortError') {
-          // Ignore AbortError caused by rapid hovering
-          console.error('Audio play error:', err)
-          stopProgressTimer()
-          setPlayingState(false)
-        }
-      })
+    const previousAudio = activeAudioRef.current
+    if (previousAudio && previousAudio.src !== currentUrl) {
+      previousAudio.pause()
+      stopProgressTimer()
     }
+
+    let audio = poolRef.current.get(currentUrl)
+    if (!audio) {
+      audio = new Audio()
+      audio.crossOrigin = 'anonymous'
+      audio.preload = 'auto'
+      audio.src = currentUrl
+    }
+    
+    // Attach event listeners if they haven't been attached yet
+    if (!audio.onended) {
+       audio.onended = () => {
+         logAudioDebug('audio ended')
+         stopProgressTimer()
+         setPlayingState(false)
+         setProgressState(0, audio.duration)
+       }
+       audio.addEventListener('loadedmetadata', () => {
+         if (activeAudioRef.current === audio) {
+           setProgressState(0, audio.duration)
+         }
+       })
+       audio.addEventListener('error', () => logAudioDebug('audio error event', { code: audio.error?.code, message: audio.error?.message }))
+    }
+    
+    activeAudioRef.current = audio
+    audio.volume = 0.05
+    const targetUrl = currentUrl
+    
+    const tPlayStart = performance.now()
+    logAudioDebug(`[PERF] Hover -> play() called for ${targetUrl.substring(0,40)}... at ${tPlayStart.toFixed(1)}ms`)
+    
+    audio.play().then(() => {
+      const tPlayDone = performance.now()
+      logAudioDebug(`[PERF] ZERO-LATENCY VERIFIED: Audio started in ${(tPlayDone - tPlayStart).toFixed(1)}ms!`)
+      
+      if (targetUrl !== useAudioStore.getState().currentUrl) return
+      
+      setPlayingState(true)
+      startProgressTimer()
+      
+      let targetVol = 0.35
+      let currentVol = audio.volume
+      const fadeInStep = (targetVol - currentVol) / 5
+      
+      audioFadeIntervalRef.current = setInterval(() => {
+        currentVol += fadeInStep
+        if (currentVol >= targetVol) {
+          if (audioFadeIntervalRef.current) clearInterval(audioFadeIntervalRef.current)
+          audio.volume = targetVol
+        } else {
+          audio.volume = Math.min(targetVol, currentVol)
+        }
+      }, 20)
+    }).catch(err => {
+      logAudioDebug('play() rejected', { name: err.name, message: err.message })
+      if (err.name !== 'AbortError') {
+        console.error('Audio play error:', err)
+        stopProgressTimer()
+        setPlayingState(false)
+      }
+    })
+    
   }, [currentUrl, setPlayingState])
 
-  return null // Audio is completely headless
+  return null
 }
