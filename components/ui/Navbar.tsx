@@ -38,18 +38,27 @@ export function Navbar({
     >
       {/* Logo & Active Vibe Badge */}
       <div className="pointer-events-auto flex items-center gap-4">
-        <div
-          className="flex items-center text-white opacity-90 select-none uppercase"
-          style={{ 
-            fontFamily: "'Syncopate', sans-serif", 
-            fontSize: '1.5rem',
-            letterSpacing: '-0.03em',
-            fontWeight: 700,
-            WebkitFontSmoothing: 'antialiased',
-          }}
-        >
-          <img src="/kadence-chrome-logo.png" alt="KADENCE" style={{ height: '2.04em', width: 'auto' }} className="pointer-events-none select-none" />
-        </div>
+        <AnimatePresence initial={false}>
+          {!isSelected && (
+            <motion.div
+              key="navbar-kadence-logo"
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -10 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
+              className="flex items-center text-white opacity-90 select-none uppercase"
+              style={{ 
+                fontFamily: "'Syncopate', sans-serif", 
+                fontSize: '1.5rem',
+                letterSpacing: '-0.03em',
+                fontWeight: 700,
+                WebkitFontSmoothing: 'antialiased',
+              }}
+            >
+              <img src="/kadence-chrome-logo.png" alt="KADENCE" style={{ height: '2.04em', width: 'auto' }} className="pointer-events-none select-none" />
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <AnimatePresence>
           {activeVibe && !isSelected && (
@@ -59,20 +68,24 @@ export function Navbar({
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.15 }}
-              className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-[10px] uppercase tracking-wider font-semibold"
-              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
             >
-              <span
-                className="w-1.5 h-1.5 rounded-full"
-                style={{
-                  backgroundColor: activeVibe.accentColor,
-                  boxShadow: `0 0 8px ${activeVibe.accentColor}`,
-                }}
-              />
-              {activeVibe.badge && (
-                <span className="text-white font-bold">{activeVibe.badge}</span>
-              )}
-              <span className="text-white/60">{activeVibe.label}</span>
+              <GlassButton
+                size="xs"
+                contentClassName="flex items-center gap-1.5"
+                style={{ fontFamily: "'Space Grotesk', sans-serif", '--background': activeVibe.bgColor || '#ffffff', '--foreground': '#ffffff' } as React.CSSProperties}
+              >
+                <span
+                  className="w-1.5 h-1.5 rounded-full shrink-0"
+                  style={{
+                    backgroundColor: activeVibe.accentColor,
+                    boxShadow: `0 0 8px ${activeVibe.accentColor}`,
+                  }}
+                />
+                {activeVibe.badge && (
+                  <span className="text-white font-bold">{activeVibe.badge}</span>
+                )}
+                <span className="text-white/80">{activeVibe.label}</span>
+              </GlassButton>
             </motion.div>
           )}
         </AnimatePresence>

@@ -112,15 +112,15 @@ export function SearchPanel({ isOpen, onOpen, onClose, onResults, onSelectResult
                   <p className="text-white/25 text-xs uppercase tracking-widest mb-2 px-1">Try searching</p>
                   <div className="flex flex-wrap gap-1.5">
                     {SUGGESTIONS.map(s => (
-                      <button
+                      <GlassButton
                         key={s}
                         onClick={() => { setQuery(s); search(s) }}
-                        className="px-3 py-1 rounded-full bg-white/5 border border-white/10
-                          text-white/50 text-xs hover:bg-white/10 hover:text-white/80
-                          transition-all duration-150 cursor-pointer"
+                        size="xs"
+                        contentClassName="text-white/60 hover:text-white/90 transition-colors lowercase"
+                        style={{ '--background': '#ffffff22', '--foreground': '#ffffff' } as React.CSSProperties}
                       >
                         {s}
-                      </button>
+                      </GlassButton>
                     ))}
                   </div>
                 </div>

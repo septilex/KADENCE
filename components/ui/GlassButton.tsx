@@ -221,12 +221,14 @@ const glassButtonVariants = cva(
       size: {
         default: "text-base font-medium",
         sm: "text-sm font-medium",
+        xs: "text-[10px] font-bold uppercase tracking-widest",
         lg: "text-lg font-medium",
         iconSm: "h-8 w-8 flex items-center justify-center p-0",
         icon: "h-9 w-9 flex items-center justify-center p-0",
         iconLg: "h-14 w-14 flex items-center justify-center p-0",
         iconXl: "h-16 w-16 flex items-center justify-center p-0",
         icon2xl: "h-[72px] w-[72px] flex items-center justify-center p-0",
+        none: "",
       },
     },
     defaultVariants: {
@@ -242,12 +244,14 @@ const glassButtonTextVariants = cva(
       size: {
         default: "px-6 py-3.5 tracking-tighter",
         sm: "px-4 py-2",
+        xs: "px-3 py-1",
         lg: "px-8 py-4",
         iconSm: "flex h-8 w-8 items-center justify-center p-0",
         icon: "flex h-9 w-9 items-center justify-center p-0",
         iconLg: "flex h-14 w-14 items-center justify-center p-0",
         iconXl: "flex h-16 w-16 items-center justify-center p-0",
         icon2xl: "flex h-[72px] w-[72px] items-center justify-center p-0",
+        none: "",
       },
     },
     defaultVariants: {
@@ -261,10 +265,11 @@ export interface GlassButtonProps
     React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof glassButtonVariants> {
   contentClassName?: string;
+  buttonClassName?: string;
 }
 
 const GlassButton = React.forwardRef<HTMLButtonElement, GlassButtonProps>(
-  ({ className, children, size, contentClassName, ...props }, ref) => {
+  ({ className, children, size, contentClassName, buttonClassName, ...props }, ref) => {
     const wrapRef = React.useRef<HTMLDivElement>(null);
     const x = useMotionValue(0);
     const y = useMotionValue(0);
@@ -307,7 +312,7 @@ const GlassButton = React.forwardRef<HTMLButtonElement, GlassButtonProps>(
           )}
         >
           <button
-            className={cn("glass-button", glassButtonVariants({ size }))}
+            className={cn("glass-button w-full h-full", glassButtonVariants({ size }), buttonClassName)}
             ref={ref}
             {...props}
           >

@@ -8,6 +8,60 @@ import { VIBE_CONFIGS } from '@/lib/vibeConfig'
 import { GlassButton } from './GlassButton'
 import { EditorialOverlay } from './EditorialOverlay'
 
+// SVG Filter Component for Glass Effect
+const GlassFilter = () => (
+  <svg style={{ display: "none" }}>
+    <filter
+      id="glass-distortion"
+      x="0%"
+      y="0%"
+      width="100%"
+      height="100%"
+      filterUnits="objectBoundingBox"
+    >
+      <feTurbulence
+        type="fractalNoise"
+        baseFrequency="0.001 0.005"
+        numOctaves="1"
+        seed="17"
+        result="turbulence"
+      />
+      <feComponentTransfer in="turbulence" result="mapped">
+        <feFuncR type="gamma" amplitude="1" exponent="10" offset="0.5" />
+        <feFuncG type="gamma" amplitude="0" exponent="1" offset="0" />
+        <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.5" />
+      </feComponentTransfer>
+      <feGaussianBlur in="turbulence" stdDeviation="3" result="softMap" />
+      <feSpecularLighting
+        in="softMap"
+        surfaceScale="5"
+        specularConstant="1"
+        specularExponent="100"
+        lightingColor="white"
+        result="specLight"
+      >
+        <fePointLight x="-200" y="-200" z="300" />
+      </feSpecularLighting>
+      <feComposite
+        in="specLight"
+        operator="arithmetic"
+        k1="0"
+        k2="1"
+        k3="1"
+        k4="0"
+        result="litImage"
+      />
+      <feDisplacementMap
+        in="SourceGraphic"
+        in2="softMap"
+        scale="200"
+        xChannelSelector="R"
+        yChannelSelector="G"
+      />
+    </filter>
+  </svg>
+)
+
 function MagneticGlassCard({
   children,
   className,
@@ -375,6 +429,7 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
   return (
     <AnimatePresence>
       <style>{WAVEFORM_STYLE}</style>
+      <GlassFilter />
       {song && (
         <>
           {/* ── Transparent Non-Blocking Backdrop ─────────────────── */}
@@ -424,28 +479,45 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
             </motion.div>
           )}
 
-          {/* ── Floating Cinematic Card (Whitish Liquid Glass Sidebar) ── */}
+          {/* ── Floating Cinematic Card (SVG Filter Glass Sidebar) ── */}
           <motion.div
             key="drawer"
             initial={{ x: -400, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: -400, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 350, damping: 30, mass: 0.8 }}
-            className="fixed left-4 top-4 bottom-4 z-40 w-full max-w-[360px] flex flex-col rounded-3xl overflow-hidden backdrop-blur-2xl"
+            className="fixed left-4 top-4 bottom-4 z-40 w-full max-w-[360px] rounded-3xl transition-all duration-700"
             style={{
-              background: `linear-gradient(165deg, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.10) 45%, rgba(255,255,255,0.05) 100%)`,
-              border: '1px solid rgba(255,255,255,0.35)',
-              boxShadow: `inset 0 1.5px 2px rgba(255,255,255,0.7), inset 0 -1px 1px rgba(255,255,255,0.15), 0 25px 60px -12px rgba(0,0,0,0.5), 0 0 35px rgba(255,255,255,0.1)`,
-              backdropFilter: 'blur(30px) saturate(190%)',
-              WebkitBackdropFilter: 'blur(30px) saturate(190%)',
+              boxShadow: "0 6px 6px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.1)",
+              transitionTimingFunction: "cubic-bezier(0.175, 0.885, 0.32, 2.2)",
             }}
             id="song-detail-drawer"
           >
-            {/* Top liquid specular highlight sheen */}
-            <div className="absolute inset-x-0 top-0 h-[38%] bg-gradient-to-b from-white/25 via-white/5 to-transparent pointer-events-none rounded-t-3xl z-0" />
+            {/* Glass Layers */}
+            <div
+              className="absolute inset-0 z-0 overflow-hidden rounded-[inherit]"
+              style={{
+                backdropFilter: "blur(3px)",
+                filter: "url(#glass-distortion)",
+                isolation: "isolate",
+              }}
+            />
+            <div
+              className="absolute inset-0 z-10 rounded-[inherit]"
+              style={{ background: "rgba(255, 255, 255, 0.25)" }}
+            />
+            <div
+              className="absolute inset-0 z-20 rounded-[inherit] overflow-hidden pointer-events-none"
+              style={{
+                boxShadow:
+                  "inset 2px 2px 1px 0 rgba(255, 255, 255, 0.5), inset -1px -1px 1px 1px rgba(255, 255, 255, 0.5)",
+              }}
+            />
 
-            {/* ── Close button ─────────────────────────────── */}
-            <div className="absolute top-5 right-5 z-50">
+            {/* Content Container */}
+            <div className="relative z-30 flex flex-col h-full w-full overflow-hidden rounded-[inherit]">
+              {/* ── Close button ─────────────────────────────── */}
+              <div className="absolute top-5 right-5 z-50">
               <GlassButton
                 id="close-detail-btn"
                 onClick={onClose}
@@ -492,20 +564,24 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
 
                   {/* Top Left Tag (e.g. Primary Genre) */}
                   {song.genres[0] && (
-                    <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-white/20 backdrop-blur-xl border border-white/35 flex items-center shadow-[inset_0_1px_1px_rgba(255,255,255,0.5),0_4px_12px_rgba(0,0,0,0.25)]">
-                      <span className="text-[9px] font-bold tracking-widest text-white uppercase">{song.genres[0]}</span>
+                    <div className="absolute top-3 left-3 pointer-events-auto">
+                      <GlassButton size="xs" contentClassName="text-white cursor-default">
+                        {song.genres[0]}
+                      </GlassButton>
                     </div>
                   )}
                   
                   {/* Bottom Right: Now Playing Indicator */}
                   {isPlaying && song.previewUrl && (
-                    <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-xl border border-white/35 shadow-[inset_0_1px_1px_rgba(255,255,255,0.5),0_4px_12px_rgba(0,0,0,0.25)]">
-                      <div className="flex items-end gap-[2px] h-3">
-                        {WAVE_BARS.slice(0,4).map((h, i) => (
-                          <div key={i} className="kd-wave-bar w-[2px] rounded-full" style={{ backgroundColor: '#fff', height: `${h * 0.4}px` }} />
-                        ))}
-                      </div>
-                      <span className="text-[9px] font-bold tracking-widest text-white uppercase">Now Playing</span>
+                    <div className="absolute bottom-3 right-3 pointer-events-auto">
+                      <GlassButton size="xs" contentClassName="flex items-center gap-1.5 text-white cursor-default">
+                        <div className="flex items-end gap-[2px] h-3">
+                          {WAVE_BARS.slice(0,4).map((h, i) => (
+                            <div key={i} className="kd-wave-bar w-[2px] rounded-full" style={{ backgroundColor: '#fff', height: `${h * 0.4}px` }} />
+                          ))}
+                        </div>
+                        <span>Now Playing</span>
+                      </GlassButton>
                     </div>
                   )}
                 </div>
@@ -514,21 +590,56 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
               {/* ── Track Metadata ────────────────────────────── */}
               <div className="px-5 space-y-3">
                 <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-                  <h2 className="text-white font-medium leading-tight mb-1 font-serif tracking-wide" 
-                      style={{ fontSize: 'clamp(1.75rem, 6vw, 2.25rem)', color: '#fff', textShadow: `0 2px 10px rgba(0,0,0,0.5)` }}>
+                  <h2
+                    className="text-white font-semibold leading-[1.15] mb-1.5 break-words [text-wrap:balance]"
+                    style={{
+                      fontFamily: "'Prompt', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+                      fontSize:
+                        song.name.length > 36
+                          ? 'clamp(1.2rem, 3.8vw, 1.45rem)'
+                          : song.name.length > 22
+                          ? 'clamp(1.42rem, 4.6vw, 1.75rem)'
+                          : 'clamp(1.75rem, 6vw, 2.2rem)',
+                      fontWeight: song.name.length > 36 ? 600 : 700,
+                      letterSpacing: song.name.length > 36 ? '-0.01em' : '-0.02em',
+                      textShadow: '0 2px 14px rgba(0,0,0,0.65), 0 0 24px rgba(255,255,255,0.12)',
+                      color: '#ffffff',
+                    }}
+                    title={song.name}
+                  >
                     {song.name}
                   </h2>
-                  <p className="text-white/80 text-sm tracking-wide font-light">{song.artist}</p>
-                  <p className="text-white/50 text-xs tracking-wide font-light mt-0.5">{song.album}</p>
+                  <p
+                    className="text-white/80 text-sm tracking-wide font-light"
+                    style={{
+                      transform: 'scaleX(1.065)',
+                      transformOrigin: 'left',
+                      width: '93.5%',
+                      display: 'block',
+                    }}
+                  >
+                    {song.artist}
+                  </p>
+                  <p
+                    className="text-white/50 text-xs tracking-wide font-light mt-0.5"
+                    style={{
+                      transform: 'scaleX(1.065)',
+                      transformOrigin: 'left',
+                      width: '93.5%',
+                      display: 'block',
+                    }}
+                  >
+                    {song.album}
+                  </p>
                 </motion.div>
 
                 {/* Genre Tags */}
                 {song.genres.length > 0 && (
                   <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="flex flex-wrap gap-2 pt-1">
                     {song.genres.map((g) => (
-                      <span key={g} className="px-3 py-1 rounded-full text-[9px] font-bold tracking-widest uppercase border border-white/30 bg-white/15 backdrop-blur-xl text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_2px_8px_rgba(0,0,0,0.2)]">
+                      <GlassButton key={g} size="xs" contentClassName="text-white cursor-default">
                         {g}
-                      </span>
+                      </GlassButton>
                     ))}
                   </motion.div>
                 )}
@@ -637,46 +748,40 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
               {/* ── Footer Stats ────────────────────────────── */}
               <div className="px-5 space-y-4">
                 <div className="flex items-center gap-3">
-                  <MagneticGlassCard
-                    className="flex-1 rounded-2xl p-3.5 flex items-center gap-3 backdrop-blur-xl transition-all duration-300 cursor-default"
-                    style={{
-                      background: `linear-gradient(135deg, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.08) 100%)`,
-                      border: '1px solid rgba(255,255,255,0.35)',
-                      boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.5), 0 8px 20px rgba(0,0,0,0.2)',
-                    }}
+                  <GlassButton
+                    size="none"
+                    className="flex-1 w-full"
+                    contentClassName="flex-1 flex items-center gap-3 w-full cursor-default text-left !p-3.5"
+                    style={{ '--foreground': '#ffffff', '--background': '#ffffff22' } as React.CSSProperties}
                   >
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="white" className="opacity-90 drop-shadow-sm"><path d="M3 18h3v-7H3v7zM8 18h3V6H8v12zM13 18h3v-9h-3v9zM18 18h3V11h-3v7z"/></svg>
                     <div>
                       <div className="text-white font-bold text-sm leading-none drop-shadow-sm">{song.popularity}%</div>
                       <div className="text-white/80 text-[8px] font-bold tracking-widest uppercase mt-1">Popularity</div>
                     </div>
-                  </MagneticGlassCard>
+                  </GlassButton>
 
-                  <MagneticGlassCard
-                    className="flex-1 rounded-2xl p-3.5 flex items-center gap-3 backdrop-blur-xl transition-all duration-300 cursor-default"
-                    style={{
-                      background: `linear-gradient(135deg, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.08) 100%)`,
-                      border: '1px solid rgba(255,255,255,0.35)',
-                      boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.5), 0 8px 20px rgba(0,0,0,0.2)',
-                    }}
+                  <GlassButton
+                    size="none"
+                    className="flex-1 w-full"
+                    contentClassName="flex-1 flex items-center gap-3 w-full cursor-default text-left !p-3.5"
+                    style={{ '--foreground': '#ffffff', '--background': '#ffffff22' } as React.CSSProperties}
                   >
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="white" className="opacity-90 drop-shadow-sm"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
                     <div>
                       <div className="text-white font-bold text-sm leading-none drop-shadow-sm">{song.previewUrl ? '30s' : '0s'}</div>
                       <div className="text-white/80 text-[8px] font-bold tracking-widest uppercase mt-1">Preview</div>
                     </div>
-                  </MagneticGlassCard>
+                  </GlassButton>
                 </div>
 
                 {/* Apple Music Button */}
-                <MagneticGlassCard
-                  href={song.spotifyUrl}
-                  className="w-full flex items-center justify-between rounded-2xl p-3.5 cursor-pointer group backdrop-blur-xl"
-                  style={{
-                    background: `linear-gradient(135deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.09) 100%)`,
-                    border: '1px solid rgba(255,255,255,0.35)',
-                    boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.5), 0 8px 20px rgba(0,0,0,0.2)',
-                  }}
+                <GlassButton
+                  onClick={() => window.open(song.spotifyUrl, '_blank')}
+                  size="none"
+                  className="w-full"
+                  contentClassName="flex items-center justify-between w-full group !p-3.5 text-left"
+                  style={{ '--foreground': '#ffffff', '--background': '#ffffff25' } as React.CSSProperties}
                 >
                   <div className="flex items-center gap-3">
                     {/* Apple Logo SVG */}
@@ -691,8 +796,9 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/60 group-hover:text-white transition-colors">
                     <path d="M9 18l6-6-6-6"/>
                   </svg>
-                </MagneticGlassCard>
+                </GlassButton>
               </div>
+            </div>
             </div>
           </motion.div>
         </>
