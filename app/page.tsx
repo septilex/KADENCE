@@ -18,6 +18,8 @@ import { useAudioStore } from '@/store/audioStore'
 import { ChangeVibeOverlay } from '@/components/ui/ChangeVibeOverlay'
 import { atlasManager } from '@/lib/atlasManager'
 import { vibeService } from '@/lib/vibeService'
+import { logAudioDebug } from '@/lib/audioDebug'
+import { getFirstTrackForVibe } from '@/lib/signatureSongs'
 
 // Dynamic import for 3D (no SSR)
 const Universe = dynamic(
@@ -113,64 +115,110 @@ export default function Home() {
 
   const { isSearchOpen, setSearchOpen } = useUIStore()
   const { setFps } = usePerformanceStore()
+  const { playUrl } = useAudioStore()
   const [previewSong, setPreviewSong] = useState<SongNode | null>(null)
   const fpsRef = useRef(60)
 
-  /**
-   * Gated Universe Entry / Vibe Switch
-   * Synchronized pipeline:
-   * 1. Fetch metadata via vibeService (reuses any in-flight prefetch or cached result)
-   *    → If hover-prefetch already completed: step 1 resolves instantly (0ms).
-   * 2. Direct Apple CDN loading & canvas painting of critical 64 covers (35% → 85%)
-   *    → If browser HTTP cache already primed from hover prefetch: very fast.
-   * 3. WebGL commit & single GPU texture flush (85% → 100%)
-   * 4. Seamless transition with 100% stable, populated tiles
-   * 5. Progressive background streaming of secondary covers
-   */
-  const handleVibeSelect = useCallback(async (vibe: Vibe) => {
-    setVibe(vibe)
-    setLoading(true, 5)
+  useEffect(() => {
+    logAudioDebug('app mounted')
+  }, [])
 
-    try {
-      // Phase 1: Fetch metadata — vibeService deduplicates any in-flight prefetch.
-      // If the user hovered long enough for prefetch to finish, this is instant.
-      const allFetched = await vibeService.fetchVibeSongs(vibe, false)
-      if (!allFetched || allFetched.length === 0) {
-        console.warn('[KADENCE] No songs returned for vibe:', vibe, '— completing intro anyway')
+  /**
+   * Decoupled Universe Entry / Vibe Switch:
+   * Architecture:
+   * 1. STAGE 1 (AUDIO PRIORITY): Immediately stop preview videos, resolve the first
+   *    playable track synchronously (0ms in-memory), and call playUrl() directly in the
+   *    user's click gesture context. Audio request starts immediately on the network.
+   * 2. STAGE 2 (INDEPENDENT VISUAL PIPELINE): In parallel, track metadata fetches,
+   *    critical artwork (32 tiles) loads into texture atlas, WebGL warms up, and
+   *    universe transition executes. Visual and audio lifecycles run completely independently.
+   */
+  const handleVibeSelect = useCallback((vibe: Vibe) => {
+    logAudioDebug('vibe select / enter clicked', vibe)
+
+    // ── STAGE 1: IMMEDIATE FIRST TRACK AUDIO PRIORITY (0ms synchronous resolution) ──
+    // Stop any category preview video so it frees decoders and audio channels immediately
+    useUIStore.getState().setActiveCategoryVideo(null)
+
+    // Resolve first playable track synchronously from in-memory signature data
+    const firstTrack = getFirstTrackForVibe(vibe)
+    if (firstTrack?.previewUrl) {
+      logAudioDebug('first track identified (0ms in-memory)', {
+        name: firstTrack.name,
+        artist: firstTrack.artist,
+        previewUrl: firstTrack.previewUrl,
+      })
+      logAudioDebug('audio URL resolved', firstTrack.previewUrl)
+      // Trigger audio play immediately using the active click gesture context
+      selectSong(firstTrack)
+      playUrl(firstTrack.previewUrl)
+    }
+
+    // ── STAGE 2: INDEPENDENT PARALLEL VISUAL INITIALIZATION ───────────────
+    // Metadata fetch, 32 critical artwork downloads, and WebGL warmup run in parallel
+    // without blocking first track audio playback.
+    (async () => {
+      setVibe(vibe)
+      setLoading(true, 5)
+
+      try {
+        logAudioDebug('tracks request started', vibe)
+        const allFetched = await vibeService.fetchVibeSongs(vibe, false)
+        logAudioDebug('tracks response received', { 
+          count: allFetched?.length, 
+          firstTrackName: allFetched?.[0]?.name,
+          firstTrackPreviewUrl: allFetched?.[0]?.previewUrl 
+        })
+
+        if (!allFetched || allFetched.length === 0) {
+          console.warn('[KADENCE] No songs returned for vibe:', vibe, '— completing intro anyway')
+          setLoading(false, 0)
+          setIntroComplete(true)
+          return
+        }
+
+        // Fallback: if in-memory signature track had no audio URL, use first API track
+        if (!firstTrack?.previewUrl && allFetched[0]?.previewUrl) {
+          selectSong(allFetched[0])
+          playUrl(allFetched[0].previewUrl)
+        }
+
+        setLoading(true, 35)
+
+        // Phase 2: Synchronized Critical Artwork (direct CDN, 256x256, real progress tracking)
+        logAudioDebug('artwork preparation started (32 critical tiles)')
+        await atlasManager.prepareCriticalVibe(allFetched, (ratio) => {
+          const progress = Math.round(35 + ratio * 50)
+          setLoading(true, progress)
+        })
+        logAudioDebug('artwork preparation finished')
+
+        // Phase 3: Set songs and warm WebGL
+        logAudioDebug('WebGL commit / warm started')
+        setSongs(allFetched)
+        setLoading(true, 92)
+
+        // Wait two frames so React and Three.js commit the geometry & instances
+        await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))
+        setLoading(true, 100)
+
+        // Fast transition — data is already loaded, no need to delay
+        setTimeout(() => {
+          setLoading(false, 100)
+          setIntroComplete(true)
+          logAudioDebug('introComplete set to true (universe active)')
+          // Phase 4: Progressive background streaming (silent & non-blocking)
+          logAudioDebug('startBackgroundLoading started (224 secondary tiles)')
+          atlasManager.startBackgroundLoading(allFetched)
+        }, 100)
+      } catch (err) {
+        console.error('[KADENCE] handleVibeSelect pipeline error:', err)
+        // Ensure the UI never gets stuck — always complete the intro
         setLoading(false, 0)
         setIntroComplete(true)
-        return
       }
-      setLoading(true, 35)
-
-      // Phase 2: Synchronized Critical Artwork (direct CDN, 256x256, real progress tracking)
-      await atlasManager.prepareCriticalVibe(allFetched, (ratio) => {
-        const progress = Math.round(35 + ratio * 50)
-        setLoading(true, progress)
-      })
-
-      // Phase 3: Set songs and warm WebGL
-      setSongs(allFetched)
-      setLoading(true, 92)
-
-      // Wait two frames so React and Three.js commit the geometry & instances
-      await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))
-      setLoading(true, 100)
-
-      // Fast transition — data is already loaded, no need to delay
-      setTimeout(() => {
-        setLoading(false, 100)
-        setIntroComplete(true)
-        // Phase 4: Progressive background streaming (silent & non-blocking)
-        atlasManager.startBackgroundLoading(allFetched)
-      }, 100)
-    } catch (err) {
-      console.error('[KADENCE] handleVibeSelect pipeline error:', err)
-      // Ensure the UI never gets stuck — always complete the intro
-      setLoading(false, 0)
-      setIntroComplete(true)
-    }
-  }, [setVibe, setLoading, setSongs, setIntroComplete])
+    })()
+  }, [setVibe, setLoading, setSongs, setIntroComplete, selectSong, playUrl])
 
   // In-universe Vibe Switch pipeline
   // vibeService reuses any in-flight prefetch from ChangeVibeOverlay hover.
@@ -179,15 +227,26 @@ export default function Home() {
     setRefreshing(true)
     setVibe(vibe)
 
+    // Immediately resolve and play new vibe's first track
+    const firstTrack = getFirstTrackForVibe(vibe)
+    if (firstTrack?.previewUrl) {
+      selectSong(firstTrack)
+      playUrl(firstTrack.previewUrl)
+    }
+
     const newSongs = await vibeService.fetchVibeSongs(vibe, false)
     if (newSongs.length > 0) {
+      if (!firstTrack?.previewUrl && newSongs[0]?.previewUrl) {
+        selectSong(newSongs[0])
+        playUrl(newSongs[0].previewUrl)
+      }
       await atlasManager.prepareCriticalVibe(newSongs, () => {})
       setSongs(newSongs)
       atlasManager.startBackgroundLoading(newSongs)
     }
 
     setTimeout(() => setRefreshing(false), 200)
-  }, [currentVibe, setSongs, setRefreshing, setVibe])
+  }, [currentVibe, setSongs, setRefreshing, setVibe, selectSong, playUrl])
 
   // ── "Refresh Tracks" flow: force-refresh from API, bypass cache ─────────────
   const handleRefresh = useCallback(async () => {
@@ -210,19 +269,20 @@ export default function Home() {
   const handleCloseSong     = useCallback(() => selectSong(null), [selectSong])
 
   // ── Global Audio Sync ───────────────────────────────────────────────────
-  const { playUrl } = useAudioStore()
-  
-  // Extract just the target audio URL using a stable selector.
-  // This causes page.tsx to re-render ONLY when the target audio URL actually changes.
+  // Extract target audio URL: hovered song takes preview precedence, falling back to selected song.
+  // Audio playback is NOT blocked by introComplete or artwork loading!
   const targetAudioUrl = useSongStore((state) => {
-    if (!state.introComplete || state.isChangingVibe) return null
-    return state.selectedSong 
-      ? state.selectedSong.previewUrl || null 
-      : state.hoveredSong?.previewUrl || null
+    if (state.isChangingVibe) return null
+    return state.hoveredSong?.previewUrl 
+      ?? state.selectedSong?.previewUrl 
+      ?? null
   })
 
   useEffect(() => {
-    playUrl(targetAudioUrl)
+    if (targetAudioUrl) {
+      logAudioDebug('targetAudioUrl updated in page.tsx', targetAudioUrl)
+      playUrl(targetAudioUrl)
+    }
   }, [targetAudioUrl, playUrl])
   const handleSearchResults = useCallback((results: SongNode[]) => {
     if (results.length > 0) {

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import { useUIStore } from '@/store/uiStore'
+import { useSongStore } from '@/store/songStore'
 
 // ── Zoom/Crop Configuration for Hardcoded Letterbox Videos ─────────────────
 const CATEGORY_ZOOM_SCALES: Record<string, number> = {
@@ -25,7 +26,8 @@ function getCategoryVideoScale(url: string | null): number {
 export function CategoryVideoBackground({ url }: { url?: string | null }) {
   // If url is passed as prop, use it (for backward compat), otherwise use the global store.
   const storeUrl = useUIStore((s) => s.activeCategoryVideo)
-  const activeUrl = url !== undefined ? url : storeUrl
+  const introComplete = useSongStore((s) => s.introComplete)
+  const activeUrl = introComplete ? null : (url !== undefined ? url : storeUrl)
 
   const containerRef = useRef<HTMLDivElement>(null)
   const slotsRef = useRef<[HTMLVideoElement | null, HTMLVideoElement | null]>([null, null])

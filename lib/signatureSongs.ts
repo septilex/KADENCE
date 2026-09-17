@@ -1,4 +1,24 @@
 import { SongNode, Vibe } from './types';
+import { devSpecialData } from './devSpecialData';
+
+export function getFirstTrackForVibe(vibe: Vibe): SongNode | null {
+  if (vibe === 'dev-special' && devSpecialData && devSpecialData.length > 0) {
+    return devSpecialData[0];
+  }
+  const sig = SIGNATURE_SONGS[vibe];
+  if (sig) {
+    return {
+      ...sig,
+      x: 0,
+      y: 0,
+      z: 0,
+      vx: 0,
+      vy: 0,
+      scale: 1,
+    } as SongNode;
+  }
+  return null;
+}
 
 // Hardcoded signature tracks combining Spotify metadata with iTunes 30-second audio previews
 // This ensures that chart previews are 100% reliable and always play a matching song.

@@ -11,7 +11,7 @@ import { JellyField } from '@/lib/jellyField'
 interface NodeFieldProps {
   songs: SongNode[]
   currentVibe: Vibe | null
-  hoveredId: string | null
+  hoveredId?: string | null
   selectedId: string | null
   onHover: (song: SongNode | null) => void
   onSelect: (song: SongNode) => void

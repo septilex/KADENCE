@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import { useAudioStore } from '@/store/audioStore'
+import { logAudioDebug } from '@/lib/audioDebug'
 
 // Progress update interval — 8Hz (125ms) is imperceptibly smooth for a scrubber
 // and reduces Zustand state updates from 60/sec to 8/sec, eliminating 52 React
@@ -26,18 +27,32 @@ export function GlobalAudioPlayer() {
   // Initialize the singleton audio element on mount
   useEffect(() => {
     if (typeof window !== 'undefined' && !audioRef.current) {
-      audioRef.current = new Audio()
-      audioRef.current.crossOrigin = 'anonymous'
+      logAudioDebug('Audio element created')
+      const audio = new Audio()
+      audioRef.current = audio
+      audio.crossOrigin = 'anonymous'
+
+      // Detailed event listeners for diagnostic tracing
+      audio.addEventListener('loadstart', () => logAudioDebug('audio request started (loadstart)', audio.src))
+      audio.addEventListener('loadedmetadata', () => {
+        logAudioDebug('loadedmetadata', { duration: audio.duration })
+        setProgressState(0, audio.duration)
+      })
+      audio.addEventListener('loadeddata', () => logAudioDebug('loadeddata'))
+      audio.addEventListener('canplay', () => logAudioDebug('canplay'))
+      audio.addEventListener('canplaythrough', () => logAudioDebug('canplaythrough'))
+      audio.addEventListener('playing', () => logAudioDebug('actual playback started'))
+      audio.addEventListener('waiting', () => logAudioDebug('audio waiting / buffering'))
+      audio.addEventListener('stalled', () => logAudioDebug('audio stalled'))
+      audio.addEventListener('error', () => logAudioDebug('audio error event', { code: audio.error?.code, message: audio.error?.message }))
+      audio.addEventListener('pause', () => logAudioDebug('audio paused'))
 
       // Keep store updated when it ends
-      audioRef.current.onended = () => {
+      audio.onended = () => {
+        logAudioDebug('audio ended')
         stopProgressTimer()
         setPlayingState(false)
-        if (audioRef.current) setProgressState(0, audioRef.current.duration)
-      }
-
-      audioRef.current.onloadedmetadata = () => {
-        if (audioRef.current) setProgressState(0, audioRef.current.duration)
+        setProgressState(0, audio.duration)
       }
     }
     // Cleanup on unmount
@@ -138,13 +153,16 @@ export function GlobalAudioPlayer() {
 
     // New URL to play immediately
     if (audio.src !== currentUrl) {
+      logAudioDebug('audio.src assigned', currentUrl)
       audio.pause()
       audio.src = currentUrl
       audio.volume = 0.05 // start very low but non-zero to fade in fast
       
       const targetUrl = currentUrl
       
+      logAudioDebug('play() called', currentUrl)
       audio.play().then(() => {
+        logAudioDebug('play() resolved', targetUrl)
         // Prevent race condition: if the URL changed while waiting for play() to resolve, abort.
         // Reading audio.src could include host/port injection from the browser, so we compare with the store state.
         if (targetUrl !== useAudioStore.getState().currentUrl) return
@@ -168,6 +186,7 @@ export function GlobalAudioPlayer() {
           }
         }, 20) // 5 steps * 20ms = 100ms fade in
       }).catch(err => {
+        logAudioDebug('play() rejected', { name: err.name, message: err.message })
         if (err.name !== 'AbortError') {
           // Ignore AbortError caused by rapid hovering
           console.error('Audio play error:', err)
