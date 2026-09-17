@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 import { Vibe } from '@/lib/types'
 import { VIBE_CONFIGS } from '@/lib/vibeConfig'
+import { useSongStore } from '@/store/songStore'
+import { GlassButton } from './GlassButton'
 
 interface NavbarProps {
   songCount: number
@@ -11,9 +13,20 @@ interface NavbarProps {
   onRefresh: () => void
   isRefreshing: boolean
   onChangeVibeClick: () => void
+  isSongSelected?: boolean
 }
 
-export function Navbar({ songCount, currentVibe, onSearchOpen, onRefresh, isRefreshing, onChangeVibeClick }: NavbarProps) {
+export function Navbar({
+  songCount,
+  currentVibe,
+  onSearchOpen,
+  onRefresh,
+  isRefreshing,
+  onChangeVibeClick,
+  isSongSelected,
+}: NavbarProps) {
+  const storeSelectedSong = useSongStore(s => s.selectedSong)
+  const isSelected = isSongSelected !== undefined ? isSongSelected : !!storeSelectedSong
   const activeVibe = VIBE_CONFIGS.find(v => v.id === currentVibe)
 
   return (
@@ -21,12 +34,12 @@ export function Navbar({ songCount, currentVibe, onSearchOpen, onRefresh, isRefr
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.5 }}
-      className="fixed top-0 inset-x-0 z-30 flex items-center justify-between px-6 py-4 pointer-events-none"
+      className="fixed top-0 inset-x-0 z-30 h-16 flex items-center justify-between px-6 pointer-events-none"
     >
       {/* Logo & Active Vibe Badge */}
       <div className="pointer-events-auto flex items-center gap-4">
         <div
-          className="flex items-baseline text-white opacity-90 select-none uppercase"
+          className="flex items-center text-white opacity-90 select-none uppercase"
           style={{ 
             fontFamily: "'Syncopate', sans-serif", 
             fontSize: '1.5rem',
@@ -38,26 +51,31 @@ export function Navbar({ songCount, currentVibe, onSearchOpen, onRefresh, isRefr
           <img src="/kadence-chrome-logo.png" alt="KADENCE" style={{ height: '2.04em', width: 'auto' }} className="pointer-events-none select-none" />
         </div>
 
-        {activeVibe && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] uppercase tracking-wider font-semibold"
-            style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-          >
-            <span
-              className="w-1.5 h-1.5 rounded-full"
-              style={{
-                backgroundColor: activeVibe.accentColor,
-                boxShadow: `0 0 8px ${activeVibe.accentColor}`,
-              }}
-            />
-            {activeVibe.badge && (
-              <span className="text-white font-bold">{activeVibe.badge}</span>
-            )}
-            <span className="text-white/60">{activeVibe.label}</span>
-          </motion.div>
-        )}
+        <AnimatePresence>
+          {activeVibe && !isSelected && (
+            <motion.div
+              key="universe-category-pill"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.15 }}
+              className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-[10px] uppercase tracking-wider font-semibold"
+              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+            >
+              <span
+                className="w-1.5 h-1.5 rounded-full"
+                style={{
+                  backgroundColor: activeVibe.accentColor,
+                  boxShadow: `0 0 8px ${activeVibe.accentColor}`,
+                }}
+              />
+              {activeVibe.badge && (
+                <span className="text-white font-bold">{activeVibe.badge}</span>
+              )}
+              <span className="text-white/60">{activeVibe.label}</span>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Song count */}
@@ -66,28 +84,30 @@ export function Navbar({ songCount, currentVibe, onSearchOpen, onRefresh, isRefr
       </div>
 
       {/* Controls */}
-      <div className="flex items-center gap-2">
+      <div 
+        className="pointer-events-auto flex items-center gap-2"
+        style={{ '--foreground': '#ffffff', '--background': '#ffffff' } as React.CSSProperties}
+      >
         {/* Change Vibe Button */}
-        <button
+        <GlassButton
           onClick={onChangeVibeClick}
-          className="pointer-events-auto flex items-center gap-2 px-4 py-2 rounded-full
-            bg-white/5 border border-white/10 text-white/70 text-xs tracking-wide
-            hover:bg-white/12 hover:text-white transition-all duration-300 cursor-pointer"
+          size="sm"
+          contentClassName="flex items-center gap-2 text-white text-xs tracking-wide font-medium"
         >
           Switch Chart
-        </button>
+        </GlassButton>
 
         {/* Refresh Tracks Button */}
-        <button
+        <GlassButton
           id="navbar-refresh-btn"
           onClick={onRefresh}
           disabled={isRefreshing}
-          className="pointer-events-auto flex items-center gap-2 px-4 py-2 rounded-full
-            bg-white/5 border border-white/10 text-white/70 text-xs tracking-wide
-            hover:bg-white/12 hover:text-white transition-all duration-300 cursor-pointer disabled:opacity-50"
+          size="sm"
+          className={isRefreshing ? 'opacity-70' : ''}
+          contentClassName="flex items-center gap-2 text-white text-xs tracking-wide font-medium"
         >
           <motion.svg 
-            width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+            width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
             animate={{ rotate: isRefreshing ? 360 : 0 }}
             transition={{ duration: 1, repeat: isRefreshing ? Infinity : 0, ease: "linear" }}
           >
@@ -97,20 +117,19 @@ export function Navbar({ songCount, currentVibe, onSearchOpen, onRefresh, isRefr
             <path d="M16 21v-5h5"/>
           </motion.svg>
           Refresh
-        </button>
+        </GlassButton>
 
         {/* Search icon */}
-        <button
+        <GlassButton
           id="navbar-search-btn"
           onClick={onSearchOpen}
-          className="pointer-events-auto w-9 h-9 flex items-center justify-center rounded-full
-            bg-white/5 border border-white/10 text-white/50
-            hover:bg-white/12 hover:text-white/80 transition-all duration-200 cursor-pointer"
+          size="icon"
+          contentClassName="flex items-center justify-center text-white"
         >
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
           </svg>
-        </button>
+        </GlassButton>
       </div>
     </motion.nav>
   )

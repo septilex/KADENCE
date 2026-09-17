@@ -5,6 +5,7 @@ import { VIBE_CONFIGS } from '@/lib/vibeConfig'
 import { useEffect, useRef, memo } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { useChartHover } from '@/hooks/useChartHover'
+import { GlassButton } from './GlassButton'
 
 interface ChangeVibeOverlayProps {
   currentVibe: Vibe | null
@@ -240,12 +241,13 @@ export function ChangeVibeOverlay({ currentVibe, onSelectVibe, onClose }: Change
           ))}
         </div>
 
-        <button
+        <GlassButton
           onClick={onClose}
-          className="px-6 py-2 rounded-full border border-white/10 text-white/50 text-xs tracking-wider uppercase hover:border-white/20 hover:text-white/80 transition-all duration-300"
+          size="sm"
+          contentClassName="px-6 py-2 text-white/80 hover:text-white text-xs tracking-wider uppercase font-medium"
         >
           Dismiss
-        </button>
+        </GlassButton>
       </motion.div>
 
       {/* Replicate Homepage Card 3D CSS Classes for the Modal */}

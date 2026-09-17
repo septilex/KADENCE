@@ -9,6 +9,7 @@ import { SongNode, Vibe } from '@/lib/types'
 import { IntroScreen } from '@/components/ui/IntroScreen'
 import { SearchPanel } from '@/components/ui/SearchPanel'
 import { SongDetail } from '@/components/ui/SongDetail'
+import { CinematicBackground } from '@/components/ui/CinematicBackground'
 import { Navbar } from '@/components/ui/Navbar'
 import { HeroBackgroundVideo } from '@/components/ui/HeroBackgroundVideo'
 import { PreviewVideoLayer } from '@/components/ui/PreviewVideoLayer'
@@ -150,7 +151,6 @@ export default function Home() {
       })
       logAudioDebug('audio URL resolved', firstTrack.previewUrl)
       // Trigger audio play immediately using the active click gesture context
-      selectSong(firstTrack)
       playUrl(firstTrack.previewUrl)
     }
 
@@ -189,7 +189,6 @@ export default function Home() {
 
         // Fallback: if in-memory signature track had no audio URL, use first API track
         if (!firstTrack?.previewUrl && allFetched[0]?.previewUrl) {
-          selectSong(allFetched[0])
           playUrl(allFetched[0].previewUrl)
         }
 
@@ -239,7 +238,6 @@ export default function Home() {
     // Immediately resolve and play new vibe's first track
     const firstTrack = getFirstTrackForVibe(vibe)
     if (firstTrack?.previewUrl) {
-      selectSong(firstTrack)
       playUrl(firstTrack.previewUrl)
     }
 
@@ -253,7 +251,6 @@ export default function Home() {
       setSongs(newSongs)
       
       if (!firstTrack?.previewUrl && newSongs[0]?.previewUrl) {
-        selectSong(newSongs[0])
         playUrl(newSongs[0].previewUrl)
       }
       
@@ -285,7 +282,10 @@ export default function Home() {
     setTimeout(() => setRefreshing(false), 300)
   }, [currentVibe, isRefreshing, setRefreshing, setSongs])
 
-  const handleSelectSong    = useCallback((song: SongNode) => selectSong(song), [selectSong])
+  const handleSelectSong    = useCallback((song: SongNode | null) => {
+    selectSong(song)
+    if (song?.previewUrl) playUrl(song.previewUrl)
+  }, [selectSong, playUrl])
   const handleCloseSong     = useCallback(() => selectSong(null), [selectSong])
 
   // ── Global Audio Sync ───────────────────────────────────────────────────
@@ -336,8 +336,8 @@ export default function Home() {
       <motion.div
         className="absolute inset-0"
         animate={{ 
-          opacity: isRefreshing ? 0.8 : 1,
-          filter: isRefreshing ? 'blur(12px) brightness(0.8)' : 'blur(0px) brightness(1)'
+          opacity: selectedSong ? 0 : (isRefreshing ? 0.8 : 1),
+          filter: selectedSong ? 'blur(10px) brightness(0)' : (isRefreshing ? 'blur(12px) brightness(0.8)' : 'blur(0px) brightness(1)')
         }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       >
@@ -355,9 +355,17 @@ export default function Home() {
       </motion.div>
 
       {/* Vignette (Only for Universe) */}
-      {introComplete && (
-        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_50%,rgba(5,5,8,0.45)_100%)] z-10" />
+      {introComplete && !selectedSong && (
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_50%,rgba(5,5,8,0.45)_100%)] z-10" 
+        />
       )}
+
+      {/* Cinematic Background Layer */}
+      <CinematicBackground song={selectedSong} />
 
       {/* UI Layer */}
       <div className="absolute inset-0 pointer-events-none z-20">
@@ -379,6 +387,7 @@ export default function Home() {
               onRefresh={handleRefresh}
               isRefreshing={isRefreshing}
               onChangeVibeClick={() => setChangingVibe(true)}
+              isSongSelected={!!selectedSong}
             />
             <SearchPanel
               isOpen={isSearchOpen}

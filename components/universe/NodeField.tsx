@@ -14,7 +14,7 @@ interface NodeFieldProps {
   hoveredId?: string | null
   selectedId: string | null
   onHover: (song: SongNode | null) => void
-  onSelect: (song: SongNode) => void
+  onSelect: (song: SongNode | null) => void
   onPreview: (song: SongNode | null) => void
 }
 

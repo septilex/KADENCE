@@ -12,7 +12,7 @@ interface UniverseProps {
   selectedSong: SongNode | null
   currentVibe: Vibe | null
   onHover: (song: SongNode | null) => void
-  onSelect: (song: SongNode) => void
+  onSelect: (song: SongNode | null) => void
   onPreview: (song: SongNode | null) => void
   isDetailOpen?: boolean
   isRefreshing?: boolean
@@ -48,6 +48,7 @@ export function Universe({
         height: '100%',
         background: 'transparent'
       }}
+      onPointerMissed={() => onSelect(null)}
     >
       <ambientLight intensity={0.9} />
 

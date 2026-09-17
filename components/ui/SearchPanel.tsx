@@ -2,6 +2,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useRef, useCallback, useEffect } from 'react'
 import { SongNode } from '@/lib/types'
+import { GlassButton } from './GlassButton'
 
 interface SearchPanelProps {
   isOpen: boolean
@@ -22,10 +23,15 @@ export function SearchPanel({ isOpen, onOpen, onClose, onResults, onSelectResult
   const [results, setResults] = useState<SongNode[]>([])
   const [isSearching, setIsSearching] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
-  const debounceRef = useRef<ReturnType<typeof setTimeout>>(null!)
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
-    if (isOpen) setTimeout(() => inputRef.current?.focus(), 100)
+    if (isOpen) {
+      setTimeout(() => inputRef.current?.focus(), 50)
+    } else {
+      setQuery('')
+      setResults([])
+    }
   }, [isOpen])
 
   const search = useCallback(async (q: string) => {
@@ -34,8 +40,8 @@ export function SearchPanel({ isOpen, onOpen, onClose, onResults, onSelectResult
     try {
       const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`)
       const data = await res.json()
-      setResults(data.songs || [])
-      onResults(data.songs || [])
+      setResults(data.songs ?? [])
+      onResults(data.songs ?? [])
     } catch {
       setResults([])
     } finally {
@@ -45,28 +51,29 @@ export function SearchPanel({ isOpen, onOpen, onClose, onResults, onSelectResult
 
   const handleChange = (val: string) => {
     setQuery(val)
-    clearTimeout(debounceRef.current)
+    if (debounceRef.current) clearTimeout(debounceRef.current)
     debounceRef.current = setTimeout(() => search(val), 350)
   }
 
   return (
     <>
       {/* Search trigger button */}
-      <button
-        id="search-trigger-btn"
-        onClick={isOpen ? onClose : onOpen}
-        className="fixed top-6 left-1/2 -translate-x-1/2 z-40
-          flex items-center gap-2 px-5 py-2.5 rounded-full
-          bg-white/5 border border-white/15 backdrop-blur-xl
-          text-white/60 text-sm hover:bg-white/10 hover:text-white/90
-          transition-all duration-200 cursor-pointer"
-      >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-        </svg>
-        {!isOpen && <span className="tracking-wide">Search by vibe, mood, or genre…</span>}
-        {isOpen && <span className="tracking-wide">Close</span>}
-      </button>
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 z-40 h-16 flex items-center justify-center pointer-events-none">
+        <GlassButton
+          id="search-trigger-btn"
+          onClick={isOpen ? onClose : onOpen}
+          size="sm"
+          className="pointer-events-auto"
+          contentClassName="flex items-center gap-2.5 px-3 py-1 text-white text-sm font-medium tracking-normal"
+          style={{ '--foreground': '#ffffff', '--background': '#ffffff' } as React.CSSProperties}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+          {!isOpen && <span className="tracking-wide">Search by vibe, mood, or genre…</span>}
+          {isOpen && <span className="tracking-wide">Close</span>}
+        </GlassButton>
+      </div>
 
       {/* Search overlay */}
       <AnimatePresence>
