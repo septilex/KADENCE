@@ -46,7 +46,7 @@ export function GlobalAudioPlayer() {
       if (active >= CONCURRENCY_LIMIT) break;
       
       const url = queue[i];
-      if (!loadingStatusRef.current.has(url)) {
+      if (!poolRef.current.has(url) && !loadingStatusRef.current.has(url)) {
         loadingStatusRef.current.set(url, 'loading');
         active++;
         
@@ -80,14 +80,25 @@ export function GlobalAudioPlayer() {
   useEffect(() => {
     if (!preloadedUrls || preloadedUrls.length === 0) return;
     
-    const queue = [...preloadedUrls];
+    // Preload intelligently: DO NOT download hundreds of full media files unnecessarily.
+    // Only buffer the top 20 (most likely visible) plus the explicitly hovered/selected tracks.
+    const baseQueue = preloadedUrls.slice(0, 20);
+    if (currentUrl && !baseQueue.includes(currentUrl) && preloadedUrls.includes(currentUrl)) {
+      baseQueue.push(currentUrl);
+    }
+    const hoverUrl = hoveredSong?.previewUrl;
+    if (hoverUrl && !baseQueue.includes(hoverUrl) && preloadedUrls.includes(hoverUrl)) {
+      baseQueue.push(hoverUrl);
+    }
+    
+    const queue = [...baseQueue];
     
     // Sort to prioritize current and hovered tracks
     queue.sort((a, b) => {
        if (a === currentUrl) return -1;
        if (b === currentUrl) return 1;
-       if (hoveredSong && a === hoveredSong.previewUrl) return -1;
-       if (hoveredSong && b === hoveredSong.previewUrl) return 1;
+       if (hoverUrl && a === hoverUrl) return -1;
+       if (hoverUrl && b === hoverUrl) return 1;
        return 0; // maintain original array order which represents visual rank
     });
     
@@ -199,7 +210,27 @@ export function GlobalAudioPlayer() {
       audio = new Audio()
       audio.crossOrigin = 'anonymous'
       audio.preload = 'auto'
+      
+      // Ensure the new audio is tracked immediately to prevent duplicate fetches
+      poolRef.current.set(currentUrl, audio)
+      loadingStatusRef.current.set(currentUrl, 'loading')
+      
+      const onDone = () => {
+        if (loadingStatusRef.current.get(currentUrl) === 'loading') {
+          loadingStatusRef.current.set(currentUrl, 'loaded');
+          processQueue();
+        }
+      };
+      
+      audio.addEventListener('canplaythrough', onDone, { once: true });
+      audio.addEventListener('error', () => {
+        loadingStatusRef.current.set(currentUrl, 'error');
+        processQueue();
+      }, { once: true });
+
+      // Start the fetch
       audio.src = currentUrl
+      audio.load()
     }
     
     // Attach event listeners if they haven't been attached yet

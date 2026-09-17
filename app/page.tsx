@@ -183,6 +183,10 @@ export default function Home() {
         useAudioStore.getState().setPreloadUrls(urlsToPreload)
         logAudioDebug(`[PERF] Dispatched ${urlsToPreload.length} URLs for preloading at ${(performance.now() - t0).toFixed(1)}ms`)
 
+        // 10. Do not block setSongs() or audio initialization behind any expensive visual/WebGL operation.
+        setSongs(allFetched)
+        logAudioDebug('setSongs called immediately after fetch')
+
         // Fallback: if in-memory signature track had no audio URL, use first API track
         if (!firstTrack?.previewUrl && allFetched[0]?.previewUrl) {
           selectSong(allFetched[0])
@@ -199,9 +203,8 @@ export default function Home() {
         })
         logAudioDebug('artwork preparation finished')
 
-        // Phase 3: Set songs and warm WebGL
+        // Phase 3: Warm WebGL
         logAudioDebug('WebGL commit / warm started')
-        setSongs(allFetched)
         setLoading(true, 92)
 
         // Wait two frames so React and Three.js commit the geometry & instances
@@ -246,12 +249,15 @@ export default function Home() {
       const urlsToPreload = newSongs.map(s => s.previewUrl).filter(Boolean) as string[]
       useAudioStore.getState().setPreloadUrls(urlsToPreload)
       
+      // Decouple from WebGL
+      setSongs(newSongs)
+      
       if (!firstTrack?.previewUrl && newSongs[0]?.previewUrl) {
         selectSong(newSongs[0])
         playUrl(newSongs[0].previewUrl)
       }
+      
       await atlasManager.prepareCriticalVibe(newSongs, () => {})
-      setSongs(newSongs)
       atlasManager.startBackgroundLoading(newSongs)
     }
 

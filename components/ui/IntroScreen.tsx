@@ -115,35 +115,45 @@ const HomepageVibeCard = memo(function HomepageVibeCard({
           onClick={(e) => { e.stopPropagation(); onSelect(vibe.id); }}
           className="kadence-3d-card relative group rounded-[20px] overflow-hidden cursor-pointer text-left outline-none w-full h-full select-none"
           style={{
-            ['--card-shadow-rest' as string]: `0 6px 16px -2px ${vibe.bgColor}, 0 0 12px 2px ${vibe.bgColor}ee`,
-            ['--card-shadow-hover' as string]: `0 10px 25px -2px ${vibe.bgColor}, 0 0 25px 5px ${vibe.bgColor}, 0 0 45px 8px ${vibe.bgColor}aa`,
+            ['--card-shadow-rest' as string]: `0 6px 16px -2px ${vibe.bgColor}, 0 0 14px 3px ${vibe.bgColor}dd`,
+            ['--card-shadow-hover' as string]: `0 12px 28px -2px ${vibe.bgColor}, 0 0 30px 6px ${vibe.bgColor}, 0 0 50px 10px ${vibe.bgColor}aa`,
           }}
         >
-          {/* Full click target */}
-          <div className="absolute inset-0 w-full h-full z-[999] cursor-pointer" onClick={(e) => { e.stopPropagation(); onSelect(vibe.id); }} />
+          {/* Base Image Layer */}
+          <div className="absolute inset-0 z-0">
+            {vibe.tileImage && (
+              <img
+                src={vibe.tileImage}
+                alt={vibe.label}
+                className="absolute inset-0 w-full h-full object-cover object-center"
+                style={{ transform: 'scale(1.04)' }}
+                draggable={false}
+                loading={index < 7 ? 'eager' : 'lazy'}
+              />
+            )}
+          </div>
 
-          {/* Reference tile image — contains all visual elements */}
-          {vibe.tileImage && (
-            <img
-              src={vibe.tileImage}
-              alt={vibe.label}
-              className="absolute inset-0 w-full h-full object-cover object-center"
-              style={{ transform: 'scale(1.04)' }}
-              draggable={false}
-              loading={index < 7 ? 'eager' : 'lazy'}
+          {/* Liquid Glass Overlay System */}
+          <div className="absolute inset-0 z-10 pointer-events-none rounded-[20px] transition-shadow duration-[400ms] ease-out shadow-[inset_0_0_0_1.5px_rgba(255,255,255,0.3),inset_0_2px_15px_rgba(255,255,255,0.1)] group-hover:shadow-[inset_0_0_0_2px_rgba(255,255,255,0.7),inset_0_4px_30px_rgba(255,255,255,0.3)]">
+            
+            {/* Base subtle glass refraction */}
+            <div className="absolute inset-0 backdrop-blur-[1.5px] bg-white/5 mix-blend-overlay" />
+
+            {/* Smooth curved specular highlight (liquid surface reflection) */}
+            <div className="absolute inset-x-0 top-0 h-[45%] bg-gradient-to-b from-white/30 to-transparent scale-105 rounded-t-[20px] blur-[2px] opacity-60 mix-blend-screen transition-opacity duration-500 group-hover:opacity-100" />
+            <div className="absolute inset-x-0 top-0 h-[30%] bg-gradient-to-b from-white/20 to-transparent scale-105 rounded-t-[20px] opacity-80 mix-blend-overlay transition-opacity duration-500 group-hover:opacity-100" />
+
+            {/* Cursor-reactive dynamic glass gloss (hover only) */}
+            <div
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out mix-blend-screen"
+              style={{
+                background: 'radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.1) 40%, transparent 70%)',
+              }}
             />
-          )}
+          </div>
 
-          {/* Subtle cursor-reactive gloss on hover */}
-          <div
-            className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[20px]"
-            style={{
-              background: 'radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.08) 40%, transparent 70%)',
-            }}
-          />
-
-          {/* Brighter edge/reflection matching the enhanced glow states */}
-          <div className="absolute inset-0 pointer-events-none rounded-[20px] transition-shadow duration-[400ms] ease-out shadow-[inset_0_0_0_1.5px_rgba(255,255,255,0.3),inset_0_2px_15px_rgba(255,255,255,0.05)] group-hover:shadow-[inset_0_0_0_2.5px_rgba(255,255,255,0.65),inset_0_4px_30px_rgba(255,255,255,0.25)]" />
+          {/* Full click target */}
+          <div className="absolute inset-0 w-full h-full z-20 cursor-pointer" onClick={(e) => { e.stopPropagation(); onSelect(vibe.id); }} />
         </button>
       </div>
     </motion.div>
@@ -753,6 +763,30 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
         />
       </div>
 
+
+      {/* ── Global Top Navigation Header ── */}
+      <header className="fixed top-0 left-0 w-full z-[100] flex items-center justify-between px-6 md:px-12 py-8 pointer-events-auto">
+        {/* Top Left Logo */}
+        <div className="flex items-center">
+          <img src="/kadence-horizontal-logo.png" alt="Kadence" className="h-[44px] object-contain select-none" draggable={false} />
+        </div>
+        
+        {/* Top Right Navigation */}
+        <nav className="flex items-center space-x-8 md:space-x-12">
+          {['DISCOVER', 'SEARCH', 'LIBRARY'].map((item) => (
+            <button key={item} className="text-white/70 hover:text-white text-[11px] font-bold tracking-[0.25em] transition-colors duration-300 select-none">
+              {item}
+            </button>
+          ))}
+          {/* Profile Icon */}
+          <button className="text-white/70 hover:text-white transition-colors duration-300 ml-4 rounded-full border border-white/20 p-[6px] hover:border-white/60">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-[18px] h-[18px]">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          </button>
+        </nav>
+      </header>
 
       {/* ── Native, Butter-Smooth 60/120 FPS Scroll Container ── */}
       <div
