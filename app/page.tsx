@@ -84,7 +84,7 @@ const HoverTooltip = memo(function HoverTooltip() {
               title="Open in iTunes"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M21 2.9v10.9a4.8 4.8 0 0 0-2.5-.7c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5V6.1l-9 1.8v8.9a4.8 4.8 0 0 0-2.5-.7c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5V4.2L21 2.9z"/>
+                <polygon points="6,4 20,12 6,20" />
               </svg>
             </a>
           </div>
