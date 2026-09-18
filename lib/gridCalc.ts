@@ -53,10 +53,10 @@ export function computeGrid(songCount: number, viewW: number, viewH: number): Gr
   const halfH  = Math.tan(FOV_RAD / 2) * BROWSE_Z
   const halfW  = halfH * aspect
 
-  // Margin (+20 cols, +16 rows) to ensure the physical grid covers the FOV
-  // even when edges curve away into perspective depth.
-  const COLS = Math.ceil((halfW * 2) / SPACING_X) + 20
-  const ROWS = Math.ceil((halfH * 2) / SPACING_Y) + 16
+  // Margin (+6 cols, +6 rows) to ensure the physical grid covers the FOV
+  // even when edges shift due to lens deformation and parallax.
+  const COLS = Math.ceil((halfW * 2) / SPACING_X) + 6
+  const ROWS = Math.ceil((halfH * 2) / SPACING_Y) + 6
 
   return { COLS, ROWS, virtualCount: COLS * ROWS }
 }

@@ -4,8 +4,8 @@ import * as THREE from 'three'
 // All values are documented in implementation_plan.md §14.
 // Adjust these to change the feel of the jelly-water effect.
 export const JELLY_PHYSICS = {
-  // Simulation grid resolution (64×64 = 4096 cells)
-  gridSize:          64,
+  // Simulation grid resolution (48×48 = 2304 cells)
+  gridSize:          48,
 
   // Mouse interaction
   mouseRadius:       0.13,     // Slightly broader influence for softer transitions across neighboring tiles
@@ -273,8 +273,20 @@ export class JellyField {
       }
     }
 
-    // Flag texture for GPU upload (Three.js calls gl.texSubImage2D — 64KB)
-    this.texture.needsUpdate = true
+    // Only upload to GPU when cells have non-trivial displacement.
+    // When the mouse is absent or stationary the field settles to zero
+    // within a few hundred ms — skip the texSubImage2D call entirely.
+    let hasActivity = false
+    for (let i = 0; i < this.COUNT; i++) {
+      if (Math.abs(dx[i]) > 0.0001 || Math.abs(dy[i]) > 0.0001 ||
+          Math.abs(vx[i]) > 0.001  || Math.abs(vy[i]) > 0.001) {
+        hasActivity = true
+        break
+      }
+    }
+    if (hasActivity) {
+      this.texture.needsUpdate = true
+    }
   }
 
   /** Release GPU texture memory */

@@ -49,7 +49,7 @@ const HoverTooltip = memo(function HoverTooltip() {
           className="fixed bottom-8 left-1/2 -translate-x-1/2 z-20 pointer-events-auto"
         >
           <div
-            className="px-5 py-3.5 rounded-2xl bg-black/75 border border-white/10 backdrop-blur-2xl flex items-center gap-4 max-w-sm shadow-[0_15px_40px_rgba(0,0,0,0.65)] transition-all duration-300 hover:border-white/20"
+            className="px-5 py-3.5 rounded-2xl bg-black/75 border border-white/10 backdrop-blur-md flex items-center gap-4 max-w-sm shadow-[0_15px_40px_rgba(0,0,0,0.65)] transition-all duration-300 hover:border-white/20"
             style={{
               boxShadow: hoveredSong.color ? `0 10px 30px -10px ${hoveredSong.color}25, 0 15px 40px rgba(0,0,0,0.65)` : undefined
             }}
@@ -337,7 +337,7 @@ export default function Home() {
         className="absolute inset-0"
         animate={{ 
           opacity: selectedSong ? 0 : (isRefreshing ? 0.8 : 1),
-          filter: selectedSong ? 'blur(10px) brightness(0)' : (isRefreshing ? 'blur(12px) brightness(0.8)' : 'blur(0px) brightness(1)')
+          filter: selectedSong ? 'blur(10px) brightness(0)' : (isRefreshing ? 'blur(12px) brightness(0.8)' : 'none')
         }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       >

@@ -71,15 +71,16 @@ const vertexShader = /* glsl */`
     float zOffset    = 0.0;
     vHighlight       = 1.05;
 
+    // Pop: Z offset + brightness only — no XY scale.
+    // Scaling one tile's XY independently breaks surface continuity
+    // with its neighbors, causing the "rubber card" jitter.
     if (abs(aInstanceIdx - uPopIdx) < 0.1) {
-      // Soft pop bubble: scale grows, pushing out slightly in Z
-      // Using an ease-out curve in JS already, so simple linear mix here is fine
-      localScale = mix(1.0, 1.25, uPopProgress);
-      zOffset    = mix(0.0, 0.4, uPopProgress);
+      zOffset    = mix(0.0, 0.6, uPopProgress);
       vHighlight = mix(1.05, 1.45, uPopProgress);
       vPopProgress = uPopProgress;
     }
 
+    // Selected: local scale is a deliberate UI state (not continuous motion)
     if (abs(aInstanceIdx - uSelectedIdx) < 0.1) {
       localScale = max(localScale, 1.06);
       zOffset    = max(zOffset, 0.8);
@@ -89,20 +90,24 @@ const vertexShader = /* glsl */`
     localPos.xy *= localScale;
     localPos.z  += zOffset;
 
+    // ── Tile center in world space (shared-field evaluation point) ──
+    vec3 tileCenter = (modelMatrix * instanceMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
+
     vec3 baseWPos = (modelMatrix * instanceMatrix * vec4(localPos, 1.0)).xyz;
     vec3 displacedWPos = baseWPos;
 
-    // ── Jelly Displacement Field ──
-    vec2 gridUV = (baseWPos.xy - uGridExtent.xy) / (uGridExtent.zw - uGridExtent.xy);
-    vec2 jellyDisp = texture(uJellyMap, clamp(gridUV, 0.0, 1.0)).rg;
+    // ── Jelly Displacement Field (tile-center evaluation) ──
+    // Evaluated at the tile CENTER so all vertices translate uniformly.
+    // Per-vertex jelly sampling caused neighboring tiles to shift
+    // independently, breaking the continuous surface.
+    vec2 centerGridUV = (tileCenter.xy - uGridExtent.xy) / (uGridExtent.zw - uGridExtent.xy);
+    vec2 jellyDisp = texture(uJellyMap, clamp(centerGridUV, 0.0, 1.0)).rg;
     displacedWPos.xy += jellyDisp;
     
-    // ── Flat Cinematic Wall ─────────────────────────────────────
-    // The wall remains perfectly flat at Z=0. No global mesh curvature.
-    
-    // ── Glass Lens (smoothed mouse — lively trailing) ──
-    // uMouse trails behind cursor with spring physics, creating organic follow.
-    // uRawMouse is kept for hover hit-detection only (instant, below).
+    // ── Glass Lens (per-vertex for gentle rigid-body tilt) ──
+    // The lens is a continuous world-space function. With flat 1×1 tiles,
+    // the 4 corner vertices produce a gentle tilt — not per-tile curvature.
+    // This gives the continuous membrane / bedsheet feel across the grid.
     vec2 deltaLens = displacedWPos.xy - uMouse;
     float distLens = length(deltaLens);
     
@@ -112,9 +117,11 @@ const vertexShader = /* glsl */`
     float maxZ = ${LENS_INTENSITY.toFixed(1)};
     displacedWPos.z += lensFactor * maxZ;
     
-    // ── Micro-Parallax ──
-    float parallaxDepth = 1.0 + mod(aInstanceIdx, 4.0) * 0.08;
-    displacedWPos.xy -= (uMouse * ${PARALLAX_STRENGTH.toFixed(3)}) * parallaxDepth;
+    // ── Micro-Parallax (uniform — no per-instance variation) ──
+    // All tiles shift by the same amount, preserving grid alignment.
+    // Per-instance parallax (mod(aInstanceIdx,4)*0.08) caused adjacent
+    // tiles to shift by different XY amounts — the primary jitter source.
+    displacedWPos.xy -= uMouse * ${PARALLAX_STRENGTH.toFixed(3)};
 
     // ── Surface Normal + Subtle Card Tilt ──
     float dr = 0.0;
@@ -238,6 +245,7 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
   const smoothMouseWorld  = useRef(new THREE.Vector2(0, 0))
   const mouseVelocity     = useRef(new THREE.Vector2(0, 0))
   const lastHoverId       = useRef<string | null>(null)
+  const lastHoverVisualIdx = useRef<number>(-1)
   const textureNeedsFlush = useRef(false)
   const jellyFieldRef = useRef<JellyField | null>(null)
   const prevMouseWorldRef = useRef(new THREE.Vector2(0, 0))
@@ -251,6 +259,7 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
   const _scratchVec3    = useRef(new THREE.Vector3())
   const _scratchDir     = useRef(new THREE.Vector3())
   const _scratchHit     = useRef(new THREE.Vector3())
+  const _scratchPlane   = useRef(new THREE.Plane(new THREE.Vector3(0, 0, 1), 0))
 
   // ── Cached DOM rect for mousemove — refreshed only on resize ───────────────
   const domRectRef = useRef<DOMRect | null>(null)
@@ -404,10 +413,12 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
     return arr
   }, [count])
 
-  // ── Subdivided geometry ───────────────────────────────────────────────────
-  // We use 8x8 subdivisions per plane so the tiles curve organically when deformed.
+  // ── Tile geometry ─────────────────────────────────────────────────────────
+  // Flat 1×1 tiles behave as rigid bodies: they tilt gently with the lens
+  // deformation but never curve individually, preserving the continuous
+  // bedsheet / membrane feel across the grid.
   const geometry = useMemo(() => {
-    const geo = new THREE.PlaneGeometry(CARD_W, CARD_H, 8, 8)
+    const geo = new THREE.PlaneGeometry(CARD_W, CARD_H, 1, 1)
     geo.setAttribute('aTexIndex',    new THREE.InstancedBufferAttribute(texIndices, 1))
     geo.setAttribute('aInstanceIdx', new THREE.InstancedBufferAttribute(instanceIndices, 1))
     return geo
@@ -473,10 +484,14 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
   useEffect(() => {
     const el = gl.domElement
 
+    const updateRect = () => {
+      domRectRef.current = el.getBoundingClientRect()
+    }
+    updateRect()
+
     const onMove = (e: MouseEvent) => {
-      // Always compute fresh bounds to account for viewport scaling, CSS transforms, or scroll offsets
-      const r = el.getBoundingClientRect()
-      if (r.width === 0 || r.height === 0) return
+      const r = domRectRef.current
+      if (!r || r.width === 0 || r.height === 0) return
       
       // Calculate precise NDC coordinates mapping the mouse to the canvas rendering space
       rawMouseNDC.current.set(
@@ -506,10 +521,12 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
     }
     
     // Attach to window so we catch pointer events even if UI overlays are on top of the canvas
+    window.addEventListener('resize', updateRect, { passive: true })
     window.addEventListener('mousemove', onMove, { passive: true })
     window.addEventListener('mouseleave', onLeave)
     window.addEventListener('click', onClick)
     return () => {
+      window.removeEventListener('resize', updateRect)
       window.removeEventListener('mousemove', onMove)
       window.removeEventListener('mouseleave', onLeave)
       window.removeEventListener('click', onClick)
@@ -552,8 +569,7 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
       // Use THREE.Raycaster for perfectly accurate projection that automatically handles
       // perspective/orthographic transforms, CSS scaling, and aspect ratios.
       state.raycaster.setFromCamera(rawMouseNDC.current, camera)
-      const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0)
-      state.raycaster.ray.intersectPlane(plane, _scratchHit.current)
+      state.raycaster.ray.intersectPlane(_scratchPlane.current, _scratchHit.current)
       
       if (_scratchHit.current) {
         targetWorldX = _scratchHit.current.x
@@ -683,22 +699,48 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
       const effectiveWorldX = targetWorldX + (targetWorldX * 0.028)
       const effectiveWorldY = targetWorldY + (targetWorldY * 0.028)
 
-      // Map corrected world coordinates to grid indices (independent of camera position since the wall is static at origin)
-      const c = Math.round((effectiveWorldX + (halfC * SPACING_X)) / SPACING_X)
-      const r = Math.round(-effectiveWorldY / SPACING_Y + halfR)
+      // ── Sticky Hover (Hysteresis) to prevent Z-fighting jitter ──
+      let stickyHit = false
+      if (lastHoverId.current && lastHoverVisualIdx.current !== -1) {
+        const visualIdx = lastHoverVisualIdx.current
+        const lastC = visualIdx % COLS
+        const lastR = Math.floor(visualIdx / COLS)
+        const tileCenterX = (lastC - halfC) * SPACING_X
+        const tileCenterY = -(lastR - halfR) * SPACING_Y
+        
+        // If mouse is within expanded radius of the currently hovered tile, keep it hovered
+        // The tile expands by ~25% on hover, so we expand the hit radius proportionally.
+        const dx = effectiveWorldX - tileCenterX
+        const dy = effectiveWorldY - tileCenterY
+        const distSq = dx * dx + dy * dy
+        const popHitRadiusSq = Math.pow(SPACING_X * 0.70, 2)
+        
+        if (distSq < popHitRadiusSq) {
+          hoverIdx = visualIdx
+          newHoverId = lastHoverId.current
+          stickyHit = true
+        }
+      }
 
-      if (c >= 0 && c < COLS && r >= 0 && r < ROWS) {
-        hoverIdx = r * COLS + c
-        if (hoverIdx < count) {
-          const mappedIndex = texIndices[hoverIdx]
-          const s   = songs[mappedIndex]
-          newHoverId = s?.id ?? null
+      if (!stickyHit) {
+        // Standard grid mapping if not sticky
+        const c = Math.round((effectiveWorldX + (halfC * SPACING_X)) / SPACING_X)
+        const r = Math.round(-effectiveWorldY / SPACING_Y + halfR)
+
+        if (c >= 0 && c < COLS && r >= 0 && r < ROWS) {
+          hoverIdx = r * COLS + c
+          if (hoverIdx < count) {
+            const mappedIndex = texIndices[hoverIdx]
+            const s   = songs[mappedIndex]
+            newHoverId = s?.id ?? null
+          }
         }
       }
     }
 
     if (newHoverId !== lastHoverId.current) {
       lastHoverId.current = newHoverId
+      lastHoverVisualIdx.current = hoverIdx
       hoverStartTime.current = newHoverId ? state.clock.getElapsedTime() : null
       activePopId.current = null
       
@@ -727,10 +769,11 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
       currentPopIdx = material.uniforms.uPopIdx.value
     }
 
-    // Ease pop progress
+    // Ease pop progress (Frame-rate independent exponential decay)
     // Growth ~500ms, Shrink ~350ms
     const popSpeed = targetPopProgress === 1 ? 6.0 : 8.0
-    popProgress.current += (targetPopProgress - popProgress.current) * (dt * popSpeed)
+    const alpha = 1.0 - Math.exp(-popSpeed * dt)
+    popProgress.current += (targetPopProgress - popProgress.current) * alpha
 
     if (popProgress.current < 0.001) {
       popProgress.current = 0
