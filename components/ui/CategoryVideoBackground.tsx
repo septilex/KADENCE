@@ -111,6 +111,10 @@ export function CategoryVideoBackground({ url }: { url?: string | null }) {
     if (!targetUrl) {
       slot0.pause()
       slot1.pause()
+      slot0.removeAttribute('src')
+      slot1.removeAttribute('src')
+      slot0.load()
+      slot1.load()
       slot0.style.display = 'none'
       slot1.style.display = 'none'
       return

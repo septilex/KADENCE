@@ -23,7 +23,13 @@ export function HeroBackgroundVideo({ currentVibe, introComplete = false }: Hero
       if (!video.paused) {
         video.pause()
       }
+      video.removeAttribute('src')
+      video.load()
     } else {
+      if (!video.getAttribute('src')) {
+        video.setAttribute('src', '/videos/globe.mp4')
+        video.load()
+      }
       if (video.paused) {
         video.play().catch(() => {})
       }
@@ -46,6 +52,7 @@ export function HeroBackgroundVideo({ currentVibe, introComplete = false }: Hero
         playsInline
         preload="auto"
         className="absolute inset-0 w-full h-full object-cover"
+        src="/videos/globe.mp4"
         style={{
           transform: 'translate3d(0, 0, 0) scale(1.85)',
           transformOrigin: 'center top',
@@ -53,9 +60,7 @@ export function HeroBackgroundVideo({ currentVibe, introComplete = false }: Hero
           filter: 'contrast(1.3) brightness(1.4) saturate(1.2)',
           display: isSongActive ? 'none' : 'block',
         }}
-      >
-        <source src="/videos/globe.mp4" type="video/mp4" />
-      </video>
+      />
     </motion.div>
   )
 }
