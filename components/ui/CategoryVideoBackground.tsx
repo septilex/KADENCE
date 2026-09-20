@@ -125,7 +125,31 @@ export function CategoryVideoBackground({ url }: { url?: string | null }) {
     const nextIdx = currentIdx === 0 ? 1 : 0
     const nextSlot = nextIdx === 0 ? slot0 : slot1
 
+    // Skip if current slot already has this URL playing (same card re-hover)
     if (currentSlot.getAttribute('data-src') === targetUrl && !currentSlot.paused) {
+      return
+    }
+
+    // Check if the OTHER slot already has this URL loaded — reuse it instead
+    // of starting a fresh download (happens on hover-away-hover-back)
+    if (nextSlot.getAttribute('data-src') === targetUrl && nextSlot.src) {
+      activeSlotIdxRef.current = nextIdx
+      nextSlot.style.transform = `translate3d(0,0,0) scale(${getCategoryVideoScale(targetUrl)})`
+
+      const hasActivation = userActivatedRef.current || (typeof navigator !== 'undefined' && (navigator as any).userActivation?.hasBeenActive)
+      if (hasActivation) {
+        nextSlot.muted = false
+        nextSlot.volume = 1.0
+      }
+
+      nextSlot.play().catch(() => {
+        if (activeUrlRef.current !== targetUrl) return
+        nextSlot.muted = true
+        nextSlot.play().catch(() => {})
+      })
+      nextSlot.style.display = 'block'
+      currentSlot.pause()
+      currentSlot.style.display = 'none'
       return
     }
 
@@ -133,7 +157,8 @@ export function CategoryVideoBackground({ url }: { url?: string | null }) {
     nextSlot.setAttribute('data-src', targetUrl)
     nextSlot.src = targetUrl
     nextSlot.style.transform = `translate3d(0,0,0) scale(${getCategoryVideoScale(targetUrl)})`
-    nextSlot.currentTime = 0
+    // Note: do NOT force currentTime = 0 on a fresh load — it triggers an
+    // extra HTTP 206 range-request seek on some browsers.
 
     const hasActivation = userActivatedRef.current || (typeof navigator !== 'undefined' && (navigator as any).userActivation?.hasBeenActive)
 

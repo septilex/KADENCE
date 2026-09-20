@@ -11,8 +11,9 @@ const PREFETCH_DEBOUNCE_MS = 150
 // Dwell threshold (50ms) to filter out fast cursor sweeps during scrolling
 const HOVER_DWELL_MS = 50
 
-// Exact 0ms hover delay — immediately triggers mapped MP4 on pointer enter
-const VIDEO_DWELL_MS = 0
+// Dwell threshold before starting a category video download (prevents wasted
+// bandwidth from rapid cursor sweeps across cards on the intro screen).
+const VIDEO_DWELL_MS = 200
 
 // ── Category → Local MP4 Preview Video Mapping ──────────────────────────────
 // Each of the 14 homepage editorial categories has exactly one assigned 30s clip.
@@ -42,6 +43,7 @@ export function useChartHover() {
   const hoverDwellTimeoutRef  = useRef<NodeJS.Timeout | null>(null)
   const prefetchDebounceRef   = useRef<NodeJS.Timeout | null>(null)
   const exitTimeoutRef        = useRef<NodeJS.Timeout | null>(null)
+  const videoDwellTimeoutRef  = useRef<NodeJS.Timeout | null>(null)
   const hoveredVibeRef        = useRef<Vibe | null>(null)
 
   const handleHoverStart = useCallback((vibeId: Vibe) => {
@@ -54,9 +56,20 @@ export function useChartHover() {
     hoveredVibeRef.current = vibeId
     setHoveredVibe(vibeId)
 
-    // ── Immediate Video Trigger (0ms delay) ──────────────────────────────────
+    // ── Debounced Video Trigger (200ms dwell) ─────────────────────────────
+    // Cancel any pending video activation from the previous card
+    if (videoDwellTimeoutRef.current) {
+      clearTimeout(videoDwellTimeoutRef.current)
+      videoDwellTimeoutRef.current = null
+    }
+
     const videoUrl = CATEGORY_PREVIEW_VIDEOS[vibeId] || null
-    useUIStore.getState().setActiveCategoryVideo(videoUrl)
+    videoDwellTimeoutRef.current = setTimeout(() => {
+      // Only activate if cursor is still on this card after the dwell period
+      if (hoveredVibeRef.current === vibeId) {
+        useUIStore.getState().setActiveCategoryVideo(videoUrl)
+      }
+    }, VIDEO_DWELL_MS)
 
     // ── Prefetch (debounced 150ms) ───────────────────────────────────────────
     if (vibeService.isCached(vibeId)) return
@@ -72,6 +85,13 @@ export function useChartHover() {
   const handleHoverEnd = useCallback(() => {
     if (hoverDwellTimeoutRef.current) clearTimeout(hoverDwellTimeoutRef.current)
     if (prefetchDebounceRef.current)  clearTimeout(prefetchDebounceRef.current)
+
+    // Cancel any pending video dwell timer — prevents downloads from starting
+    // after the cursor has already left the card
+    if (videoDwellTimeoutRef.current) {
+      clearTimeout(videoDwellTimeoutRef.current)
+      videoDwellTimeoutRef.current = null
+    }
 
     // 50ms grace period on hover exit: allows cursor to traverse the 12px gap
     // between cards without flashing or triggering double re-renders.

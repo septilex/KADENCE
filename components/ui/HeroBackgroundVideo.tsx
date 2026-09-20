@@ -19,13 +19,18 @@ export function HeroBackgroundVideo({ currentVibe, introComplete = false }: Hero
     const video = videoRef.current
     if (!video) return
 
-    if (isSongActive || introComplete) {
+    if (introComplete) {
+      // Universe entered — release globe permanently (no re-download ever)
+      video.pause()
+      video.removeAttribute('src')
+      video.load()
+    } else if (isSongActive) {
+      // Category video active — pause globe but KEEP src to avoid re-download
       if (!video.paused) {
         video.pause()
       }
-      video.removeAttribute('src')
-      video.load()
     } else {
+      // No category video — resume globe from buffered position
       if (!video.getAttribute('src')) {
         video.setAttribute('src', '/videos/globe.mp4')
         video.load()
