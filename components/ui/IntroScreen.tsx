@@ -418,7 +418,16 @@ function CreatorCollectionCard({
           />
 
           {/* Large background number */}
-          <span className="absolute top-[-20px] left-[0px] text-[120px] font-black text-[#d4af37] opacity-[0.08] tracking-tighter leading-none pointer-events-none select-none">
+          <span 
+            className="absolute top-[-20px] left-[0px] text-[120px] font-black text-[#d4af37] opacity-[0.08] leading-none pointer-events-none select-none"
+            style={{ 
+              fontFamily: "'Syne', sans-serif",
+              display: 'inline-block',
+              transform: 'scaleX(1.45)',
+              transformOrigin: 'left top',
+              letterSpacing: '0.02em',
+            }}
+          >
             {vibe.number}
           </span>
 

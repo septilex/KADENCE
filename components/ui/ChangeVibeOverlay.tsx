@@ -147,7 +147,15 @@ const ChangeVibeCard = memo(function ChangeVibeCard({
           />
 
           {/* Large background number */}
-          <span className="absolute top-[-16px] left-[-4px] text-[96px] font-black text-black opacity-[0.35] tracking-tighter leading-none pointer-events-none select-none">
+          <span 
+            className="absolute top-[-16px] left-[-4px] text-[96px] font-black text-black opacity-[0.35] leading-none pointer-events-none select-none"
+            style={{ 
+              fontFamily: "'Syne', sans-serif",
+              display: 'inline-block',
+              transform: 'scaleX(1.4)',
+              transformOrigin: 'left top',
+            }}
+          >
             {vibe.number}
           </span>
 
