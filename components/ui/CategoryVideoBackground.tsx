@@ -100,7 +100,7 @@ export function CategoryVideoBackground({ url }: { url?: string | null }) {
     }
   }, [])
 
-  // ── Handle Video URL Changes (Immediate, Authoritative, 0 Competing Decoders) ──
+  // ── Handle Video URL Changes (Wait-for-Ready Crossfade Engine) ──
   useEffect(() => {
     const [slot0, slot1] = slotsRef.current
     if (!slot0 || !slot1) return
@@ -153,15 +153,42 @@ export function CategoryVideoBackground({ url }: { url?: string | null }) {
       return
     }
 
+    // ── New URL: Load in hidden slot, wait for canplay, then crossfade ──
+    // The CURRENT slot stays visible so the user never sees a black frame.
     activeSlotIdxRef.current = nextIdx
     nextSlot.setAttribute('data-src', targetUrl)
     nextSlot.src = targetUrl
     nextSlot.style.transform = `translate3d(0,0,0) scale(${getCategoryVideoScale(targetUrl)})`
-    // Note: do NOT force currentTime = 0 on a fresh load — it triggers an
-    // extra HTTP 206 range-request seek on some browsers.
+    // Keep new slot hidden until it has a frame ready
+    nextSlot.style.display = 'none'
 
     const hasActivation = userActivatedRef.current || (typeof navigator !== 'undefined' && (navigator as any).userActivation?.hasBeenActive)
 
+    // Handler: fires once the new video has buffered enough to display
+    const onReady = () => {
+      nextSlot.removeEventListener('canplay', onReady)
+
+      // Staleness check: if the user already moved to another card,
+      // don't show this now-irrelevant video
+      if (activeUrlRef.current !== targetUrl) {
+        nextSlot.pause()
+        nextSlot.removeAttribute('src')
+        nextSlot.load()
+        nextSlot.style.display = 'none'
+        return
+      }
+
+      // Crossfade: show new, hide old
+      nextSlot.style.display = 'block'
+      currentSlot.pause()
+      currentSlot.style.display = 'none'
+      currentSlot.removeAttribute('src')
+      currentSlot.load()
+    }
+
+    nextSlot.addEventListener('canplay', onReady, { once: true })
+
+    // Start loading and playing (muted first if needed)
     if (hasActivation) {
       nextSlot.muted = false
       nextSlot.volume = 1.0
@@ -183,11 +210,10 @@ export function CategoryVideoBackground({ url }: { url?: string | null }) {
       }
     }
 
-    nextSlot.style.display = 'block'
-    currentSlot.pause()
-    currentSlot.style.display = 'none'
-    currentSlot.removeAttribute('src')
-    currentSlot.load()
+    // Cleanup: if effect re-runs before canplay fires, remove the stale listener
+    return () => {
+      nextSlot.removeEventListener('canplay', onReady)
+    }
   }, [activeUrl])
 
   const isAnyActive = Boolean(activeUrl)
