@@ -1,8 +1,9 @@
 import { useState, useRef, useCallback } from 'react'
 import { Vibe } from '@/lib/types'
-import { SIGNATURE_SONGS } from '@/lib/signatureSongs'
+import { SIGNATURE_SONGS, getFirstTrackForVibe } from '@/lib/signatureSongs'
 import { vibeService } from '@/lib/vibeService'
 import { useUIStore } from '@/store/uiStore'
+import { useAudioStore } from '@/store/audioStore'
 
 // How long the cursor must dwell on a card before prefetching begins.
 // 150ms filters out rapid cursor sweeps without noticeable lag for intentional hovers.
@@ -68,6 +69,14 @@ export function useChartHover() {
       // Only activate if cursor is still on this card after the dwell period
       if (hoveredVibeRef.current === vibeId) {
         useUIStore.getState().setActiveCategoryVideo(videoUrl)
+        
+        // ── AUDIO PRELOAD ───────────────────────────────────────────────────
+        // Preload the signature song audio so it's ready if the user clicks "Enter".
+        // This eliminates the 500ms+ cross-origin iTunes CDN latency on first track.
+        const firstTrack = getFirstTrackForVibe(vibeId)
+        if (firstTrack?.previewUrl) {
+          useAudioStore.getState().setPreloadUrls([firstTrack.previewUrl])
+        }
       }
     }, VIDEO_DWELL_MS)
 
