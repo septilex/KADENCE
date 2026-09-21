@@ -89,8 +89,8 @@ class VibeService {
       const songs = await this.fetchVibeSongs(vibe)
       if (!songs || songs.length === 0) return
 
-      // Prewarm the first 64 covers into the browser's HTTP disk cache
-      const critical = songs.slice(0, 64)
+      // Prewarm the first 12 covers into the browser's HTTP disk cache (reduced to prevent network saturation)
+      const critical = songs.slice(0, 12)
       for (const song of critical) {
         if (!song.albumArt || this.prewarmedArtworks.has(song.albumArt)) continue
         this.prewarmedArtworks.add(song.albumArt)

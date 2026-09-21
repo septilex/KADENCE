@@ -1,9 +1,9 @@
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import { Vibe } from '@/lib/types'
-import { SIGNATURE_SONGS, getFirstTrackForVibe } from '@/lib/signatureSongs'
+import { SIGNATURE_SONGS } from '@/lib/signatureSongs'
 import { vibeService } from '@/lib/vibeService'
 import { useUIStore } from '@/store/uiStore'
-import { useAudioStore } from '@/store/audioStore'
+import { useIntroAudioStore } from '@/store/introAudioStore'
 
 // How long the cursor must dwell on a card before prefetching begins.
 // 150ms filters out rapid cursor sweeps without noticeable lag for intentional hovers.
@@ -47,6 +47,15 @@ export function useChartHover() {
   const videoDwellTimeoutRef  = useRef<NodeJS.Timeout | null>(null)
   const hoveredVibeRef        = useRef<Vibe | null>(null)
 
+  // Preload all intro audio on mount
+  useEffect(() => {
+    const allAudioUrls = Object.values(CATEGORY_PREVIEW_VIDEOS)
+      .filter(Boolean)
+      .map(url => url!.replace('/videos/', '/audio/intro/').replace('.mp4', '.m4a'))
+    
+    useIntroAudioStore.getState().initAndPreload(allAudioUrls)
+  }, [])
+
   const handleHoverStart = useCallback((vibeId: Vibe) => {
     // Immediately cancel any pending exit timer from moving between cards
     if (exitTimeoutRef.current) {
@@ -70,12 +79,9 @@ export function useChartHover() {
       if (hoveredVibeRef.current === vibeId) {
         useUIStore.getState().setActiveCategoryVideo(videoUrl)
         
-        // ── AUDIO PRELOAD ───────────────────────────────────────────────────
-        // Preload the signature song audio so it's ready if the user clicks "Enter".
-        // This eliminates the 500ms+ cross-origin iTunes CDN latency on first track.
-        const firstTrack = getFirstTrackForVibe(vibeId)
-        if (firstTrack?.previewUrl) {
-          useAudioStore.getState().setPreloadUrls([firstTrack.previewUrl])
+        if (videoUrl) {
+          const audioUrl = videoUrl.replace('/videos/', '/audio/intro/').replace('.mp4', '.m4a')
+          useIntroAudioStore.getState().playUrl(audioUrl)
         }
       }
     }, VIDEO_DWELL_MS)
@@ -110,6 +116,7 @@ export function useChartHover() {
       hoveredVibeRef.current = null
       setHoveredVibe(null)
       useUIStore.getState().setActiveCategoryVideo(null)
+      useIntroAudioStore.getState().stopAll()
     }, 50)
   }, [])
 

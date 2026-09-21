@@ -31,38 +31,11 @@ export function CategoryVideoBackground({ url }: { url?: string | null }) {
 
   const containerRef = useRef<HTMLDivElement>(null)
   const slotsRef = useRef<[HTMLVideoElement | null, HTMLVideoElement | null]>([null, null])
-  const activeSlotIdxRef = useRef<number>(0)
+  const visibleSlotIdxRef = useRef<number>(0)
   const activeUrlRef = useRef<string | null>(null)
   const userActivatedRef = useRef<boolean>(false)
 
-  // ── Global User Activation Listener for Instant Audio Unlocking ──────────
-  useEffect(() => {
-    if (typeof navigator !== 'undefined' && (navigator as any).userActivation?.hasBeenActive) {
-      userActivatedRef.current = true
-    }
-
-    const unlockAudio = () => {
-      userActivatedRef.current = true
-      const activeSlot = slotsRef.current[activeSlotIdxRef.current]
-      if (activeSlot && !activeSlot.paused && activeSlot.muted) {
-        activeSlot.muted = false
-        activeSlot.volume = 1.0
-      }
-      window.removeEventListener('pointerdown', unlockAudio, true)
-      window.removeEventListener('keydown', unlockAudio, true)
-      window.removeEventListener('touchstart', unlockAudio, true)
-    }
-
-    window.addEventListener('pointerdown', unlockAudio, { capture: true, passive: true })
-    window.addEventListener('keydown', unlockAudio, { capture: true, passive: true })
-    window.addEventListener('touchstart', unlockAudio, { capture: true, passive: true })
-
-    return () => {
-      window.removeEventListener('pointerdown', unlockAudio, true)
-      window.removeEventListener('keydown', unlockAudio, true)
-      window.removeEventListener('touchstart', unlockAudio, true)
-    }
-  }, [])
+  // (User Activation Listener removed since introAudioStore handles playback independently)
 
   // ── Create Dual-Slot Video Elements on Mount ─────────────────────────────
   useEffect(() => {
@@ -111,108 +84,73 @@ export function CategoryVideoBackground({ url }: { url?: string | null }) {
     if (!targetUrl) {
       slot0.pause()
       slot1.pause()
-      slot0.removeAttribute('src')
-      slot1.removeAttribute('src')
-      slot0.load()
-      slot1.load()
       slot0.style.display = 'none'
       slot1.style.display = 'none'
       return
     }
 
-    const currentIdx = activeSlotIdxRef.current
-    const currentSlot = currentIdx === 0 ? slot0 : slot1
-    const nextIdx = currentIdx === 0 ? 1 : 0
-    const nextSlot = nextIdx === 0 ? slot0 : slot1
+    const visibleIdx = visibleSlotIdxRef.current
+    const visibleSlot = visibleIdx === 0 ? slot0 : slot1
+    const hiddenSlot = visibleIdx === 0 ? slot1 : slot0
 
-    // Skip if current slot already has this URL playing (same card re-hover)
-    if (currentSlot.getAttribute('data-src') === targetUrl && !currentSlot.paused) {
-      return
-    }
-
-    // Check if the OTHER slot already has this URL loaded — reuse it instead
-    // of starting a fresh download (happens on hover-away-hover-back)
-    if (nextSlot.getAttribute('data-src') === targetUrl && nextSlot.src) {
-      activeSlotIdxRef.current = nextIdx
-      nextSlot.style.transform = `translate3d(0,0,0) scale(${getCategoryVideoScale(targetUrl)})`
-
-      const hasActivation = userActivatedRef.current || (typeof navigator !== 'undefined' && (navigator as any).userActivation?.hasBeenActive)
-      if (hasActivation) {
-        nextSlot.muted = false
-        nextSlot.volume = 1.0
+    // 1. If the visible slot is ALREADY the target URL
+    if (visibleSlot.getAttribute('data-src') === targetUrl) {
+      if (visibleSlot.paused) {
+        visibleSlot.muted = true
+        visibleSlot.play().catch(() => {})
       }
-
-      nextSlot.play().catch(() => {
-        if (activeUrlRef.current !== targetUrl) return
-        nextSlot.muted = true
-        nextSlot.play().catch(() => {})
-      })
-      nextSlot.style.display = 'block'
-      currentSlot.pause()
-      currentSlot.style.display = 'none'
+      visibleSlot.style.display = 'block'
       return
     }
 
-    // ── New URL: Load in hidden slot, wait for canplay, then crossfade ──
-    // The CURRENT slot stays visible so the user never sees a black frame.
-    activeSlotIdxRef.current = nextIdx
-    nextSlot.setAttribute('data-src', targetUrl)
-    nextSlot.src = targetUrl
-    nextSlot.style.transform = `translate3d(0,0,0) scale(${getCategoryVideoScale(targetUrl)})`
-    // Keep new slot hidden until it has a frame ready
-    nextSlot.style.display = 'none'
+    // 2. If the hidden slot is ALREADY the target URL (was buffering or cached)
+    if (hiddenSlot.getAttribute('data-src') === targetUrl && hiddenSlot.src) {
+      visibleSlotIdxRef.current = visibleIdx === 0 ? 1 : 0
+      
+      hiddenSlot.muted = true
+      hiddenSlot.play().catch(() => {})
+      
+      hiddenSlot.style.display = 'block'
+      visibleSlot.pause()
+      visibleSlot.style.display = 'none'
+      return
+    }
 
-    const hasActivation = userActivatedRef.current || (typeof navigator !== 'undefined' && (navigator as any).userActivation?.hasBeenActive)
+    // 3. New URL: Load into the hidden slot.
+    // Mute/pause the visible slot immediately so its audio doesn't overlap while we buffer the new one,
+    // BUT leave it display: block so the user sees a freeze frame instead of a black screen!
+    visibleSlot.pause()
 
-    // Handler: fires once the new video has buffered enough to display
+    hiddenSlot.setAttribute('data-src', targetUrl)
+    hiddenSlot.src = targetUrl
+    hiddenSlot.style.transform = `translate3d(0,0,0) scale(${getCategoryVideoScale(targetUrl)})`
+    hiddenSlot.style.display = 'none'
+
     const onReady = () => {
-      nextSlot.removeEventListener('canplay', onReady)
-
-      // Staleness check: if the user already moved to another card,
-      // don't show this now-irrelevant video
+      hiddenSlot.removeEventListener('canplay', onReady)
+      
+      // Staleness check
       if (activeUrlRef.current !== targetUrl) {
-        nextSlot.pause()
-        nextSlot.removeAttribute('src')
-        nextSlot.load()
-        nextSlot.style.display = 'none'
+        hiddenSlot.pause()
+        hiddenSlot.style.display = 'none'
         return
       }
 
-      // Crossfade: show new, hide old
-      nextSlot.style.display = 'block'
-      currentSlot.pause()
-      currentSlot.style.display = 'none'
-      currentSlot.removeAttribute('src')
-      currentSlot.load()
+      // Crossfade: Update state and swap visibility
+      visibleSlotIdxRef.current = visibleIdx === 0 ? 1 : 0
+      hiddenSlot.style.display = 'block'
+      visibleSlot.pause()
+      visibleSlot.style.display = 'none'
     }
 
-    nextSlot.addEventListener('canplay', onReady, { once: true })
+    hiddenSlot.addEventListener('canplay', onReady, { once: true })
 
-    // Start loading and playing (muted first if needed)
-    if (hasActivation) {
-      nextSlot.muted = false
-      nextSlot.volume = 1.0
-      nextSlot.play().catch(() => {
-        if (activeUrlRef.current !== targetUrl) return
-        nextSlot.muted = true
-        nextSlot.play().catch(() => {})
-      })
-    } else {
-      nextSlot.muted = false
-      nextSlot.volume = 1.0
-      const p = nextSlot.play()
-      if (p && typeof p.catch === 'function') {
-        p.catch(() => {
-          if (activeUrlRef.current !== targetUrl) return
-          nextSlot.muted = true
-          nextSlot.play().catch(() => {})
-        })
-      }
-    }
+    // Start playing hidden slot (muted) so it's ready as soon as canplay fires
+    hiddenSlot.muted = true
+    hiddenSlot.play().catch(() => {})
 
-    // Cleanup: if effect re-runs before canplay fires, remove the stale listener
     return () => {
-      nextSlot.removeEventListener('canplay', onReady)
+      hiddenSlot.removeEventListener('canplay', onReady)
     }
   }, [activeUrl])
 
