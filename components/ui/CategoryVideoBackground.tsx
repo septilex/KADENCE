@@ -117,9 +117,9 @@ export function CategoryVideoBackground({ url }: { url?: string | null }) {
     }
 
     // 3. New URL: Load into the hidden slot.
-    // Mute/pause the visible slot immediately so its audio doesn't overlap while we buffer the new one,
-    // BUT leave it display: block so the user sees a freeze frame instead of a black screen!
-    visibleSlot.pause()
+    // We intentionally DO NOT pause the visible slot here! Let it keep playing smoothly 
+    // until the new video fires 'canplay' and is ready to be swapped in. This completely 
+    // eliminates the "frozen video" perceived lag during network buffering on Vercel.
 
     hiddenSlot.setAttribute('data-src', targetUrl)
     hiddenSlot.src = targetUrl
