@@ -2,7 +2,7 @@
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion'
 import React, { useState, useRef, useEffect, useCallback, memo } from 'react'
 import { Vibe } from '@/lib/types'
-import { useChartHover, CATEGORY_PREVIEW_VIDEOS } from '@/hooks/useChartHover'
+import { useChartHover } from '@/hooks/useChartHover'
 import { vibeService } from '@/lib/vibeService'
 
 import { VIBE_CONFIGS, VibeConfig } from '@/lib/vibeConfig'

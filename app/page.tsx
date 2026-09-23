@@ -12,8 +12,8 @@ import { SongDetail } from '@/components/ui/SongDetail'
 import { CinematicBackground } from '@/components/ui/CinematicBackground'
 import { Navbar } from '@/components/ui/Navbar'
 import { HeroBackgroundVideo } from '@/components/ui/HeroBackgroundVideo'
+import { HoverMediaBackground } from '@/components/ui/HoverMediaBackground'
 import { PreviewVideoLayer } from '@/components/ui/PreviewVideoLayer'
-import { CategoryVideoBackground } from '@/components/ui/CategoryVideoBackground'
 import { GlobalAudioPlayer } from '@/components/GlobalAudioPlayer'
 import { useAudioStore } from '@/store/audioStore'
 import { ChangeVibeOverlay } from '@/components/ui/ChangeVibeOverlay'
@@ -138,8 +138,6 @@ export default function Home() {
     logAudioDebug('vibe select / enter clicked', vibe)
 
     // ── STAGE 1: IMMEDIATE FIRST TRACK AUDIO PRIORITY (0ms synchronous resolution) ──
-    // Stop any category preview video so it frees decoders and audio channels immediately
-    useUIStore.getState().setActiveCategoryVideo(null)
 
     // Resolve first playable track synchronously from in-memory signature data
     const firstTrack = getFirstTrackForVibe(vibe)
@@ -327,7 +325,9 @@ export default function Home() {
       <GlobalAudioPlayer />
       {/* Background Video Layer (Homepage Only) */}
       <HeroBackgroundVideo currentVibe={currentVibe} introComplete={introComplete} />
-      <CategoryVideoBackground />
+      
+      {/* Zero-black-screen Hover MP4 Layer */}
+      <HoverMediaBackground />
 
       {/* Song Preview Video Layer */}
       {introComplete && <PreviewVideoLayer song={previewSong} />}
