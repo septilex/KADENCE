@@ -3,7 +3,7 @@ import { Vibe } from '@/lib/types'
 import { SIGNATURE_SONGS } from '@/lib/signatureSongs'
 import { vibeService } from '@/lib/vibeService'
 import { useUIStore } from '@/store/uiStore'
-import { INTRO_MEDIA_MANIFEST } from '@/lib/introMediaManifest'
+
 
 // How long the cursor must dwell on a card before prefetching begins.
 // 150ms filters out rapid cursor sweeps without noticeable lag for intentional hovers.
@@ -15,7 +15,7 @@ const HOVER_DWELL_MS = 50
 export function useChartHover() {
   const hoveredVibe = useUIStore((s) => s.hoveredVibe)
   const setHoveredVibe = useUIStore((s) => s.setHoveredVibe)
-  const activeVideoUrl = hoveredVibe ? INTRO_MEDIA_MANIFEST[hoveredVibe]?.mp4File || null : null
+
   const hoverDwellTimeoutRef  = useRef<NodeJS.Timeout | null>(null)
   const prefetchDebounceRef   = useRef<NodeJS.Timeout | null>(null)
   const exitTimeoutRef        = useRef<NodeJS.Timeout | null>(null)
@@ -57,7 +57,7 @@ export function useChartHover() {
 
   return {
     hoveredVibe,
-    activeVideoUrl,
+
     handleHoverStart,
     handleHoverEnd,
     signatureSongs: SIGNATURE_SONGS,

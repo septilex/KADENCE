@@ -12,7 +12,7 @@ import { SongDetail } from '@/components/ui/SongDetail'
 import { CinematicBackground } from '@/components/ui/CinematicBackground'
 import { Navbar } from '@/components/ui/Navbar'
 import { HeroBackgroundVideo } from '@/components/ui/HeroBackgroundVideo'
-import { HoverMediaBackground } from '@/components/ui/HoverMediaBackground'
+import HoverMediaBackground from '@/components/ui/HoverMediaBackground'
 import { PreviewVideoLayer } from '@/components/ui/PreviewVideoLayer'
 import { GlobalAudioPlayer } from '@/components/GlobalAudioPlayer'
 import { useAudioStore } from '@/store/audioStore'
@@ -328,7 +328,7 @@ export default function Home() {
       
       {/* Zero-black-screen Hover MP4 Layer */}
       <HoverMediaBackground />
-
+      
       {/* Song Preview Video Layer */}
       {introComplete && <PreviewVideoLayer song={previewSong} />}
 

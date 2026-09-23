@@ -553,7 +553,7 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
   const [selectedVibe, setSelectedVibe] = useState<Vibe | null>(null)
 
   // ── Chart Hover Preview ──
-  const { hoveredVibe, activeVideoUrl, handleHoverStart, handleHoverEnd, signatureSongs } = useChartHover()
+  const { hoveredVibe, handleHoverStart, handleHoverEnd, signatureSongs } = useChartHover()
 
   const scrollWrapperRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
@@ -736,7 +736,7 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
 
       {/* ── Fixed Ambient Background Layer (Compositor-isolated, 0 scroll overhead) ── */}
       <div
-        className={`fixed inset-0 pointer-events-none overflow-hidden transition-opacity duration-300 ${activeVideoUrl ? 'opacity-0' : 'opacity-100'}`}
+        className={`fixed inset-0 pointer-events-none overflow-hidden transition-opacity duration-300 ${hoveredVibe ? 'opacity-0' : 'opacity-100'}`}
         style={{ contain: 'strict', transform: 'translate3d(0, 0, 0)' }}
       >
         {/* Floating particles */}
@@ -844,11 +844,11 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
                 >
                   <img src="/kadence-chrome-logo.png" alt="KADENCE" style={{ height: '2.04em', width: 'auto', marginBottom: '-0.6em' }} className="pointer-events-none select-none" />
                 </h1>
-                <p className={`text-white/40 text-[20px] md:text-[24px] tracking-[0.6em] uppercase font-bold transition-opacity duration-300 ${activeVideoUrl ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>iTunes Universe</p>
+                <p className={`text-white/40 text-[20px] md:text-[24px] tracking-[0.6em] uppercase font-bold transition-opacity duration-300 ${hoveredVibe ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>iTunes Universe</p>
               </div>
 
               {/* Question */}
-              <div className={`text-center space-y-1 mb-[clamp(0.5rem,1.5dvh,1rem)] transition-opacity duration-300 ${activeVideoUrl ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+              <div className={`text-center space-y-1 mb-[clamp(0.5rem,1.5dvh,1rem)] transition-opacity duration-300 ${hoveredVibe ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
                 <h2
                   className="text-white text-2xl md:text-3xl font-light tracking-tight"
                   style={{ fontFamily: "'Space Grotesk', sans-serif" }}
@@ -859,7 +859,7 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
               </div>
 
               {/* Creator Collection Cue with 3D Bubble Pop & Magnetic Nav */}
-              <div className={`transition-opacity duration-300 ${activeVideoUrl && hoveredVibe !== 'dev-special' ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+              <div className={`transition-opacity duration-300 ${hoveredVibe && hoveredVibe !== 'dev-special' ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
                 <CreatorCueCard
                   onClick={scrollToCreatorCollection}
                   onHoverStart={() => handleHoverStart('dev-special')}
@@ -886,7 +886,7 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
               </div>
 
               {/* Creator Collection Section - SECTION 2 with 3D Bubble Pop */}
-              <div className={`transition-opacity duration-300 ${activeVideoUrl && hoveredVibe !== 'dev-special' ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+              <div className={`transition-opacity duration-300 ${hoveredVibe && hoveredVibe !== 'dev-special' ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
               {(() => {
                 const devSpecialVibe = VIBE_CONFIGS.find(v => v.id === 'dev-special')
                 if (!devSpecialVibe) return null
