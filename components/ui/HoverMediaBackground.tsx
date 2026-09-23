@@ -18,6 +18,18 @@ export default function HoverMediaBackground() {
   const dwellTimerRef = useRef<NodeJS.Timeout | null>(null)
   const isTransitioningRef = useRef(false)
 
+  const NEEDS_SCALE_UP = [
+    'pop-rising',      // 05
+    'dance-hits',      // 06
+    'mood-booster',    // 07
+    'dev-special',     // Dev's Universe (God Mode)
+    'top-telugu',      // 11
+    'top-tamil',       // 12
+    'top-hindi',       // 13
+    'top-kpop'         // 14
+  ]
+  const shouldScale = activeVibe ? NEEDS_SCALE_UP.includes(activeVibe) : false;
+
   // Clear everything out and halt media
   const resetAndHalt = () => {
     if (dwellTimerRef.current) {
@@ -183,6 +195,7 @@ export default function HoverMediaBackground() {
         playsInline
         muted={false}
         className={`absolute inset-0 w-full h-full object-cover z-10 transition-opacity duration-150 ${showPreview && !showFull ? 'opacity-100' : 'opacity-0'}`}
+        style={{ transform: shouldScale ? 'scale(1.35)' : 'scale(1)', transformOrigin: 'center' }}
       />
 
       {/* Full Playback Layer */}
@@ -192,6 +205,7 @@ export default function HoverMediaBackground() {
         muted={false}
         loop
         className={`absolute inset-0 w-full h-full object-cover z-20 transition-opacity duration-150 ${showFull ? 'opacity-100' : 'opacity-0'}`}
+        style={{ transform: shouldScale ? 'scale(1.35)' : 'scale(1)', transformOrigin: 'center' }}
       />
     </div>
   )
