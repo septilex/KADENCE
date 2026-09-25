@@ -1,427 +1,197 @@
 <div align="center">
 
-<img src="./assets/kadence-horizontal-logo.png" alt="Kadence — Music Beyond Borders" width="820"/>
+<img src="./screenshots/logo.png" alt="Kadence Logo" width="420"/>
 
-<br/>
+### Music Beyond Borders
 
-MUSIC BEYOND BORDERS
+**An interactive music discovery platform that turns listening data into immersive visual experiences.**
 
-An immersive music discovery experience where music becomes a visual universe — not another scrolling list. 🎧🌐
-
-Live Demo · GitHub
+![Status](https://img.shields.io/badge/status-in%20development-yellow)
+![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black)
+![Next.js](https://img.shields.io/badge/Next.js-000000?logo=next.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-38B2AC?logo=tailwind-css&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer%20Motion-black?logo=framer&logoColor=white)
 
 </div>
 
-✦ What is KADENCE?
+---
 
-KADENCE is an interactive music discovery platform built around a simple idea:
+## 🚀 Overview
 
-Music discovery should feel spatial, visual, and alive.
+**Kadence** reimagines music discovery for listeners who want more than a static list of tracks. Instead of scrolling a feed, users explore songs, artists, and genres through editorial charts, cinematic hero moments, and an interactive relationship graph — all wrapped in a fast, glassmorphic interface with real-time audio previews.
 
-Instead of forcing users through static lists, KADENCE turns charts, album artwork, audio previews, and song metadata into a single exploratory interface.
+Kadence combines:
 
-The experience combines:
+- 🎧 Curated music discovery across genres and regions
+- 📊 Interactive, animated charts and rankings
+- 🌐 Artist and song relationship visualization
+- ⚡ Real-time hover interactions and instant previews
+- 🎨 A modern, immersive, motion-driven UI
 
-🎧 Music discovery and curated editorial charts
+---
 
-🌌 A WebGL-powered Music Universe of album artwork
+## 📸 Screenshots
 
-📊 Global, genre, mood, and Indian regional discovery
+### Home — Editorial Chart Selection
+The landing experience lets users choose a chart to explore, with a rotating cinematic backdrop and a spotlighted **Creator's Pick**.
 
-🎵 30-second audio previews
+<p align="center">
+  <img src="./screenshots/homepage.png" alt="Kadence homepage with editorial chart grid" width="100%"/>
+</p>
 
-🪟 Cinematic, liquid-glass song previews
+### Switch Chart
+A live, no-reload chart switcher lets users jump between Global Top 50, Viral 50, regional charts (Telugu, Tamil, Hindi, K-Pop), mood-based charts, and the curator's own universe.
 
-🌈 Artwork-driven visual atmospheres
+<p align="center">
+  <img src="./screenshots/switch-chart.png" alt="Switch Chart modal" width="100%"/>
+</p>
 
-🔎 Search and chart-based exploration
+### Cinematic Hero States
+The homepage background dynamically shifts per session, keeping the chart-selection experience fresh every visit.
 
-⚡ Interaction-focused motion and rendering performance
+<p align="center">
+  <img src="./screenshots/creators-universe.png" alt="Alternate cinematic homepage state" width="100%"/>
+</p>
 
-✦ The Experience
+### Chart Grid — Music Universe
+Selecting a chart drops the user into a dense, hover-reactive album wall, complete with live search by vibe, mood, or genre.
 
-flowchart LR
-    A["01 · DISCOVER<br/>Music Universe"] --> B["02 · EXPLORE<br/>14 Editorial Charts"]
-    B --> C["03 · PREVIEW<br/>Cinematic Song Detail"]
-    C --> D["04 · LISTEN<br/>30s Preview / Apple Music"]
+<p align="center">
+  <img src="./screenshots/chart-grid.png" alt="Top Telugu chart grid view" width="100%"/>
+</p>
 
-    classDef node fill:#0b0b0b,stroke:#cfd3d8,color:#ffffff,stroke-width:1.5px;
-    class A,B,C,D node;
+### Now Playing — Song Detail Panel
+Every track opens into a rich now-playing panel with waveform scrubbing, popularity score, preview length, genre tags, and a direct link to Apple Music.
 
-The interface is designed as one continuous flow:
+<p align="center">
+  <img src="./screenshots/song-preview-1.png" alt="Now playing panel — Kurchi Madathapetti" width="49%"/>
+  <img src="./screenshots/song-preview-2.png" alt="Now playing panel — Bhoochadae" width="49%"/>
+</p>
 
-DISCOVER → EXPLORE → PREVIEW → LISTEN
+<p align="center">
+  <img src="./screenshots/song-preview-3.png" alt="Now playing panel — Dev's Universe special pick" width="100%"/>
+</p>
 
-✦ 01 — The Music Universe 🌌
+---
 
-The heart of KADENCE is a large interactive Three.js / WebGL artwork field.
+## ✨ Key Features
 
-Hundreds of album covers form a visual environment that users can explore spatially rather than scrolling through a conventional feed.
+### 🎵 Song Discovery
+- Browse trending and popular tracks across global and regional charts
+- Explore detailed song metadata and artist credits
+- Direct links out to streaming platforms (Apple Music)
 
-<div align="center">
-<img src="./assets/Music%20Universe%201.png" alt="KADENCE Music Universe" width="100%"/>
-</div>
+### 📊 Interactive Music Charts
+- Dynamic, animated ranking grids (Global Top 50, Viral 50, Hip-Hop Central, Pop Rising, and more)
+- Live chart switching with no page reload
+- Regional and mood-based chart categories (Telugu, Tamil, Hindi, K-Pop, Workout, Chill, Late Night)
 
-Interaction model
+### 🎧 Audio Previews
+- Instant 30-second preview playback with waveform scrubbing
+- Popularity score and preview-length indicators per track
+- Lightweight, seamless playback experience
 
-🖱️ Cursor-mapped exploration
+### 🌐 Music Relationship Graph
+- Visualize connections between songs, artists, genres, and related tracks
+- Interactive, node-based exploration of the music universe
 
-🫧 Continuous surface deformation / motion
+### 🎨 Premium UI Experience
+- Glassmorphism-inspired design language
+- Smooth Framer Motion animations and micro-interactions
+- Cinematic, rotating hero backdrops
+- Fully responsive layout
 
-🎯 Pin-to-pin cursor interaction
+### 🔍 Search & Exploration
+- Fast search by vibe, mood, or genre
+- Intelligent content discovery across artists and songs
 
-✨ Hover states and focused artwork
+---
 
-🎨 Artwork-rich visual field
+## 🛠️ Tech Stack
 
-⚡ Frame-independent interaction logic
+| Category | Technologies |
+|---|---|
+| **Frontend** | React, Next.js, TypeScript, Tailwind CSS |
+| **Animation & Visualization** | Framer Motion, Three.js, React Three Fiber |
+| **State Management** | Zustand |
+| **Tooling** | Node.js, npm, Git |
 
-The goal is not to make a decorative canvas.
+---
 
-The canvas is the discovery interface.
+## 🏗️ Project Structure
 
-✦ 02 — 14 Editorial Charts 📊
-
-KADENCE organizes discovery into 14 editorial worlds:
-
-Global
-
-Genre / Mood
-
-Regional
-
-🌍 Global Top 50
-
-🎤 Hip-Hop Central
-
-🇮🇳 Top Telugu
-
-🔥 Viral 50
-
-✨ Pop Rising
-
-🇮🇳 Top Tamil
-
-🆕 New Music Friday
-
-💃 Dance Hits
-
-🇮🇳 Top Hindi
-
-
-
-🌱 Mood Booster
-
-🇰🇷 Top K-Pop
-
-
-
-🌙 Late Night
-
-
-
-
-
-🏋️ Workout
-
-
-
-
-
-🌊 Chill Hits
-
-
-
-Switch Chart
-
-The Switch Chart interaction lets users move between editorial worlds without breaking the discovery experience.
-
-<div align="center">
-<img src="./assets/KADENCE%20Switch%20Chart.png" alt="KADENCE Switch Chart" width="860"/>
-</div>
-
-✦ 03 — Cinematic Song Preview 🎵
-
-Clicking a track opens a dedicated cinematic Song Preview.
-
-The preview brings together:
-
-album artwork
-
-song title
-
-artist metadata
-
-chart / genre context
-
-waveform
-
-playback controls
-
-preview progress
-
-popularity
-
-Apple Music action
-
-dynamic visual atmosphere
-
-<div align="center">
-
-<img src="./assets/Kurchi%20Song%20Preview.png" alt="Kurchi Song Preview" width="48%"/>
-<img src="./assets/Bhoochade%20Song%20Preview.png" alt="Bhoochade Song Preview" width="48%"/>
-
-</div>
-
-✦ 04 — The Interface Adapts to the Song 🌈
-
-KADENCE does not force every song into the same visual environment.
-
-When a track is selected, its artwork drives the surrounding atmosphere.
-
-That creates a simple design principle:
-
-Same interface. Different emotional context.
-
-<div align="center">
-
-<img src="./assets/Ram%20Sita%20Ram%20Song%20Preview.png" alt="Ram Sita Ram Preview" width="48%"/>
-<img src="./assets/Dont%20Lose%20Song%20Preview.png" alt="Don't Lose Your Head Preview" width="48%"/>
-
-<br/><br/>
-
-<img src="./assets/Worry%20Song%20Preview.png" alt="Worry Preview" width="31%"/>
-<img src="./assets/Love%20Song%20Preview.png" alt="Love Preview" width="31%"/>
-<img src="./assets/Sunflower%20Home%20Card%20Preview.png" alt="Sunflower Home Experience" width="31%"/>
-
-</div>
-
-✦ 05 — Global × Regional 🌍🇮🇳
-
-KADENCE is intentionally built around music beyond borders.
-
-The discovery model brings together:
-
-🌍 Global charts
-
-🎤 International genres
-
-🇮🇳 Telugu music
-
-🇮🇳 Tamil music
-
-🇮🇳 Hindi music
-
-🇰🇷 K-Pop
-
-🎧 Mood-based discovery
-
-This creates one discovery environment where regional and global music can coexist.
-
-✦ 06 — Product & UI Philosophy 🪟
-
-KADENCE treats the interface as part of the music experience.
-
-Visual language
-
-Chrome / metallic branding
-
-Liquid-glass surfaces
-
-Cinematic artwork
-
-High-contrast typography
-
-Soft atmospheric blur
-
-Controlled glow
-
-Large visual hierarchy
-
-Minimal but expressive controls
-
-The interface deliberately avoids looking like a conventional streaming dashboard.
-
-The visual environment changes with the music.
-
-✦ 07 — Technical Architecture ⚙️
-
-flowchart TD
-    U["USER"]
-    F["NEXT.JS / REACT<br/>UI + Interaction"]
-    D["iTUNES API<br/>Music & Chart Data"]
-    S["STATE + AUDIO<br/>Song Selection / Preview"]
-    W["THREE.JS / WEBGL<br/>Music Universe"]
-    P["CINEMATIC SONG PREVIEW<br/>Artwork + Controls + Atmosphere"]
-
-    U --> F
-    F --> D
-    D --> S
-    S --> W
-    S --> P
-
-    classDef node fill:#f7f7f7,stroke:#111,color:#111,stroke-width:1.5px;
-    class U,F,D,S,W,P node;
-
-✦ 08 — Engineering Focus 🧠
-
-KADENCE involved more than visual design. A major part of the project was making an interaction-heavy WebGL experience behave smoothly on desktop and mobile.
-
-Audio performance
-
-Preview playback is treated as a performance-sensitive path so artwork preparation does not unnecessarily delay audio availability.
-
-WebGL performance
-
-The Music Universe required careful control of:
-
-tile count
-
-shader workload
-
-CPU-side deformation
-
-texture updates
-
-frame-dependent animation
-
-Interaction stability
-
-The cursor system was refined to keep the visual deformation aligned with the physical pointer instead of creating a delayed or padded interaction feel.
-
-Motion
-
-Animations use frame-independent interpolation so movement remains stable across changing frame rates.
-
-Glass UI
-
-The Song Preview uses layered translucent surfaces, highlights, shadows, and controlled blur to achieve the liquid-glass visual language.
-
-✦ 09 — Tech Stack 🛠️
-
-Frontend
-
-
-
-
-
-
-Visualisation & Motion
-
-
-
-
-
-Music Data & Development
-
-
-
-
-
-
-✦ 10 — Project Structure 🗂️
-
-KADENCE/
+```bash
+kadence/
 ├── app/
-│   ├── page.tsx
-│   └── ...
 ├── components/
-│   ├── universe/
-│   ├── ui/
-│   ├── SongDetail.tsx
-│   ├── GlobalAudioPlayer.tsx
-│   └── ...
+├── hooks/
 ├── lib/
-│   ├── jellyField.ts
-│   ├── gridCalc.ts
-│   └── ...
 ├── public/
-│   ├── images/
-│   ├── videos/
-│   └── ...
+├── scripts/
+├── store/
+├── screenshots/
 ├── package.json
 └── README.md
+```
 
-The exact structure may evolve as the product continues to develop.
+---
 
-✦ 11 — Run KADENCE Locally 💻
+## ⚙️ Installation
 
-Prerequisites
-
-Node.js
-
-npm
-
-Git
-
-Clone
-
+**Clone the repository**
+```bash
 git clone https://github.com/septilex/KADENCE.git
+```
+
+**Navigate into the project**
+```bash
 cd KADENCE
+```
 
-Install
-
+**Install dependencies**
+```bash
 npm install
+```
 
-Start development
-
+**Start the development server**
+```bash
 npm run dev
+```
 
-Open:
+Then open [http://localhost:3000](http://localhost:3000) in your browser.
 
-http://localhost:3000
+---
 
-Production build
+## 🎯 Vision
 
-npm run build
-npm start
+Kadence aims to redefine music exploration by making music data interactive, visual, and enjoyable. Rather than simply listening to music, users can:
 
-✦ 12 — Roadmap 🔮
+- Discover hidden connections between artists and tracks
+- Explore entire artist ecosystems
+- Interact with real-time music trends
+- Experience data through engaging visual storytelling
 
-KADENCE is still evolving.
+---
 
-Planned directions include:
+## 🔮 Future Roadmap
 
-🤖 AI-powered music recommendations
+- 🤖 AI-powered music recommendations
+- 🎵 Personalized listening insights
+- 🌍 Global music trend analysis
+- 👥 Social music sharing
+- 📈 Advanced analytics dashboard
+- 🎙️ Playlist generation with AI
+- 📱 Mobile application support
 
-🧠 Personalised listening intelligence
+---
 
-🌍 Deeper global music-trend analysis
+## 👨‍💻 Author
 
-🇮🇳 More Indian regional discovery
-
-🔎 More expressive search
-
-🎙️ AI playlist generation
-
-📱 Mobile-focused experience
-
-👥 Social discovery features
-
-📈 Richer music analytics
-
-✦ 13 — Why KADENCE?
-
-Traditional music interfaces optimise for selection.
-
-KADENCE explores a different model:
-
-make discovery itself the experience.
-
-The product brings data, artwork, sound, motion and interaction into one visual system.
-
-Same beats. A bigger world. 🎧🌐
-
-👨‍💻 Built by Prajit Balaji
-
-KADENCE — MUSIC BEYOND BORDERS
-
-Built with a focus on music discovery, frontend engineering, WebGL experimentation, visual design, and interaction performance.
-
-GitHub · Live Project
+Developed with passion for music, data visualization, and immersive web experiences.
 
 <div align="center">
 
-🎵 Explore Music Differently.
+**Kadence — Explore Music Differently.** 🎵✨
 
 </div>
