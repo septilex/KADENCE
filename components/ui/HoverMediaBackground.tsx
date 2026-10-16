@@ -8,9 +8,10 @@ import { INTRO_MEDIA_MANIFEST } from '@/lib/introMediaManifest'
  * HoverMediaBackground
  *
  * Full-screen background video layer for the homepage vibe tiles.
- * State machine: IDLE → DWELLING (800ms) → PREVIEWING → FULL_PLAYBACK
+ * State machine: IDLE → PREVIEWING → FULL_PLAYBACK
  *
  * Design principles:
+ * - Zero intentional delay: preview loading begins immediately on hover.
  * - Preview (3s clip) is highest priority — starts as soon as canplay fires.
  * - Full video (30s) loading is deferred until preview is confirmed playing.
  * - Preview loops if full video isn't ready at handoff time.
@@ -18,9 +19,8 @@ import { INTRO_MEDIA_MANIFEST } from '@/lib/introMediaManifest'
  * - Audio comes from the MP4 tracks themselves; no overlapping playback.
  */
 
-type PlaybackPhase = 'IDLE' | 'DWELLING' | 'PREVIEWING' | 'FULL_PLAYBACK'
+type PlaybackPhase = 'IDLE' | 'PREVIEWING' | 'FULL_PLAYBACK'
 
-const DWELL_MS = 800
 const HANDOFF_TARGET_TIME = 3
 
 const NEEDS_SCALE_UP = new Set([
@@ -41,7 +41,7 @@ export default function HoverMediaBackground() {
   const phaseRef = useRef<PlaybackPhase>('IDLE')
   const activeVibeRef = useRef<string | null>(null)
   const sessionRef = useRef(0) // monotonic counter to invalidate stale closures
-  const dwellTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
 
   const previewRef = useRef<HTMLVideoElement>(null)
   const fullRef = useRef<HTMLVideoElement>(null)
@@ -78,11 +78,6 @@ export default function HoverMediaBackground() {
   const halt = useCallback(() => {
     // Bump session so any in-flight callbacks become stale
     sessionRef.current++
-
-    if (dwellTimerRef.current) {
-      clearTimeout(dwellTimerRef.current)
-      dwellTimerRef.current = null
-    }
 
     phaseRef.current = 'IDLE'
     activeVibeRef.current = null
@@ -251,7 +246,7 @@ export default function HoverMediaBackground() {
       return
     }
 
-    // Different tile or fresh hover — reset and start new dwell
+    // Different tile or fresh hover — reset and begin preview immediately
     halt()
 
     const entry = INTRO_MEDIA_MANIFEST[hoveredVibe as keyof typeof INTRO_MEDIA_MANIFEST]
@@ -259,12 +254,9 @@ export default function HoverMediaBackground() {
 
     const session = ++sessionRef.current
     activeVibeRef.current = hoveredVibe
-    phaseRef.current = 'DWELLING'
 
-    dwellTimerRef.current = setTimeout(() => {
-      if (sessionRef.current !== session) return
-      beginPreview(session, hoveredVibe)
-    }, DWELL_MS)
+    // Zero-delay: begin preview loading immediately (playback gated on canplay)
+    beginPreview(session, hoveredVibe)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hoveredVibe])
 
