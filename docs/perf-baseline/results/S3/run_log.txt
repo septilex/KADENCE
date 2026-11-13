@@ -1,0 +1,19 @@
+=== 14:30:53 S3_cold_cpu1x_late-night_r1 late-night 1 1 0
+S3_cold_cpu1x_late-night_r1 hydrated true after 7025 ms; pre {"activation":false,"vp":"1718x910@1.090000033378601","canvases":0,"hoverVideosWithSrc":0}
+S3_cold_cpu1x_late-night_r1 reqs after click 4 api [[null,null,null]] art 0 audio 1 uploads>=1MP 0 post {"activation":true,"canvases":0,"audioEls":0,"heapMB":9}
+=== 14:33:23 S3_cold_cpu1x_late-night_r2 late-night 1 1 0
+S3_cold_cpu1x_late-night_r2 hydrated true after 7018 ms; pre {"activation":false,"vp":"1718x910@1.090000033378601","canvases":0,"hoverVideosWithSrc":0}
+S3_cold_cpu1x_late-night_r2 reqs after click 4 api [[null,null,null]] art 0 audio 1 uploads>=1MP 0 post {"activation":true,"canvases":0,"audioEls":0,"heapMB":8}
+=== 14:36:00 S3_cold_cpu1x_late-night_r3 late-night 1 1 0
+S3_cold_cpu1x_late-night_r3 hydrated true after 5019 ms; pre {"activation":false,"vp":"1718x910@1.090000033378601","canvases":1,"hoverVideosWithSrc":0}
+S3_cold_cpu1x_late-night_r3 reqs after click 4 api [[200,"MISS",null]] art 0 audio 1 uploads>=1MP 0 post {"activation":true,"canvases":1,"audioEls":0,"heapMB":12}
+=== 14:38:43 S3_cold_cpu1x_late-night_traced late-night 1 1 1
+S3_cold_cpu1x_late-night_traced hydrated true after 7034 ms; pre {"activation":false,"vp":"1718x910@1.090000033378601","canvases":0,"hoverVideosWithSrc":0}
+S3_cold_cpu1x_late-night_traced reqs after click 98 api [[200,"MISS",23866]] art 73 audio 21 uploads>=1MP 30 post {"activation":true,"canvases":1,"audioEls":0,"heapMB":13}
+=== 14:41:13 S3_warm_cpu1x_late-night late-night 0 1 0
+S3_warm_cpu1x_late-night hydrated true after 7036 ms; pre {"activation":false,"vp":"1718x910@1.090000033378601","canvases":1,"hoverVideosWithSrc":0}
+S3_warm_cpu1x_late-night reqs after click 266 api [[200,"MISS",2721]] art 241 audio 21 uploads>=1MP 43 post {"activation":true,"canvases":1,"audioEls":0,"heapMB":14}
+=== 14:43:44 S3_cold_cpu4x_workout workout 1 4 0
+S3_cold_cpu4x_workout hydrated true after 7065 ms; pre {"activation":false,"vp":"1718x910@1.090000033378601","canvases":0,"hoverVideosWithSrc":0}
+S3_cold_cpu4x_workout reqs after click 4 api [[null,null,null]] art 0 audio 1 uploads>=1MP 0 post {"activation":true,"canvases":1,"audioEls":0,"heapMB":11}
+ALL DONE 14:46:15

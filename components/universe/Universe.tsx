@@ -16,6 +16,8 @@ interface UniverseProps {
   onPreview: (song: SongNode | null) => void
   isDetailOpen?: boolean
   isRefreshing?: boolean
+  /** True while the wall is fully covered (Song Detail, Switch Chart overlay): rendering is suspended. */
+  isPaused?: boolean
   onFps?: (fps: number) => void
 }
 
@@ -29,11 +31,15 @@ export function Universe({
   onPreview,
   isDetailOpen = false,
   isRefreshing = false,
+  isPaused = false,
   onFps,
 }: UniverseProps) {
+  // Render continuously only while the wall is visible. When it is covered, 'never'
+  // stops the R3F loop entirely (no draws, no jelly sim, no hover raycasts).
+  const frameloop = songs.length === 0 ? 'demand' : isPaused ? 'never' : 'always'
   return (
     <Canvas
-      frameloop={songs.length > 0 ? 'always' : 'demand'}
+      frameloop={frameloop}
       gl={{
         antialias: false,
         powerPreference: 'high-performance',

@@ -114,9 +114,12 @@ export default function Home() {
 
   const selectedSong = useSongStore(state => state.selectedSong)
 
-  const { isSearchOpen, setSearchOpen } = useUIStore()
-  const { setFps } = usePerformanceStore()
-  const { playUrl } = useAudioStore()
+  // Selector-only subscriptions: Home must not re-render on unrelated store writes
+  // (e.g. intro hoveredVibe changes or audio state it does not render).
+  const isSearchOpen = useUIStore(s => s.isSearchOpen)
+  const setSearchOpen = useUIStore(s => s.setSearchOpen)
+  const setFps = usePerformanceStore(s => s.setFps)
+  const playUrl = useAudioStore(s => s.playUrl)
   const [previewSong, setPreviewSong] = useState<SongNode | null>(null)
   const fpsRef = useRef(60)
 
@@ -136,6 +139,10 @@ export default function Home() {
    */
   const handleVibeSelect = useCallback((vibe: Vibe) => {
     logAudioDebug('vibe select / enter clicked', vibe)
+
+    // Stop intro hover media explicitly — do not rely on a pointerleave that may never arrive
+    // while the selected card becomes pointer-events:none / unmounts.
+    useUIStore.getState().setHoveredVibe(null)
 
     // ── STAGE 1: IMMEDIATE FIRST TRACK AUDIO PRIORITY (0ms synchronous resolution) ──
 
@@ -229,6 +236,8 @@ export default function Home() {
   // In-universe Vibe Switch pipeline
   // vibeService reuses any in-flight prefetch from ChangeVibeOverlay hover.
   const handleChangeVibe = useCallback(async (vibe: Vibe) => {
+    // Overlay card hover drives the same hover-video engine — clear it on selection.
+    useUIStore.getState().setHoveredVibe(null)
     if (vibe === currentVibe) return
     setRefreshing(true)
     setVibe(vibe)
@@ -286,22 +295,8 @@ export default function Home() {
   }, [selectSong, playUrl])
   const handleCloseSong     = useCallback(() => selectSong(null), [selectSong])
 
-  // ── Global Audio Sync ───────────────────────────────────────────────────
-  // Extract target audio URL: hovered song takes preview precedence, falling back to selected song.
-  // Audio playback is NOT blocked by introComplete or artwork loading!
-  const targetAudioUrl = useSongStore((state) => {
-    if (state.isChangingVibe) return null
-    return state.hoveredSong?.previewUrl 
-      ?? state.selectedSong?.previewUrl 
-      ?? null
-  })
-
-  useEffect(() => {
-    if (targetAudioUrl) {
-      logAudioDebug('targetAudioUrl updated in page.tsx', targetAudioUrl)
-      playUrl(targetAudioUrl)
-    }
-  }, [targetAudioUrl, playUrl])
+  // Hover/selection → audio is handled by lib/audioDirector (started in GlobalAudioPlayer),
+  // outside React, so tile changes do not re-render this component.
   const handleSearchResults = useCallback((results: SongNode[]) => {
     if (results.length > 0) {
       // Use getState() to read current songs without adding songs to dependency array.
@@ -335,9 +330,11 @@ export default function Home() {
       {/* 3D Universe */}
       <motion.div
         className="absolute inset-0"
-        animate={{ 
+        animate={{
+          // Song Detail: opacity-only fade (no animated full-screen blur over the canvas;
+          // the canvas also stops rendering while covered — see Universe isPaused).
           opacity: selectedSong ? 0 : (isRefreshing ? 0.8 : 1),
-          filter: selectedSong ? 'blur(10px) brightness(0)' : (isRefreshing ? 'blur(12px) brightness(0.8)' : 'none')
+          filter: isRefreshing && !selectedSong ? 'blur(12px) brightness(0.8)' : 'none'
         }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       >
@@ -350,6 +347,7 @@ export default function Home() {
           onPreview={setPreviewSong}
           isDetailOpen={!!selectedSong}
           isRefreshing={isRefreshing}
+          isPaused={!!selectedSong || isChangingVibe}
           onFps={(f) => { fpsRef.current = f; setFps(f) }}
         />
       </motion.div>
@@ -407,7 +405,7 @@ export default function Home() {
           <ChangeVibeOverlay
             currentVibe={currentVibe}
             onSelectVibe={handleChangeVibe}
-            onClose={() => setChangingVibe(false)}
+            onClose={() => { useUIStore.getState().setHoveredVibe(null); setChangingVibe(false) }}
           />
         )}
       </AnimatePresence>

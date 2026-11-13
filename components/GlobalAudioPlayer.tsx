@@ -4,21 +4,22 @@ import { useEffect, useRef, useCallback } from 'react'
 import { useAudioStore } from '@/store/audioStore'
 import { useSongStore } from '@/store/songStore'
 import { logAudioDebug } from '@/lib/audioDebug'
+import { startAudioDirector } from '@/lib/audioDirector'
 
 // Progress update interval
 const PROGRESS_INTERVAL_MS = 125
 const PRELOAD_COUNT = 32
 
 export function GlobalAudioPlayer() {
-  const { 
-    currentUrl, 
-    isPlaying, 
-    seekRequest,
-    clearSeekRequest, 
-    setPlayingState, 
-    setProgressState,
-    preloadedUrls
-  } = useAudioStore()
+  // Selector-only subscriptions: this component must not re-render on unrelated store writes.
+  // (Progress lives in usePlaybackProgressStore and is never subscribed to here.)
+  const currentUrl       = useAudioStore((s) => s.currentUrl)
+  const isPlaying        = useAudioStore((s) => s.isPlaying)
+  const seekRequest      = useAudioStore((s) => s.seekRequest)
+  const preloadedUrls    = useAudioStore((s) => s.preloadedUrls)
+  const clearSeekRequest = useAudioStore((s) => s.clearSeekRequest)
+  const setPlayingState  = useAudioStore((s) => s.setPlayingState)
+  const setProgressState = useAudioStore((s) => s.setProgressState)
   
   const hoveredSong = useSongStore(state => state.hoveredSong)
 
@@ -29,6 +30,9 @@ export function GlobalAudioPlayer() {
   const activeAudioRef = useRef<HTMLAudioElement | null>(null)
   const audioFadeIntervalRef = useRef<NodeJS.Timeout | null>(null)
   const progressTimerRef = useRef<NodeJS.Timeout | null>(null)
+
+  // Hover/selection → audio bridge (dwell, selected-wins while Song Detail is open).
+  useEffect(() => startAudioDirector(), [])
 
   // ── PRIORITY-BASED READY POOL ──────────────────────────────────────────
   const processQueue = useCallback(() => {

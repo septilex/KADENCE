@@ -18,13 +18,28 @@ export function getOptimizedArtworkUrl(url: string, size: 100 | 256 | 600 = 256)
   return url
 }
 
+type SlotEntry = { url: string; promise: Promise<void> }
+
+/**
+ * Single owner of the artwork atlas (the only code that loads artwork into it).
+ *
+ * - Each slot is loaded at most once per (generation, url): concurrent callers share the
+ *   same in-flight promise instead of issuing duplicate image requests.
+ * - `generation` changes on every new chart (prepareCriticalVibe). Late image loads from a
+ *   previous chart are discarded instead of being drawn into the new chart's slots.
+ * - GPU texture uploads are coalesced: one after the critical set, then at most every 1.2 s.
+ */
 class AtlasManager {
   private canvas: HTMLCanvasElement | null = null
   private ctx: CanvasRenderingContext2D | null = null
   private texture: THREE.CanvasTexture | null = null
-  private loadedSlots = new Set<number>()
-  private abortController: AbortController | null = null
+  private slots = new Map<number, SlotEntry>()
+  private generation = 0
+  private criticalReady: Promise<void> = Promise.resolve()
+  private dirty = false
   private lastFlushTime = 0
+  private ensureRunning = false
+  private ensureQueued: SongNode[] | null = null
 
   /**
    * Initializes or returns the singleton Canvas and CanvasTexture.
@@ -70,10 +85,82 @@ class AtlasManager {
   }
 
   /**
-   * Prepares the critical-tier artwork (first 48-64 tracks) directly into the
-   * texture atlas. Reports real-time loading progress and resolves ONLY when
-   * all critical images are downloaded, decoded, drawn into the atlas, and
-   * flagged for GPU upload.
+   * Loads one atlas slot. Returns the in-flight promise if the same URL is already
+   * loading/loaded for this generation (no duplicate requests). The promise resolves
+   * when the slot has been drawn (image or fallback); it never rejects.
+   * `fallbackAfterMs`: draw a placeholder and resolve early if the image is slow
+   * (the real image is still drawn later if it arrives within the same generation).
+   */
+  private loadSlot(index: number, song: SongNode, fallbackAfterMs?: number): Promise<void> {
+    const slot = index % TEXTURE_DEPTH
+    const url = song.albumArt ? getOptimizedArtworkUrl(song.albumArt, 256) : ''
+    const existing = this.slots.get(slot)
+    if (existing && existing.url === url) return existing.promise
+
+    const gen = this.generation
+    const color = song.color || '#333'
+    const isCurrent = () => gen === this.generation && this.slots.get(slot) === entry
+    const entry: SlotEntry = { url, promise: Promise.resolve() }
+    entry.promise = new Promise<void>((resolve) => {
+      if (!url) {
+        this.drawFallbackSlot(slot, color)
+        this.dirty = true
+        resolve()
+        return
+      }
+      let settled = false
+      const img = new Image()
+      img.crossOrigin = 'anonymous'
+      img.decoding = 'async'
+      const timer = fallbackAfterMs
+        ? setTimeout(() => {
+            if (!settled && isCurrent()) { this.drawFallbackSlot(slot, color); this.dirty = true }
+            resolve()
+          }, fallbackAfterMs)
+        : null
+      const finish = (ok: boolean) => {
+        settled = true
+        if (timer) clearTimeout(timer)
+        if (isCurrent() && this.ctx) {
+          const col = slot % ATLAS_COLS
+          const row = Math.floor(slot / ATLAS_COLS)
+          if (ok) {
+            try {
+              this.ctx.drawImage(img, col * TEXTURE_SIZE, row * TEXTURE_SIZE, TEXTURE_SIZE, TEXTURE_SIZE)
+            } catch {
+              this.drawFallbackSlot(slot, color)
+            }
+          } else {
+            this.drawFallbackSlot(slot, color)
+          }
+          this.dirty = true
+        }
+        resolve()
+      }
+      img.onload = () => finish(true)
+      img.onerror = () => finish(false)
+      img.src = url
+    })
+    this.slots.set(slot, entry)
+    return entry.promise
+  }
+
+  /** Mark the texture for GPU upload if anything was drawn (throttled unless forced). */
+  private flush(force: boolean) {
+    if (!this.texture || !this.dirty) return
+    const now = performance.now()
+    if (force || now - this.lastFlushTime > 1200) {
+      this.texture.needsUpdate = true
+      this.lastFlushTime = now
+      this.dirty = false
+    }
+  }
+
+  /**
+   * Prepares the critical-tier artwork (first CRITICAL_TILES tracks) for a NEW chart.
+   * Starts a new generation (stale loads from the previous chart are discarded), clears
+   * the atlas, reports progress, and resolves when the critical set is drawn and flagged
+   * for a single GPU upload.
    */
   public async prepareCriticalVibe(
     songs: SongNode[],
@@ -82,191 +169,90 @@ class AtlasManager {
     const { canvas, texture } = this.init()
     if (!canvas || !this.ctx) return
 
-    // Cancel any ongoing background streaming
-    if (this.abortController) {
-      this.abortController.abort()
-    }
-    this.abortController = new AbortController()
-    const { signal } = this.abortController
-
-    // Reset loaded tracker and clear canvas with clean background
-    this.loadedSlots.clear()
+    this.generation++
+    this.slots.clear()
     this.ctx.fillStyle = '#121218'
     this.ctx.fillRect(0, 0, canvas.width, canvas.height)
+    this.dirty = true
 
     const totalCritical = Math.min(songs.length, CRITICAL_TILES)
     if (totalCritical === 0) {
       texture.needsUpdate = true
+      this.dirty = false
+      this.criticalReady = Promise.resolve()
       onProgress(1)
       return
     }
 
     let loadedCount = 0
-
-    // Load an individual slot directly into the canvas
-    const loadSlotImage = (index: number, song: SongNode): Promise<void> => {
-      return new Promise((resolve) => {
-        if (!song.albumArt || signal.aborted) {
-          loadedCount++
-          onProgress(loadedCount / totalCritical)
-          resolve()
-          return
-        }
-
-        const img = new Image()
-        img.crossOrigin = 'anonymous'
-        const directUrl = getOptimizedArtworkUrl(song.albumArt, 256)
-
-        // Safety timeout to guarantee the transition never hangs if an image stalls
-        const timer = setTimeout(() => {
-          if (!this.loadedSlots.has(index)) {
-            this.drawFallbackSlot(index, song.color || '#333')
-            this.loadedSlots.add(index)
-            loadedCount++
-            onProgress(loadedCount / totalCritical)
-          }
-          resolve()
-        }, 3500)
-
-        const onFinish = (success: boolean) => {
-          clearTimeout(timer)
-          if (signal.aborted) {
-            resolve()
-            return
-          }
-
-          if (success && this.ctx) {
-            const slot = index % TEXTURE_DEPTH
-            const col = slot % ATLAS_COLS
-            const row = Math.floor(slot / ATLAS_COLS)
-            try {
-              this.ctx.drawImage(
-                img,
-                col * TEXTURE_SIZE,
-                row * TEXTURE_SIZE,
-                TEXTURE_SIZE,
-                TEXTURE_SIZE
-              )
-              this.loadedSlots.add(slot)
-            } catch {
-              this.drawFallbackSlot(slot, song.color || '#333')
-              this.loadedSlots.add(slot)
-            }
-          } else {
-            this.drawFallbackSlot(index, song.color || '#333')
-            this.loadedSlots.add(index)
-          }
-
-          loadedCount++
-          onProgress(loadedCount / totalCritical)
-          resolve()
-        }
-
-        img.onload = () => onFinish(true)
-        img.onerror = () => onFinish(false)
-        img.src = directUrl
-      })
-    }
-
-    // Process critical images in parallel (browser HTTP/2 handles multiplexing cleanly)
     const promises: Promise<void>[] = []
     for (let i = 0; i < totalCritical; i++) {
-      promises.push(loadSlotImage(i, songs[i]))
+      promises.push(
+        this.loadSlot(i, songs[i], 3500).then(() => {
+          loadedCount++
+          onProgress(loadedCount / totalCritical)
+        })
+      )
     }
+    const ready = Promise.all(promises).then(() => undefined)
+    this.criticalReady = ready
+    await ready
 
-    await Promise.all(promises)
-
-    // Mark the texture for GPU upload ONCE for the entire critical set
-    texture.needsUpdate = true
-    this.lastFlushTime = performance.now()
+    // ONE GPU upload for the entire critical set
+    this.flush(true)
     onProgress(1)
   }
 
   /**
-   * Progressively streams the remaining secondary artwork (indices 64 to 255)
-   * in the background after the destination screen is already active and usable.
-   * Flushes texture updates at throttled intervals so the 60fps framerate is never interrupted.
+   * Makes sure every slot for `songs` (up to TEXTURE_DEPTH) holds that song's artwork.
+   * Idempotent and cheap to call repeatedly: already loaded/in-flight slots are skipped.
+   * Waits for the current critical set first so background artwork never competes with it.
+   * Used for background streaming after chart entry and for songs appended by search.
    */
-  public async startBackgroundLoading(songs: SongNode[]): Promise<void> {
-    if (!this.canvas || !this.ctx || !this.texture) return
-    const signal = this.abortController?.signal
-
-    const maxSongs = Math.min(songs.length, TEXTURE_DEPTH)
-    const remainingIndices: number[] = []
-
-    for (let i = CRITICAL_TILES; i < maxSongs; i++) {
-      if (!this.loadedSlots.has(i)) {
-        remainingIndices.push(i)
+  public async ensureSongs(songs: SongNode[]): Promise<void> {
+    if (typeof document === 'undefined') return
+    this.init()
+    if (this.ensureRunning) { this.ensureQueued = songs; return }
+    this.ensureRunning = true
+    try {
+      let current: SongNode[] | null = songs
+      while (current) {
+        this.ensureQueued = null
+        await this.ensureOnce(current)
+        current = this.ensureQueued
       }
+    } finally {
+      this.ensureRunning = false
     }
+  }
 
-    if (remainingIndices.length === 0) return
+  private async ensureOnce(songs: SongNode[]): Promise<void> {
+    const gen = this.generation
+    await this.criticalReady
+    if (gen !== this.generation) return
+
+    const max = Math.min(songs.length, TEXTURE_DEPTH)
+    const todo: number[] = []
+    for (let i = 0; i < max; i++) {
+      const url = songs[i]?.albumArt ? getOptimizedArtworkUrl(songs[i].albumArt, 256) : ''
+      const existing = this.slots.get(i)
+      if (!existing || existing.url !== url) todo.push(i)
+    }
 
     const BATCH_SIZE = 8
-    let dirty = false
-
-    for (let b = 0; b < remainingIndices.length; b += BATCH_SIZE) {
-      if (signal?.aborted) return
-
-      const batch = remainingIndices.slice(b, b + BATCH_SIZE)
-      await Promise.all(
-        batch.map((index) => {
-          return new Promise<void>((resolve) => {
-            const song = songs[index]
-            if (!song?.albumArt || signal?.aborted) {
-              resolve()
-              return
-            }
-
-            const img = new Image()
-            img.crossOrigin = 'anonymous'
-            img.src = getOptimizedArtworkUrl(song.albumArt, 256)
-
-            img.onload = () => {
-              if (signal?.aborted || !this.ctx) {
-                resolve()
-                return
-              }
-              const slot = index % TEXTURE_DEPTH
-              const col = slot % ATLAS_COLS
-              const row = Math.floor(slot / ATLAS_COLS)
-              try {
-                this.ctx.drawImage(
-                  img,
-                  col * TEXTURE_SIZE,
-                  row * TEXTURE_SIZE,
-                  TEXTURE_SIZE,
-                  TEXTURE_SIZE
-                )
-                this.loadedSlots.add(slot)
-                dirty = true
-              } catch {
-                // Ignore background draw error
-              }
-              resolve()
-            }
-
-            img.onerror = () => resolve()
-          })
-        })
-      )
-
-      // Throttle GPU texture flushes to at most once every 1,200ms
-      const now = performance.now()
-      if (dirty && (now - this.lastFlushTime > 1200 || b + BATCH_SIZE >= remainingIndices.length)) {
-        this.texture.needsUpdate = true
-        this.lastFlushTime = now
-        dirty = false
-      }
-
-      // Yield main thread between batches to keep animations buttery smooth
+    for (let b = 0; b < todo.length; b += BATCH_SIZE) {
+      if (gen !== this.generation) return
+      await Promise.all(todo.slice(b, b + BATCH_SIZE).map((i) => this.loadSlot(i, songs[i])))
+      this.flush(false)
+      // Yield between batches to keep the frame loop smooth
       await new Promise((r) => setTimeout(r, 60))
     }
+    if (gen === this.generation) this.flush(true)
+  }
 
-    if (dirty && !signal?.aborted) {
-      this.texture.needsUpdate = true
-      this.lastFlushTime = performance.now()
-    }
+  /** Background streaming of the remaining artwork after the destination is visible. */
+  public startBackgroundLoading(songs: SongNode[]): Promise<void> {
+    return this.ensureSongs(songs)
   }
 
   private drawFallbackSlot(slot: number, colorHex: string) {

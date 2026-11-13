@@ -1,0 +1,12 @@
+=== 16:32:24 S5_prod_cpu1x_r1 prod 1 0 attempt 1
+S5_prod_cpu1x_r1 11:02:57 revealed true 22032 ms; settled 26135 ms; audio elements in playing state 0
+S5_prod_cpu1x_r1 11:03:31 webgl while detail open {"seconds":5.01,"frames":719,"framesWithDraws":719,"framesWithDrawsPerSec":143.6,"detailOpen":true}
+S5_prod_cpu1x_r1 11:03:31 saved; commits 702 events 293 drawer changes 46 actions ["move+click tile (not popped)","click Pause","click Play","scrub press 20%","scrub release 80%","click 40%","click Next Track","click Close"]
+=== 16:34:55 S5_prod_cpu1x_r2 prod 1 0 attempt 1
+S5_prod_cpu1x_r2 11:05:18 revealed true 7167 ms; settled 11781 ms; audio elements in playing state 0
+S5_prod_cpu1x_r2 11:05:52 webgl while detail open {"seconds":5,"frames":644,"framesWithDraws":644,"framesWithDrawsPerSec":128.8,"detailOpen":true}
+S5_prod_cpu1x_r2 11:05:52 saved; commits 721 events 99 drawer changes 52 actions ["move+click tile (not popped)","click Pause","click Play","scrub press 20%","scrub release 80%","click 40%","click Next Track","click Close"]
+=== 16:37:26 S5_prod_cpu1x_r3_traced prod 1 1 attempt 1
+S5_prod_cpu1x_r3_traced 11:07:45 revealed true 8790 ms; settled 12881 ms; audio elements in playing state 0
+S5_prod_cpu1x_r3_traced 11:09:00 webgl while detail open {"seconds":5,"frames":680,"framesWithDraws":680,"framesWithDrawsPerSec":135.9,"detailOpen":true}
+S5_prod_cpu1x_r3_traced 11:09:00 saved; commits 1181 events 99 drawer changes 47 actions ["move+click tile (not popped)","click Pause","click Play","scrub press 20%","scrub release 80%","click 40%","click Next Track","click Close"]

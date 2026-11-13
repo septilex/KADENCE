@@ -1,0 +1,65 @@
+id,cold,activation,cacheState,previewSrcSetMs,previewReqStartMs,previewFirstByteMs,dimStartMs,dimFullMs,loadedDataMs,canplayMs,playCallMs,playResolvedMs,playRejected,firstPresentedFrameMs,previewLayerVisibleMs,firstVisibleMotionMs,frozenVisibleMs,playOutcome,maxActivePlayingVideos,handoff.fullSrcSet,handoff.fullSeeked,handoff.fullPlayResolved,handoff.fullFirstPresented,handoff.fullVisible,handoff.previewMediaTimeAtSwitch,handoff.contentOffsetSec,handoff.dualUnmutedPlayingMs,handoff.handoffDelayFromPreviewMotionMs,raf.p95,raf.max,raf.over50,loaf.n,loaf.max,longtasks.n,leave.srcRemovedMs,leave.dimGoneMs
+"B_rapid_warm_act_r1",false,true,"warm(disk-cache)",-1,7,20,11,11,39,39,39,40,"",46,11,129,33,"playing-visible-motion",2,40,"","","","","","","","",33.5,33.6,0,1,90,0,55,282
+"B_rapid_warm_act_r2",false,true,"warm(disk-cache)",0,6,8,9,9,24,24,24,27,"",30,9,110,17,"playing-visible-motion",2,27,"","","","","","","","",33.5,33.7,0,0,0,0,54,282
+"B_warm_act_cc",false,true,"no-request",7,"","",118,284,70,70,70,72,"",125,201,215,0,"playing→handoff-to-full (full playing)",3,72,491,493,503,601,0.292,2.708,200,288,33.5,83.4,2,2,88,0,55,282
+"B_warm_act_chill-hits",false,true,"warm(disk-cache)",0,7,11,61,278,50,50,50,52,"",65,128,147,0,"playing-visible-motion",2,52,"","","","","","","","",33.5,33.6,0,0,0,0,56,282
+"B_warm_act_cue",false,true,"warm(disk-cache)",0,7,15,76,276,37,37,37,38,"",79,143,177,0,"playing→handoff-to-full (full playing)",3,39,352,352,478,476,0.375,2.667,500,301,33.4,66.6,1,1,65,0,54,282
+"B_warm_act_cue_r2",false,true,"warm(disk-cache)",0,6,8,78,278,35,35,35,37,"",83,128,146,0,"playing→handoff-to-full (full playing)",3,37,389,390,402,478,0.25,2.75,533,256,33.5,66.5,2,1,67,0,54,282
+"B_warm_act_cue_r3",false,true,"warm(disk-cache)",-1,16,20,60,276,52,52,52,55,"",73,127,149,0,"playing→handoff-to-full (full playing)",3,55,418,418,431,526,0.25,2.75,583,282,33.4,49.9,0,1,50,0,54,282
+"B_warm_act_dance-hits",false,true,"warm(disk-cache)",0,5,8,62,279,33,34,34,35,"",43,112,130,0,"playing-visible-motion",2,35,"","","","","","","","",33.5,33.5,0,0,0,0,54,282
+"B_warm_act_global-top-50",false,true,"warm(disk-cache)",0,5,8,44,260,32,32,32,34,"",49,93,132,0,"playing-visible-motion",2,34,"","","","","","","","",33.5,33.6,0,0,0,0,57,282
+"B_warm_act_global-top-50_r2",false,true,"warm(disk-cache)",-1,6,10,44,278,47,47,47,48,"",57,128,186,0,"playing-visible-motion",2,48,"","","","","","","","",33.5,50,0,1,52,0,55,282
+"B_warm_act_global-top-50_r3",false,true,"warm(disk-cache)",0,5,10,59,275,57,57,57,60,"",71,125,161,0,"playing-visible-motion",2,61,"","","","","","","","",33.5,50.1,1,0,0,0,56,282
+"B_warm_act_hip-hop-central",false,true,"warm(disk-cache)",0,6,8,45,279,48,49,49,50,"",59,112,147,0,"playing→handoff-to-full (full playing)",3,50,292,293,298,362,0.167,2.833,433,151,33.5,33.7,0,0,0,0,54,282
+"B_warm_act_hip-hop-central_r2",false,true,"warm(disk-cache)",0,5,7,45,278,43,43,43,48,"",64,128,131,0,"playing→handoff-to-full (full playing)",3,48,228,229,231,295,0.125,2.875,233,100,33.5,33.6,0,0,0,0,54,282
+"B_warm_act_hip-hop-central_r3",false,true,"warm(disk-cache)",-1,8,11,62,279,49,49,49,52,"",65,129,164,0,"playing→handoff-to-full (full playing)",3,52,218,220,315,296,0.167,2.875,217,151,33.5,33.5,0,0,0,0,54,282
+"B_warm_act_late-night",false,true,"warm(disk-cache)",-1,9,13,61,294,58,58,58,61,"",70,127,148,0,"playing→handoff-to-full (full playing)",3,61,107,107,197,177,0.083,2.959,217,49,33.5,33.6,0,0,0,0,54,282
+"B_warm_act_late-night_r2",false,true,"warm(disk-cache)",-1,5,9,61,277,51,51,51,53,"",64,127,147,0,"playing→handoff-to-full (full playing)",3,54,96,96,104,160,0,3,233,-43,33.5,33.8,0,0,0,0,55,282
+"B_warm_act_late-night_r3",false,true,"warm(disk-cache)",-1,7,13,45,279,51,51,51,54,"",62,112,147,0,"playing→handoff-to-full (full playing)",3,54,107,107,214,178,0.083,2.959,233,67,33.5,33.7,0,0,0,0,57,282
+"B_warm_act_mood-booster",false,true,"warm(disk-cache)",0,6,8,45,278,48,48,49,50,"",57,112,146,0,"playing-visible-motion",2,50,"","","","","","","","",33.5,33.6,0,0,0,0,57,282
+"B_warm_act_new-music-friday",false,true,"warm(disk-cache)",-1,8,13,57,290,56,56,56,58,"",70,124,158,0,"playing-visible-motion",2,58,"","","","","","","","",33.4,33.5,0,0,0,0,55,282
+"B_warm_act_pop-rising",false,true,"warm(disk-cache)",-1,6,9,43,277,48,49,49,52,"",59,110,145,0,"playing-visible-motion",2,52,"","","","","","","","",33.5,33.7,0,0,0,0,55,282
+"B_warm_act_top-hindi",false,true,"warm(disk-cache)",-1,12,19,60,293,59,59,59,63,"",74,143,144,0,"playing→handoff-to-full (full playing)",3,63,352,352,454,443,0.292,2.75,483,309,33.5,33.7,0,1,65,0,54,282
+"B_warm_act_top-kpop",false,true,"warm(disk-cache)",-1,9,24,58,291,54,54,54,56,"",63,124,143,0,"playing-visible-motion",2,56,"","","","","","","","",33.5,33.5,0,0,0,0,55,282
+"B_warm_act_top-tamil",false,true,"warm(disk-cache)",-1,8,12,44,278,39,39,39,42,"",50,111,129,0,"playing-visible-motion",2,42,"","","","","","","","",33.4,33.7,0,0,0,0,57,283
+"B_warm_act_top-telugu",false,true,"warm(disk-cache)",0,14,18,61,294,58,58,58,60,"",70,144,146,0,"playing-visible-motion",2,61,"","","","","","","","",33.5,33.7,0,0,0,0,54,282
+"B_warm_act_viral-50",false,true,"warm(disk-cache)",-1,6,8,41,275,42,42,42,47,"",58,108,160,0,"playing-visible-motion",2,47,"","","","","","","","",33.4,33.6,0,0,0,0,55,282
+"B_warm_act_workout",false,true,"warm(disk-cache)",0,6,9,43,277,49,49,49,50,"",56,110,163,0,"playing-visible-motion",2,50,"","","","","","","","",33.5,33.8,0,0,0,0,54,282
+"C_cold_act_chill-hits",true,true,"network",-1,8,"",45,278,"","","","","","","","",0,"no-play()-call",1,"","","","","","","","","",16.8,16.9,0,0,0,0,53,283
+"C_cold_act_cue",true,true,"network",-1,12,"",44,277,"","","","","","","","",0,"no-play()-call",1,"","","","","","","","","",16.8,18.3,0,0,0,0,56,282
+"C_cold_act_dance-hits",true,true,"network",0,6,"",45,278,"","","","","","","","",0,"no-play()-call",1,"","","","","","","","","",16.8,17,0,0,0,0,55,283
+"C_cold_act_global-top-50",true,true,"network",-1,6,"",42,275,"","","","","","","","",0,"no-play()-call",1,"","","","","","","","","",16.8,17.1,0,0,0,0,54,282
+"C_cold_act_hip-hop-central",true,true,"network",0,7,"",46,279,"","","","","","","","",0,"no-play()-call",1,"","","","","","","","","",16.8,17,0,0,0,0,57,283
+"C_cold_act_late-night",true,true,"network",-1,8,"",57,291,"","","","","","","","",0,"no-play()-call",1,"","","","","","","","","",16.8,18,0,0,0,0,56,283
+"C_cold_act_mood-booster",true,true,"network",-1,7,"",43,276,"","","","","","","","",0,"no-play()-call",1,"","","","","","","","","",16.8,17,0,0,0,0,54,282
+"C_cold_act_new-music-friday",true,true,"network",-1,9,"",57,290,"","","","","","","","",0,"no-play()-call",1,"","","","","","","","","",16.8,17,0,0,0,0,54,283
+"C_cold_act_pop-rising",true,true,"network",0,7,"",45,278,"","","","","","","","",0,"no-play()-call",1,"","","","","","","","","",16.8,18,0,0,0,0,54,282
+"C_cold_act_top-hindi",true,true,"network",0,5,"",46,279,"","","","","","","","",0,"no-play()-call",1,"","","","","","","","","",16.8,17.3,0,0,0,0,58,282
+"C_cold_act_top-kpop",true,true,"network",0,5,"",42,275,"","","","","","","","",0,"no-play()-call",1,"","","","","","","","","",16.8,17,0,0,0,0,54,283
+"C_cold_act_top-tamil",true,true,"network",-1,8,"",42,276,"","","","","","","","",0,"no-play()-call",1,"","","","","","","","","",16.8,17,0,0,0,0,54,282
+"C_cold_act_top-telugu",true,true,"network",-1,9,"",59,292,"","","","","","","","",0,"no-play()-call",1,"","","","","","","","","",16.8,16.9,0,0,0,0,56,283
+"C_cold_act_viral-50",true,true,"network",-1,8,"",42,276,"","","","","","","","",0,"no-play()-call",1,"","","","","","","","","",16.8,17,0,0,0,0,54,283
+"C_cold_act_workout",true,true,"network",0,7,"",46,279,"","","","","","","","",0,"no-play()-call",1,"","","","","","","","","",16.8,17,0,0,0,0,53,282
+"C_rapid_cold_act",true,true,"network",0,6,"",10,10,"","","","","","","","",0,"no-play()-call",1,"","","","","","","","","",16.8,16.9,0,0,0,0,55,283
+"REC_cold_act_global-top-50",true,true,"network",0,6,"",28,261,"","","","","","","","",0,"no-play()-call",1,"","","","","","","","","",16.8,17,0,0,0,0,56,283
+"REC_warm_act_cue",false,true,"warm(disk-cache)",0,7,9,94,277,47,47,47,50,"",97,160,162,0,"playing→handoff-to-full (full playing)",3,50,439,440,447,544,0.292,2.708,550,286,33.5,66.5,1,1,63,0,54,282
+"REC_warm_act_late-night",false,true,"warm(disk-cache)",0,5,7,42,276,47,47,47,48,"",60,126,151,0,"playing→handoff-to-full (full playing)",3,48,97,98,195,159,0.083,2.959,233,43,33.5,33.9,0,0,0,0,55,282
+"REC_warm_act_rapid",false,true,"warm(disk-cache)",-1,7,24,8,8,48,48,48,50,"",60,8,143,216,"resolved-but-no-motion",2,50,"","","","","","","","",16.9,50,0,1,51,0,,5
+"TRACE_warm_act_cue",false,true,"warm(disk-cache)",-1,16,19,91,274,48,48,48,51,"",95,157,158,0,"playing→handoff-to-full (full playing)",3,51,280,281,392,358,0.25,2.792,433,233,33.5,66.7,1,1,68,0,56,282
+"TRACE_warm_act_late-night",false,true,"warm(disk-cache)",-1,9,16,60,277,43,43,43,45,"",75,127,146,0,"playing→handoff-to-full (full playing)",3,45,87,88,180,160,0.083,2.959,233,34,33.5,33.8,0,0,0,0,55,283
+"W_rapid_warm_noact",false,false,"warm(disk-cache)",-1,7,9,8,8,36,37,37,"","NotAllowedError",44,8,"",6033,"rejected:NotAllowedError",1,"","","","","","","","","",16.8,16.9,0,0,0,0,55,282
+"W_warm_noact_chill-hits",false,false,"warm(disk-cache)",-1,7,24,75,292,68,68,68,"","NotAllowedError",84,142,"",9899,"rejected:NotAllowedError",1,"","","","","","","","","",16.8,33.3,0,0,0,0,54,282
+"W_warm_noact_cue",false,false,"warm(disk-cache)",-1,7,18,109,275,64,64,65,"","NotAllowedError",111,175,"",11865,"rejected:NotAllowedError",1,"","","","","","","","","",16.8,99.9,2,2,105,0,56,282
+"W_warm_noact_dance-hits",false,false,"warm(disk-cache)",-1,6,11,73,290,65,65,65,"","NotAllowedError",80,140,"",9899,"rejected:NotAllowedError",1,"","","","","","","","","",16.8,33.4,0,0,0,0,56,282
+"W_warm_noact_global-top-50",false,false,"warm(disk-cache)",-1,6,13,40,274,44,44,45,"","NotAllowedError",54,124,"",9915,"rejected:NotAllowedError",1,"","","","","","","","","",16.8,33.3,0,0,0,0,56,282
+"W_warm_noact_hip-hop-central",false,false,"warm(disk-cache)",0,5,7,59,276,51,51,51,"","NotAllowedError",64,126,"",9915,"rejected:NotAllowedError",1,"","","","","","","","","",16.8,33.2,0,0,0,0,56,282
+"W_warm_noact_late-night",false,false,"warm(disk-cache)",0,6,10,74,291,44,44,45,"","NotAllowedError",56,141,"",9882,"rejected:NotAllowedError",1,"","","","","","","","","",16.8,33.3,0,0,0,0,55,283
+"W_warm_noact_mood-booster",false,false,"warm(disk-cache)",0,6,9,77,294,51,51,51,"","NotAllowedError",59,127,"",9899,"rejected:NotAllowedError",1,"","","","","","","","","",16.8,33.2,0,0,0,0,55,282
+"W_warm_noact_new-music-friday",false,false,"warm(disk-cache)",-1,5,10,58,275,53,53,53,"","NotAllowedError",67,125,"",9916,"rejected:NotAllowedError",1,"","","","","","","","","",16.8,33.3,0,0,0,0,55,281
+"W_warm_noact_pop-rising",false,false,"warm(disk-cache)",0,5,8,43,276,46,46,46,"","NotAllowedError",55,110,"",9932,"rejected:NotAllowedError",1,"","","","","","","","","",16.8,17.1,0,0,0,0,58,283
+"W_warm_noact_top-hindi",false,false,"warm(disk-cache)",-1,11,29,75,292,72,72,73,"","NotAllowedError",88,142,"",9882,"rejected:NotAllowedError",1,"","","","","","","","","",16.8,33.2,0,0,0,0,55,283
+"W_warm_noact_top-kpop",false,false,"warm(disk-cache)",-1,7,10,60,277,50,50,50,"","NotAllowedError",64,127,"",9899,"rejected:NotAllowedError",1,"","","","","","","","","",16.8,33.5,0,0,0,0,57,283
+"W_warm_noact_top-tamil",false,false,"warm(disk-cache)",-1,12,29,72,288,73,73,73,"","NotAllowedError",84,138,"",9899,"rejected:NotAllowedError",1,"","","","","","","","","",16.8,33.2,0,0,0,0,56,283
+"W_warm_noact_top-telugu",false,false,"warm(disk-cache)",-1,6,9,42,276,42,42,42,"","NotAllowedError",55,109,"",9932,"rejected:NotAllowedError",1,"","","","","","","","","",16.8,33.3,0,0,0,0,56,282
+"W_warm_noact_viral-50",false,false,"warm(disk-cache)",-1,9,15,58,274,52,52,52,"","NotAllowedError",69,124,"",9915,"rejected:NotAllowedError",1,"","","","","","","","","",16.8,33.3,0,0,0,0,57,281
+"W_warm_noact_workout",false,false,"warm(disk-cache)",0,7,10,61,277,53,53,53,"","NotAllowedError",64,127,"",9915,"rejected:NotAllowedError",1,"","","","","","","","","",16.8,33.3,0,0,0,0,55,282

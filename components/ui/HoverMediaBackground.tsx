@@ -2,7 +2,37 @@
 
 import { useEffect, useRef, useCallback } from 'react'
 import { useUIStore } from '@/store/uiStore'
+import { useSongStore } from '@/store/songStore'
 import { INTRO_MEDIA_MANIFEST } from '@/lib/introMediaManifest'
+
+/**
+ * Browsers reject unmuted play() until the user has interacted with the page (a hover is
+ * not an interaction). Previews therefore start muted and only carry sound once the page
+ * has user activation. Unknown support → assume no activation (muted).
+ */
+const hasUserActivation = () =>
+  typeof navigator !== 'undefined' && !!(navigator as Navigator & { userActivation?: { hasBeenActive: boolean } }).userActivation?.hasBeenActive
+
+/** Reveal a video only once a real frame has been presented (not merely when play() resolves). */
+function onFirstPresentedFrame(video: HTMLVideoElement, cb: () => void) {
+  let done = false
+  const fire = () => { if (!done) { done = true; cb() } }
+  const v = video as HTMLVideoElement & { requestVideoFrameCallback?: (cb: () => void) => number }
+  if (typeof v.requestVideoFrameCallback === 'function') v.requestVideoFrameCallback(fire)
+  // Safety net: if no frame callback arrives shortly after playback starts, reveal anyway.
+  video.addEventListener('playing', () => setTimeout(fire, 120), { once: true })
+}
+
+/** play() with a muted retry when the autoplay policy blocks unmuted playback. */
+function playWithMutedFallback(video: HTMLVideoElement): Promise<void> {
+  return video.play().catch((err: unknown) => {
+    if ((err as { name?: string })?.name === 'NotAllowedError' && !video.muted) {
+      video.muted = true
+      return video.play()
+    }
+    throw err
+  })
+}
 
 /**
  * HoverMediaBackground
@@ -35,7 +65,12 @@ const NEEDS_SCALE_UP = new Set([
 ])
 
 export default function HoverMediaBackground() {
-  const hoveredVibe = useUIStore((s) => s.hoveredVibe)
+  const rawHoveredVibe = useUIStore((s) => s.hoveredVibe)
+  // The hover-video engine only runs where hover cards exist: the intro screen and the
+  // Switch Chart overlay. Anywhere else (loading, the wall, Song Detail) it stays halted,
+  // even if a stale hoveredVibe was left behind.
+  const engineActive = useSongStore((s) => !s.introComplete || s.isChangingVibe)
+  const hoveredVibe = engineActive ? rawHoveredVibe : null
 
   // ── Refs for state machine (no re-render needed for transitions) ──
   const phaseRef = useRef<PlaybackPhase>('IDLE')
@@ -135,7 +170,8 @@ export default function HoverMediaBackground() {
       phaseRef.current = 'FULL_PLAYBACK'
 
       const pVid = previewRef.current
-      const playPromise = fVid.play()
+      fVid.muted = !hasUserActivation()
+      const playPromise = playWithMutedFallback(fVid)
       if (playPromise) {
         playPromise
           .then(() => {
@@ -200,20 +236,23 @@ export default function HoverMediaBackground() {
     const onCanPlay = () => {
       if (sessionRef.current !== session) return
 
-      setVisible(pVid, true)
+      // Muted until the page has user activation (unmuted autoplay from a hover is blocked).
+      pVid.muted = !hasUserActivation()
+      // Reveal only when a frame is actually presented — never show a frozen first frame.
+      onFirstPresentedFrame(pVid, () => {
+        if (sessionRef.current !== session) return
+        setVisible(pVid, true)
+      })
 
-      const playPromise = pVid.play()
-      if (playPromise) {
-        playPromise
-          .then(() => {
-            if (sessionRef.current !== session) return
-            // Preview is confirmed playing — NOW start loading full video
-            beginFullVideoPrep(session, vibeId)
-          })
-          .catch(() => {
-            // play() was interrupted (user left tile) — halt handles cleanup
-          })
-      }
+      playWithMutedFallback(pVid)
+        .then(() => {
+          if (sessionRef.current !== session) return
+          // Preview is confirmed playing — NOW start loading full video
+          beginFullVideoPrep(session, vibeId)
+        })
+        .catch(() => {
+          // play() was interrupted (user left tile) — halt handles cleanup
+        })
     }
 
     pVid.addEventListener('canplay', onCanPlay, { once: true })
@@ -268,6 +307,24 @@ export default function HoverMediaBackground() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  // Sound policy: previews start muted; the first real interaction (click/tap/key) gives the
+  // page user activation, after which the currently playing hover video gets its sound back.
+  useEffect(() => {
+    const unmuteOnActivation = () => {
+      if (!hasUserActivation()) return
+      const pVid = previewRef.current
+      const fVid = fullRef.current
+      if (phaseRef.current === 'PREVIEWING' && pVid && !pVid.paused) pVid.muted = false
+      if (phaseRef.current === 'FULL_PLAYBACK' && fVid && !fVid.paused) fVid.muted = false
+    }
+    window.addEventListener('pointerdown', unmuteOnActivation, true)
+    window.addEventListener('keydown', unmuteOnActivation, true)
+    return () => {
+      window.removeEventListener('pointerdown', unmuteOnActivation, true)
+      window.removeEventListener('keydown', unmuteOnActivation, true)
+    }
+  }, [])
+
   return (
     <div
       ref={containerRef}
@@ -285,7 +342,7 @@ export default function HoverMediaBackground() {
       <video
         ref={previewRef}
         playsInline
-        muted={false}
+        muted
         preload="none"
         className="absolute inset-0 w-full h-full object-cover"
         style={{
@@ -300,7 +357,7 @@ export default function HoverMediaBackground() {
       <video
         ref={fullRef}
         playsInline
-        muted={false}
+        muted
         loop
         preload="none"
         className="absolute inset-0 w-full h-full object-cover"

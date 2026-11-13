@@ -1,0 +1,40 @@
+=== 15:08:57 S4_prod_cpu1x_r1 prod 1 0 1
+S4_prod_cpu1x_r1 09:39:05 entered; hydrated true preActivation false
+S4_prod_cpu1x_r1 09:39:55 wall revealed true 50534 ms
+S4_prod_cpu1x_r1 09:40:00 audio playing true artwork settled at 55164 ms
+S4_prod_cpu1x_r1 09:41:29 refresh done 8159 ms
+S4_prod_cpu1x_r1 09:41:46 heap {"heap1_idleIntro":0,"heap2_settledWall":21,"heap3_after60sScriptPlus10s":114,"heap4_afterSwitchToWorkout15s":117}
+S4_prod_cpu1x_r1 09:41:46 saved; commits 2091 tipChanges 232 poolSamples 141 audioNew 93 uploads 0 post {"act":true,"heapMB":14}
+=== 15:11:46 S4_prod_cpu1x_r2 prod 1 0 0
+<harness>/cdp.mjs:38
+  const send = (method, params = {}, sessionId, timeoutMs = 60000) => new Promise((res, rej) => { const i = ++id; const tm = setTimeout(() => { if (pending.has(i)) { pending.delete(i); rej(new Error("CDP timeout: " + method)); } }, timeoutMs); pending.set(i, { res: (v) => { clearTimeout(tm); res(v); }, rej: (e) => { clearTimeout(tm); rej(e); } }); ws.send(JSON.stringify({ id: i, method, params, ...(sessionId ? { sessionId } : {}) })); });
+                                                                                                                                                                                             ^
+
+Error: CDP timeout: Page.navigate
+    at Timeout._onTimeout (<harness>/cdp.mjs:38:190)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+
+Node.js v26.13.0
+RUN FAILED S4_prod_cpu1x_r2 prod 1 0 0
+=== 15:14:46 S4_prod_cpu1x_r3_traced prod 1 1 0
+S4_prod_cpu1x_r3_traced 09:45:13 entered; hydrated true preActivation false
+S4_prod_cpu1x_r3_traced 09:45:17 wall revealed true 4081 ms
+S4_prod_cpu1x_r3_traced 09:45:21 audio playing true artwork settled at 8173 ms
+S4_prod_cpu1x_r3_traced 09:47:26 saved; commits 1776 tipChanges 235 poolSamples 229 audioNew 98 uploads 0 post {"act":true,"heapMB":17}
+=== 15:17:38 S4_prod_cpu4x_r1 prod 4 0 0
+S4_prod_cpu4x_r1 09:47:48 entered; hydrated true preActivation false
+S4_prod_cpu4x_r1 09:48:05 wall revealed true 17464 ms
+S4_prod_cpu4x_r1 09:48:11 audio playing true artwork settled at 23211 ms
+S4_prod_cpu4x_r1 09:49:32 saved; commits 1600 tipChanges 235 poolSamples 140 audioNew 95 uploads 0 post {"act":true,"heapMB":19}
+=== 15:20:09 S4_dev_cpu1x_r1 dev 1 0 0
+S4_dev_cpu1x_r1 09:50:19 entered; hydrated true preActivation false
+S4_dev_cpu1x_r1 09:50:31 wall revealed true 12935 ms
+S4_dev_cpu1x_r1 09:51:33 audio playing true artwork settled at not settled (cap) ms
+S4_dev_cpu1x_r1 09:52:53 saved; commits 1621 tipChanges 232 poolSamples 140 audioNew 98 uploads 38 post {"act":true,"heapMB":52}
+ALL DONE 15:22:53
+=== 15:25:00 S4_prod_cpu1x_r2 (retry)
+S4_prod_cpu1x_r2 09:55:06 entered; hydrated true preActivation false
+S4_prod_cpu1x_r2 09:55:11 wall revealed true 4090 ms
+S4_prod_cpu1x_r2 09:55:15 audio playing true artwork settled at 8197 ms
+S4_prod_cpu1x_r2 09:56:35 saved; commits 1733 tipChanges 235 poolSamples 140 audioNew 97 uploads 0 post {"act":true,"heapMB":18}

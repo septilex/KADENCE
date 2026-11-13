@@ -1,11 +1,11 @@
 'use client'
-import { useRef, useMemo, useEffect, useCallback } from 'react'
+import { useRef, useMemo, useEffect } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { SongNode, Vibe } from '@/lib/types'
 import { SPACING_X, SPACING_Y, CARD_W, CARD_H, computeGrid } from '@/lib/gridCalc'
 import { VIBE_COLORS } from '@/lib/types'
-import { atlasManager, getOptimizedArtworkUrl } from '@/lib/atlasManager'
+import { atlasManager } from '@/lib/atlasManager'
 import { JellyField } from '@/lib/jellyField'
 
 interface NodeFieldProps {
@@ -19,10 +19,7 @@ interface NodeFieldProps {
 }
 
 // ── Texture atlas config ──────────────────────────────────────────────────────
-const TEXTURE_SIZE  = 256    // px per atlas slot
-const TEXTURE_DEPTH = 256    // max unique artworks in the atlas
-const ATLAS_COLS    = 16     // 16x16 = 256 slots (4096x4096px canvas)
-const MAX_LOADS     = 6      // reduced to prevent HTTP queue starvation (was 128)
+const TEXTURE_DEPTH = 256    // max unique artworks in the atlas (must match atlasManager)
 
 // ── Motion & Interaction Tuning Constants ─────────────────────────────────────
 const SPRING_STIFFNESS     = 120.0   // Tighter cursor anchoring
@@ -297,63 +294,13 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
     }
   }, [])
 
-  const loadedSet  = useRef(new Set<number>())
-  const loadingSet = useRef(new Set<number>())
-  const flushData  = useRef({ lastCount: 0, lastTime: 0 })
-
-  // Reset on songs change
+  // Artwork is owned by atlasManager (single loader, per-slot de-duplication, generation
+  // token against stale charts, throttled GPU uploads). NodeField only asks it to make sure
+  // every slot for the current song list is populated — this also covers songs appended
+  // by search, which do not go through prepareCriticalVibe().
   useEffect(() => {
-    loadedSet.current.clear()
-    loadingSet.current.clear()
-    flushData.current = { lastCount: 0, lastTime: 0 }
+    if (songs.length > 0) void atlasManager.ensureSongs(songs)
   }, [songs])
-
-  // Wrapped in useCallback so the frame loop always captures a stable reference.
-  // Loads images DIRECTLY from Apple CDN (no proxy round-trip).
-  const loadSlot = useCallback((realIdx: number, url: string) => {
-    if (!url || loadedSet.current.has(realIdx) || loadingSet.current.has(realIdx)) return
-    loadingSet.current.add(realIdx)
-    
-    const img = new Image()
-    img.crossOrigin = 'anonymous'
-    img.onload = () => {
-      if (!atlas) return
-      const ctx = atlas.canvas.getContext('2d', { alpha: false })
-      if (!ctx) return
-      
-      const slot = realIdx % TEXTURE_DEPTH
-      const col = slot % ATLAS_COLS
-      const row = Math.floor(slot / ATLAS_COLS)
-      
-      ctx.drawImage(img, col * TEXTURE_SIZE, row * TEXTURE_SIZE, TEXTURE_SIZE, TEXTURE_SIZE)
-      
-      loadedSet.current.add(realIdx)
-      loadingSet.current.delete(realIdx)
-    }
-    img.onerror = () => {
-      loadedSet.current.add(realIdx)
-      loadingSet.current.delete(realIdx)
-    }
-    img.src = url
-  }, [atlas])
-
-  // Progressive texture loading — direct CDN, no proxy round-trip
-  useFrame(() => {
-    if (songs.length === 0) return
-    let launched = 0
-    for (let i = 0; i < songs.length && i < TEXTURE_DEPTH; i++) {
-      if (loadingSet.current.size >= MAX_LOADS) break
-      if (!loadedSet.current.has(i) && !loadingSet.current.has(i)) {
-        if (songs[i]?.albumArt) {
-          const directUrl = getOptimizedArtworkUrl(songs[i].albumArt, 256)
-          loadSlot(i, directUrl)
-          launched++
-          // Allow up to 64 image load requests per frame so cached hits populate the atlas instantly
-          if (launched >= 64) break
-        }
-      }
-    }
-  })
 
   // Per-instance texture index attribute — shuffled to prevent visible repeat patterns.
   // Uses a deterministic xorshift32 so layout is stable across re-renders but
@@ -540,18 +487,6 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
 
   // ── Frame Loop ─────────────────────────────────────────────────────────────
   useFrame((state, delta) => {
-    if (atlas && flushData.current.lastCount !== loadedSet.current.size) {
-      const now = performance.now()
-      const isComplete = loadedSet.current.size === Math.min(songs.length, TEXTURE_DEPTH)
-      const isInitialBatch = loadedSet.current.size <= 16
-
-      if (now - flushData.current.lastTime > 500 || isComplete || isInitialBatch) {
-        atlas.texture.needsUpdate = true
-        flushData.current.lastTime = now
-        flushData.current.lastCount = loadedSet.current.size
-      }
-    }
-
     material.uniforms.uTime.value = state.clock.getElapsedTime()
 
     // Cap delta time to maintain numerical stability during frame-rate drops

@@ -1,8 +1,9 @@
 'use client'
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion'
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { SongNode } from '@/lib/types'
 import { useAudioStore } from '@/store/audioStore'
+import { usePlaybackProgressStore } from '@/store/playbackProgressStore'
 import { useSongStore } from '@/store/songStore'
 import { VIBE_CONFIGS } from '@/lib/vibeConfig'
 import { GlassButton } from './GlassButton'
@@ -172,11 +173,24 @@ function LiquidScrubber({
   const springScaleY = useSpring(scaleY, { damping: 20, stiffness: 350, mass: 0.12 })
   const springTilt = useSpring(tilt, { damping: 24, stiffness: 320, mass: 0.15 })
 
+  // Track width cached via ResizeObserver so progress ticks never force a layout read.
+  const trackWidthRef = useRef(0)
+  useEffect(() => {
+    const el = trackRef.current
+    if (!el) return
+    trackWidthRef.current = el.getBoundingClientRect().width
+    if (typeof ResizeObserver === 'undefined') return
+    const ro = new ResizeObserver((entries) => {
+      for (const entry of entries) trackWidthRef.current = entry.contentRect.width
+    })
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+
   // Keep targetX aligned with actual playback progress when not actively dragging
   useEffect(() => {
-    if (!isScrubbing && trackRef.current) {
-      const rect = trackRef.current.getBoundingClientRect()
-      targetX.set((progress / 100) * rect.width)
+    if (!isScrubbing && trackWidthRef.current > 0) {
+      targetX.set((progress / 100) * trackWidthRef.current)
     }
   }, [progress, isScrubbing, targetX])
 
@@ -400,11 +414,60 @@ const WAVEFORM_STYLE = WAVE_BARS.map((h, i) => `
   }
 `
 
+function formatTime(secs: number) {
+  const m = Math.floor(secs / 60)
+  const s = Math.floor(secs % 60)
+  return `${m}:${s.toString().padStart(2, '0')}`
+}
+
+/**
+ * The only part of Song Detail that depends on playback progress. It subscribes to
+ * usePlaybackProgressStore itself, so progress ticks re-render this subtree only
+ * (waveform + scrubber) instead of the whole drawer and the page root.
+ */
+function PlaybackProgressSection({ hasPreview, isPlaying, onSeek }: { hasPreview: boolean; isPlaying: boolean; onSeek: (pct: number) => void }) {
+  const progress = usePlaybackProgressStore((s) => s.progress)
+  const duration = usePlaybackProgressStore((s) => s.duration)
+  return (
+    <>
+      {/* ── Waveform Visualizer ── */}
+      <div className="flex items-end justify-between h-10 mb-5 px-1 opacity-90 mix-blend-screen">
+        {MAIN_WAVE_HEIGHTS.map((h, i) => (
+          <div key={i} className="w-[3px] rounded-full origin-bottom"
+               style={{
+                 backgroundColor: i < (progress / 100) * 40 ? '#ffffff' : 'rgba(255,255,255,0.2)',
+                 height: `${h}%`,
+                 animation: `kd-pulse-wave ${0.4 + (i % 3) * 0.15}s ease-in-out infinite alternate`,
+                 animationDelay: `${i * 0.05}s`,
+                 animationPlayState: isPlaying ? 'running' : 'paused',
+                 transition: 'background-color 0.2s',
+                 boxShadow: i < (progress / 100) * 40 && isPlaying ? `0 0 8px rgba(255,255,255,0.6)` : 'none'
+               }}
+          />
+        ))}
+      </div>
+
+      {/* ── Scrubber & Time ── */}
+      <LiquidScrubber
+        progress={progress}
+        duration={duration}
+        hasPreview={hasPreview}
+        onSeek={onSeek}
+        formatTime={formatTime}
+      />
+    </>
+  )
+}
+
 export function SongDetail({ song, onClose }: SongDetailProps) {
   const currentVibeId = useSongStore(s => s.currentVibe)
   const activeVibe = VIBE_CONFIGS.find(v => v.id === currentVibeId)
 
-  const { isPlaying, progress, duration, togglePlay, seekTo } = useAudioStore()
+  // Selector-only subscriptions. Playback progress is NOT read here — only the
+  // PlaybackProgressSection leaf subscribes to it, so the drawer does not re-render 8×/s.
+  const isPlaying  = useAudioStore((s) => s.isPlaying)
+  const togglePlay = useAudioStore((s) => s.togglePlay)
+  const seekTo     = useAudioStore((s) => s.seekTo)
   const [imageLoaded, setImageLoaded] = useState(false)
 
   // Reset image loaded on song change
@@ -412,26 +475,18 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
     setImageLoaded(false)
   }, [song?.name])
 
-  // Memoized to avoid recreating on every render — stable reference for event handlers
-  const handleSeek = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (!duration) return
-    const rect = e.currentTarget.getBoundingClientRect()
-    const pct  = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width))
-    seekTo(pct * 100)
-  }, [duration, seekTo])
-
-  const formatTime = useCallback((secs: number) => {
-    const m = Math.floor(secs / 60)
-    const s = Math.floor(secs % 60)
-    return `${m}:${s.toString().padStart(2, '0')}`
-  }, [])
-
   return (
-    <AnimatePresence>
+    <>
+      {/* Static, always-present style/filter definitions live OUTSIDE AnimatePresence:
+          AnimatePresence keys its children by `key` (falling back to ""), so un-keyed
+          siblings collided ("two children with the same key"). */}
       <style>{WAVEFORM_STYLE}</style>
       <GlassFilter />
+      <AnimatePresence>
       {song && (
-        <>
+        // Constant key: the whole drawer group is one presence child, exactly as before
+        // (switching songs while open does not re-run the drawer's enter/exit animation).
+        <Fragment key="song-detail">
           {/* ── Transparent Non-Blocking Backdrop ─────────────────── */}
           {/* We remove the dark blur so the cinematic background shines through, and we don't block interactions */}
           <motion.div
@@ -647,30 +702,11 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
 
               {/* ── Audio Player / Waveform ───────────────────────── */}
               <motion.div className="px-5" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
-                {/* ── Waveform Visualizer ── */}
-                <div className="flex items-end justify-between h-10 mb-5 px-1 opacity-90 mix-blend-screen">
-                  {MAIN_WAVE_HEIGHTS.map((h, i) => (
-                    <div key={i} className="w-[3px] rounded-full origin-bottom" 
-                         style={{
-                           backgroundColor: i < (progress / 100) * 40 ? '#ffffff' : 'rgba(255,255,255,0.2)',
-                           height: `${h}%`,
-                           animation: `kd-pulse-wave ${0.4 + (i % 3) * 0.15}s ease-in-out infinite alternate`,
-                           animationDelay: `${i * 0.05}s`,
-                           animationPlayState: isPlaying ? 'running' : 'paused',
-                           transition: 'background-color 0.2s',
-                           boxShadow: i < (progress / 100) * 40 && isPlaying ? `0 0 8px rgba(255,255,255,0.6)` : 'none'
-                         }} 
-                    />
-                  ))}
-                </div>
-
-                {/* ── Scrubber & Time ── */}
-                <LiquidScrubber
-                  progress={progress}
-                  duration={duration}
+                {/* ── Waveform Visualizer + Scrubber & Time (leaf progress subscriber) ── */}
+                <PlaybackProgressSection
                   hasPreview={!!song.previewUrl}
+                  isPlaying={isPlaying}
                   onSeek={seekTo}
-                  formatTime={formatTime}
                 />
 
                 {/* ── Controls ── */}
@@ -801,8 +837,9 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
             </div>
             </div>
           </motion.div>
-        </>
+        </Fragment>
       )}
-    </AnimatePresence>
+      </AnimatePresence>
+    </>
   )
 }
