@@ -85,3 +85,68 @@ export function computeBounds(
 
   return { maxX, maxY }
 }
+
+/**
+ * Which artwork slot every wall tile shows. Deterministic (fixed-seed shuffle) so the wall
+ * renderer and the artwork loader agree on the layout without sharing state.
+ * `slotCount` is the number of distinct artworks available (songs, capped by the atlas depth).
+ */
+export function buildTileSlots(tileCount: number, slotCount: number, cols: number): Float32Array {
+  const arr = new Float32Array(tileCount)
+  if (slotCount <= 0) return arr
+
+  // Pool that wraps through all slots once, then repeats as needed
+  const pool = new Int32Array(tileCount)
+  for (let i = 0; i < tileCount; i++) pool[i] = i % slotCount
+
+  // Deterministic xorshift32 (fast, good quality); result strictly in [0, 1)
+  let seed = 0xA3C7_9B1D
+  const rng = () => {
+    seed ^= seed << 13
+    seed ^= seed >> 17
+    seed ^= seed << 5
+    return (seed >>> 0) / 4294967296
+  }
+
+  // Fisher-Yates shuffle — O(n), stable seed → same layout on every render
+  for (let i = tileCount - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1))
+    const tmp = pool[i]; pool[i] = pool[j]; pool[j] = tmp
+  }
+
+  // Neighbour-conflict resolution: a tile never matches its left or top neighbour
+  for (let i = cols + 1; i < tileCount; i++) {
+    const left = pool[i - 1]
+    const top  = pool[i - cols]
+    if (pool[i] === left || pool[i] === top) {
+      for (let j = i + 1; j < Math.min(i + 8, tileCount); j++) {
+        if (pool[j] !== left && pool[j] !== top) {
+          const tmp = pool[i]; pool[i] = pool[j]; pool[j] = tmp
+          break
+        }
+      }
+    }
+  }
+
+  for (let i = 0; i < tileCount; i++) arr[i] = pool[i]
+  return arr
+}
+
+/**
+ * Artwork slots ordered by how close to the centre of the wall they first appear.
+ * Loading in this order fills the wall from the middle of the screen outwards.
+ */
+export function slotPriority(tileSlots: ArrayLike<number>, cols: number, rows: number, slotCount: number): number[] {
+  const best = new Float64Array(slotCount).fill(Infinity)
+  const halfC = (cols - 1) / 2
+  const halfR = (rows - 1) / 2
+  for (let i = 0; i < tileSlots.length; i++) {
+    const slot = tileSlots[i]
+    if (slot >= slotCount) continue
+    const dx = ((i % cols) - halfC) * SPACING_X
+    const dy = (Math.floor(i / cols) - halfR) * SPACING_Y
+    const d = dx * dx + dy * dy
+    if (d < best[slot]) best[slot] = d
+  }
+  return Array.from({ length: slotCount }, (_, i) => i).sort((a, b) => best[a] - best[b] || a - b)
+}

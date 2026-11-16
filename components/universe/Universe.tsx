@@ -1,10 +1,24 @@
 'use client'
-import { Suspense } from 'react'
+import { Component, Suspense, useEffect, useState, useSyncExternalStore, type ReactNode } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { SongNode, Vibe } from '@/lib/types'
 import { NodeField } from './NodeField'
 import { CameraController } from './CameraController'
 import { INTRO_Z, FOV_DEG } from '@/lib/gridCalc'
+import { TrackList } from './TrackList'
+
+const subscribeVisibility = (notify: () => void) => { document.addEventListener('visibilitychange', notify); return () => document.removeEventListener('visibilitychange', notify) }
+const getVisible = () => document.visibilityState === 'visible'
+const getServerVisible = () => true
+const subscribeMotion = (notify: () => void) => { const media = matchMedia('(prefers-reduced-motion: reduce)'); media.addEventListener('change', notify); return () => media.removeEventListener('change', notify) }
+const getReducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches
+const getServerMotion = () => false
+
+class RendererBoundary extends Component<{ children: ReactNode; fallback: ReactNode }, { failed: boolean }> {
+  state = { failed: false }
+  static getDerivedStateFromError() { return { failed: true } }
+  render() { return this.state.failed ? this.props.fallback : this.props.children }
+}
 
 interface UniverseProps {
   songs: SongNode[]
@@ -30,18 +44,30 @@ export function Universe({
   onSelect,
   onPreview,
   isDetailOpen = false,
-  isRefreshing = false,
   isPaused = false,
-  onFps,
 }: UniverseProps) {
+  const visible = useSyncExternalStore(subscribeVisibility, getVisible, getServerVisible)
+  const reducedMotion = useSyncExternalStore(subscribeMotion, getReducedMotion, getServerMotion)
+  const [listMode, setListMode] = useState<boolean | null>(null)
+  const [contextLost, setContextLost] = useState(false)
+  const showList = contextLost || (listMode ?? reducedMotion)
+  useEffect(() => { if (showList || isPaused || !visible) onHover(null) }, [showList, isPaused, visible, onHover])
+  const fallback = <TrackList songs={songs} onSelect={onSelect} />
   // Render continuously only while the wall is visible. When it is covered, 'never'
   // stops the R3F loop entirely (no draws, no jelly sim, no hover raycasts).
-  const frameloop = songs.length === 0 ? 'demand' : isPaused ? 'never' : 'always'
+  const frameloop = !visible || isPaused ? 'never' : songs.length === 0 ? 'demand' : 'always'
   return (
+    <>
+    {showList ? fallback : <RendererBoundary fallback={fallback}>
     <Canvas
+      fallback={fallback}
+      onCreated={({ gl }) => {
+        gl.domElement.addEventListener('webglcontextlost', () => setContextLost(true), { once: true })
+      }}
       frameloop={frameloop}
       gl={{
-        antialias: false,
+        // MSAA: the tiles tilt under the lens, and their edges crawl without it.
+        antialias: true,
         powerPreference: 'high-performance',
         alpha: true,
         stencil: false,
@@ -54,7 +80,6 @@ export function Universe({
         height: '100%',
         background: 'transparent'
       }}
-      onPointerMissed={() => onSelect(null)}
     >
       <ambientLight intensity={0.9} />
 
@@ -76,5 +101,10 @@ export function Universe({
         />
       </Suspense>
     </Canvas>
+    </RendererBoundary>}
+    {!isPaused && <button className="absolute bottom-5 right-5 z-20 rounded-full border border-white/20 bg-black/80 px-4 py-2 text-sm text-white" onClick={() => { setContextLost(false); setListMode(!showList) }}>
+      {showList ? 'Universe view' : 'List view'}
+    </button>}
+    </>
   )
 }

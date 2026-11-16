@@ -1,10 +1,11 @@
+import type { ItunesTrack } from '../lib/itunesClient';
 import fs from 'fs';
 import path from 'path';
 
 const extractedPath = 'C:/Users/praji/.gemini/antigravity-ide/brain/046a3f0f-26fe-4471-a35d-33bbb2c4afd5/scratch/extracted.json';
 const extracted = JSON.parse(fs.readFileSync(extractedPath, 'utf-8'));
 
-async function searchITunes(title: string, artist: string, retries = 5): Promise<any> {
+async function searchITunes(title: string, artist: string, retries = 5): Promise<ItunesTrack | null> {
   const mainArtist = artist.split(',')[0].trim();
   const term = encodeURIComponent(`${title} ${mainArtist}`);
   const url = `https://itunes.apple.com/search?term=${term}&media=music&entity=song&limit=5`;
@@ -116,7 +117,7 @@ async function run() {
     
     const id = track.trackId.toString();
     const popularity = generatePopularity(id);
-    const genres = [track.primaryGenreName, 'Dev Special'];
+    const genres = [track.primaryGenreName || 'Music', 'Dev Special'];
     const physics = assignNodePhysics(id);
     const scaleFactor = 0.3 + (popularity / 100) * 1.2;
 

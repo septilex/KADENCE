@@ -1,12 +1,16 @@
 'use client'
+/* R3F owns mutable Three.js resources. Its frame loop intentionally updates GPU
+   uniforms and the canvas cursor outside React; these are not React state. */
+/* eslint-disable react-hooks/immutability */
 import { useRef, useMemo, useEffect } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { SongNode, Vibe } from '@/lib/types'
-import { SPACING_X, SPACING_Y, CARD_W, CARD_H, computeGrid } from '@/lib/gridCalc'
+import { SPACING_X, SPACING_Y, CARD_W, CARD_H, computeGrid, buildTileSlots } from '@/lib/gridCalc'
 import { VIBE_COLORS } from '@/lib/types'
 import { atlasManager } from '@/lib/atlasManager'
 import { JellyField } from '@/lib/jellyField'
+import { WallPicker, LENS_RADIUS, LENS_INTENSITY, PARALLAX_STRENGTH } from '@/lib/wallPicking'
 
 interface NodeFieldProps {
   songs: SongNode[]
@@ -21,21 +25,14 @@ interface NodeFieldProps {
 // ── Texture atlas config ──────────────────────────────────────────────────────
 const TEXTURE_DEPTH = 256    // max unique artworks in the atlas (must match atlasManager)
 
-// ── Motion & Interaction Tuning Constants ─────────────────────────────────────
-const SPRING_STIFFNESS     = 120.0   // Tighter cursor anchoring
-const SPRING_DAMPING       = 22.0    // Critically damped — no wobble
-const SPRING_MASS          = 1.0     // Physical weight of the wall
-const PARALLAX_STRENGTH    = 0.028   // Amount of background drift
-const MOMENTUM_MULTIPLIER  = 1.0     // Multiplier for velocity retention
-const LENS_RADIUS          = 10.2    // -15% from 12.0
-const LENS_INTENSITY       = 5.3     // +20% from 4.4
-
 const vertexShader = /* glsl */`
   in float aTexIndex;
   in float aInstanceIdx;
 
   out vec2 vUvCustom;
-  out float vTexIndex;
+  flat out float vTexIndex;
+  flat out float vArt;
+  out vec2 vWorldXY;
   out float vHighlight;
   out vec3 vNormal;
   out float vWarpInfluence;
@@ -55,10 +52,18 @@ const vertexShader = /* glsl */`
   uniform float uWaveAmp;
   uniform sampler2D uJellyMap;
   uniform vec4 uGridExtent;
+  uniform sampler2D uReveal;
+  uniform float uNow;
+  uniform float uCols;
 
   void main() {
     vUvCustom = uv;
     vTexIndex = aTexIndex;
+
+    // Per-artwork reveal: -1 = not loaded yet (placeholder), otherwise the time the cover
+    // reached the GPU. Each cover fades in over ~0.45 s instead of popping.
+    float revealAt = texelFetch(uReveal, ivec2(int(aTexIndex + 0.5), 0), 0).r;
+    vArt = revealAt < 0.0 ? 0.0 : clamp((uNow - revealAt) / 0.45, 0.0, 1.0);
     vVibeColor = uVibeAccent;
     vPopProgress = 0.0;
 
@@ -66,13 +71,13 @@ const vertexShader = /* glsl */`
 
     float localScale = 1.0;
     float zOffset    = 0.0;
-    vHighlight       = 1.05;
+    vHighlight       = abs(aInstanceIdx - uHoverIdx) < 0.1 ? 1.22 : 1.05;
 
     // Pop: Z offset + brightness only — no XY scale.
     // Scaling one tile's XY independently breaks surface continuity
     // with its neighbors, causing the "rubber card" jitter.
     if (abs(aInstanceIdx - uPopIdx) < 0.1) {
-      zOffset    = mix(0.0, 0.6, uPopProgress);
+      // Keep hover geometry fixed: lifting the picked tile causes hit-test feedback at edges.
       vHighlight = mix(1.05, 1.45, uPopProgress);
       vPopProgress = uPopProgress;
     }
@@ -109,7 +114,7 @@ const vertexShader = /* glsl */`
     float distLens = length(deltaLens);
     
     float R = ${LENS_RADIUS.toFixed(1)};
-    float lensFactor = smoothstep(R, 0.0, distLens);
+    float lensFactor = 1.0 - smoothstep(0.0, R, distLens);
     
     float maxZ = ${LENS_INTENSITY.toFixed(1)};
     displacedWPos.z += lensFactor * maxZ;
@@ -141,6 +146,15 @@ const vertexShader = /* glsl */`
     vWarpInfluence = lensFactor;
     vHighlight += lensFactor * 0.12;
 
+    // Depth separation between neighbours. The jelly field can push adjacent tiles into each
+    // other; coplanar overlaps z-fight (the overlapping strip flickers between the two covers).
+    // A 2×2 checkerboard of tiny Z offsets gives every tile a different depth from all eight
+    // of its neighbours, so one of them always wins cleanly.
+    float gridCol = mod(aInstanceIdx, uCols);
+    float gridRow = floor(aInstanceIdx / uCols);
+    displacedWPos.z += (mod(gridCol, 2.0) + 2.0 * mod(gridRow, 2.0)) * 0.004;
+    vWorldXY = displacedWPos.xy;
+
     vec4 mvPosition = viewMatrix * vec4(displacedWPos, 1.0);
     gl_Position = projectionMatrix * mvPosition;
   }
@@ -149,19 +163,22 @@ const vertexShader = /* glsl */`
 // ── Fragment shader ───────────────────────────────────────────────────────────
 // Pure artwork display for the resting wall. Inject vibe tinting based on active world status.
 const fragmentShader = /* glsl */`
-  precision mediump sampler2D;
+  precision highp sampler2DArray;
 
   in vec2  vUvCustom;
-  in float vTexIndex;
+  flat in float vTexIndex;
+  flat in float vArt;
+  in vec2  vWorldXY;
   in float vHighlight;
   in vec3  vNormal;
   in float vWarpInfluence;
   in vec3  vVibeColor;
   in float vPopProgress;
 
-  uniform sampler2D uAtlas;
+  uniform sampler2DArray uAtlas;
   uniform float uSelectedIdx;
   uniform float uHoverIdx;
+  uniform float uTime;
 
   out vec4 fragColor;
 
@@ -185,9 +202,6 @@ const fragmentShader = /* glsl */`
     vec2 scaledUv = centeredUv * artworkZoomScale;
     vec2 textureUv = scaledUv + 0.5;
 
-    float cols = 16.0;
-    float col = mod(vTexIndex, cols);
-    float row = floor(vTexIndex / cols);
     
     // Check bounds for the "expanding frame" effect
     vec4 c;
@@ -195,8 +209,18 @@ const fragmentShader = /* glsl */`
       // Solid color background mimicking the vibe accent behind the image
       c = vec4(vVibeColor * 0.15, 1.0);
     } else {
-      vec2 atlasUv = (textureUv + vec2(col, cols - 1.0 - row)) / cols;
-      c = texture(uAtlas, atlasUv);
+      // Placeholder for covers that are still downloading: dark glass in the chart's colour
+      // with a slow sheen sweeping across the wall, so empty tiles read as "loading", not broken.
+      float sheen = 0.5 + 0.5 * sin((vWorldXY.x + vWorldXY.y) * 0.22 - uTime * 1.6);
+      vec3 placeholder = vec3(0.075, 0.075, 0.10) + vVibeColor * (0.05 + 0.07 * sheen * sheen)
+                       + vec3(0.03) * (1.0 - textureUv.y);
+      c = vec4(placeholder, 1.0);
+      if (vArt > 0.0) {
+        vec2 safeUv = clamp(textureUv, vec2(0.5 / 256.0), vec2(1.0 - 0.5 / 256.0));
+        vec3 art = texture(uAtlas, vec3(safeUv.x, 1.0 - safeUv.y, vTexIndex)).rgb;
+        float fade = vArt * vArt * (3.0 - 2.0 * vArt);
+        c.rgb = mix(placeholder, art, fade);
+      }
     }
 
     // ── Base colour: gamma-correct multiply by per-tile brightness ────────
@@ -219,18 +243,17 @@ const fragmentShader = /* glsl */`
 
     vec3 finalLinear = baseRgb + vec3(spec);
     vec3 out_        = pow(max(finalLinear, vec3(0.0)), vec3(1.0 / 2.2));
-    fragColor        = vec4(out_, c.a);
+    fragColor        = vec4(out_, 1.0);
   }
 `;
 
-export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, onSelect, onPreview }: NodeFieldProps) {
+export function NodeField({ songs, currentVibe, selectedId, onHover, onSelect }: NodeFieldProps) {
   const { camera, gl, size } = useThree()
   const meshRef = useRef<THREE.InstancedMesh>(null)
 
   // ── Grid layout dimensions ─────────────────────────────────────────────────
   const dims  = useMemo(
     () => computeGrid(songs.length, size.width, size.height),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [songs.length, size.width, size.height]
   )
   const count = dims.virtualCount
@@ -243,7 +266,6 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
   const mouseVelocity     = useRef(new THREE.Vector2(0, 0))
   const lastHoverId       = useRef<string | null>(null)
   const lastHoverVisualIdx = useRef<number>(-1)
-  const textureNeedsFlush = useRef(false)
   const jellyFieldRef = useRef<JellyField | null>(null)
   const prevMouseWorldRef = useRef(new THREE.Vector2(0, 0))
   const prevMouseActiveRef = useRef(false)
@@ -253,8 +275,7 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
 
   // ── Pre-allocated scratch objects to avoid per-frame heap allocation ────────
   // These are reused every frame via .set() / .copy() — zero GC pressure.
-  const _scratchVec3    = useRef(new THREE.Vector3())
-  const _scratchDir     = useRef(new THREE.Vector3())
+  const picker = useMemo(() => new WallPicker(), [])
   const _scratchHit     = useRef(new THREE.Vector3())
   const _scratchPlane   = useRef(new THREE.Plane(new THREE.Vector3(0, 0, 1), 0))
 
@@ -280,7 +301,7 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
   // This eliminates duplicate image loading: atlasManager.prepareCriticalVibe()
   // already populated the first 64 critical tiles during the loading phase.
   const defaultAtlasTexture = useMemo(() => {
-    const tex = new THREE.Texture()
+    const tex = new THREE.DataArrayTexture(new Uint8Array(4), 1, 1, 1)
     tex.needsUpdate = true
     return tex
   }, [])
@@ -302,57 +323,19 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
     if (songs.length > 0) void atlasManager.ensureSongs(songs)
   }, [songs])
 
+  // Sharper covers on the tilted tiles around the pointer.
+  useEffect(() => {
+    atlasManager.setAnisotropy(Math.min(8, gl.capabilities.getMaxAnisotropy()))
+  }, [gl])
+
   // Per-instance texture index attribute — shuffled to prevent visible repeat patterns.
   // Uses a deterministic xorshift32 so layout is stable across re-renders but
   // visually random with no sequential stripes or diagonal artifact bands.
-  const texIndices = useMemo(() => {
-    const arr = new Float32Array(count)
-    if (songs.length === 0) return arr
-
-    const n = Math.min(songs.length, TEXTURE_DEPTH)
-
-    // Build a pool that wraps through all songs once, then repeats as needed
-    const pool = new Int32Array(count)
-    for (let i = 0; i < count; i++) pool[i] = i % n
-
-    // Deterministic xorshift32 pseudo-random number generator (fast, good quality)
-    let seed = 0xA3C7_9B1D
-    const rng = () => {
-      seed ^= seed << 13
-      seed ^= seed >> 17
-      seed ^= seed << 5
-      // Divide by 2^32 to ensure the result is strictly in [0, 1), avoiding out-of-bounds in Fisher-Yates
-      return (seed >>> 0) / 4294967296
-    }
-
-    // Fisher-Yates shuffle — O(n), stable seed → same layout on every render
-    for (let i = count - 1; i > 0; i--) {
-      const j = Math.floor(rng() * (i + 1))
-      const tmp = pool[i]; pool[i] = pool[j]; pool[j] = tmp
-    }
-
-    // Neighbor-conflict resolution: swap any tile that matches its left or top
-    // neighbor so adjacent cells always show visually distinct album art
-    const c = (count > 0 && songs.length > 0)
-      ? Math.ceil(Math.sqrt(count * (16 / 9)))  // estimated COLS for neighbor calc
-      : 1
-    for (let i = c + 1; i < count; i++) {
-      const left = pool[i - 1]
-      const top  = pool[i - c]
-      if (pool[i] === left || pool[i] === top) {
-        // Find a nearby non-conflicting candidate to swap with
-        for (let j = i + 1; j < Math.min(i + 8, count); j++) {
-          if (pool[j] !== left && pool[j] !== top) {
-            const tmp = pool[i]; pool[i] = pool[j]; pool[j] = tmp
-            break
-          }
-        }
-      }
-    }
-
-    for (let i = 0; i < count; i++) arr[i] = pool[i]
-    return arr
-  }, [count, songs.length])
+  // The layout lives in gridCalc so atlasManager can load artwork in on-screen order.
+  const texIndices = useMemo(
+    () => buildTileSlots(count, Math.min(songs.length, TEXTURE_DEPTH), COLS),
+    [count, songs.length, COLS]
+  )
 
   const instanceIndices = useMemo(() => {
     const arr = new Float32Array(count)
@@ -392,6 +375,9 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
       uWaveAmp:       { value: 1.0 },
       uJellyMap:      { value: null },
       uGridExtent:    { value: new THREE.Vector4(0, 0, 1, 1) },
+      uReveal:        { value: null },
+      uNow:           { value: 0 },
+      uCols:          { value: 1 },
     },
     glslVersion: THREE.GLSL3,
     transparent: false,
@@ -404,6 +390,7 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
   useEffect(() => {
     if (atlas && material) {
       material.uniforms.uAtlas.value = atlas.texture
+      material.uniforms.uReveal.value = atlas.reveal
     }
   }, [atlas, material])
 
@@ -427,67 +414,68 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
     meshRef.current.instanceMatrix.needsUpdate = true
   }, [count, COLS, ROWS, geometry])
 
-  // Mouse event capturing
+  // The same deformed surface is used for hover, mouse clicks and first touch taps.
   useEffect(() => {
     const el = gl.domElement
-
-    const updateRect = () => {
-      domRectRef.current = el.getBoundingClientRect()
-    }
+    const updateRect = () => { domRectRef.current = el.getBoundingClientRect() }
     updateRect()
-
-    const onMove = (e: MouseEvent) => {
+    const observer = new ResizeObserver(updateRect)
+    observer.observe(el)
+    const onMove = (e: PointerEvent | MouseEvent) => {
       const r = domRectRef.current
-      if (!r || r.width === 0 || r.height === 0) return
-      
-      // Calculate precise NDC coordinates mapping the mouse to the canvas rendering space
-      rawMouseNDC.current.set(
-        ((e.clientX - r.left) / r.width)  *  2 - 1,
-        ((e.clientY - r.top)  / r.height) * -2 + 1,
-      )
+      if (!r?.width || !r.height) return
+      rawMouseNDC.current.set(((e.clientX - r.left) / r.width) * 2 - 1, ((e.clientY - r.top) / r.height) * -2 + 1)
     }
-    
-    const onLeave = () => { rawMouseNDC.current.set(-10, -10) }
+    const onLeave = () => {
+      rawMouseNDC.current.set(-10, -10)
+      lastHoverId.current = null
+      lastHoverVisualIdx.current = -1
+      activePopId.current = null
+      hoverStartTime.current = null
+      onHover(null)
+    }
+    let down: { x: number; y: number } | null = null
+    const onDown = (e: PointerEvent) => { onMove(e); down = { x: e.clientX, y: e.clientY } }
+    const raycaster = new THREE.Raycaster()
     const onClick = (e: MouseEvent) => {
-      // Only process clicks on the WebGL canvas, ignore clicks on floating UI elements
-      if (e.target !== el) return
-      if (lastHoverId.current) {
-        const s = songMaps.byId.get(lastHoverId.current)
-        if (s) {
-          // If the tile is already "popped", start preview. Otherwise select/open.
-          if (activePopId.current === lastHoverId.current) {
-            onPreview(s)
-          } else {
-            onSelect(s)
-          }
-        }
-      } else {
-        // Clicked empty space
-        onPreview(null)
-      }
+      if (down && Math.hypot(e.clientX - down.x, e.clientY - down.y) > 8) return
+      onMove(e)
+      raycaster.setFromCamera(rawMouseNDC.current, camera)
+      const idx = picker.pick(raycaster.ray, dims, smoothMouseWorld.current, jellyFieldRef.current)
+      // A click always opens details, even after the dwell animation. Previously it
+      // switched to an obsolete preview-only path after one second.
+      if (idx >= 0) onSelect(songs[texIndices[idx]] ?? null)
     }
-    
-    // Attach to window so we catch pointer events even if UI overlays are on top of the canvas
     window.addEventListener('resize', updateRect, { passive: true })
-    window.addEventListener('mousemove', onMove, { passive: true })
-    window.addEventListener('mouseleave', onLeave)
-    window.addEventListener('click', onClick)
+    el.addEventListener('pointermove', onMove, { passive: true })
+    el.addEventListener('pointerdown', onDown, { passive: true })
+    el.addEventListener('pointerleave', onLeave)
+    el.addEventListener('pointercancel', onLeave)
+    el.addEventListener('click', onClick)
     return () => {
+      observer.disconnect()
       window.removeEventListener('resize', updateRect)
-      window.removeEventListener('mousemove', onMove)
-      window.removeEventListener('mouseleave', onLeave)
-      window.removeEventListener('click', onClick)
+      el.removeEventListener('pointermove', onMove)
+      el.removeEventListener('pointerdown', onDown)
+      el.removeEventListener('pointerleave', onLeave)
+      el.removeEventListener('pointercancel', onLeave)
+      el.removeEventListener('click', onClick)
     }
-  }, [gl, onSelect, songMaps])
+  }, [gl, camera, dims, picker, onHover, onSelect, songs, texIndices])
 
-  // ── Jelly field cleanup ────────────────────────────────────────────────────
-  useEffect(() => {
-    return () => { jellyFieldRef.current?.dispose() }
-  }, [])
+  useEffect(() => () => geometry.dispose(), [geometry])
+  useEffect(() => () => {
+    material.dispose()
+    defaultAtlasTexture.dispose()
+    jellyFieldRef.current?.dispose()
+    jellyFieldRef.current = null
+  }, [material, defaultAtlasTexture])
 
   // ── Frame Loop ─────────────────────────────────────────────────────────────
   useFrame((state, delta) => {
     material.uniforms.uTime.value = state.clock.getElapsedTime()
+    material.uniforms.uNow.value = atlasManager.now()
+    material.uniforms.uCols.value = COLS
 
     // Cap delta time to maintain numerical stability during frame-rate drops
     const dt = Math.min(delta, 0.03)
@@ -504,9 +492,9 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
       // Use THREE.Raycaster for perfectly accurate projection that automatically handles
       // perspective/orthographic transforms, CSS scaling, and aspect ratios.
       state.raycaster.setFromCamera(rawMouseNDC.current, camera)
-      state.raycaster.ray.intersectPlane(_scratchPlane.current, _scratchHit.current)
+      const hit = state.raycaster.ray.intersectPlane(_scratchPlane.current, _scratchHit.current)
       
-      if (_scratchHit.current) {
+      if (hit) {
         targetWorldX = _scratchHit.current.x
         targetWorldY = _scratchHit.current.y
         isMouseActive = true
@@ -618,76 +606,26 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
       vc.hex = vibeColorHex
     }
 
-    // ── O(1) Hover detection ─────────────────────────────────────────────────
-    let hoverIdx = -1
-    let newHoverId: string | null = null
-
-    // Determine hover using actual cursor target (not smoothed spring cursor)
-    // to keep hover selection snappy and directly aligned with the cursor coordinate.
-    if (isMouseActive) {
-      const halfC  = (COLS - 1) / 2
-      const halfR  = (ROWS - 1) / 2
-      
-      // Inverse the vertex shader's micro-parallax to find which grid tile 
-      // is visually residing under the exact mouse cursor coordinate.
-      // Vertex Shader shift: displacedWPos.xy -= uMouse * 0.028
-      const effectiveWorldX = targetWorldX + (targetWorldX * 0.028)
-      const effectiveWorldY = targetWorldY + (targetWorldY * 0.028)
-
-      // ── Sticky Hover (Hysteresis) to prevent Z-fighting jitter ──
-      let stickyHit = false
-      if (lastHoverId.current && lastHoverVisualIdx.current !== -1) {
-        const visualIdx = lastHoverVisualIdx.current
-        const lastC = visualIdx % COLS
-        const lastR = Math.floor(visualIdx / COLS)
-        const tileCenterX = (lastC - halfC) * SPACING_X
-        const tileCenterY = -(lastR - halfR) * SPACING_Y
-        
-        // If mouse is within expanded radius of the currently hovered tile, keep it hovered
-        // The tile expands by ~25% on hover, so we expand the hit radius proportionally.
-        const dx = effectiveWorldX - tileCenterX
-        const dy = effectiveWorldY - tileCenterY
-        const distSq = dx * dx + dy * dy
-        const popHitRadiusSq = Math.pow(SPACING_X * 0.70, 2)
-        
-        if (distSq < popHitRadiusSq) {
-          hoverIdx = visualIdx
-          newHoverId = lastHoverId.current
-          stickyHit = true
-        }
-      }
-
-      if (!stickyHit) {
-        // Standard grid mapping if not sticky
-        const c = Math.round((effectiveWorldX + (halfC * SPACING_X)) / SPACING_X)
-        const r = Math.round(-effectiveWorldY / SPACING_Y + halfR)
-
-        if (c >= 0 && c < COLS && r >= 0 && r < ROWS) {
-          hoverIdx = r * COLS + c
-          if (hoverIdx < count) {
-            const mappedIndex = texIndices[hoverIdx]
-            const s   = songs[mappedIndex]
-            newHoverId = s?.id ?? null
-          }
-        }
-      }
-    }
-
-    if (newHoverId !== lastHoverId.current) {
+    const hoverIdx = isMouseActive
+      ? picker.pick(state.raycaster.ray, dims, smoothMouseWorld.current, jellyFieldRef.current)
+      : -1
+    const hoveredSong = hoverIdx >= 0 ? songs[texIndices[hoverIdx]] : null
+    const newHoverId = hoveredSong?.id ?? null
+    // Visual identity matters: the same song occurs on multiple tiles.
+    if (newHoverId !== lastHoverId.current || hoverIdx !== lastHoverVisualIdx.current) {
+      const songChanged = newHoverId !== lastHoverId.current
       lastHoverId.current = newHoverId
       lastHoverVisualIdx.current = hoverIdx
       hoverStartTime.current = newHoverId ? state.clock.getElapsedTime() : null
       activePopId.current = null
-      
-      // O(1) Map lookup — replaces O(n) songs.find()
-      const s = newHoverId ? (songMaps.byId.get(newHoverId) ?? null) : null
-      onHover(s)
+      popProgress.current = 0
+      if (songChanged) onHover(hoveredSong ?? null)
       gl.domElement.style.cursor = newHoverId ? 'pointer' : 'crosshair'
     }
 
     // ── Hover Dwell & Pop Animation ──────────────────────────────────────────
     const currentElapsedTime = state.clock.getElapsedTime()
-    if (lastHoverId.current && hoverStartTime.current) {
+    if (lastHoverId.current && hoverStartTime.current !== null) {
       if (currentElapsedTime - hoverStartTime.current >= 1.0) { // 1 second dwell
         activePopId.current = lastHoverId.current
       }
@@ -722,7 +660,7 @@ export function NodeField({ songs, currentVibe, hoveredId, selectedId, onHover, 
     if (selectedId) {
       // O(1) Map lookup — replaces O(n) songs.findIndex()
       const idx = songMaps.idxById.get(selectedId)
-      if (idx !== undefined) selIdx = idx
+      if (idx !== undefined) selIdx = texIndices.indexOf(idx)
     }
     material.uniforms.uSelectedIdx.value = selIdx
   })

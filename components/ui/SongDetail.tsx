@@ -9,136 +9,6 @@ import { VIBE_CONFIGS } from '@/lib/vibeConfig'
 import { GlassButton } from './GlassButton'
 import { EditorialOverlay } from './EditorialOverlay'
 
-// SVG Filter Component for Glass Effect
-const GlassFilter = () => (
-  <svg style={{ display: "none" }}>
-    <filter
-      id="glass-distortion"
-      x="0%"
-      y="0%"
-      width="100%"
-      height="100%"
-      filterUnits="objectBoundingBox"
-    >
-      <feTurbulence
-        type="fractalNoise"
-        baseFrequency="0.001 0.005"
-        numOctaves="1"
-        seed="17"
-        result="turbulence"
-      />
-      <feComponentTransfer in="turbulence" result="mapped">
-        <feFuncR type="gamma" amplitude="1" exponent="10" offset="0.5" />
-        <feFuncG type="gamma" amplitude="0" exponent="1" offset="0" />
-        <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.5" />
-      </feComponentTransfer>
-      <feGaussianBlur in="turbulence" stdDeviation="3" result="softMap" />
-      <feSpecularLighting
-        in="softMap"
-        surfaceScale="5"
-        specularConstant="1"
-        specularExponent="100"
-        lightingColor="white"
-        result="specLight"
-      >
-        <fePointLight x="-200" y="-200" z="300" />
-      </feSpecularLighting>
-      <feComposite
-        in="specLight"
-        operator="arithmetic"
-        k1="0"
-        k2="1"
-        k3="1"
-        k4="0"
-        result="litImage"
-      />
-      <feDisplacementMap
-        in="SourceGraphic"
-        in2="softMap"
-        scale="200"
-        xChannelSelector="R"
-        yChannelSelector="G"
-      />
-    </filter>
-  </svg>
-)
-
-function MagneticGlassCard({
-  children,
-  className,
-  style,
-  onClick,
-  href,
-}: {
-  children: React.ReactNode
-  className?: string
-  style?: React.CSSProperties
-  onClick?: () => void
-  href?: string
-}) {
-  const cardRef = useRef<HTMLDivElement & HTMLAnchorElement>(null)
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
-  const springX = useSpring(x, { damping: 18, stiffness: 450, mass: 0.15 })
-  const springY = useSpring(y, { damping: 18, stiffness: 450, mass: 0.15 })
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!cardRef.current) return
-    const rect = cardRef.current.getBoundingClientRect()
-    const pullX = (e.clientX - (rect.left + rect.width / 2)) * 0.22
-    const pullY = (e.clientY - (rect.top + rect.height / 2)) * 0.22
-    x.set(pullX)
-    y.set(pullY)
-  }
-
-  const handleMouseLeave = () => {
-    x.set(0)
-    y.set(0)
-  }
-
-  if (href) {
-    return (
-      <motion.a
-        ref={cardRef}
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        style={{ x: springX, y: springY, ...style }}
-        whileHover={{
-          scale: 1.03,
-          boxShadow: 'inset 0 1.5px 2px rgba(255,255,255,0.7), 0 0 24px rgba(255,255,255,0.4), 0 10px 25px rgba(0,0,0,0.3)',
-        }}
-        whileTap={{ scale: 0.97 }}
-        transition={{ type: 'spring', stiffness: 500, damping: 22 }}
-        className={className}
-      >
-        {children}
-      </motion.a>
-    )
-  }
-
-  return (
-    <motion.div
-      ref={cardRef}
-      onClick={onClick}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ x: springX, y: springY, ...style }}
-      whileHover={{
-        scale: 1.03,
-        boxShadow: 'inset 0 1.5px 2px rgba(255,255,255,0.7), 0 0 20px rgba(255,255,255,0.35), 0 10px 25px rgba(0,0,0,0.3)',
-      }}
-      whileTap={{ scale: 0.97 }}
-      transition={{ type: 'spring', stiffness: 500, damping: 22 }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  )
-}
-
 interface LiquidScrubberProps {
   progress: number
   duration: number
@@ -468,12 +338,25 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
   const isPlaying  = useAudioStore((s) => s.isPlaying)
   const togglePlay = useAudioStore((s) => s.togglePlay)
   const seekTo     = useAudioStore((s) => s.seekTo)
-  const [imageLoaded, setImageLoaded] = useState(false)
-
-  // Reset image loaded on song change
+  const playbackError = useAudioStore(s => s.playbackError)
+  const [loadedArtwork, setLoadedArtwork] = useState<string | null>(null)
+  const imageLoaded = loadedArtwork === song?.albumArt
+  const navigateTrack = (direction: number | 'shuffle') => {
+    const state = useSongStore.getState()
+    const tracks = state.songs.filter(track => track.previewUrl)
+    if (!tracks.length) return
+    const index = tracks.findIndex(track => track.id === song?.id)
+    const next = direction === 'shuffle'
+      ? (index + 1 + Math.floor(Math.random() * Math.max(1, tracks.length - 1))) % tracks.length
+      : (index + direction + tracks.length) % tracks.length
+    state.selectSong(tracks[next])
+  }
   useEffect(() => {
-    setImageLoaded(false)
-  }, [song?.name])
+    if (!song) return
+    const handler = (event: KeyboardEvent) => { if (event.key === 'Escape') onClose() }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [song, onClose])
 
   return (
     <>
@@ -481,7 +364,7 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
           AnimatePresence keys its children by `key` (falling back to ""), so un-keyed
           siblings collided ("two children with the same key"). */}
       <style>{WAVEFORM_STYLE}</style>
-      <GlassFilter />
+
       <AnimatePresence>
       {song && (
         // Constant key: the whole drawer group is one presence child, exactly as before
@@ -541,19 +424,21 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: -400, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 350, damping: 30, mass: 0.8 }}
-            className="fixed left-4 top-4 bottom-4 z-40 w-full max-w-[360px] rounded-3xl transition-all duration-700"
+            className="fixed left-4 top-4 bottom-4 z-40 w-[calc(100vw-2rem)] max-w-[360px] rounded-3xl"
             style={{
               boxShadow: "0 6px 6px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.1)",
               transitionTimingFunction: "cubic-bezier(0.175, 0.885, 0.32, 2.2)",
             }}
             id="song-detail-drawer"
+            role="dialog"
+            aria-label={song.name}
           >
             {/* Glass Layers */}
             <div
               className="absolute inset-0 z-0 overflow-hidden rounded-[inherit]"
               style={{
                 backdropFilter: "blur(3px)",
-                filter: "url(#glass-distortion)",
+                background: "rgba(12, 12, 20, 0.45)",
                 isolation: "isolate",
               }}
             />
@@ -611,7 +496,7 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
                       filter: imageLoaded ? 'blur(0px)' : 'blur(12px)'
                     }}
                     transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-                    onLoad={() => setImageLoaded(true)}
+                    onLoad={() => setLoadedArtwork(song.albumArt)}
                   />
 
                   {/* Gradient Overlay for Text Visibility */}
@@ -709,6 +594,7 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
                   onSeek={seekTo}
                 />
 
+                {playbackError && <p role="status" className="mb-3 text-xs text-amber-100">{playbackError}</p>}
                 {/* ── Controls ── */}
                 <div 
                   className="flex items-center justify-between px-1 pt-1 pb-2"
@@ -719,6 +605,7 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
                     size="iconSm"
                     contentClassName="flex items-center justify-center text-white/70 hover:text-white"
                     title="Shuffle"
+                    onClick={() => navigateTrack('shuffle')}
                   >
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>
@@ -730,6 +617,7 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
                     size="icon"
                     contentClassName="flex items-center justify-center text-white/90"
                     title="Previous Track"
+                    onClick={() => navigateTrack(-1)}
                   >
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M19 20L9 12l10-8v16zM5 19h2V5H5v14z"/>
@@ -762,6 +650,7 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
                     size="icon"
                     contentClassName="flex items-center justify-center text-white/90"
                     title="Next Track"
+                    onClick={() => navigateTrack(1)}
                   >
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M5 4l10 8-10 8V4zM19 5h-2v14h2V5z"/>
@@ -772,7 +661,9 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
                   <GlassButton
                     size="iconSm"
                     contentClassName="flex items-center justify-center text-white/70 hover:text-white"
-                    title="Repeat"
+                    title="Restart preview"
+                    onClick={() => { seekTo(0); useAudioStore.getState().play() }}
+                    disabled={!song.previewUrl}
                   >
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M17 2l4 4-4 4M3 11v-1a4 4 0 0 1 4-4h14M7 22l-4-4 4-4M21 13v1a4 4 0 0 1-4 4H3"/>
@@ -793,7 +684,7 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="white" className="opacity-90 drop-shadow-sm"><path d="M3 18h3v-7H3v7zM8 18h3V6H8v12zM13 18h3v-9h-3v9zM18 18h3V11h-3v7z"/></svg>
                     <div>
                       <div className="text-white font-bold text-sm leading-none drop-shadow-sm">{song.popularity}%</div>
-                      <div className="text-white/80 text-[8px] font-bold tracking-widest uppercase mt-1">Popularity</div>
+                      <div className="text-white/80 text-[8px] font-bold tracking-widest uppercase mt-1">Discovery score</div>
                     </div>
                   </GlassButton>
 

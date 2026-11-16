@@ -1,5 +1,5 @@
 import { SongNode, Vibe } from './types'
-import { getOptimizedArtworkUrl } from './atlasManager'
+import { getOptimizedArtworkUrl } from './artwork'
 
 interface CachedVibe {
   songs: SongNode[]
@@ -41,6 +41,8 @@ class VibeService {
    * If a fetch is already in flight for this vibe, returns the existing Promise.
    */
   public async fetchVibeSongs(vibe: Vibe, forceRefresh = false): Promise<SongNode[]> {
+    const running = this.inFlightFetches.get(vibe)
+    if (running) return running
     if (!forceRefresh) {
       const cached = this.getCachedSongs(vibe)
       if (cached && cached.length > 0) {
@@ -57,7 +59,7 @@ class VibeService {
     const fetchPromise = (async () => {
       try {
         const qs = forceRefresh ? `?vibe=${vibe}&refresh=1` : `?vibe=${vibe}`
-        const res = await fetch(`/api/songs${qs}`)
+        const res = await fetch(`/api/songs${qs}`, { signal: AbortSignal.timeout(20000) })
         if (!res.ok) throw new Error(`HTTP ${res.status}`)
         const data = await res.json()
         const songs = (data.songs || []) as SongNode[]
@@ -68,7 +70,7 @@ class VibeService {
         return songs
       } catch (err) {
         console.warn(`[VibeService] Failed to load vibe ${vibe}:`, err)
-        return []
+        throw err
       } finally {
         this.inFlightFetches.delete(vibe)
       }
@@ -119,11 +121,9 @@ class VibeService {
     ] as const
 
     // Fire all fetches in parallel — vibeService deduplicates in-flight requests
-    const promises = ALL_VIBES.map(vibe => {
-      if (this.isCached(vibe)) return Promise.resolve()
-      return this.fetchVibeSongs(vibe, false).catch(() => {})
-    })
-    await Promise.allSettled(promises)
+    for (const vibe of ALL_VIBES) {
+      if (!this.isCached(vibe)) await this.fetchVibeSongs(vibe, false).catch(() => {})
+    }
   }
 
   public clearCache(): void {

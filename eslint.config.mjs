@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Archived profiler captures/scripts are evidence, not maintained application code.
+    "docs/perf-baseline/**",
+    "kadence_audit.js",
   ]),
 ]);
 

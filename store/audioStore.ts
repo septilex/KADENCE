@@ -4,6 +4,8 @@ import { usePlaybackProgressStore } from './playbackProgressStore'
 interface AudioStoreState {
   currentUrl: string | null
   isPlaying: boolean
+  playbackError: string | null
+  setPlaybackError: (error: string | null) => void
 
   // Actions to command the player
   playUrl: (url: string | null) => void
@@ -29,11 +31,14 @@ interface AudioStoreState {
 export const useAudioStore = create<AudioStoreState>((set, get) => ({
   currentUrl: null,
   isPlaying: false,
+  playbackError: null,
+  setPlaybackError: (playbackError) => set({ playbackError }),
   seekRequest: null,
 
   playUrl: (url) => {
+    if (get().currentUrl === url) { if (url) set({ isPlaying: true }); return }
     usePlaybackProgressStore.getState().setProgress(0, usePlaybackProgressStore.getState().duration)
-    set({ currentUrl: url, isPlaying: !!url })
+    set({ currentUrl: url, isPlaying: !!url, seekRequest: null, playbackError: null })
   },
 
   play: () => {

@@ -57,6 +57,20 @@ export class JellyField {
 
   // Texture backing buffer (shared reference with DataTexture)
   private textureData: Float32Array
+  private wasActive = false
+
+  /** Match GPU linear sampling, including half-texel centres and clamped edges. */
+  sample(u: number, v: number, target: THREE.Vector2): THREE.Vector2 {
+    const x = Math.max(0, Math.min(this.SIZE - 1, u * this.SIZE - 0.5))
+    const y = Math.max(0, Math.min(this.SIZE - 1, v * this.SIZE - 0.5))
+    const x0 = Math.floor(x), y0 = Math.floor(y)
+    const x1 = Math.min(x0 + 1, this.SIZE - 1), y1 = Math.min(y0 + 1, this.SIZE - 1)
+    const tx = x - x0, ty = y - y0
+    const sample = (data: Float32Array) =>
+      (data[y0 * this.SIZE + x0] * (1 - tx) + data[y0 * this.SIZE + x1] * tx) * (1 - ty) +
+      (data[y1 * this.SIZE + x0] * (1 - tx) + data[y1 * this.SIZE + x1] * tx) * ty
+    return target.set(sample(this.dx), sample(this.dy))
+  }
 
   constructor() {
     const P = JELLY_PHYSICS
@@ -284,9 +298,10 @@ export class JellyField {
         break
       }
     }
-    if (hasActivity) {
+    if (hasActivity || this.wasActive) {
       this.texture.needsUpdate = true
     }
+    this.wasActive = hasActivity
   }
 
   /** Release GPU texture memory */

@@ -1,4 +1,5 @@
 import { SongNode, Vibe } from './types'
+import { itunesClient, MusicProviderError, type ItunesTrack } from './itunesClient'
 import { devSpecialData }             from './devSpecialData'
 import { isPlaylistVibe, getPlaylistSongs } from './chartSource'
 
@@ -149,7 +150,7 @@ function isMultilingual(artist: string): boolean {
 }
 
 /** Extract release year from iTunes releaseDate (e.g. "2023-04-15T07:00:00Z") */
-function getReleaseYear(track: any): number {
+function getReleaseYear(track: ItunesTrack): number {
   if (!track.releaseDate) return 2000;
   const y = parseInt(track.releaseDate.slice(0, 4), 10);
   return isNaN(y) ? 2000 : y;
@@ -173,7 +174,7 @@ const ACCEPT_THRESHOLD = 40;
  * Returns a positive score (≥ ACCEPT_THRESHOLD = accept) or a negative / low
  * score (< ACCEPT_THRESHOLD = reject).
  */
-function scoreTeluguTrack(track: any): number {
+function scoreTeluguTrack(track: ItunesTrack): number {
   const name   = track.trackName   || '';
   const artist = track.artistName  || '';
   const album  = track.collectionName || '';
@@ -219,7 +220,7 @@ function scoreTeluguTrack(track: any): number {
 }
 
 /** Score a track for Tamil authenticity. */
-function scoreTamilTrack(track: any): number {
+function scoreTamilTrack(track: ItunesTrack): number {
   const name   = track.trackName   || '';
   const artist = track.artistName  || '';
   const album  = track.collectionName || '';
@@ -259,7 +260,7 @@ function scoreTamilTrack(track: any): number {
 }
 
 /** Score a track for Hindi/Bollywood authenticity. */
-function scoreHindiTrack(track: any): number {
+function scoreHindiTrack(track: ItunesTrack): number {
   const name   = track.trackName   || '';
   const artist = track.artistName  || '';
   const album  = track.collectionName || '';
@@ -326,7 +327,7 @@ function generatePopularity(id: string): number {
   return Math.floor(random * 70) + 30; // 30 to 100
 }
 
-function itunesToSongNode(track: any, vibeGenres: string[]): SongNode {
+function itunesToSongNode(track: ItunesTrack, vibeGenres: string[]): SongNode {
   const popularity = generatePopularity(track.trackId.toString());
   // Upgrade artwork quality
   const albumArt = track.artworkUrl100 ? track.artworkUrl100.replace('100x100bb', '600x600bb') : '';
@@ -516,46 +517,13 @@ const VIBE_QUERIES: Record<Vibe, { term: string; genre: string }[]> = {
   ],
 }
 
-async function fetchItunesTracks(term: string, limit: number = 200): Promise<any[]> {
-  try {
-    const url = `https://itunes.apple.com/search?term=${encodeURIComponent(term)}&entity=song&limit=${limit}`;
-    const res = await fetch(url, { cache: 'no-store' });
-    if (!res.ok) {
-      console.error(`[musicProvider] iTunes fetch failed for term "${term}": ${res.status}`);
-      return [];
-    }
-    const data = await res.json();
-    return data.results || [];
-  } catch (error) {
-    console.error(`[musicProvider] Error fetching iTunes for term "${term}":`, error);
-    return [];
-  }
-}
-
-/**
- * Like fetchItunesTracks but uses the India storefront (country=IN).
- * This surfaces more Indian regional music that may not be in the global catalogue.
- */
-async function fetchItunesTracksIN(term: string, limit: number = 200): Promise<any[]> {
-  try {
-    const url = `https://itunes.apple.com/search?term=${encodeURIComponent(term)}&entity=song&limit=${limit}&country=IN`;
-    const res = await fetch(url, { cache: 'no-store' });
-    if (!res.ok) {
-      console.error(`[musicProvider] iTunes IN fetch failed for term "${term}": ${res.status}`);
-      return [];
-    }
-    const data = await res.json();
-    return data.results || [];
-  } catch (error) {
-    console.error(`[musicProvider] Error fetching iTunes IN for term "${term}":`, error);
-    return [];
-  }
-}
+const fetchItunesTracks = (term: string, limit = 200) => itunesClient.search(term, limit)
+const fetchItunesTracksIN = (term: string, limit = 200) => itunesClient.search(term, limit, 'IN')
 
 const REGIONAL_VIBES = new Set<Vibe>(['top-telugu', 'top-tamil', 'top-hindi']);
 
 /** Maps each regional vibe to its confidence scorer. Returns score ≥ ACCEPT_THRESHOLD to include. */
-const REGIONAL_SCORER: Partial<Record<Vibe, (t: any) => number>> = {
+const REGIONAL_SCORER: Partial<Record<Vibe, (t: ItunesTrack) => number>> = {
   'top-telugu': scoreTeluguTrack,
   'top-tamil':  scoreTamilTrack,
   'top-hindi':  scoreHindiTrack,
@@ -631,12 +599,12 @@ export async function fetchSongsByVibe(
    */
   async function fetchAndScore(
     batch: { term: string; genre: string }[]
-  ): Promise<{ track: any; score: number; year: number; genre: string }[]> {
+  ): Promise<{ track: ItunesTrack; score: number; year: number; genre: string }[]> {
     const promises = batch.map(q =>
       fetcher(q.term, 200).then(tracks => ({ tracks, genre: q.genre }))
     );
     const settled = await Promise.allSettled(promises);
-    const scored: { track: any; score: number; year: number; genre: string }[] = [];
+    const scored: { track: ItunesTrack; score: number; year: number; genre: string }[] = [];
 
     for (const result of settled) {
       if (result.status !== 'fulfilled') continue;
@@ -659,6 +627,8 @@ export async function fetchSongsByVibe(
 
   // ── Phase 1: primary queries ──────────────────────────────────────────────
   let candidates = await fetchAndScore(rotated);
+
+  if (!candidates.length) throw new MusicProviderError('No tracks available from the music provider')
 
   // ── Phase 2: expansion (regional only, if Phase 1 yields < threshold) ────
   if (isRegional && candidates.length < EXPANSION_THRESHOLD) {
@@ -685,7 +655,7 @@ export async function fetchSongsByVibe(
   const artistCap = isRegional ? 6 : 8;
   const albumCap  = isRegional ? 3 : 4;
 
-  let totalRaw      = candidates.length;
+  const totalRaw      = candidates.length;
   let totalAccepted = 0;
   let totalRejected = 0;
 
@@ -738,7 +708,7 @@ export async function fetchSongsByVibe(
 
   // NodeField's texIndices pool algorithm already maps any number of songs
   // across the massive virtual grid. No need to bloat memory with duplicate objects.
-  return songs;
+  return songs.slice(0, Math.max(1, Math.min(targetCount, 256)));
 }
 
 export async function searchSongsByMood(query: string): Promise<SongNode[]> {
@@ -765,7 +735,7 @@ export async function fetchChartPreviews(vibeId: Vibe): Promise<SongNode[]> {
   const queries = VIBE_QUERIES[vibeId] || VIBE_QUERIES['global-top-50'];
   const tracks = await fetchItunesTracks(queries[0].term, 40);
   
-  const validItems = tracks.filter((t: any) => t.previewUrl && t.artworkUrl100);
+  const validItems = tracks.filter((t: ItunesTrack) => t.previewUrl && t.artworkUrl100);
   
   // Shuffle
   for (let i = validItems.length - 1; i > 0; i--) {
@@ -775,7 +745,7 @@ export async function fetchChartPreviews(vibeId: Vibe): Promise<SongNode[]> {
     validItems[j] = temp
   }
   
-  return validItems.slice(0, 8).map((t: any) => itunesToSongNode(t, [queries[0].genre]));
+  return validItems.slice(0, 8).map((t: ItunesTrack) => itunesToSongNode(t, [queries[0].genre]));
 }
 
 export async function fetchTopSongByVibe(vibeId: Vibe): Promise<SongNode | null> {
@@ -786,7 +756,7 @@ export async function fetchTopSongByVibe(vibeId: Vibe): Promise<SongNode | null>
   const queries = VIBE_QUERIES[vibeId] || VIBE_QUERIES['global-top-50'];
   const tracks = await fetchItunesTracks(queries[0].term, 10);
   
-  const valid = tracks.find((t: any) => t.previewUrl && t.artworkUrl100);
+  const valid = tracks.find((t: ItunesTrack) => t.previewUrl && t.artworkUrl100);
   if (valid) {
     return itunesToSongNode(valid, [queries[0].genre]);
   }

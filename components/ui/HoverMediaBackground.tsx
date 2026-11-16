@@ -83,8 +83,6 @@ export default function HoverMediaBackground() {
 
   // ── DOM opacity/visibility helpers (avoids React re-renders) ──
   const containerRef = useRef<HTMLDivElement>(null)
-  const previewWrapRef = useRef<HTMLVideoElement | null>(null) // alias
-  const fullWrapRef = useRef<HTMLVideoElement | null>(null)    // alias
 
   const setVisible = useCallback((el: HTMLElement | null, visible: boolean) => {
     if (!el) return
@@ -120,6 +118,10 @@ export default function HoverMediaBackground() {
     const pVid = previewRef.current
     const fVid = fullRef.current
 
+    for (const video of [pVid, fVid]) {
+      const cleanup = (video as unknown as { __cleanup?: () => void } | null)?.__cleanup
+      cleanup?.()
+    }
     if (pVid) {
       pVid.pause()
       pVid.removeAttribute('src')
@@ -156,6 +158,9 @@ export default function HoverMediaBackground() {
       if (sessionRef.current !== session) return
       if (phaseRef.current !== 'PREVIEWING') return
 
+      const preview = previewRef.current
+      if (!preview || preview.currentTime < Math.min(HANDOFF_TARGET_TIME, preview.duration || HANDOFF_TARGET_TIME) - 0.25 || fVid.seeking) return
+
       // Check if target time is buffered
       let ready = false
       for (let i = 0; i < fVid.buffered.length; i++) {
@@ -170,14 +175,19 @@ export default function HoverMediaBackground() {
       phaseRef.current = 'FULL_PLAYBACK'
 
       const pVid = previewRef.current
-      fVid.muted = !hasUserActivation()
+      fVid.muted = true
       const playPromise = playWithMutedFallback(fVid)
       if (playPromise) {
         playPromise
           .then(() => {
             if (sessionRef.current !== session) return
-            // Full video is playing — fade it in, fade preview out
-            setVisible(fVid, true)
+            // Switch audio ownership only when the replacement presents a frame.
+            onFirstPresentedFrame(fVid, () => {
+              if (sessionRef.current !== session) return
+              if (pVid) pVid.muted = true
+              fVid.muted = !hasUserActivation()
+              setVisible(fVid, true)
+            })
             // Short delay to allow crossfade, then stop preview
             setTimeout(() => {
               if (sessionRef.current !== session) return
@@ -188,12 +198,13 @@ export default function HoverMediaBackground() {
             }, 200)
           })
           .catch(() => {
-            // play() rejected (e.g. user left) — do nothing, halt will clean up
+            if (sessionRef.current === session) phaseRef.current = 'PREVIEWING'
           })
       }
     }
 
     fVid.addEventListener('loadedmetadata', onLoadedMetadata, { once: true })
+    previewRef.current?.addEventListener('timeupdate', attemptHandoff)
     fVid.addEventListener('progress', attemptHandoff)
     fVid.addEventListener('canplay', attemptHandoff)
     fVid.addEventListener('canplaythrough', attemptHandoff)
@@ -206,6 +217,7 @@ export default function HoverMediaBackground() {
     // Store cleanup for this session
     const cleanup = () => {
       fVid.removeEventListener('loadedmetadata', onLoadedMetadata)
+      previewRef.current?.removeEventListener('timeupdate', attemptHandoff)
       fVid.removeEventListener('progress', attemptHandoff)
       fVid.removeEventListener('canplay', attemptHandoff)
       fVid.removeEventListener('canplaythrough', attemptHandoff)
@@ -227,7 +239,6 @@ export default function HoverMediaBackground() {
     if (!pVid) return
 
     phaseRef.current = 'PREVIEWING'
-    setContainerActive(true)
     setScale(vibeId)
 
     // Enable looping on the preview — if full video isn't ready, preview loops
@@ -241,6 +252,7 @@ export default function HoverMediaBackground() {
       // Reveal only when a frame is actually presented — never show a frozen first frame.
       onFirstPresentedFrame(pVid, () => {
         if (sessionRef.current !== session) return
+        setContainerActive(true)
         setVisible(pVid, true)
       })
 

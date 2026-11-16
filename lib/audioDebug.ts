@@ -1,7 +1,7 @@
 // Audio Startup Pipeline Diagnostic Logger
 const startTime = typeof performance !== 'undefined' ? performance.now() : Date.now()
 
-export function logAudioDebug(stage: string, detail?: any) {
+export function logAudioDebug(stage: string, detail?: unknown) {
   if (process.env.NODE_ENV === 'production') return
   const elapsed = Math.round((typeof performance !== 'undefined' ? performance.now() : Date.now()) - startTime)
   const detailStr = detail !== undefined ? ` | ${typeof detail === 'object' ? JSON.stringify(detail) : detail}` : ''
@@ -9,7 +9,7 @@ export function logAudioDebug(stage: string, detail?: any) {
 }
 
 if (typeof window !== 'undefined') {
-  (window as any).__audioDebugLog = logAudioDebug
+  (window as unknown as { __audioDebugLog: typeof logAudioDebug }).__audioDebugLog = logAudioDebug
   if (process.env.NODE_ENV !== 'production') {
     logAudioDebug('navigation started / module evaluated')
   }

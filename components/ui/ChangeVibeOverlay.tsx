@@ -1,7 +1,7 @@
 'use client'
 import { motion } from 'framer-motion'
 import { Vibe } from '@/lib/types'
-import { VIBE_CONFIGS } from '@/lib/vibeConfig'
+import { VIBE_CONFIGS, type VibeConfig } from '@/lib/vibeConfig'
 import { useEffect, useRef, memo } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { useChartHover } from '@/hooks/useChartHover'
@@ -23,11 +23,11 @@ const ChangeVibeCard = memo(function ChangeVibeCard({
   onHoverEnd,
   onSelect
 }: {
-  vibe: any
+  vibe: VibeConfig
   index: number
   isActive: boolean
   isHovered: boolean
-  signatureSong: any
+  signatureSong: (typeof import('@/lib/signatureSongs').SIGNATURE_SONGS)[Vibe]
   onHoverStart: (id: Vibe) => void
   onHoverEnd: () => void
   onSelect: (id: Vibe) => void

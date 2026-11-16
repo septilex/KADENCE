@@ -1,16 +1,17 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { useUIStore } from '@/store/uiStore'
 import { motion } from 'framer-motion'
 import { Vibe } from '@/lib/types'
-import { useUIStore } from '@/store/uiStore'
 
 interface HeroBackgroundVideoProps {
   currentVibe: Vibe | null
   introComplete?: boolean
 }
 
-export function HeroBackgroundVideo({ currentVibe, introComplete = false }: HeroBackgroundVideoProps) {
+export function HeroBackgroundVideo({ introComplete = false }: HeroBackgroundVideoProps) {
+  const hoveredVibe = useUIStore(s => s.hoveredVibe)
   const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
@@ -22,6 +23,8 @@ export function HeroBackgroundVideo({ currentVibe, introComplete = false }: Hero
       video.pause()
       video.removeAttribute('src')
       video.load()
+    } else if (hoveredVibe || document.hidden) {
+      video.pause()
     } else {
       // No category video — resume globe from buffered position
       if (!video.getAttribute('src')) {
@@ -32,7 +35,13 @@ export function HeroBackgroundVideo({ currentVibe, introComplete = false }: Hero
         video.play().catch(() => {})
       }
     }
-  }, [introComplete])
+    const onVisibility = () => {
+      if (document.hidden || hoveredVibe || introComplete) video.pause()
+      else video.play().catch(() => {})
+    }
+    document.addEventListener('visibilitychange', onVisibility)
+    return () => document.removeEventListener('visibilitychange', onVisibility)
+  }, [introComplete, hoveredVibe])
 
   return (
     <motion.div

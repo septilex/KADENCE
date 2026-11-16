@@ -171,27 +171,6 @@ export const devSpecialData: SongNode[] = [
     "vy": -0.10800000000000001
   },
   {
-    "id": "1476800925",
-    "name": "Hoyna Hoyna (From \"Gang Leader\")",
-    "artist": "Anirudh Ravichander & Inno Genga",
-    "album": "Hoyna Hoyna (From \"Gang Leader\") - Single",
-    "albumArt": "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/74/82/ee/7482eee5-9a94-25d0-e0a2-5c46d755ef0c/886447902318.jpg/600x600bb.jpg",
-    "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/e0/7b/3c/e07b3c13-2f3a-3b11-5921-c82cbcf6989b/mzaf_11092745646116208633.plus.aac.p.m4a",
-    "spotifyUrl": "https://music.apple.com/us/album/hoyna-hoyna-from-gang-leader/1476800924?i=1476800925&uo=4",
-    "popularity": 90,
-    "genres": [
-      "Telugu",
-      "Dev Special"
-    ],
-    "color": "#1db954",
-    "scale": 1.3800000000000001,
-    "x": 239.99999999999994,
-    "y": -180.00000000000003,
-    "z": 24.00000000000002,
-    "vx": 0.07999999999999999,
-    "vy": -0.06000000000000001
-  },
-  {
     "id": "1786071219",
     "name": "Titli (From \"Chennai Express\")",
     "artist": "Chinmayi Sripada & Gopi Sundar",

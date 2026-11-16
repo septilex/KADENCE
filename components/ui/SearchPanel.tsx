@@ -8,7 +8,6 @@ interface SearchPanelProps {
   isOpen: boolean
   onOpen: () => void
   onClose: () => void
-  onResults: (songs: SongNode[]) => void
   onSelectResult: (song: SongNode) => void
 }
 
@@ -18,41 +17,66 @@ const SUGGESTIONS = [
   'party anthems', 'chill jazz', 'romantic r&b', 'dark ambient',
 ]
 
-export function SearchPanel({ isOpen, onOpen, onClose, onResults, onSelectResult }: SearchPanelProps) {
+export function SearchPanel({ isOpen, onOpen, onClose, onSelectResult }: SearchPanelProps) {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<SongNode[]>([])
   const [isSearching, setIsSearching] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
+  const requestRef = useRef<AbortController | null>(null)
+  const generation = useRef(0)
+  const [error, setError] = useState<string | null>(null)
+  const cancel = useCallback(() => {
+    generation.current++
+    requestRef.current?.abort()
+    requestRef.current = null
+    if (debounceRef.current) clearTimeout(debounceRef.current)
+  }, [])
   useEffect(() => {
-    if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 50)
-    } else {
-      setQuery('')
-      setResults([])
-    }
-  }, [isOpen])
+    if (!isOpen) return
+    const timer = setTimeout(() => inputRef.current?.focus(), 50)
+    return () => { clearTimeout(timer); cancel() }
+  }, [isOpen, cancel])
 
+  const close = () => {
+    cancel()
+    setQuery('')
+    setResults([])
+    setError(null)
+    setIsSearching(false)
+    onClose()
+  }
   const search = useCallback(async (q: string) => {
-    if (!q.trim()) { setResults([]); return }
+    cancel()
+    if (!q.trim()) { setResults([]); setIsSearching(false); return }
+    const request = new AbortController()
+    requestRef.current = request
+    const current = generation.current
     setIsSearching(true)
+    setError(null)
     try {
-      const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`)
+      const res = await fetch(`/api/search?q=${encodeURIComponent(q.trim())}`, { signal: request.signal })
+      if (!res.ok) throw new Error('Search is temporarily unavailable. Please try again.')
       const data = await res.json()
+      if (current !== generation.current) return
       setResults(data.songs ?? [])
-      onResults(data.songs ?? [])
-    } catch {
+    } catch (error) {
+      if (current !== generation.current) return
       setResults([])
+      setError(error instanceof Error ? error.message : 'Search failed. Please try again.')
     } finally {
-      setIsSearching(false)
+      if (current === generation.current) setIsSearching(false)
     }
-  }, [onResults])
+  }, [cancel])
 
   const handleChange = (val: string) => {
+    cancel()
     setQuery(val)
-    if (debounceRef.current) clearTimeout(debounceRef.current)
-    debounceRef.current = setTimeout(() => search(val), 350)
+    setResults([])
+    setError(null)
+    setIsSearching(!!val.trim())
+    if (val.trim()) debounceRef.current = setTimeout(() => search(val), 350)
   }
 
   return (
@@ -61,7 +85,7 @@ export function SearchPanel({ isOpen, onOpen, onClose, onResults, onSelectResult
       <div className="fixed top-0 left-1/2 -translate-x-1/2 z-40 h-16 flex items-center justify-center pointer-events-none">
         <GlassButton
           id="search-trigger-btn"
-          onClick={isOpen ? onClose : onOpen}
+          onClick={isOpen ? close : onOpen}
           size="sm"
           className="pointer-events-auto"
           contentClassName="flex items-center gap-2.5 px-3 py-1 text-white text-sm font-medium tracking-normal"
@@ -94,11 +118,13 @@ export function SearchPanel({ isOpen, onOpen, onClose, onResults, onSelectResult
                 <input
                   ref={inputRef}
                   type="text"
+                  aria-label="Search songs, artists, moods or genres"
+                  maxLength={120}
                   value={query}
                   onChange={e => handleChange(e.target.value)}
                   placeholder="late night drive, gym rage, dreamy…"
                   className="flex-1 bg-transparent text-white placeholder-white/30 text-sm outline-none"
-                  onKeyDown={e => e.key === 'Escape' && onClose()}
+                  onKeyDown={e => e.key === 'Escape' && close()}
                   id="search-input"
                 />
                 {isSearching && (
@@ -106,6 +132,7 @@ export function SearchPanel({ isOpen, onOpen, onClose, onResults, onSelectResult
                 )}
               </div>
 
+              {error && <p role="alert" className="px-4 py-3 text-sm text-red-200">{error}</p>}
               {/* Suggestions */}
               {!query && (
                 <div className="p-3">

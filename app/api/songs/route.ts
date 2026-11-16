@@ -13,55 +13,39 @@ const VALID_VIBES: Vibe[] = [
   'top-telugu', 'top-tamil', 'top-hindi', 'top-kpop',
 ]
 
-// Keep track of refresh counts per vibe to shift/rotate seed indices on refresh requests
-const refreshCounts = new Map<string, number>()
+const inFlight = new Map<Vibe, Promise<import('@/lib/types').SongNode[]>>()
+const successHeaders = { 'Cache-Control': 'public, max-age=60, s-maxage=1200, stale-while-revalidate=3600' }
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
-  const vibeParam = searchParams.get('vibe') as Vibe | null
+  const vibeParam = searchParams.get('vibe')
+  if (vibeParam && !VALID_VIBES.includes(vibeParam as Vibe)) {
+    return NextResponse.json({ error: 'Unknown chart' }, { status: 400 })
+  }
+  const vibe = (vibeParam || 'global-top-50') as Vibe
   const refresh = searchParams.get('refresh') === '1'
-  const vibe: Vibe = (vibeParam && VALID_VIBES.includes(vibeParam)) ? vibeParam : 'global-top-50'
-
-  console.log('[DIAG:route] vibe:', vibe, '| refresh:', refresh)
-
+  const cached = vibeCache.get(vibe)
+  // Refresh reuses recently fetched data instead of multiplying upstream traffic.
+  if (cached && Date.now() - cached.time < CACHE_TTL) {
+    return NextResponse.json({ songs: cached.songs, total: cached.songs.length, cached: true, vibe }, { headers: refresh ? { 'Cache-Control': 'no-store' } : successHeaders })
+  }
   try {
-    const cached = vibeCache.get(vibe)
-    const isFresh = cached && (Date.now() - cached.time < CACHE_TTL) && !refresh
-    console.log('[DIAG:route] Cache check — has cached entry:', !!cached, '| isFresh:', isFresh, '| cached songs count:', cached?.songs?.length ?? 'n/a')
-
-    if (isFresh && cached) {
-      console.log('[DIAG:route] Returning CACHED result:', cached.songs.length, 'songs')
-      return NextResponse.json({
-        songs: cached.songs,
-        total: cached.songs.length,
-        cached: true,
-        vibe,
-      })
+    let request = inFlight.get(vibe)
+    if (!request) {
+      request = fetchSongsByVibe(vibe, 256).then(songs => {
+        if (!songs.length) throw new Error('No tracks available')
+        vibeCache.set(vibe, { songs, time: Date.now() })
+        return songs
+      }).finally(() => inFlight.delete(vibe))
+      inFlight.set(vibe, request)
     }
-
-    // Increment refresh rotation index
-    let offset = 0
-    if (refresh) {
-      const currentVal = refreshCounts.get(vibe) || 0
-      offset = currentVal + 1
-      refreshCounts.set(vibe, offset)
+    const songs = await request
+    return NextResponse.json({ songs, total: songs.length, vibe }, { headers: refresh ? { 'Cache-Control': 'no-store' } : successHeaders })
+  } catch (error) {
+    console.error('Songs API error:', error)
+    if (cached && Date.now() - cached.time < 24 * 60 * 60 * 1000) {
+      return NextResponse.json({ songs: cached.songs, total: cached.songs.length, vibe, stale: true }, { headers: { 'Cache-Control': 'no-store' } })
     }
-
-    const songs = await fetchSongsByVibe(vibe, 256, offset)
-    console.log('[DIAG:route] fetchSongsByVibe returned:', songs.length, 'songs')
-
-    if (songs.length === 0) {
-      throw new Error('Music provider returned 0 songs')
-    }
-
-    vibeCache.set(vibe, { songs, time: Date.now() })
-    console.log('[DIAG:route] Responding with', songs.length, 'songs for vibe:', vibe)
-    return NextResponse.json({ songs, total: songs.length, vibe })
-  } catch (err) {
-    console.error('Songs API error:', err)
-    return NextResponse.json(
-      { error: String(err) },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'This chart is temporarily unavailable. Please try again.' }, { status: 503, headers: { 'Retry-After': '60', 'Cache-Control': 'no-store' } })
   }
 }

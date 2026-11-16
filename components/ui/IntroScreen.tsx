@@ -3,7 +3,7 @@ import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motio
 import React, { useState, useRef, useEffect, useCallback, memo } from 'react'
 import { Vibe } from '@/lib/types'
 import { useChartHover } from '@/hooks/useChartHover'
-import { vibeService } from '@/lib/vibeService'
+import { devSpecialData } from '@/lib/devSpecialData'
 
 import { VIBE_CONFIGS, VibeConfig } from '@/lib/vibeConfig'
 import { GlowingRingLoader } from './GlowingRingLoader'
@@ -274,7 +274,7 @@ function CreatorCueCard({
 
           {/* CREATOR'S PICK with Silver Chrome metallic gradient and consistent ✦ sparkle */}
           <span className="kadence-chrome-text text-[11px] uppercase tracking-[0.26em] font-[900] pointer-events-none z-10 select-none">
-            <span className="mr-1.5 text-[10px]">✦</span>CREATOR'S PICK
+            <span className="mr-1.5 text-[10px]">✦</span>CREATOR&apos;S PICK
           </span>
 
           {/* Title: Explore Dev's Universe in pure #000000 bold */}
@@ -282,12 +282,12 @@ function CreatorCueCard({
             className="text-[22px] font-[900] text-[#000000] tracking-tight pointer-events-none z-10 leading-tight"
             style={{ fontFamily: "'Syne', sans-serif" }}
           >
-            Explore Dev's Universe
+            Explore Dev&apos;s Universe
           </span>
 
           {/* 80 HANDPICKED TRACKS with Silver Chrome metallic gradient */}
           <span className="kadence-chrome-text text-[11px] uppercase tracking-[0.22em] font-[800] pointer-events-none z-10 mt-0.5 select-none">
-            80 Handpicked Tracks
+            {devSpecialData.length} Handpicked Tracks
           </span>
         </button>
       </div>
@@ -494,7 +494,7 @@ const AmbientParticles = memo(function AmbientParticles({ isDevSpecial }: { isDe
   )
 })
 
-function MagneticChromeText({ children, className, style }: any) {
+function MagneticChromeText({ children, className, style }: { children: React.ReactNode; className?: string; style?: React.CSSProperties }) {
   const ref = useRef<HTMLHeadingElement>(null)
   
   const x = useMotionValue(0)

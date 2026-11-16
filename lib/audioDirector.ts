@@ -22,7 +22,7 @@ export const HOVER_DWELL_MS = 150
 type SongState = ReturnType<typeof useSongStore.getState>
 
 function targetUrl(s: SongState): string | null {
-  if (s.isChangingVibe) return null
+  if (s.isChangingVibe || s.isRefreshing) return null
   if (s.selectedSong) return s.selectedSong.previewUrl ?? null
   return s.hoveredSong?.previewUrl ?? null
 }
@@ -42,10 +42,17 @@ export function startAudioDirector(): () => void {
     if (
       state.hoveredSong === prev.hoveredSong &&
       state.selectedSong === prev.selectedSong &&
-      state.isChangingVibe === prev.isChangingVibe
+      state.isChangingVibe === prev.isChangingVibe &&
+      state.isRefreshing === prev.isRefreshing
     ) return
 
     const target = targetUrl(state)
+    if (state.selectedSong && !state.selectedSong.previewUrl) {
+      clear()
+      lastTarget = null
+      useAudioStore.getState().playUrl(null)
+      return
+    }
     if (target === lastTarget) return
     lastTarget = target
     clear()
