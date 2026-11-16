@@ -370,15 +370,20 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
         // Constant key: the whole drawer group is one presence child, exactly as before
         // (switching songs while open does not re-run the drawer's enter/exit animation).
         <Fragment key="song-detail">
-          {/* ── Transparent Non-Blocking Backdrop ─────────────────── */}
-          {/* We remove the dark blur so the cinematic background shines through, and we don't block interactions */}
+          {/* ── Transparent click-away backdrop ─────────────────── */}
+          {/* Invisible, so the cinematic background shines through. It catches clicks outside the
+              panel and closes it; without it, those clicks reached the hidden 3D wall underneath
+              and opened whichever tile was under the pointer. Sits below the navbar (z-30) so
+              Search / Switch Chart / Refresh stay usable. */}
           <motion.div
             key="backdrop"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.35, ease: 'easeOut' }}
-            className="fixed inset-0 z-30 pointer-events-none"
+            className="fixed inset-0 z-[25] pointer-events-auto"
+            onClick={onClose}
+            aria-hidden="true"
           />
 
           <EditorialOverlay />
