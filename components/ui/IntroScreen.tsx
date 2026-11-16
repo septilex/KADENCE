@@ -7,6 +7,8 @@ import { devSpecialData } from '@/lib/devSpecialData'
 
 import { VIBE_CONFIGS, VibeConfig } from '@/lib/vibeConfig'
 import { GlowingRingLoader } from './GlowingRingLoader'
+import { HubPanels } from './HubPanels'
+import { useLibraryStore, type HubPanel } from '@/store/libraryStore'
 
 interface IntroScreenProps {
   loadingProgress?: number
@@ -559,7 +561,11 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
   const contentRef = useRef<HTMLDivElement>(null)
 
 
+  const activePanel = useLibraryStore((s) => s.activePanel)
+  const openPanel = useLibraryStore((s) => s.openPanel)
+
   const handleVibeSelect = useCallback((vibe: Vibe) => {
+    useLibraryStore.getState().openPanel(null)
     setSelectedVibe(vibe)
     setStep('loading')
     onVibeSelect(vibe)
@@ -781,14 +787,27 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
         </div>
         
         {/* Top Right Navigation */}
-        <nav className="flex items-center space-x-8 md:space-x-12">
-          {['DISCOVER', 'SEARCH', 'LIBRARY'].map((item) => (
-            <button key={item} className="text-white/70 hover:text-white text-[11px] font-bold tracking-[0.25em] transition-colors duration-300 select-none">
+        <nav className="flex items-center space-x-8 md:space-x-12" aria-label="Main">
+          {(['discover', 'search', 'library'] as HubPanel[]).map((item) => (
+            <button
+              key={item}
+              type="button"
+              onClick={() => openPanel(activePanel === item ? null : item)}
+              aria-expanded={activePanel === item}
+              className={`relative text-[11px] font-bold uppercase tracking-[0.25em] transition-colors duration-300 select-none ${activePanel === item ? 'text-white' : 'text-white/70 hover:text-white'}`}
+            >
               {item}
+              <span className={`absolute -bottom-2 left-0 h-px bg-white transition-all duration-300 ${activePanel === item ? 'w-full opacity-100' : 'w-0 opacity-0'}`} />
             </button>
           ))}
           {/* Profile Icon */}
-          <button className="text-white/70 hover:text-white transition-colors duration-300 ml-4 rounded-full border border-white/20 p-[6px] hover:border-white/60">
+          <button
+            type="button"
+            onClick={() => openPanel(activePanel === 'profile' ? null : 'profile')}
+            aria-label="Your profile"
+            aria-expanded={activePanel === 'profile'}
+            className={`transition-colors duration-300 ml-4 rounded-full border p-[6px] ${activePanel === 'profile' ? 'text-white border-white/80 shadow-[0_0_18px_rgba(255,255,255,0.35)]' : 'text-white/70 hover:text-white border-white/20 hover:border-white/60'}`}
+          >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-[18px] h-[18px]">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
               <circle cx="12" cy="7" r="4" />
@@ -796,6 +815,9 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
           </button>
         </nav>
       </header>
+
+      {/* Discover / Search / Library / Profile panels */}
+      {step === 'vibe' && <div className="pointer-events-auto"><HubPanels onVibeSelect={handleVibeSelect} /></div>}
 
       {/* ── Native, Butter-Smooth 60/120 FPS Scroll Container ── */}
       <div

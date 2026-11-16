@@ -8,6 +8,7 @@ import { useSongStore } from '@/store/songStore'
 import { VIBE_CONFIGS } from '@/lib/vibeConfig'
 import { GlassButton } from './GlassButton'
 import { EditorialOverlay } from './EditorialOverlay'
+import { useLibraryStore } from '@/store/libraryStore'
 
 interface LiquidScrubberProps {
   progress: number
@@ -329,6 +330,26 @@ function PlaybackProgressSection({ hasPreview, isPlaying, onSeek }: { hasPreview
   )
 }
 
+/** Heart toggle; a leaf so liking a song re-renders only this button. */
+function LikeButton({ song }: { song: SongNode }) {
+  const liked = useLibraryStore((s) => !!s.liked[song.id])
+  const toggleLike = useLibraryStore((s) => s.toggleLike)
+  return (
+    <GlassButton
+      id="like-detail-btn"
+      onClick={() => toggleLike(song)}
+      size="iconSm"
+      contentClassName={`flex items-center justify-center ${liked ? 'text-pink-400' : 'text-white'}`}
+      title={liked ? 'Remove from liked songs' : 'Like this song'}
+      aria-pressed={liked}
+    >
+      <svg width="13" height="13" viewBox="0 0 24 24" fill={liked ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21.3l7.8-7.8 1-1.1a5.5 5.5 0 0 0 0-7.8z" />
+      </svg>
+    </GlassButton>
+  )
+}
+
 export function SongDetail({ song, onClose }: SongDetailProps) {
   const currentVibeId = useSongStore(s => s.currentVibe)
   const activeVibe = VIBE_CONFIGS.find(v => v.id === currentVibeId)
@@ -461,6 +482,10 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
 
             {/* Content Container */}
             <div className="relative z-30 flex flex-col h-full w-full overflow-hidden rounded-[inherit]">
+              {/* ── Like (saved to the listener's library) ───── */}
+              <div className="absolute top-5 right-16 z-50">
+                <LikeButton song={song} />
+              </div>
               {/* ── Close button ─────────────────────────────── */}
               <div className="absolute top-5 right-5 z-50">
               <GlassButton

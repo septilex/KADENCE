@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { useAudioStore } from '@/store/audioStore'
 import { startAudioDirector } from '@/lib/audioDirector'
 import { AudioEngine } from '@/lib/audioEngine'
+import { startListeningTracker } from '@/lib/listeningTracker'
 
 export function GlobalAudioPlayer() {
   useEffect(() => {
@@ -21,7 +22,9 @@ export function GlobalAudioPlayer() {
     engine.setSource(state.currentUrl, state.isPlaying)
     engine.preload(state.preloadedUrls)
     const stopDirector = startAudioDirector()
-    return () => { stopDirector(); unsubscribe(); engine.dispose() }
+    // Listening history for the profile card (plays, charts opened); browser-local.
+    const stopTracker = startListeningTracker()
+    return () => { stopTracker(); stopDirector(); unsubscribe(); engine.dispose() }
   }, [])
   return null
 }
