@@ -2,12 +2,16 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import type { SongNode, Vibe } from '@/lib/types'
-import { VIBE_CONFIGS, type VibeConfig } from '@/lib/vibeConfig'
+import dynamic from 'next/dynamic'
+import { VIBE_CONFIGS } from '@/lib/vibeConfig'
 import { getOptimizedArtworkUrl } from '@/lib/artwork'
 import { useAudioStore } from '@/store/audioStore'
 import { useLibraryStore, type HubPanel, type LibrarySong } from '@/store/libraryStore'
 import { playSong } from '@/lib/listeningTracker'
 import { buildAutoPlaylists, buildTasteProfile, type AutoPlaylist } from '@/lib/tasteProfile'
+
+// Loaded and mounted only when Discover is opened.
+const DiscoverConstellation = dynamic(() => import('./DiscoverConstellation'), { ssr: false })
 
 const DISPLAY = { fontFamily: "'Syne', sans-serif" }
 const BODY = { fontFamily: "'Space Grotesk', sans-serif" }
@@ -101,101 +105,13 @@ function PanelHeader({ kicker, title, onClose }: { kicker: string; title: string
   )
 }
 
-// ── Discover ─────────────────────────────────────────────────────────────────
-
-const DISCOVER_GROUPS: { title: string; hint: string; vibes: Vibe[] }[] = [
-  { title: 'Right now', hint: 'What the world is playing', vibes: ['global-top-50', 'viral-50', 'new-music-friday', 'pop-rising'] },
-  { title: 'Turn it up', hint: 'High energy', vibes: ['workout', 'dance-hits', 'hip-hop-central', 'mood-booster'] },
-  { title: 'Wind down', hint: 'Low light, slow tempo', vibes: ['late-night', 'chill-hits'] },
-  { title: 'Home frequencies', hint: 'Regional charts', vibes: ['top-telugu', 'top-tamil', 'top-hindi', 'top-kpop'] },
-]
-
-function VibeTile({ vibe, onSelect, wide = false }: { vibe: VibeConfig; onSelect: (v: Vibe) => void; wide?: boolean }) {
-  return (
-    <button
-      type="button"
-      onClick={() => onSelect(vibe.id)}
-      className={`group relative overflow-hidden rounded-2xl border border-white/10 text-left transition-transform duration-300 hover:-translate-y-0.5 hover:border-white/30 ${wide ? 'h-24' : 'h-[76px]'}`}
-      style={{ background: `linear-gradient(135deg, ${vibe.bgColor}38 0%, rgba(10,10,16,0.9) 70%)` }}
-    >
-      <span className="absolute -right-2 -top-3 select-none text-6xl font-black opacity-10 transition-opacity group-hover:opacity-25" style={{ ...DISPLAY, color: vibe.bgColor }}>{vibe.number}</span>
-      <span className="absolute left-0 top-0 h-full w-[3px]" style={{ background: vibe.bgColor, boxShadow: `0 0 14px ${vibe.bgColor}` }} />
-      <span className="relative block px-4" style={BODY}>
-        <span className="block truncate text-sm font-bold text-white">{vibe.label}</span>
-        <span className="block truncate text-[11px] text-white/45">{vibe.sub}</span>
-      </span>
-    </button>
-  )
-}
-
-function DiscoverPanel({ onVibeSelect, onClose }: { onVibeSelect: (v: Vibe) => void; onClose: () => void }) {
-  const vibeVisits = useLibraryStore((s) => s.vibeVisits)
-  const byId = useMemo(() => new Map(VIBE_CONFIGS.map((v) => [v.id, v])), [])
-  const lastFavourite = useMemo(() => {
-    const top = (Object.entries(vibeVisits) as [Vibe, number][]).sort((a, b) => b[1] - a[1])[0]
-    return top ? byId.get(top[0]) ?? null : null
-  }, [vibeVisits, byId])
-  const select = (vibe: Vibe) => { onClose(); onVibeSelect(vibe) }
-  const surprise = () => {
-    const pool = VIBE_CONFIGS.filter((v) => v.id !== lastFavourite?.id)
-    select(pool[Math.floor(Math.random() * pool.length)].id)
-  }
-  const creator = byId.get('dev-special')
-
-  return (
-    <motion.div
-      role="dialog" aria-label="Discover"
-      initial={{ opacity: 0, y: -16, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -12, scale: 0.98 }}
-      transition={{ duration: 0.3, ease: EASE }}
-      className={`fixed left-1/2 top-24 z-[120] max-h-[calc(100dvh-7.5rem)] w-[min(1040px,calc(100vw-2rem))] -translate-x-1/2 overflow-y-auto rounded-3xl p-6 md:p-8 ${GLASS}`}
-    >
-      <PanelHeader kicker="Pick a universe" title="Discover" onClose={onClose} />
-
-      <div className={`mb-6 grid gap-3 ${lastFavourite ? 'md:grid-cols-3' : 'md:grid-cols-2'}`}>
-        <button
-          type="button" onClick={surprise}
-          className="group relative h-24 overflow-hidden rounded-2xl border border-white/15 px-5 text-left transition-transform duration-300 hover:-translate-y-0.5"
-          style={{ background: 'conic-gradient(from 210deg at 80% 20%, #7c3aed55, #06b6d455, #f43f5e55, #7c3aed55)' }}
-        >
-          <span className="block text-[10px] font-bold uppercase tracking-[0.3em] text-white/60" style={BODY}>Feeling lucky</span>
-          <span className="mt-1 block text-lg font-extrabold uppercase tracking-wide text-white" style={DISPLAY}>Surprise me</span>
-          <span className="block text-[11px] text-white/55" style={BODY}>Drop into a random chart</span>
-        </button>
-        {lastFavourite && (
-          <div>
-            <VibeTile vibe={{ ...lastFavourite, sub: 'Jump back in · your most visited' }} onSelect={select} wide />
-          </div>
-        )}
-        {creator && (
-          <div>
-            <VibeTile vibe={{ ...creator, sub: "Creator's pick · handpicked tracks" }} onSelect={select} wide />
-          </div>
-        )}
-      </div>
-
-      <div className="grid gap-x-8 gap-y-6 md:grid-cols-2">
-        {DISCOVER_GROUPS.map((group) => (
-          <section key={group.title}>
-            <div className="mb-2.5 flex items-baseline justify-between">
-              <h3 className="text-xs font-bold uppercase tracking-[0.22em] text-white/80" style={DISPLAY}>{group.title}</h3>
-              <span className="text-[11px] text-white/35" style={BODY}>{group.hint}</span>
-            </div>
-            <div className="grid grid-cols-2 gap-2.5">
-              {group.vibes.map((id) => { const v = byId.get(id); return v ? <VibeTile key={id} vibe={v} onSelect={select} /> : null })}
-            </div>
-          </section>
-        ))}
-      </div>
-    </motion.div>
-  )
-}
-
 // ── Search ───────────────────────────────────────────────────────────────────
 
 const SEARCH_IDEAS = ['late night drive', 'gym rage', 'rainy day songs', 'dreamy electronic', 'party anthems', 'romantic r&b', 'focus flow', 'sad synthwave']
 
 function SearchPalette() {
-  const [query, setQuery] = useState('')
+  // Discover can hand over what the listener typed there.
+  const [query, setQuery] = useState(() => useLibraryStore.getState().searchSeed)
   const [results, setResults] = useState<SongNode[]>([])
   const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle')
   const inputRef = useRef<HTMLInputElement>(null)
@@ -567,7 +483,7 @@ export function HubPanels({ onVibeSelect }: { onVibeSelect: (vibe: Vibe) => void
   }, [panel, close])
 
   const render = (active: HubPanel) => {
-    if (active === 'discover') return <DiscoverPanel key="discover" onVibeSelect={onVibeSelect} onClose={close} />
+    if (active === 'discover') return <DiscoverConstellation key="discover" onVibeSelect={onVibeSelect} onClose={close} />
     if (active === 'search') return <SearchPalette key="search" />
     if (active === 'library') return <LibraryDrawer key="library" onClose={close} />
     return <ProfileCard key="profile" onClose={close} onVibeSelect={onVibeSelect} />

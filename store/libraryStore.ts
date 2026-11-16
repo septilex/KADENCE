@@ -32,12 +32,16 @@ interface LibraryState {
   displayName: string
   /** Which hub panel is open (not persisted). */
   activePanel: HubPanel | null
+  /** Text handed from Discover to the song search (not persisted). */
+  searchSeed: string
 
   recordPlay: (song: SongNode | LibrarySong) => void
   toggleLike: (song: SongNode | LibrarySong) => void
   recordVibe: (vibe: Vibe) => void
   setDisplayName: (name: string) => void
   openPanel: (panel: HubPanel | null) => void
+  /** Open the song search with the box already filled in. */
+  openSearchWith: (query: string) => void
   clearHistory: () => void
 }
 
@@ -65,6 +69,7 @@ export const useLibraryStore = create<LibraryState>()(
       vibeVisits: {},
       displayName: '',
       activePanel: null,
+      searchSeed: '',
 
       recordPlay: (song) => set((state) => {
         const previous = state.plays[song.id]
@@ -93,7 +98,8 @@ export const useLibraryStore = create<LibraryState>()(
       })),
 
       setDisplayName: (displayName) => set({ displayName: displayName.slice(0, 24) }),
-      openPanel: (activePanel) => set({ activePanel }),
+      openPanel: (activePanel) => set({ activePanel, searchSeed: '' }),
+      openSearchWith: (searchSeed) => set({ activePanel: 'search', searchSeed }),
       clearHistory: () => set({ plays: {}, vibeVisits: {} }),
     }),
     {
