@@ -559,6 +559,7 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
 
   const scrollWrapperRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
+  const isScrollingRef = useRef(false)
 
 
   const activePanel = useLibraryStore((s) => s.activePanel)
@@ -571,6 +572,104 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
     onVibeSelect(vibe)
   }, [onVibeSelect])
 
+  const handleCardHoverStart = useCallback((vibe: Vibe) => {
+    if (!isScrollingRef.current) handleHoverStart(vibe)
+  }, [handleHoverStart])
+
+  useEffect(() => {
+    const container = scrollWrapperRef.current
+    if (!container) return
+
+    let animationFrame: number | null = null
+    let scrollEndTimer: ReturnType<typeof setTimeout> | null = null
+    let currentScroll = container.scrollTop
+    let targetScroll = currentScroll
+    let lastFrameTime = performance.now()
+
+    const markScrolling = () => {
+      if (!isScrollingRef.current) {
+        isScrollingRef.current = true
+        container.classList.add('is-scrolling')
+        handleHoverEnd()
+      }
+
+      if (scrollEndTimer) clearTimeout(scrollEndTimer)
+      scrollEndTimer = setTimeout(() => {
+        isScrollingRef.current = false
+        container.classList.remove('is-scrolling')
+      }, 180)
+    }
+
+    const stopAnimation = () => {
+      if (animationFrame !== null) cancelAnimationFrame(animationFrame)
+      animationFrame = null
+      currentScroll = container.scrollTop
+      targetScroll = currentScroll
+    }
+
+    const animateScroll = (now: number) => {
+      const elapsed = Math.min(now - lastFrameTime, 32)
+      lastFrameTime = now
+      const ease = 1 - Math.exp(-elapsed / 150)
+      currentScroll += (targetScroll - currentScroll) * ease
+
+      if (Math.abs(targetScroll - currentScroll) < 0.5) {
+        container.scrollTop = targetScroll
+        animationFrame = null
+        return
+      }
+
+      container.scrollTop = currentScroll
+      animationFrame = requestAnimationFrame(animateScroll)
+    }
+
+    const handleWheel = (event: WheelEvent) => {
+      if (event.ctrlKey || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+      const maxScroll = container.scrollHeight - container.clientHeight
+      if (maxScroll <= 0) return
+
+      event.preventDefault()
+      markScrolling()
+
+      if (animationFrame === null) {
+        currentScroll = container.scrollTop
+        targetScroll = currentScroll
+      }
+
+      const unit = event.deltaMode === WheelEvent.DOM_DELTA_LINE
+        ? 16
+        : event.deltaMode === WheelEvent.DOM_DELTA_PAGE
+          ? container.clientHeight
+          : 1
+      const delta = Math.max(-240, Math.min(240, event.deltaY * unit))
+      targetScroll = Math.max(0, Math.min(maxScroll, targetScroll + delta * 0.72))
+
+      if (animationFrame === null) {
+        lastFrameTime = performance.now()
+        animationFrame = requestAnimationFrame(animateScroll)
+      }
+    }
+
+    const handleNativeScroll = () => markScrolling()
+    const handleDirectInput = () => stopAnimation()
+
+    container.addEventListener('wheel', handleWheel, { passive: false })
+    container.addEventListener('scroll', handleNativeScroll, { passive: true })
+    container.addEventListener('pointerdown', handleDirectInput, { passive: true })
+    window.addEventListener('keydown', handleDirectInput)
+
+    return () => {
+      stopAnimation()
+      if (scrollEndTimer) clearTimeout(scrollEndTimer)
+      container.classList.remove('is-scrolling')
+      container.removeEventListener('wheel', handleWheel)
+      container.removeEventListener('scroll', handleNativeScroll)
+      container.removeEventListener('pointerdown', handleDirectInput)
+      window.removeEventListener('keydown', handleDirectInput)
+    }
+  }, [handleHoverEnd])
+
   const scrollToCreatorCollection = () => {
     const section2 = document.getElementById('creator-collection-section')
     const container = scrollWrapperRef.current
@@ -578,9 +677,11 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
       const containerRect = container.getBoundingClientRect()
       const sectionRect = section2.getBoundingClientRect()
       const targetTop = container.scrollTop + (sectionRect.top - containerRect.top)
-      container.scrollTo({ top: targetTop, behavior: 'smooth' })
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      container.scrollTo({ top: targetTop, behavior: reduceMotion ? 'auto' : 'smooth' })
     } else if (section2) {
-      section2.scrollIntoView({ behavior: 'smooth' })
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      section2.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' })
     }
   }
 
@@ -738,6 +839,28 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
           box-shadow: 0 32px 85px rgba(212, 175, 55, 0.8), 0 0 75px 18px rgba(212, 175, 55, 0.6), inset 0 0 35px rgba(212, 175, 55, 0.35);
           filter: brightness(1.22);
         }
+
+        /* Do not start hover previews or expensive 3D/glow transitions as
+           cards pass under the cursor while the page is moving. */
+        .kadence-home-scroll.is-scrolling .kadence-3d-wrapper,
+        .kadence-home-scroll.is-scrolling .kadence-dev-cue-wrapper,
+        .kadence-home-scroll.is-scrolling .kadence-dev-sec2-wrapper {
+          pointer-events: none;
+        }
+        .kadence-home-scroll.is-scrolling .kadence-3d-pop,
+        .kadence-home-scroll.is-scrolling .kadence-3d-card,
+        .kadence-home-scroll.is-scrolling .kadence-dev-cue-pop,
+        .kadence-home-scroll.is-scrolling .kadence-dev-cue-card,
+        .kadence-home-scroll.is-scrolling .kadence-dev-sec2-pop,
+        .kadence-home-scroll.is-scrolling .kadence-dev-sec2-card {
+          transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+          transition: none;
+          filter: none;
+        }
+        .kadence-home-scroll.is-scrolling .kadence-particle {
+          animation-play-state: paused;
+        }
+
       `}</style>
 
       {/* ── Fixed Ambient Background Layer (Compositor-isolated, 0 scroll overhead) ── */}
@@ -822,9 +945,8 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
       {/* ── Native, Butter-Smooth 60/120 FPS Scroll Container ── */}
       <div
         ref={scrollWrapperRef}
-        className={`fixed inset-0 z-50 bg-transparent overflow-y-auto overflow-x-hidden scrollbar-hide ${step === 'loading' ? 'pointer-events-none' : 'pointer-events-auto'}`}
+        className={`kadence-home-scroll fixed inset-0 z-50 bg-transparent overflow-y-auto overflow-x-hidden scrollbar-hide ${step === 'loading' ? 'pointer-events-none' : 'pointer-events-auto'}`}
         style={{
-          scrollBehavior: 'smooth',
           WebkitOverflowScrolling: 'touch',
           overscrollBehaviorY: 'contain',
         }}
@@ -884,7 +1006,7 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
               <div className={`transition-opacity duration-300 ${hoveredVibe && hoveredVibe !== 'dev-special' ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
                 <CreatorCueCard
                   onClick={scrollToCreatorCollection}
-                  onHoverStart={() => handleHoverStart('dev-special')}
+                  onHoverStart={() => handleCardHoverStart('dev-special')}
                   onHoverEnd={handleHoverEnd}
                 />
               </div>
@@ -897,7 +1019,7 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
                     vibe={v}
                     index={i}
                     isHovered={hoveredVibe === v.id}
-                    onHoverStart={handleHoverStart}
+                    onHoverStart={handleCardHoverStart}
                     onHoverEnd={handleHoverEnd}
                     onSelect={handleVibeSelect}
                   />
@@ -934,7 +1056,7 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
                       <CreatorCollectionCard
                         vibe={devSpecialVibe}
                         isHovered={hoveredVibe === devSpecialVibe.id}
-                        onHoverStart={handleHoverStart}
+                        onHoverStart={handleCardHoverStart}
                         onHoverEnd={handleHoverEnd}
                         onSelect={handleVibeSelect}
                       />

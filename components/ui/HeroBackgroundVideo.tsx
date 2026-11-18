@@ -17,6 +17,18 @@ export function HeroBackgroundVideo({ introComplete = false }: HeroBackgroundVid
   useEffect(() => {
     const video = videoRef.current
     if (!video) return
+    const playWithSound = () => {
+      video.muted = false
+      video.play().catch((error: unknown) => {
+        if ((error as { name?: string })?.name === 'NotAllowedError') {
+          video.muted = true
+          void video.play().catch(() => {})
+        }
+      })
+    }
+    const enableSound = () => {
+      if (!introComplete && !hoveredVibe && !document.hidden) playWithSound()
+    }
 
     if (introComplete) {
       // Universe entered — release globe permanently (no re-download ever)
@@ -32,15 +44,21 @@ export function HeroBackgroundVideo({ introComplete = false }: HeroBackgroundVid
         video.load()
       }
       if (video.paused) {
-        video.play().catch(() => {})
+        playWithSound()
       }
     }
     const onVisibility = () => {
       if (document.hidden || hoveredVibe || introComplete) video.pause()
-      else video.play().catch(() => {})
+      else playWithSound()
     }
     document.addEventListener('visibilitychange', onVisibility)
-    return () => document.removeEventListener('visibilitychange', onVisibility)
+    window.addEventListener('click', enableSound)
+    window.addEventListener('keydown', enableSound)
+    return () => {
+      document.removeEventListener('visibilitychange', onVisibility)
+      window.removeEventListener('click', enableSound)
+      window.removeEventListener('keydown', enableSound)
+    }
   }, [introComplete, hoveredVibe])
 
   return (
@@ -54,7 +72,6 @@ export function HeroBackgroundVideo({ introComplete = false }: HeroBackgroundVid
       <video
         ref={videoRef}
         autoPlay
-        muted
         loop
         playsInline
         preload="auto"

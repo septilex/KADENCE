@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef, useCallback, useState } from 'react'
 import { useUIStore } from '@/store/uiStore'
 import { useSongStore } from '@/store/songStore'
 import { INTRO_MEDIA_MANIFEST } from '@/lib/introMediaManifest'
@@ -65,6 +65,24 @@ const NEEDS_SCALE_UP = new Set([
 ])
 
 export default function HoverMediaBackground() {
+  const [soundEnabled, setSoundEnabled] = useState(false)
+  // Warm small clips serially, never the multi-megabyte full videos. Save-Data opts out.
+  useEffect(() => {
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection
+    if (connection?.saveData) return
+    const abort = new AbortController()
+    const timer = setTimeout(async () => {
+      const entries = Object.values(INTRO_MEDIA_MANIFEST)
+      entries.sort((a, b) => Number(b.vibeId === 'dev-special') - Number(a.vibeId === 'dev-special'))
+      for (const entry of entries) {
+        if (abort.signal.aborted) break
+        if (!entry.previewMp4) continue
+        try { const response = await fetch(entry.previewMp4, { signal: abort.signal, cache: 'force-cache' }); await response.arrayBuffer() } catch { break }
+      }
+    }, 1200)
+    return () => { clearTimeout(timer); abort.abort() }
+  }, [])
+
   const rawHoveredVibe = useUIStore((s) => s.hoveredVibe)
   // The hover-video engine only runs where hover cards exist: the intro screen and the
   // Switch Chart overlay. Anywhere else (loading, the wall, Song Detail) it stays halted,
@@ -185,7 +203,7 @@ export default function HoverMediaBackground() {
             onFirstPresentedFrame(fVid, () => {
               if (sessionRef.current !== session) return
               if (pVid) pVid.muted = true
-              fVid.muted = !hasUserActivation()
+              fVid.muted = false
               setVisible(fVid, true)
             })
             // Short delay to allow crossfade, then stop preview
@@ -248,7 +266,7 @@ export default function HoverMediaBackground() {
       if (sessionRef.current !== session) return
 
       // Muted until the page has user activation (unmuted autoplay from a hover is blocked).
-      pVid.muted = !hasUserActivation()
+      pVid.muted = false
       // Reveal only when a frame is actually presented — never show a frozen first frame.
       onFirstPresentedFrame(pVid, () => {
         if (sessionRef.current !== session) return
@@ -260,7 +278,10 @@ export default function HoverMediaBackground() {
         .then(() => {
           if (sessionRef.current !== session) return
           // Preview is confirmed playing — NOW start loading full video
-          beginFullVideoPrep(session, vibeId)
+          // Avoid competing with first-frame playback during brief hovers.
+          const timer = setTimeout(() => beginFullVideoPrep(session, vibeId), 1500)
+          const previous = (pVid as unknown as { __cleanup?: () => void }).__cleanup
+          ;(pVid as unknown as { __cleanup?: () => void }).__cleanup = () => { previous?.(); clearTimeout(timer) }
         })
         .catch(() => {
           // play() was interrupted (user left tile) — halt handles cleanup
@@ -324,6 +345,7 @@ export default function HoverMediaBackground() {
   useEffect(() => {
     const unmuteOnActivation = () => {
       if (!hasUserActivation()) return
+      setSoundEnabled(true)
       const pVid = previewRef.current
       const fVid = fullRef.current
       if (phaseRef.current === 'PREVIEWING' && pVid && !pVid.paused) pVid.muted = false
@@ -338,6 +360,16 @@ export default function HoverMediaBackground() {
   }, [])
 
   return (
+    <>
+      {engineActive && !soundEnabled && <button
+        className="fixed bottom-5 right-5 z-50 pointer-events-auto rounded-full border border-white/30 bg-black/80 px-4 py-2 text-sm text-white"
+        style={{ opacity: 1 }}
+        onClick={() => {
+          setSoundEnabled(true)
+          const video = phaseRef.current === 'FULL_PLAYBACK' ? fullRef.current : previewRef.current
+          if (video?.src) { video.muted = false; video.play().catch(() => setSoundEnabled(false)) }
+        }}
+      >Enable preview sound</button>}
     <div
       ref={containerRef}
       className="fixed inset-0 pointer-events-none overflow-hidden"
@@ -381,5 +413,6 @@ export default function HoverMediaBackground() {
         }}
       />
     </div>
+    </>
   )
 }
