@@ -1,418 +1,80 @@
 'use client'
-
-import { useEffect, useRef, useCallback, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useUIStore } from '@/store/uiStore'
 import { useSongStore } from '@/store/songStore'
 import { INTRO_MEDIA_MANIFEST } from '@/lib/introMediaManifest'
 
-/**
- * Browsers reject unmuted play() until the user has interacted with the page (a hover is
- * not an interaction). Previews therefore start muted and only carry sound once the page
- * has user activation. Unknown support → assume no activation (muted).
- */
-const hasUserActivation = () =>
-  typeof navigator !== 'undefined' && !!(navigator as Navigator & { userActivation?: { hasBeenActive: boolean } }).userActivation?.hasBeenActive
-
-/** Reveal a video only once a real frame has been presented (not merely when play() resolves). */
-function onFirstPresentedFrame(video: HTMLVideoElement, cb: () => void) {
-  let done = false
-  const fire = () => { if (!done) { done = true; cb() } }
-  const v = video as HTMLVideoElement & { requestVideoFrameCallback?: (cb: () => void) => number }
-  if (typeof v.requestVideoFrameCallback === 'function') v.requestVideoFrameCallback(fire)
-  // Safety net: if no frame callback arrives shortly after playback starts, reveal anyway.
-  video.addEventListener('playing', () => setTimeout(fire, 120), { once: true })
-}
-
-/** play() with a muted retry when the autoplay policy blocks unmuted playback. */
-function playWithMutedFallback(video: HTMLVideoElement): Promise<void> {
-  return video.play().catch((err: unknown) => {
-    if ((err as { name?: string })?.name === 'NotAllowedError' && !video.muted) {
-      video.muted = true
-      return video.play()
-    }
-    throw err
-  })
-}
-
-/**
- * HoverMediaBackground
- *
- * Full-screen background video layer for the homepage vibe tiles.
- * State machine: IDLE → PREVIEWING → FULL_PLAYBACK
- *
- * Design principles:
- * - Zero intentional delay: preview loading begins immediately on hover.
- * - Preview (3s clip) is highest priority — starts as soon as canplay fires.
- * - Full video (30s) loading is deferred until preview is confirmed playing.
- * - Preview loops if full video isn't ready at handoff time.
- * - A monotonic session counter invalidates stale callbacks from old hovers.
- * - Audio comes from the MP4 tracks themselves; no overlapping playback.
- */
-
-type PlaybackPhase = 'IDLE' | 'PREVIEWING' | 'FULL_PLAYBACK'
-
-const HANDOFF_TARGET_TIME = 3
-
-const NEEDS_SCALE_UP = new Set([
-  'pop-rising',
-  'dance-hits',
-  'mood-booster',
-  'dev-special',
-  'top-telugu',
-  'top-tamil',
-  'top-hindi',
-  'top-kpop',
-])
-
+// One original full-length MP4 owns both video and audio. No short preview,
+// re-encoding, seeking, crossfade, or overlapping audio sources.
 export default function HoverMediaBackground() {
+  const rawVibe = useUIStore(s => s.hoveredVibe)
+  const active = useSongStore(s => !s.introComplete || s.isChangingVibe)
+  const vibe = active ? rawVibe : null
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const [visible, setVisible] = useState(false)
   const [soundEnabled, setSoundEnabled] = useState(false)
-  // Warm small clips serially, never the multi-megabyte full videos. Save-Data opts out.
+
   useEffect(() => {
-    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection
-    if (connection?.saveData) return
-    const abort = new AbortController()
-    const timer = setTimeout(async () => {
-      const entries = Object.values(INTRO_MEDIA_MANIFEST)
-      entries.sort((a, b) => Number(b.vibeId === 'dev-special') - Number(a.vibeId === 'dev-special'))
-      for (const entry of entries) {
-        if (abort.signal.aborted) break
-        if (!entry.previewMp4) continue
-        try { const response = await fetch(entry.previewMp4, { signal: abort.signal, cache: 'force-cache' }); await response.arrayBuffer() } catch { break }
+    const video = videoRef.current
+    if (!video) return
+    let cancelled = false
+    setVisible(false)
+    video.pause()
+    video.removeAttribute('src')
+    video.load()
+    const source = vibe ? INTRO_MEDIA_MANIFEST[vibe]?.fullMp4 : null
+    if (!source) return
+    const playing = () => {
+      if (!cancelled) { setVisible(true); setSoundEnabled(!video.muted) }
+    }
+    const volume = () => { if (!cancelled) setSoundEnabled(!video.muted) }
+    video.addEventListener('playing', playing)
+    video.addEventListener('volumechange', volume)
+    video.src = source
+    video.volume = 1
+    video.muted = false
+    video.load()
+    void video.play().catch((error: unknown) => {
+      if (cancelled) return
+      if ((error as { name?: string })?.name === 'NotAllowedError') {
+        video.muted = true
+        setSoundEnabled(false)
+        void video.play().catch(() => {})
       }
-    }, 1200)
-    return () => { clearTimeout(timer); abort.abort() }
-  }, [])
-
-  const rawHoveredVibe = useUIStore((s) => s.hoveredVibe)
-  // The hover-video engine only runs where hover cards exist: the intro screen and the
-  // Switch Chart overlay. Anywhere else (loading, the wall, Song Detail) it stays halted,
-  // even if a stale hoveredVibe was left behind.
-  const engineActive = useSongStore((s) => !s.introComplete || s.isChangingVibe)
-  const hoveredVibe = engineActive ? rawHoveredVibe : null
-
-  // ── Refs for state machine (no re-render needed for transitions) ──
-  const phaseRef = useRef<PlaybackPhase>('IDLE')
-  const activeVibeRef = useRef<string | null>(null)
-  const sessionRef = useRef(0) // monotonic counter to invalidate stale closures
-
-
-  const previewRef = useRef<HTMLVideoElement>(null)
-  const fullRef = useRef<HTMLVideoElement>(null)
-
-  // ── DOM opacity/visibility helpers (avoids React re-renders) ──
-  const containerRef = useRef<HTMLDivElement>(null)
-
-  const setVisible = useCallback((el: HTMLElement | null, visible: boolean) => {
-    if (!el) return
-    el.style.opacity = visible ? '1' : '0'
-  }, [])
-
-  const setContainerActive = useCallback((active: boolean) => {
-    const el = containerRef.current
-    if (!el) return
-    if (active) {
-      el.style.opacity = '1'
-      el.style.zIndex = '1'
-    } else {
-      el.style.opacity = '0'
-      el.style.zIndex = '-10'
-    }
-  }, [])
-
-  const setScale = useCallback((vibeId: string | null) => {
-    const scale = vibeId && NEEDS_SCALE_UP.has(vibeId) ? 'scale(1.35)' : 'scale(1)'
-    if (previewRef.current) previewRef.current.style.transform = scale
-    if (fullRef.current) fullRef.current.style.transform = scale
-  }, [])
-
-  // ── Halt: stop all media and reset to IDLE ──
-  const halt = useCallback(() => {
-    // Bump session so any in-flight callbacks become stale
-    sessionRef.current++
-
-    phaseRef.current = 'IDLE'
-    activeVibeRef.current = null
-
-    const pVid = previewRef.current
-    const fVid = fullRef.current
-
-    for (const video of [pVid, fVid]) {
-      const cleanup = (video as unknown as { __cleanup?: () => void } | null)?.__cleanup
-      cleanup?.()
-    }
-    if (pVid) {
-      pVid.pause()
-      pVid.removeAttribute('src')
-      pVid.load()
-    }
-    if (fVid) {
-      fVid.pause()
-      fVid.removeAttribute('src')
-      fVid.load()
-    }
-
-    setVisible(pVid, false)
-    setVisible(fVid, false)
-    setContainerActive(false)
-  }, [setVisible, setContainerActive])
-
-  // ── Begin full-video preparation (called after preview is confirmed playing) ──
-  const beginFullVideoPrep = useCallback((session: number, vibeId: string) => {
-    if (sessionRef.current !== session) return
-    const entry = INTRO_MEDIA_MANIFEST[vibeId as keyof typeof INTRO_MEDIA_MANIFEST]
-    if (!entry?.fullMp4) return
-
-    const fVid = fullRef.current
-    if (!fVid) return
-
-    // Handler: once metadata loads, seek to ~3s
-    const onLoadedMetadata = () => {
-      if (sessionRef.current !== session) return
-      fVid.currentTime = HANDOFF_TARGET_TIME
-    }
-
-    // Handler: once the target position is buffered, execute handoff
-    const attemptHandoff = () => {
-      if (sessionRef.current !== session) return
-      if (phaseRef.current !== 'PREVIEWING') return
-
-      const preview = previewRef.current
-      if (!preview || preview.currentTime < Math.min(HANDOFF_TARGET_TIME, preview.duration || HANDOFF_TARGET_TIME) - 0.25 || fVid.seeking) return
-
-      // Check if target time is buffered
-      let ready = false
-      for (let i = 0; i < fVid.buffered.length; i++) {
-        if (fVid.buffered.start(i) <= HANDOFF_TARGET_TIME && fVid.buffered.end(i) >= HANDOFF_TARGET_TIME + 0.5) {
-          ready = true
-          break
-        }
-      }
-      if (!ready) return
-
-      // Execute handoff
-      phaseRef.current = 'FULL_PLAYBACK'
-
-      const pVid = previewRef.current
-      fVid.muted = true
-      const playPromise = playWithMutedFallback(fVid)
-      if (playPromise) {
-        playPromise
-          .then(() => {
-            if (sessionRef.current !== session) return
-            // Switch audio ownership only when the replacement presents a frame.
-            onFirstPresentedFrame(fVid, () => {
-              if (sessionRef.current !== session) return
-              if (pVid) pVid.muted = true
-              fVid.muted = false
-              setVisible(fVid, true)
-            })
-            // Short delay to allow crossfade, then stop preview
-            setTimeout(() => {
-              if (sessionRef.current !== session) return
-              setVisible(pVid, false)
-              if (pVid) {
-                pVid.pause()
-              }
-            }, 200)
-          })
-          .catch(() => {
-            if (sessionRef.current === session) phaseRef.current = 'PREVIEWING'
-          })
-      }
-    }
-
-    fVid.addEventListener('loadedmetadata', onLoadedMetadata, { once: true })
-    previewRef.current?.addEventListener('timeupdate', attemptHandoff)
-    fVid.addEventListener('progress', attemptHandoff)
-    fVid.addEventListener('canplay', attemptHandoff)
-    fVid.addEventListener('canplaythrough', attemptHandoff)
-    fVid.addEventListener('seeked', attemptHandoff)
-
-    // Start loading — but don't call play() yet
-    fVid.src = entry.fullMp4
-    fVid.load()
-
-    // Store cleanup for this session
-    const cleanup = () => {
-      fVid.removeEventListener('loadedmetadata', onLoadedMetadata)
-      previewRef.current?.removeEventListener('timeupdate', attemptHandoff)
-      fVid.removeEventListener('progress', attemptHandoff)
-      fVid.removeEventListener('canplay', attemptHandoff)
-      fVid.removeEventListener('canplaythrough', attemptHandoff)
-      fVid.removeEventListener('seeked', attemptHandoff)
-    }
-    // We rely on halt() to do removeAttribute('src') + load() which implicitly
-    // cancels everything, but let's also clean up listeners when session changes.
-    // Store the cleanup on the element for halt to call.
-    ;(fVid as unknown as Record<string, unknown>).__cleanup = cleanup
-  }, [setVisible])
-
-  // ── Begin preview playback ──
-  const beginPreview = useCallback((session: number, vibeId: string) => {
-    if (sessionRef.current !== session) return
-    const entry = INTRO_MEDIA_MANIFEST[vibeId as keyof typeof INTRO_MEDIA_MANIFEST]
-    if (!entry?.previewMp4) return
-
-    const pVid = previewRef.current
-    if (!pVid) return
-
-    phaseRef.current = 'PREVIEWING'
-    setScale(vibeId)
-
-    // Enable looping on the preview — if full video isn't ready, preview loops
-    pVid.loop = true
-
-    const onCanPlay = () => {
-      if (sessionRef.current !== session) return
-
-      // Muted until the page has user activation (unmuted autoplay from a hover is blocked).
-      pVid.muted = false
-      // Reveal only when a frame is actually presented — never show a frozen first frame.
-      onFirstPresentedFrame(pVid, () => {
-        if (sessionRef.current !== session) return
-        setContainerActive(true)
-        setVisible(pVid, true)
-      })
-
-      playWithMutedFallback(pVid)
-        .then(() => {
-          if (sessionRef.current !== session) return
-          // Preview is confirmed playing — NOW start loading full video
-          // Avoid competing with first-frame playback during brief hovers.
-          const timer = setTimeout(() => beginFullVideoPrep(session, vibeId), 1500)
-          const previous = (pVid as unknown as { __cleanup?: () => void }).__cleanup
-          ;(pVid as unknown as { __cleanup?: () => void }).__cleanup = () => { previous?.(); clearTimeout(timer) }
-        })
-        .catch(() => {
-          // play() was interrupted (user left tile) — halt handles cleanup
-        })
-    }
-
-    pVid.addEventListener('canplay', onCanPlay, { once: true })
-    pVid.src = entry.previewMp4
-    pVid.load()
-
-    // Cleanup listener if session invalidated before canplay fires
-    ;(pVid as unknown as Record<string, unknown>).__cleanup = () => {
-      pVid.removeEventListener('canplay', onCanPlay)
-    }
-  }, [setVisible, setContainerActive, setScale, beginFullVideoPrep])
-
-  // ── Main hover watcher ──
-  useEffect(() => {
-    // Clean up stale listeners from previous session
-    const pVid = previewRef.current
-    const fVid = fullRef.current
-    const cleanupPrev = (pVid as unknown as Record<string, unknown>)?.__cleanup as (() => void) | undefined
-    const cleanupFull = (fVid as unknown as Record<string, unknown>)?.__cleanup as (() => void) | undefined
-    if (cleanupPrev) { cleanupPrev(); (pVid as unknown as Record<string, unknown>).__cleanup = undefined }
-    if (cleanupFull) { cleanupFull(); (fVid as unknown as Record<string, unknown>).__cleanup = undefined }
-
-    if (!hoveredVibe) {
-      halt()
-      return
-    }
-
-    // Same tile — no action needed
-    if (hoveredVibe === activeVibeRef.current && phaseRef.current !== 'IDLE') {
-      return
-    }
-
-    // Different tile or fresh hover — reset and begin preview immediately
-    halt()
-
-    const entry = INTRO_MEDIA_MANIFEST[hoveredVibe as keyof typeof INTRO_MEDIA_MANIFEST]
-    if (!entry?.previewMp4 || !entry?.fullMp4) return
-
-    const session = ++sessionRef.current
-    activeVibeRef.current = hoveredVibe
-
-    // Zero-delay: begin preview loading immediately (playback gated on canplay)
-    beginPreview(session, hoveredVibe)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hoveredVibe])
-
-  // Cleanup on unmount
-  useEffect(() => {
+    })
     return () => {
-      halt()
+      cancelled = true
+      video.removeEventListener('playing', playing)
+      video.removeEventListener('volumechange', volume)
+      video.pause()
+      video.removeAttribute('src')
+      video.load()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [vibe])
 
-  // Sound policy: previews start muted; the first real interaction (click/tap/key) gives the
-  // page user activation, after which the currently playing hover video gets its sound back.
   useEffect(() => {
-    const unmuteOnActivation = () => {
-      if (!hasUserActivation()) return
-      setSoundEnabled(true)
-      const pVid = previewRef.current
-      const fVid = fullRef.current
-      if (phaseRef.current === 'PREVIEWING' && pVid && !pVid.paused) pVid.muted = false
-      if (phaseRef.current === 'FULL_PLAYBACK' && fVid && !fVid.paused) fVid.muted = false
+    const enableSound = () => {
+      const video = videoRef.current
+      if (!video?.getAttribute('src')) return
+      video.muted = false
+      void video.play().then(() => setSoundEnabled(true)).catch(() => setSoundEnabled(false))
     }
-    window.addEventListener('pointerdown', unmuteOnActivation, true)
-    window.addEventListener('keydown', unmuteOnActivation, true)
+    window.addEventListener('click', enableSound)
+    window.addEventListener('keydown', enableSound)
     return () => {
-      window.removeEventListener('pointerdown', unmuteOnActivation, true)
-      window.removeEventListener('keydown', unmuteOnActivation, true)
+      window.removeEventListener('click', enableSound)
+      window.removeEventListener('keydown', enableSound)
     }
   }, [])
 
-  return (
-    <>
-      {engineActive && !soundEnabled && <button
-        className="fixed bottom-5 right-5 z-50 pointer-events-auto rounded-full border border-white/30 bg-black/80 px-4 py-2 text-sm text-white"
-        style={{ opacity: 1 }}
-        onClick={() => {
-          setSoundEnabled(true)
-          const video = phaseRef.current === 'FULL_PLAYBACK' ? fullRef.current : previewRef.current
-          if (video?.src) { video.muted = false; video.play().catch(() => setSoundEnabled(false)) }
-        }}
-      >Enable preview sound</button>}
-    <div
-      ref={containerRef}
-      className="fixed inset-0 pointer-events-none overflow-hidden"
-      style={{
-        transition: 'opacity 300ms ease',
-        opacity: 0,
-        zIndex: -10,
-      }}
-    >
-      {/* Background Dim */}
-      <div className="absolute inset-0 bg-black/60" style={{ zIndex: 0 }} />
-
-      {/* Preview Layer */}
-      <video
-        ref={previewRef}
-        playsInline
-        muted
-        preload="none"
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{
-          zIndex: 10,
-          transition: 'opacity 150ms ease',
-          opacity: 0,
-          transformOrigin: 'center',
-        }}
-      />
-
-      {/* Full Playback Layer */}
-      <video
-        ref={fullRef}
-        playsInline
-        muted
-        loop
-        preload="none"
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{
-          zIndex: 20,
-          transition: 'opacity 150ms ease',
-          opacity: 0,
-          transformOrigin: 'center',
-        }}
-      />
+  return <>
+    {active && vibe && !soundEnabled && <button
+      className="fixed bottom-5 right-5 z-[110] pointer-events-auto rounded-full border border-white/30 bg-black/80 px-4 py-2 text-sm text-white"
+    >Enable sound</button>}
+    <div className="fixed inset-0 pointer-events-none overflow-hidden"
+      style={{ opacity: visible ? 1 : 0, zIndex: visible ? 1 : -10, transition: 'opacity 150ms ease' }}>
+      <video ref={videoRef} playsInline loop preload="auto"
+        className="absolute inset-0 w-full h-full object-cover" />
     </div>
-    </>
-  )
+  </>
 }
