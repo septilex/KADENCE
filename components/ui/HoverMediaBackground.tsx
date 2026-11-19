@@ -3,6 +3,10 @@ import { useEffect, useRef, useState } from 'react'
 import { useUIStore } from '@/store/uiStore'
 import { useSongStore } from '@/store/songStore'
 import { INTRO_MEDIA_MANIFEST } from '@/lib/introMediaManifest'
+import { measurePicture, coverScale, type PictureBox } from '@/lib/videoCrop'
+
+// Where the picture sits inside each file (some MP4s have black bars burned in). Measured once per file.
+const pictureCache = new Map<string, PictureBox>()
 
 // One original full-length MP4 owns both video and audio. No short preview,
 // re-encoding, seeking, crossfade, or overlapping audio sources.
@@ -24,9 +28,27 @@ export default function HoverMediaBackground() {
     video.load()
     const source = vibe ? INTRO_MEDIA_MANIFEST[vibe]?.fullMp4 : null
     if (!source) return
-    const playing = () => {
-      if (!cancelled) { setVisible(true); setSoundEnabled(!video.muted) }
+    // Scale the video so the picture, not the file with its burned-in bars, covers the screen.
+    let picture: PictureBox | null = pictureCache.get(source) ?? null
+    const applyCrop = () => {
+      const scale = picture ? coverScale(picture, video.videoWidth, video.videoHeight, window.innerWidth, window.innerHeight) : 1
+      video.style.transform = scale > 1 ? `scale(${scale.toFixed(3)})` : ''
     }
+    const playing = () => {
+      if (cancelled) return
+      setSoundEnabled(!video.muted)
+      if (picture) { applyCrop(); setVisible(true); return }
+      // First time this file plays: measure its bars (~0.3 s) before showing it, so it never
+      // appears letterboxed. Show it anyway if measuring is slow.
+      const reveal = setTimeout(() => { if (!cancelled) setVisible(true) }, 600)
+      void measurePicture(video, () => cancelled).then((box) => {
+        clearTimeout(reveal)
+        if (cancelled) return
+        if (box) { picture = box; pictureCache.set(source, box); applyCrop() }
+        setVisible(true)
+      })
+    }
+    window.addEventListener('resize', applyCrop)
     const volume = () => { if (!cancelled) setSoundEnabled(!video.muted) }
     video.addEventListener('playing', playing)
     video.addEventListener('volumechange', volume)
@@ -46,6 +68,8 @@ export default function HoverMediaBackground() {
       cancelled = true
       video.removeEventListener('playing', playing)
       video.removeEventListener('volumechange', volume)
+      window.removeEventListener('resize', applyCrop)
+      video.style.transform = ''
       video.pause()
       video.removeAttribute('src')
       video.load()
