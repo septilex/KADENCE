@@ -15,12 +15,20 @@
  *    under prefers-reduced-motion.
  */
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore, type CSSProperties, type KeyboardEvent as ReactKeyboardEvent } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import type { Vibe } from '@/lib/types'
 import { VIBE_CONFIGS } from '@/lib/vibeConfig'
 import { useLibraryStore } from '@/store/libraryStore'
+import { ConstellationAtmosphere } from './ConstellationAtmosphere'
 
 const DISPLAY: CSSProperties = { fontFamily: "'Syne', sans-serif" }
+const CHART_NAME: CSSProperties = {
+  ...DISPLAY,
+  fontWeight: 800,
+  letterSpacing: '-0.025em',
+  transform: 'scale(1.12, 0.85)',
+  transformOrigin: 'center',
+}
 const BODY: CSSProperties = { fontFamily: "'Space Grotesk', sans-serif" }
 const GOLD = '#d4af37'
 /** Dark halo so labels stay readable where a line passes behind them. */
@@ -280,6 +288,7 @@ export default function DiscoverConstellation({ onVibeSelect, onClose }: { onVib
       style={{ background: 'radial-gradient(120% 90% at 50% 38%, #10111f 0%, #07070d 55%, #020204 100%)' }}
     >
       <style>{STYLES}</style>
+      <ConstellationAtmosphere accent={shown ? colorOf(shown) : '#8875ff'} />
 
       {/* Depth: two star-dust layers that drift at different rates with the pointer */}
       <div aria-hidden="true" className="kdc-layer kdc-dust-a pointer-events-none absolute -inset-6 opacity-70" />
@@ -288,7 +297,7 @@ export default function DiscoverConstellation({ onVibeSelect, onClose }: { onVib
       <div
         aria-hidden="true"
         className="pointer-events-none absolute left-1/2 top-1/2 h-[90vmin] w-[90vmin] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[120px] transition-[background-color,opacity] duration-700"
-        style={{ backgroundColor: shown ? colorOf(shown) : '#3b3f8f', opacity: shown ? 0.16 : 0.1 }}
+        style={{ backgroundColor: shown ? colorOf(shown) : '#3b3f8f', opacity: shown ? 0.06 : 0.015 }}
       />
 
       {/* ── Header: title · search · surprise · close ── */}
@@ -414,8 +423,8 @@ export default function DiscoverConstellation({ onVibeSelect, onClose }: { onVib
                   style={{ background: color, transform: on ? 'scale(1.5)' : 'scale(1)', boxShadow: on ? `0 0 0 3px ${color}33, 0 0 26px 6px ${color}99` : `0 0 12px 1px ${color}80` }}
                 />
               </span>
-              <span className={`${up ? '-mb-1' : '-mt-1'} text-center text-[11px] font-semibold leading-tight tracking-wide transition-colors duration-300 md:text-[13px] ${on ? 'text-white' : 'text-white/80'}`} style={{ ...BODY, textShadow: HALO }}>
-                {vibe.label}
+              <span className={`${up ? '-mb-1' : '-mt-1'} text-center text-[11px] leading-tight transition-colors duration-300 md:text-[13px] ${on ? 'text-white' : 'text-white/80'}`} style={{ textShadow: HALO }}>
+                <span className="block" style={CHART_NAME}>{vibe.label}</span>
                 {homeVibe === star.id && <span className="mt-0.5 block text-[8px] font-bold uppercase tracking-[0.25em] text-white/40">Your home</span>}
               </span>
             </button>
@@ -446,7 +455,7 @@ export default function DiscoverConstellation({ onVibeSelect, onClose }: { onVib
                 <span className="kdc-core h-3.5 w-3.5 rounded-full" style={{ background: `radial-gradient(circle at 35% 30%, #fff6d0, ${GOLD} 60%, #7a5c12)`, transform: on ? 'scale(1.35)' : 'scale(1)', boxShadow: on ? `0 0 34px 8px ${GOLD}aa` : `0 0 18px 2px ${GOLD}77` }} />
               </span>
               <span className="mt-0.5 text-center" style={BODY}>
-                <span className="block text-xs font-extrabold uppercase tracking-[0.28em]" style={{ ...DISPLAY, color: on ? '#f5e3a3' : GOLD }}>Dev’s Universe</span>
+                <span className="block text-xs uppercase" style={{ ...CHART_NAME, color: on ? '#f5e3a3' : GOLD }}>Dev’s Universe</span>
                 <span className="block text-[9px] font-bold uppercase tracking-[0.3em] text-white/40">Creator’s pick</span>
               </span>
             </button>
@@ -467,25 +476,36 @@ export default function DiscoverConstellation({ onVibeSelect, onClose }: { onVib
       </div>
 
       {/* ── Readout: what the focused star is ── */}
-      <div className="pointer-events-none absolute inset-x-5 bottom-4 z-20 md:inset-x-auto md:bottom-9 md:left-10 md:w-[340px]" aria-live="polite">
+      <div className="pointer-events-none absolute inset-x-5 bottom-4 z-20 md:inset-x-auto md:bottom-9 md:left-10 md:w-[680px] md:max-w-[calc(100vw-80px)]" aria-live="polite">
+        <AnimatePresence mode="wait" initial={false}>
         {shown && (shownVibe || shown === 'dev-special') ? (
-          <div key={shown} className="flex items-end gap-4">
-            <span className="text-5xl font-extrabold leading-none md:text-7xl" style={{ ...DISPLAY, color: 'transparent', WebkitTextStroke: `1px ${colorOf(shown)}` }}>
+          <motion.div key={shown} className="flex items-end gap-4 md:gap-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { duration: reducedMotion ? 0 : 0.28, ease: 'easeOut' } }}
+            exit={{ opacity: 0, transition: { duration: reducedMotion ? 0 : 0.18, ease: 'easeIn' } }}>
+            <span className="shrink-0 text-5xl font-extrabold leading-none md:text-[144px]" style={{
+              ...DISPLAY,
+              color: colorOf(shown),
+              textShadow: `0 0 6px ${colorOf(shown)}, 0 0 18px ${colorOf(shown)}cc, 0 0 38px ${colorOf(shown)}99, 0 0 64px ${colorOf(shown)}66`,
+            }}>
               {shown === 'dev-special' ? '✦' : shownVibe?.number}
             </span>
-            <span className="min-w-0 pb-1" style={BODY}>
-              <span className="block text-[9px] font-bold uppercase tracking-[0.35em] text-white/45">{shown === 'dev-special' ? 'A universe of its own' : shownGroup?.name}</span>
-              <span className="block truncate text-lg font-bold md:text-xl" style={DISPLAY}>{shown === 'dev-special' ? 'Dev’s Universe' : shownVibe?.label}</span>
-              <span className="block truncate text-xs text-white/55">{shown === 'dev-special' ? 'Handpicked by the creator' : shownVibe?.sub}</span>
+            <span className="min-w-0 pb-1 md:pb-2" style={BODY}>
+              <span className="block text-[9px] md:text-[18px] font-bold uppercase tracking-[0.35em] text-white/45">{shown === 'dev-special' ? 'A universe of its own' : shownGroup?.name}</span>
+              <span className="block w-[89.28%] truncate text-lg leading-tight md:text-[36px]" style={{ ...CHART_NAME, transformOrigin: 'left center' }}>{shown === 'dev-special' ? 'Dev’s Universe' : shownVibe?.label}</span>
+              <span className="block truncate text-xs md:text-[24px] text-white/55">{shown === 'dev-special' ? 'Handpicked by the creator' : shownVibe?.sub}</span>
             </span>
-          </div>
+          </motion.div>
         ) : (
-          <p className="text-[11px] leading-relaxed text-white/40" style={BODY}>
+          <motion.p key="readout-idle" className="text-[11px] leading-relaxed text-white/40" style={BODY}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            transition={{ duration: reducedMotion ? 0 : 0.18 }}>
             <span className="block font-bold uppercase tracking-[0.3em] text-white/55">14 charts · 4 constellations</span>
             Pick a star to enter its chart. Lines join charts that sound alike.
             <span className="hidden md:inline"> Arrow keys travel between stars.</span>
-          </p>
+          </motion.p>
         )}
+        </AnimatePresence>
       </div>
     </motion.div>
   )

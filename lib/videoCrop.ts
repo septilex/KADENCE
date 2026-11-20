@@ -6,7 +6,9 @@
  */
 
 /** A row/column counts as bar when nothing in it gets brighter than this (0–255 luma). */
-const BAR_LUMA = 22
+// Allow for compression noise in encoded black letterbox bands. A low threshold
+// can treat near-black bars as picture and leave them visible in the viewport.
+const BAR_LUMA = 34
 /** Frames sampled per video; bars are judged over all of them so a dark scene is not mistaken for a bar. */
 const SAMPLES = 3
 const SAMPLE_GAP_MS = 140

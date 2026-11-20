@@ -182,6 +182,23 @@ export default function Home() {
   }, [selectSong, playUrl])
   const handleCloseSong     = useCallback(() => selectSong(null), [selectSong])
 
+  /** Leave the universe for the homepage. The loaded chart stays in memory, so choosing it
+   *  again is instant; picking any chart on the homepage loads it as usual. */
+  const handleGoHome = useCallback(() => {
+    loadRequest.current++ // a chart load still in flight must not reopen the universe
+    setRefreshing(false) // ...and its own cleanup is skipped once superseded
+    setLoading(false, 100)
+    selectSong(null)
+    hoverSong(null)
+    setSearchOpen(false)
+    setChangingVibe(false)
+    setPreviewSong(null)
+    useUIStore.getState().setHoveredVibe(null)
+    playUrl(null) // the homepage plays its own hover video sound
+    setIntroAttempt(attempt => attempt + 1) // fresh homepage (chart picker, scrolled to top)
+    setIntroComplete(false)
+  }, [selectSong, hoverSong, setSearchOpen, setChangingVibe, playUrl, setIntroComplete, setRefreshing, setLoading])
+
   // Hover/selection → audio is handled by lib/audioDirector (started in GlobalAudioPlayer),
   // outside React, so tile changes do not re-render this component.
   const handleSearchSelect = useCallback(
@@ -204,10 +221,12 @@ export default function Home() {
       {/* 3D Universe */}
       <motion.div
         className="absolute inset-0"
+        // Hidden and click-through while the homepage is showing over a loaded universe.
+        style={{ pointerEvents: introComplete ? undefined : 'none' }}
         animate={{
           // Song Detail: opacity-only fade (no animated full-screen blur over the canvas;
           // the canvas also stops rendering while covered — see Universe isPaused).
-          opacity: selectedSong ? 0 : (isRefreshing ? 0.8 : 1),
+          opacity: !introComplete || selectedSong ? 0 : (isRefreshing ? 0.8 : 1),
           filter: 'none'
         }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -221,7 +240,7 @@ export default function Home() {
           onPreview={setPreviewSong}
           isDetailOpen={!!selectedSong}
           isRefreshing={isRefreshing}
-          isPaused={!!selectedSong || isChangingVibe || isRefreshing || isSearchOpen}
+          isPaused={!introComplete || !!selectedSong || isChangingVibe || isRefreshing || isSearchOpen}
           onFps={(f) => { fpsRef.current = f; setFps(f) }}
         />}
       </motion.div>
@@ -260,6 +279,7 @@ export default function Home() {
               onRefresh={handleRefresh}
               isRefreshing={isRefreshing}
               onChangeVibeClick={() => setChangingVibe(true)}
+              onHome={handleGoHome}
               isSongSelected={!!selectedSong}
             />
             <SearchPanel

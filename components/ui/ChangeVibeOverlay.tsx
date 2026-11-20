@@ -35,6 +35,9 @@ const ChangeVibeCard = memo(function ChangeVibeCard({
   const popRef = useRef<HTMLDivElement>(null)
   const rectRef = useRef<DOMRect | null>(null)
   const rafRef = useRef<number | null>(null)
+  const isGold = vibe.id === 'dev-special'
+  // Card fill and glow colour (Dev's Universe glows gold).
+  const glow = isGold ? '#f5c542' : vibe.bgColor
 
   const handlePointerEnter = () => {
     if (popRef.current) {
@@ -118,12 +121,17 @@ const ChangeVibeCard = memo(function ChangeVibeCard({
           onClick={(e) => { e.stopPropagation(); onSelect(vibe.id); }}
           className="kadence-3d-card relative group flex flex-col justify-end p-4 rounded-[20px] overflow-hidden cursor-pointer text-left outline-none w-full h-full select-none"
           style={{
-            backgroundColor: vibe.bgColor,
-            ['--card-shadow-rest' as string]: isActive 
-              ? `0 34px 70px -4px ${vibe.bgColor}, 0 0 60px 15px ${vibe.bgColor}, 0 0 95px 25px ${vibe.bgColor}99, inset 0 2px 5px rgba(255,255,255,0.9)`
-              : `0 24px 50px -6px ${vibe.bgColor}ee, 0 0 36px 6px ${vibe.bgColor}aa, inset 0 2px 4px rgba(255,255,255,0.75)`,
-            ['--card-shadow-hover' as string]: `0 34px 70px -4px ${vibe.bgColor}, 0 0 60px 15px ${vibe.bgColor}, 0 0 95px 25px ${vibe.bgColor}99, inset 0 2px 5px rgba(255,255,255,0.9)`,
+            backgroundColor: glow,
+            // Dev's Universe is the creator's pick: polished gold instead of its dark config colour.
+            backgroundImage: isGold
+              ? 'linear-gradient(135deg, #fff3b0 0%, #f7d46a 22%, #e0a92e 48%, #f9dc7a 70%, #b8860b 100%)'
+              : undefined,
+            ['--card-shadow-rest' as string]: isActive
+              ? `0 34px 70px -4px ${glow}, 0 0 60px 15px ${glow}, 0 0 95px 25px ${glow}99, inset 0 2px 5px rgba(255,255,255,0.9)`
+              : `0 24px 50px -6px ${glow}ee, 0 0 36px 6px ${glow}aa, inset 0 2px 4px rgba(255,255,255,0.75)`,
+            ['--card-shadow-hover' as string]: `0 34px 70px -4px ${glow}, 0 0 60px 15px ${glow}, 0 0 95px 25px ${glow}99, inset 0 2px 5px rgba(255,255,255,0.9)`,
             filter: isActive ? 'brightness(1.15)' : 'brightness(1)',
+            containerType: 'inline-size',
           }}
         >
           {/* ✨ FORCE FULL BOUNDING BOX CLICK TARGET ✨ */}
@@ -146,14 +154,18 @@ const ChangeVibeCard = memo(function ChangeVibeCard({
             }}
           />
 
-          {/* Large background number */}
-          <span 
-            className="absolute top-[-16px] left-[-4px] text-[96px] font-black text-black opacity-[0.35] leading-none pointer-events-none select-none"
-            style={{ 
+          {/* Large background number: sized from the card width (cqw) so it always fits inside
+              the card, never bleeds off the edge, and stays clear of the title block. */}
+          <span
+            aria-hidden="true"
+            className="absolute left-[14px] top-[10px] font-black text-black opacity-[0.3] pointer-events-none select-none"
+            style={{
               fontFamily: "'Syne', sans-serif",
-              display: 'inline-block',
-              transform: 'scaleX(1.4)',
-              transformOrigin: 'left top',
+              fontSize: '30cqw',
+              lineHeight: 0.85,
+              letterSpacing: '-0.04em',
+              fontVariantNumeric: 'tabular-nums',
+              whiteSpace: 'nowrap',
             }}
           >
             {vibe.number}
@@ -208,6 +220,17 @@ export function ChangeVibeOverlay({ currentVibe, onSelectVibe, onClose }: Change
       transition={{ duration: 0.4 }}
       onClick={onClose}
     >
+      {/* Flowing colour atmosphere (background only). Three oversized gradient sheets drift on
+          slow, mutually prime CSS loops; `alternate` makes every loop reverse instead of resetting,
+          so there is never a jump. Transform-only animation: the gradients rasterise once and the
+          GPU just moves them. Unmounts with the overlay, so nothing runs while it is closed. */}
+      <div aria-hidden="true" className="kcv-atmosphere pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="kcv-sheet kcv-sheet-a" />
+        <div className="kcv-sheet kcv-sheet-b" />
+        <div className="kcv-sheet kcv-sheet-c" />
+        <div className="kcv-core" />
+      </div>
+
       <motion.div
         className="relative z-50 flex flex-col items-center gap-8 px-6 py-10 max-w-4xl w-full"
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -218,9 +241,14 @@ export function ChangeVibeOverlay({ currentVibe, onSelectVibe, onClose }: Change
       >
         {/* Header */}
         <div className="flex flex-col items-center gap-2 text-center">
+          {/* Wide Syne title in plain white. */}
           <h2
-            className="text-white text-3xl md:text-4xl font-black tracking-tight"
-            style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+            className="text-white text-3xl md:text-4xl uppercase select-none"
+            style={{
+              fontFamily: "'Syne', sans-serif",
+              fontWeight: 800,
+              letterSpacing: '0.14em',
+            }}
           >
             Switch Chart
           </h2>
@@ -300,6 +328,67 @@ export function ChangeVibeOverlay({ currentVibe, onSelectVibe, onClose }: Change
             transition: transform 0.1s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.34, 1.5, 0.64, 1), filter 0.3s ease;
             box-shadow: var(--card-shadow-hover);
             filter: brightness(1.22);
+          }
+
+          /* ── Flowing colour atmosphere ──────────────────────────────────────────
+             Softness comes from wide radial falloffs, not a blur filter, so nothing
+             is re-blurred per frame. Sheets are 2x the viewport so their edges never
+             come into view while they drift. */
+          .kcv-atmosphere { z-index: 0; contain: strict; }
+          .kcv-sheet {
+            position: absolute;
+            inset: -50%;
+            will-change: transform;
+            mix-blend-mode: screen;
+            backface-visibility: hidden;
+          }
+          .kcv-sheet-a {
+            opacity: 0.55;
+            background:
+              radial-gradient(28% 32% at 22% 30%, rgba(255, 106, 0, 0.85) 0%, rgba(255, 106, 0, 0) 100%),
+              radial-gradient(30% 34% at 74% 26%, rgba(139, 0, 255, 0.8) 0%, rgba(139, 0, 255, 0) 100%),
+              radial-gradient(26% 30% at 60% 76%, rgba(16, 200, 96, 0.7) 0%, rgba(16, 200, 96, 0) 100%);
+            animation: kcv-drift-a 46s ease-in-out infinite alternate;
+          }
+          .kcv-sheet-b {
+            opacity: 0.5;
+            background:
+              radial-gradient(30% 30% at 30% 72%, rgba(30, 77, 255, 0.85) 0%, rgba(30, 77, 255, 0) 100%),
+              radial-gradient(26% 30% at 78% 64%, rgba(224, 16, 58, 0.8) 0%, rgba(224, 16, 58, 0) 100%),
+              radial-gradient(24% 26% at 48% 22%, rgba(255, 179, 0, 0.6) 0%, rgba(255, 179, 0, 0) 100%);
+            animation: kcv-drift-b 61s ease-in-out infinite alternate;
+          }
+          .kcv-sheet-c {
+            opacity: 0.4;
+            background:
+              radial-gradient(26% 28% at 18% 52%, rgba(255, 0, 184, 0.75) 0%, rgba(255, 0, 184, 0) 100%),
+              radial-gradient(28% 30% at 84% 40%, rgba(0, 179, 255, 0.75) 0%, rgba(0, 179, 255, 0) 100%);
+            animation: kcv-drift-c 79s ease-in-out infinite alternate;
+          }
+          /* Keeps the middle dark so the menu and the coloured tiles stay readable. */
+          .kcv-core {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(60% 62% at 50% 50%, rgba(5, 5, 9, 0.82) 0%, rgba(5, 5, 9, 0.55) 48%, rgba(5, 5, 9, 0.12) 78%, rgba(5, 5, 9, 0) 100%);
+          }
+          /* Horizontal + diagonal travel; translate is a share of each sheet's own (2x) size. */
+          @keyframes kcv-drift-a {
+            0%   { transform: translate3d(-9%, -4%, 0) rotate(0deg); }
+            50%  { transform: translate3d(4%, 5%, 0) rotate(8deg); }
+            100% { transform: translate3d(10%, -3%, 0) rotate(-4deg); }
+          }
+          @keyframes kcv-drift-b {
+            0%   { transform: translate3d(8%, 6%, 0) rotate(0deg); }
+            50%  { transform: translate3d(-6%, -2%, 0) rotate(-10deg); }
+            100% { transform: translate3d(-10%, 7%, 0) rotate(5deg); }
+          }
+          @keyframes kcv-drift-c {
+            0%   { transform: translate3d(-4%, 8%, 0) rotate(0deg) scale(1); }
+            50%  { transform: translate3d(7%, -6%, 0) rotate(12deg) scale(1.08); }
+            100% { transform: translate3d(2%, 4%, 0) rotate(-6deg) scale(0.96); }
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .kcv-sheet { animation: none; }
           }
         `
       }} />

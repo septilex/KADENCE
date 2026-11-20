@@ -13,6 +13,8 @@ interface NavbarProps {
   onRefresh: () => void
   isRefreshing: boolean
   onChangeVibeClick: () => void
+  /** Leave the universe and return to the homepage (chart picker). */
+  onHome: () => void
   isSongSelected?: boolean
 }
 
@@ -23,6 +25,7 @@ export function Navbar({
   onRefresh,
   isRefreshing,
   onChangeVibeClick,
+  onHome,
   isSongSelected,
 }: NavbarProps) {
   const storeSelectedSong = useSongStore(s => s.selectedSong)
@@ -101,6 +104,22 @@ export function Navbar({
         className="pointer-events-auto flex items-center gap-2"
         style={{ '--foreground': '#ffffff', '--background': '#ffffff' } as React.CSSProperties}
       >
+        {/* Home: back to the homepage */}
+        <GlassButton
+          id="navbar-home-btn"
+          onClick={onHome}
+          size="sm"
+          title="Back to the homepage"
+          aria-label="Home"
+          contentClassName="flex items-center gap-2 text-white text-xs tracking-wide font-medium"
+        >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M3 10.5 12 3l9 7.5" />
+            <path d="M5 9.5V21h5v-6h4v6h5V9.5" />
+          </svg>
+          Home
+        </GlassButton>
+
         {/* Change Vibe Button */}
         <GlassButton
           onClick={onChangeVibeClick}

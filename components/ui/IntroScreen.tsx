@@ -255,7 +255,7 @@ function CreatorCueCard({
             e.stopPropagation()
             onClick()
           }}
-          className="kadence-dev-cue-card relative group flex flex-col items-center justify-center gap-0.5 cursor-pointer rounded-[44px] px-8 py-2.5 md:px-12 md:py-4 select-none overflow-hidden outline-none w-full h-full"
+          className="kadence-dev-cue-card relative group flex min-w-[min(88vw,420px)] flex-col items-center justify-center gap-1 cursor-pointer rounded-[44px] px-8 py-3 md:min-w-[500px] md:px-14 md:py-5 select-none overflow-hidden outline-none w-full h-full"
           style={{
             background: 'linear-gradient(135deg, #FFF9A6 0%, #FFDF00 22%, #FFC400 52%, #FFA000 82%, #FF8F00 100%)',
           }}
@@ -281,7 +281,7 @@ function CreatorCueCard({
 
           {/* Title: Explore Dev's Universe in pure #000000 bold */}
           <span
-            className="text-[22px] font-[900] text-[#000000] tracking-tight pointer-events-none z-10 leading-tight"
+            className="text-[24px] md:text-[28px] font-[900] text-[#000000] tracking-[0.005em] pointer-events-none z-10 leading-tight whitespace-nowrap"
             style={{ fontFamily: "'Syne', sans-serif" }}
           >
             Explore Dev&apos;s Universe
@@ -391,9 +391,11 @@ function CreatorCollectionCard({
         <button
           id={`vibe-${vibe.id}`}
           onClick={(e) => { e.stopPropagation(); onSelect(vibe.id); }}
-          className="kadence-dev-sec2-card relative group flex flex-col justify-end p-8 rounded-[24px] overflow-hidden cursor-pointer text-left outline-none w-full h-[240px] border border-[#d4af37]/60 select-none"
+          className="kadence-dev-sec2-card relative group flex flex-col justify-end p-8 rounded-[24px] overflow-hidden cursor-pointer text-left outline-none w-full h-[240px] border border-[#ffe28a]/80 select-none"
           style={{
-            backgroundColor: vibe.bgColor,
+            // Polished gold fill (same palette as the Dev's Universe tile in Switch Chart).
+            backgroundColor: '#f5c542',
+            backgroundImage: 'linear-gradient(135deg, #fff3b0 0%, #f7d46a 22%, #e0a92e 48%, #f9dc7a 70%, #b8860b 100%)',
           }}
         >
           {/* ✨ FORCE FULL BOUNDING BOX CLICK TARGET ✨ */}
@@ -420,9 +422,9 @@ function CreatorCollectionCard({
           />
 
           {/* Large background number */}
-          <span 
+          <span
             className="absolute top-[-20px] left-[0px] text-[120px] font-black text-[#d4af37] opacity-[0.08] leading-none pointer-events-none select-none"
-            style={{ 
+            style={{
               fontFamily: "'Syne', sans-serif",
               display: 'inline-block',
               transform: 'scaleX(1.45)',
@@ -435,7 +437,7 @@ function CreatorCollectionCard({
 
           {/* Badge */}
           {vibe.badge && (
-            <div className="absolute top-5 right-5 px-3 py-1 rounded-[8px] backdrop-blur-md text-[10px] font-bold tracking-widest shadow-sm bg-[#d4af37]/20 text-[#d4af37] border border-[#d4af37]/40 pointer-events-none">
+            <div className="absolute top-5 right-5 px-3 py-1 rounded-[8px] text-[10px] font-bold tracking-widest shadow-sm bg-black text-white pointer-events-none">
               {vibe.badge}
             </div>
           )}
@@ -443,16 +445,16 @@ function CreatorCollectionCard({
           {/* Text */}
           <div className="relative z-10 w-full mt-auto pointer-events-none">
             <span
-              className="block text-white font-[800] text-xl md:text-2xl leading-tight mb-1"
+              className="block text-black font-[800] text-xl md:text-2xl leading-tight mb-1"
               style={{ fontFamily: "'Syne', sans-serif" }}
             >
               {vibe.label}
             </span>
             <div className="flex items-center gap-2 mt-1">
-              <span className="text-white/70 text-[10px] md:text-xs uppercase font-bold tracking-wider leading-tight">
+              <span className="text-black/80 text-[10px] md:text-xs uppercase font-bold tracking-wider leading-tight">
                 {vibe.sub}
               </span>
-              <span className="text-[#d4af37] text-[10px] md:text-xs font-bold tracking-[0.1em] uppercase">
+              <span className="text-[#5c3d00] text-[10px] md:text-xs font-bold tracking-[0.1em] uppercase">
                 • 80 handpicked tracks
               </span>
             </div>

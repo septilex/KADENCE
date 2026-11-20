@@ -1,219 +1,85 @@
 'use client'
 import * as React from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 
-interface LoaderProps {
-  size?: number
-  text?: string
-}
+interface LoaderProps { size?: number; text?: string }
 
-const MUSIC_WORDS = [
-  'Generating',
-  'Tuning',
-  'Mixing',
-  'Rapping',
-  'Composing',
-  'Producing',
-  'Creating',
-  'Vibing',
-  'Mastering',
-  'Synthesizing',
-] as const
-
-export const GlowingRingLoader: React.FC<LoaderProps> = ({
-  size = 340,
-  text,
-}) => {
-  const [currentWord, setCurrentWord] = React.useState<string>(() => {
-    return text || MUSIC_WORDS[Math.floor(Math.random() * MUSIC_WORDS.length)]
+// Fixed circular silhouette with fine, deterministic wave contours inside it.
+const WAVES = Array.from({ length: 28 }, (_, line) => {
+  const points = Array.from({ length: 241 }, (_, i) => {
+    const angle = i / 240 * Math.PI * 2
+    const inset = line * 1.35
+    const wave = (Math.sin(angle * 3 + line * 0.09) + 1) * (6 + line * 0.42)
+    const radius = 174 - inset - wave
+    return `${(250 + Math.cos(angle) * radius).toFixed(2)},${(250 + Math.sin(angle) * radius).toFixed(2)}`
   })
+  return 'M' + points.join(' L') + ' Z'
+})
 
-  // Randomly cycle through music-related words every 1.5s
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentWord((prev) => {
-        const pool = MUSIC_WORDS.filter((w) => w !== prev)
-        return pool[Math.floor(Math.random() * pool.length)]
-      })
-    }, 1500)
-
-    return () => clearInterval(interval)
-  }, [])
-
-  const letters = currentWord.split('')
-
+export const GlowingRingLoader: React.FC<LoaderProps> = ({ size = 340, text }) => {
+  const id = React.useId().replace(/:/g, '')
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0, scale: 0.98 }}
-      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-transparent pointer-events-none select-none"
-    >
-      <div
-        className="relative flex items-center justify-center"
-        style={{ width: size, height: size, maxWidth: '90vw', maxHeight: '90vw' }}
-      >
-        {/* Soft Music Beat Pulse Glow — expands subtly outward synchronized with the rhythm */}
-        <div className="absolute inset-[-12px] rounded-full blur-[32px] animate-beatPulse bg-gradient-to-tr from-purple-600/35 via-pink-500/35 to-cyan-400/35 pointer-events-none" />
-
-        {/* Subtle Outer Futuristic Orbit Ring */}
-        <div className="absolute inset-[-20px] rounded-full border border-white/[0.09] border-dashed animate-slowOrbit pointer-events-none" />
-
-        {/* Subtle Inner Concentric Accent Ring */}
-        <div className="absolute inset-[22px] rounded-full border border-white/[0.07] pointer-events-none" />
-
-        {/* Four Subtle Glowing Micro-Accents at Cardinal Points */}
-        <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_10px_#06b6d4] pointer-events-none" />
-        <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-pink-500 shadow-[0_0_10px_#ec4899] pointer-events-none" />
-        <div className="absolute -left-1.5 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-purple-400 shadow-[0_0_10px_#a855f7] pointer-events-none" />
-        <div className="absolute -right-1.5 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-orange-400 shadow-[0_0_10px_#f97316] pointer-events-none" />
-
-        {/* Animated Words in the Center with Syne Font */}
-        <div className="relative z-10 flex items-center justify-center pointer-events-none">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentWord}
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -5 }}
-              transition={{ duration: 0.22, ease: 'easeOut' }}
-              className="flex items-center justify-center"
-            >
-              {letters.map((letter, index) => (
-                <span
-                  key={`${currentWord}-${index}`}
-                  className="inline-block text-white text-xl sm:text-2xl font-bold uppercase tracking-[0.22em] opacity-60 animate-loaderLetter drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]"
-                  style={{
-                    fontFamily: "'Syne', 'Syncopate', sans-serif",
-                    animationDelay: `${index * 0.08}s`,
-                  }}
-                >
-                  {letter}
-                </span>
-              ))}
-            </motion.div>
-          </AnimatePresence>
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none select-none"
+      role="status" aria-live="polite" aria-label={text || 'Preparing your track'}>
+      <div className="loader-orb" style={{ width: `min(${size * 1.55}px, 94vw, 78dvh)`, aspectRatio: '1' }}>
+        <svg viewBox="0 0 500 500" className="orb-art" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id={id + 'rim'} x1="110" y1="90" x2="370" y2="420" gradientUnits="userSpaceOnUse">
+              <stop stopColor="#8db6ff" /><stop offset=".3" stopColor="#ec7dff" />
+              <stop offset=".65" stopColor="#bd51ea" /><stop offset=".88" stopColor="#ff9759" />
+              <stop offset="1" stopColor="#fff5c9" />
+            </linearGradient>
+            <radialGradient id={id + 'core'}>
+              <stop stopColor="#080611" stopOpacity=".94" />
+              <stop offset=".8" stopColor="#130b24" stopOpacity=".9" />
+              <stop offset="1" stopColor="#492047" stopOpacity=".45" />
+            </radialGradient>
+          </defs>
+          <ellipse cx="250" cy="250" rx="246" ry="83" transform="rotate(-25 250 250)"
+            stroke={`url(#${id}rim)`} strokeWidth=".65" opacity=".28" />
+          <circle cx="250" cy="250" r="175" fill={`url(#${id}core)`} />
+          <g className="orb-waves">
+            {WAVES.map((d, i) => <path key={i} d={d} stroke={`url(#${id}rim)`}
+              strokeWidth={i % 7 === 0 ? '.9' : '.55'} opacity={.65 - i * .012} />)}
+          </g>
+          <circle cx="250" cy="250" r="175" stroke={`url(#${id}rim)`} strokeWidth="5" opacity=".12" />
+          <circle cx="250" cy="250" r="175" stroke={`url(#${id}rim)`} strokeWidth="1.7" />
+          <g className="orb-ticks">
+            {Array.from({ length: 120 }, (_, i) => <line key={i} x1="250" y1="42" x2="250" y2={i % 5 === 0 ? 52 : 49}
+              transform={`rotate(${i * 3} 250 250)`} stroke={`url(#${id}rim)`}
+              strokeWidth={i > 8 && i < 27 ? '1.7' : '.8'} opacity={i > 8 && i < 27 ? .95 : .28} />)}
+          </g>
+          <g transform="rotate(-17 250 250)">
+            <ellipse cx="250" cy="250" rx="239" ry="64" stroke={`url(#${id}rim)`} strokeWidth=".8" opacity=".65" />
+            <circle r="3.2" fill="#ffe0f8">
+              <animateMotion dur="9s" repeatCount="indefinite" path="M489,250 A239,64 0 1,1 11,250 A239,64 0 1,1 489,250" />
+            </circle>
+          </g>
+        </svg>
+        <div className="orb-copy" aria-hidden="true">
+          <div className="orb-equalizer">{[8, 16, 25, 14, 21, 30, 11].map((height, i) =>
+            <span key={i} style={{ height, animationDelay: `${i * -.13}s` }} />)}</div>
+          <div className="orb-title">{text || 'Preparing your track'}</div>
+          <div className="orb-subtitle">Tuning the universe for you…</div>
         </div>
-
-        {/* Dynamic Multicolor Glowing Rotating Main Ring */}
-        <div className="absolute inset-0 rounded-full animate-loaderCircle pointer-events-none" />
       </div>
-
       <style jsx>{`
-        @keyframes loaderCircle {
-          0% {
-            transform: rotate(0deg);
-            box-shadow:
-              0 8px 18px 0 #ec4899 inset,
-              0 18px 28px 0 #8b5cf6 inset,
-              0 40px 48px 0 #3b82f6 inset,
-              0 0 8px 2px rgba(236, 72, 153, 0.5),
-              0 0 20px 4px rgba(139, 92, 246, 0.4),
-              0 0 36px 8px rgba(59, 130, 246, 0.3);
-          }
-          20% {
-            transform: rotate(72deg);
-            box-shadow:
-              0 8px 18px 0 #a855f7 inset,
-              0 18px 28px 0 #3b82f6 inset,
-              0 40px 48px 0 #06b6d4 inset,
-              0 0 8px 2px rgba(168, 85, 247, 0.5),
-              0 0 20px 4px rgba(59, 130, 246, 0.4),
-              0 0 36px 8px rgba(6, 182, 212, 0.3);
-          }
-          40% {
-            transform: rotate(144deg);
-            box-shadow:
-              0 8px 18px 0 #06b6d4 inset,
-              0 18px 28px 0 #10b981 inset,
-              0 40px 48px 0 #8b5cf6 inset,
-              0 0 8px 2px rgba(6, 182, 212, 0.5),
-              0 0 20px 4px rgba(16, 185, 129, 0.4),
-              0 0 36px 8px rgba(139, 92, 246, 0.3);
-          }
-          60% {
-            transform: rotate(216deg);
-            box-shadow:
-              0 8px 18px 0 #f97316 inset,
-              0 18px 28px 0 #f43f5e inset,
-              0 40px 48px 0 #a855f7 inset,
-              0 0 8px 2px rgba(249, 115, 22, 0.5),
-              0 0 20px 4px rgba(244, 63, 94, 0.4),
-              0 0 36px 8px rgba(168, 85, 247, 0.3);
-          }
-          80% {
-            transform: rotate(288deg);
-            box-shadow:
-              0 8px 18px 0 #f43f5e inset,
-              0 18px 28px 0 #ec4899 inset,
-              0 40px 48px 0 #f97316 inset,
-              0 0 8px 2px rgba(244, 63, 94, 0.5),
-              0 0 20px 4px rgba(236, 72, 153, 0.4),
-              0 0 36px 8px rgba(249, 115, 22, 0.3);
-          }
-          100% {
-            transform: rotate(360deg);
-            box-shadow:
-              0 8px 18px 0 #ec4899 inset,
-              0 18px 28px 0 #8b5cf6 inset,
-              0 40px 48px 0 #3b82f6 inset,
-              0 0 8px 2px rgba(236, 72, 153, 0.5),
-              0 0 20px 4px rgba(139, 92, 246, 0.4),
-              0 0 36px 8px rgba(59, 130, 246, 0.3);
-          }
-        }
-
-        @keyframes beatPulse {
-          0%, 100% {
-            transform: scale(0.97);
-            opacity: 0.2;
-          }
-          50% {
-            transform: scale(1.15);
-            opacity: 0.65;
-          }
-        }
-
-        @keyframes slowOrbit {
-          0% {
-            transform: rotate(0deg);
-          }
-          100% {
-            transform: rotate(360deg);
-          }
-        }
-
-        @keyframes loaderLetter {
-          0%,
-          100% {
-            opacity: 0.45;
-            transform: translateY(0);
-          }
-          20% {
-            opacity: 1;
-            transform: scale(1.14) translateY(-2px);
-          }
-          40% {
-            opacity: 0.75;
-            transform: translateY(0);
-          }
-        }
-
-        .animate-loaderCircle {
-          animation: loaderCircle 5.5s linear infinite;
-        }
-
-        .animate-beatPulse {
-          animation: beatPulse 2.6s ease-in-out infinite;
-        }
-
-        .animate-slowOrbit {
-          animation: slowOrbit 30s linear infinite;
-        }
-
-        .animate-loaderLetter {
-          animation: loaderLetter 2.6s infinite ease-in-out;
+        .loader-orb { position: relative; flex: none; }
+        .orb-art { width: 100%; height: 100%; overflow: visible; }
+        .orb-copy { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 15px; }
+        .orb-title { color: #f7edff; font-family: 'Space Grotesk', sans-serif; font-size: clamp(10px, 1.2vw, 16px); letter-spacing: .24em; text-transform: uppercase; max-width: 72%; }
+        .orb-subtitle { color: #a99cb6; font-size: clamp(9px, 1vw, 12px); letter-spacing: .04em; }
+        .orb-equalizer { height: 32px; display: flex; align-items: center; gap: 4px; margin-bottom: 5px; }
+        .orb-equalizer span { display: block; width: 2px; border-radius: 2px; background: #d595ff; animation: equalize 1.5s ease-in-out infinite alternate; }
+        .orb-waves, .orb-ticks { transform-origin: 250px 250px; }
+        .orb-waves { animation: orbit 32s linear infinite; }
+        .orb-ticks { animation: orbit 70s linear infinite reverse; }
+        @keyframes orbit { to { transform: rotate(360deg); } }
+        @keyframes equalize { to { transform: scaleY(.35); opacity: .6; } }
+        @media (prefers-reduced-motion: reduce) {
+          .orb-waves, .orb-ticks, .orb-equalizer span { animation: none; }
         }
       `}</style>
     </motion.div>

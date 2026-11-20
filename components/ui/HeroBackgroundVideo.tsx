@@ -40,7 +40,7 @@ export function HeroBackgroundVideo({ introComplete = false }: HeroBackgroundVid
     } else {
       // No category video — resume globe from buffered position
       if (!video.getAttribute('src')) {
-        video.setAttribute('src', '/videos/globe.mp4')
+        video.setAttribute('src', '/videos/globe-hq.mp4')
         video.load()
       }
       if (video.paused) {
@@ -76,12 +76,13 @@ export function HeroBackgroundVideo({ introComplete = false }: HeroBackgroundVid
         playsInline
         preload="auto"
         className="absolute inset-0 w-full h-full object-cover"
-        src="/videos/globe.mp4"
+        src="/videos/globe-hq.mp4"
         style={{
           transform: 'translate3d(0, 0, 0) scale(1.85)',
           transformOrigin: 'center top',
           objectPosition: 'center top', // Pins the top of the video to show the top half of the globe
-          filter: 'contrast(1.3) brightness(1.4) saturate(1.2)',
+          // No CSS filter: the original footage plays as encoded. A full-screen filter on an
+          // upscaled video costs a GPU pass every frame and was making playback stutter.
           display: 'block',
         }}
       />
