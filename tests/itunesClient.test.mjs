@@ -44,3 +44,28 @@ test('request budget and upstream payload validation fail explicitly', async () 
   const invalid=new ItunesClient(async()=>Response.json({results:'invalid'}))
   await assert.rejects(invalid.search('test'))
 })
+test('top-songs charts parse Apple RSS entries into playable tracks with their rank', async () => {
+  let url = ''
+  const entry = (id, name) => ({
+    'im:name': { label: name }, 'im:artist': { label: 'Anirudh Ravichander' },
+    'im:collection': { 'im:name': { label: 'Jailer 2 (Original Motion Picture Soundtrack)' } },
+    'im:image': [{ label: 'https://is1-ssl.mzstatic.com/a/cover.jpg/55x55bb.png' }, { label: 'https://is1-ssl.mzstatic.com/a/cover.jpg/170x170bb.png' }],
+    'im:releaseDate': { label: '2026-09-30T00:00:00-07:00' },
+    category: { attributes: { 'im:id': '1264', term: 'Tamil' } },
+    id: { attributes: { 'im:id': String(id) } },
+    link: [
+      { attributes: { rel: 'alternate', href: `https://music.apple.com/in/album/x/1?i=${id}` } },
+      { attributes: { rel: 'enclosure', 'im:assetType': 'preview', href: `https://audio-ssl.itunes.apple.com/${id}.m4a` } },
+    ],
+  })
+  const client = new ItunesClient(async u => { url = String(u); return Response.json({ feed: { entry: [entry(11, 'Jailer 2 Theme'), entry(12, 'One Name')] } }) })
+  const tracks = await client.topSongs('IN', 1264)
+  assert.equal(url, 'https://itunes.apple.com/in/rss/topsongs/limit=100/genre=1264/json')
+  assert.deepEqual(tracks.map(t => [t.trackId, t.chartRank, t.primaryGenreName]), [[11, 1, 'Tamil'], [12, 2, 'Tamil']])
+  assert.equal(tracks[0].artworkUrl100, 'https://is1-ssl.mzstatic.com/a/cover.jpg/100x100bb.jpg')
+  assert.equal(tracks[0].previewUrl, 'https://audio-ssl.itunes.apple.com/11.m4a')
+  // a single-entry feed is an object, not an array
+  const one = new ItunesClient(async () => Response.json({ feed: { entry: entry(13, 'Solo') } }))
+  assert.equal((await one.topSongs('us')).length, 1)
+  await assert.rejects(new ItunesClient(async () => Response.json({ nope: 1 })).topSongs('us'))
+})

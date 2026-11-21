@@ -21,6 +21,13 @@ export interface SongNode {
   // Display
   color: string
   scale: number
+  // Provenance (optional; set for provider-sourced songs)
+  /** ISO release date from Apple. */
+  releaseDate?: string
+  /** Where the song entered the chart: Apple's live chart, the verified curated list, or keyword search. */
+  source?: 'chart' | 'curated' | 'search'
+  /** Best position on any Apple chart merged into this KADENCE chart. */
+  chartRank?: number
 }
 
 export type Vibe =

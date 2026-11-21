@@ -1,7 +1,7 @@
 import { SongNode, Vibe } from './types'
 import { itunesClient, MusicProviderError, type ItunesTrack } from './itunesClient'
 import { devSpecialData }             from './devSpecialData'
-import { isPlaylistVibe, getPlaylistSongs } from './chartSource'
+import { CURATED_TRACKS } from './curatedTracks'
 
 const GENRE_COLORS: Record<string, string> = {
   pop: '#ff6b9d',
@@ -183,12 +183,12 @@ function scoreTeluguTrack(track: ItunesTrack): number {
 
   // ── Hard disqualifiers ── score made deeply negative so they never pass
   if (containsScript(combined, TAMIL_SCRIPT_RE) || containsScript(combined, DEVANAGARI_RE)) {
-    console.log(`[TELUGU ✗ wrong-script] "${name}" — ${artist}`);
+    if (MUSIC_DEBUG) console.log(`[TELUGU ✗ wrong-script] "${name}" — ${artist}`);
     return -200;
   }
   const haystack = combined.toLowerCase();
   if (HARD_REJECT_KEYWORDS.some(kw => haystack.includes(kw))) {
-    console.log(`[TELUGU ✗ instrumental] "${name}"`);
+    if (MUSIC_DEBUG) console.log(`[TELUGU ✗ instrumental] "${name}"`);
     return -200;
   }
 
@@ -214,7 +214,7 @@ function scoreTeluguTrack(track: ItunesTrack): number {
   score += recencyBonus(getReleaseYear(track));
 
   if (score < ACCEPT_THRESHOLD) {
-    console.log(`[TELUGU ✗ score=${score}] "${name}" — ${artist} — ${genre}`);
+    if (MUSIC_DEBUG) console.log(`[TELUGU ✗ score=${score}] "${name}" — ${artist} — ${genre}`);
   }
   return score;
 }
@@ -228,12 +228,12 @@ function scoreTamilTrack(track: ItunesTrack): number {
   const combined = `${name} ${artist} ${album} ${genre}`;
 
   if (containsScript(combined, TELUGU_SCRIPT_RE) || containsScript(combined, DEVANAGARI_RE)) {
-    console.log(`[TAMIL ✗ wrong-script] "${name}" — ${artist}`);
+    if (MUSIC_DEBUG) console.log(`[TAMIL ✗ wrong-script] "${name}" — ${artist}`);
     return -200;
   }
   const haystack = combined.toLowerCase();
   if (HARD_REJECT_KEYWORDS.some(kw => haystack.includes(kw))) {
-    console.log(`[TAMIL ✗ instrumental] "${name}"`);
+    if (MUSIC_DEBUG) console.log(`[TAMIL ✗ instrumental] "${name}"`);
     return -200;
   }
 
@@ -254,7 +254,7 @@ function scoreTamilTrack(track: ItunesTrack): number {
   score += recencyBonus(getReleaseYear(track));
 
   if (score < ACCEPT_THRESHOLD) {
-    console.log(`[TAMIL ✗ score=${score}] "${name}" — ${artist} — ${genre}`);
+    if (MUSIC_DEBUG) console.log(`[TAMIL ✗ score=${score}] "${name}" — ${artist} — ${genre}`);
   }
   return score;
 }
@@ -268,12 +268,12 @@ function scoreHindiTrack(track: ItunesTrack): number {
   const combined = `${name} ${artist} ${album} ${genre}`;
 
   if (containsScript(combined, TELUGU_SCRIPT_RE) || containsScript(combined, TAMIL_SCRIPT_RE)) {
-    console.log(`[HINDI ✗ wrong-script] "${name}" — ${artist}`);
+    if (MUSIC_DEBUG) console.log(`[HINDI ✗ wrong-script] "${name}" — ${artist}`);
     return -200;
   }
   const haystack = combined.toLowerCase();
   if (HARD_REJECT_KEYWORDS.some(kw => haystack.includes(kw))) {
-    console.log(`[HINDI ✗ instrumental] "${name}"`);
+    if (MUSIC_DEBUG) console.log(`[HINDI ✗ instrumental] "${name}"`);
     return -200;
   }
 
@@ -302,7 +302,7 @@ function scoreHindiTrack(track: ItunesTrack): number {
   score += recencyBonus(getReleaseYear(track));
 
   if (score < ACCEPT_THRESHOLD) {
-    console.log(`[HINDI ✗ score=${score}] "${name}" — ${artist} — ${genre}`);
+    if (MUSIC_DEBUG) console.log(`[HINDI ✗ score=${score}] "${name}" — ${artist} — ${genre}`);
   }
   return score;
 }
@@ -317,448 +317,334 @@ function genreToColor(genres: string[]): string {
   return colors[Math.floor(Math.random() * colors.length)]
 }
 
-// Pseudo-random popularity based on string id (to keep it stable but random)
-function generatePopularity(id: string): number {
-  let hash = 0;
-  for (let i = 0; i < id.length; i++) {
-    hash = id.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  const random = Math.abs(Math.sin(hash))
-  return Math.floor(random * 70) + 30; // 30 to 100
+// ── Chart plans ──────────────────────────────────────────────────────────────
+//
+// Each KADENCE chart is built from three sources, in this order of authority:
+//   1. chart    Apple's live top-songs charts (documented iTunes RSS, per storefront/genre).
+//               Rank on these charts is the only popularity signal used.
+//   2. curated  Hand-verified recent soundtracks (lib/curatedTracks.ts, built from the
+//               iTunes Lookup API by scripts/build-curated-tracks.mjs).
+//   3. search   iTunes keyword search, only to top a chart up to its size. Search order is
+//               never treated as popularity; these songs sort after chart songs, newest first.
+
+type ChartRef = readonly [storefront: string, genre?: number]
+
+interface ChartPlan {
+  /** Apple top-songs charts merged into this chart (genre ids: 14 Pop, 15 R&B/Soul,
+   *  17 Dance, 18 Hip-Hop/Rap, 7 Electronic, 10 Singer/Songwriter, 20 Alternative,
+   *  21 Rock, 51 K-Pop, 1263 Bollywood, 1264 Tamil, 1265 Telugu, 1266 Regional Indian). */
+  charts: readonly ChartRef[]
+  /** Storefront used for keyword top-up. */
+  country: string
+  /** Apple genre names accepted (regional / K-Pop charts). Anything else is rejected. */
+  genres?: readonly string[]
+  /** Hard limit on release age for chart and search songs ("new" charts). */
+  maxAgeDays?: number
+  /** Chart songs released within this window lead the chart; older hits follow them. */
+  freshDays: number
+  /** Keyword top-up, rotated on refresh. `{year}` becomes the current year. */
+  queries: readonly string[]
+  /** Genre tag attached to the songs. */
+  genre: string
 }
 
-function itunesToSongNode(track: ItunesTrack, vibeGenres: string[]): SongNode {
-  const popularity = generatePopularity(track.trackId.toString());
-  // Upgrade artwork quality
-  const albumArt = track.artworkUrl100 ? track.artworkUrl100.replace('100x100bb', '600x600bb') : '';
-  const trackGenres = track.primaryGenreName ? [track.primaryGenreName.toLowerCase(), ...vibeGenres] : [...vibeGenres];
-  
+const ANGLO = ['us', 'gb', 'ca', 'au'] as const
+const each = (genre?: number, stores: readonly string[] = ANGLO): ChartRef[] => stores.map(s => [s, genre] as const)
+
+const CHART_PLANS: Record<Exclude<Vibe, 'dev-special'>, ChartPlan> = {
+  'global-top-50': {
+    charts: [...each(undefined, ['us', 'gb', 'ca', 'au', 'in'])], country: 'US', freshDays: 120, genre: 'pop',
+    queries: ['top hits {year}', 'billboard hot 100 {year}', 'chart toppers {year}', 'global pop hits {year}', 'radio hits {year}', 'number one hits {year}'],
+  },
+  'viral-50': {
+    charts: [...each(), ['us', 14], ['gb', 14]], country: 'US', maxAgeDays: 150, freshDays: 60, genre: 'pop',
+    queries: ['viral hits {year}', 'tiktok viral {year}', 'trending songs {year}', 'viral dance {year}', 'internet hits {year}', 'viral pop {year}'],
+  },
+  'new-music-friday': {
+    charts: [['us', 20], ['gb', 20], ['us', 10], ['us', 14]], country: 'US', maxAgeDays: 90, freshDays: 45, genre: 'indie',
+    queries: ['new music {year}', 'new indie {year}', 'new alternative {year}', 'new releases {year}', 'indie pop {year}', 'fresh finds {year}'],
+  },
+  'hip-hop-central': {
+    charts: each(18), country: 'US', freshDays: 180, genre: 'hip-hop',
+    queries: ['rap {year}', 'hip hop {year}', 'trap {year}', 'drill {year}', 'rap hits {year}', 'hip hop bangers {year}'],
+  },
+  'pop-rising': {
+    charts: each(14), country: 'US', freshDays: 365, genre: 'pop',
+    queries: ['new pop {year}', 'pop {year}', 'rising pop {year}', 'alt pop {year}', 'bedroom pop {year}', 'hyperpop {year}'],
+  },
+  'dance-hits': {
+    charts: [['us', 17], ['gb', 17], ['au', 17], ['us', 7], ['gb', 7]], country: 'US', freshDays: 180, genre: 'dance',
+    queries: ['dance hits {year}', 'house music {year}', 'edm {year}', 'tech house {year}', 'club anthems {year}', 'melodic techno {year}'],
+  },
+  'mood-booster': {
+    charts: [['us', 14], ['au', 14], ['us', 17]], country: 'US', freshDays: 365, genre: 'pop',
+    queries: ['feel good {year}', 'happy songs {year}', 'upbeat pop {year}', 'good vibes {year}', 'summer hits {year}', 'feel good pop'],
+  },
+  'late-night': {
+    charts: [['us', 15], ['gb', 15], ['ca', 15]], country: 'US', freshDays: 365, genre: 'r&b',
+    queries: ['r&b {year}', 'slow jams {year}', 'neo soul {year}', 'late night r&b', 'chill r&b {year}', 'smooth r&b'],
+  },
+  'workout': {
+    charts: [['us', 18], ['us', 21], ['us', 17], ['gb', 17]], country: 'US', freshDays: 365, genre: 'workout',
+    queries: ['workout {year}', 'gym motivation {year}', 'hard rock {year}', 'running music {year}', 'phonk {year}', 'high energy {year}'],
+  },
+  'chill-hits': {
+    charts: [['us', 10], ['gb', 10], ['ca', 10]], country: 'US', freshDays: 365, genre: 'ambient',
+    queries: ['lofi {year}', 'chill {year}', 'acoustic chill {year}', 'soft pop {year}', 'chillout {year}', 'mellow acoustic'],
+  },
+  'top-telugu': {
+    charts: [['in', 1265], ['in', 1266]], country: 'IN', genres: ['Telugu'], freshDays: 180, genre: 'telugu',
+    queries: ['Telugu songs {year}', 'Tollywood {year}', 'Thaman Telugu {year}', 'Devi Sri Prasad Telugu', 'Telugu movie songs {year}', 'Sid Sriram Telugu'],
+  },
+  'top-tamil': {
+    charts: [['in', 1264], ['in', 1266], ['in', 1262]], country: 'IN', genres: ['Tamil'], freshDays: 180, genre: 'tamil',
+    queries: ['Tamil songs {year}', 'Kollywood {year}', 'Anirudh Ravichander {year}', 'Sai Abhyankkar', 'Tamil movie songs {year}', 'Think Indie Tamil'],
+  },
+  'top-hindi': {
+    charts: [['in', 1263], ['in', 1262]], country: 'IN', genres: ['Bollywood', 'Hindi'], freshDays: 180, genre: 'hindi',
+    queries: ['Bollywood {year}', 'Hindi songs {year}', 'Arijit Singh {year}', 'Bollywood movie songs {year}', 'Hindi romantic {year}', 'Pritam {year}'],
+  },
+  'top-kpop': {
+    charts: each(51), country: 'US', genres: ['K-Pop'], freshDays: 365, genre: 'pop',
+    queries: ['kpop {year}', 'BTS', 'BLACKPINK', 'Stray Kids', 'aespa', 'NewJeans'],
+  },
+}
+
+const MUSIC_DEBUG = process.env.KADENCE_MUSIC_DEBUG === '1'
+const DAY = 24 * 60 * 60 * 1000
+/** Keyword queries per top-up; with chart feeds this keeps a cold chart well inside Apple's budget. */
+const FILL_QUERIES = 2
+/** Keyword results are not evidence of popularity, so top-up only adds recent releases. */
+const FILL_MAX_AGE_DAYS = 730
+/** Derivative uploads that are never chart material. */
+const JUNK = /karaoke|ringtone|originally performed|made famous|in the style of|tribute to|8-?bit|lullaby version|music box version|\b(sped up|slowed( \+|\s&)? reverb|nightcore)\b/i
+
+const REGIONAL_SCORER: Partial<Record<Vibe, (t: ItunesTrack) => number>> = {
+  'top-telugu': scoreTeluguTrack,
+  'top-tamil': scoreTamilTrack,
+  'top-hindi': scoreHindiTrack,
+}
+
+interface Candidate {
+  track: ItunesTrack
+  source: 'chart' | 'curated' | 'search'
+  /** Sum over merged charts of (1 − (rank−1)/chartLength): higher = higher and wider charting. */
+  chartScore: number
+  bestRank: number
+  released: number
+  /** In the verified curated list (kept whole, exempt from diversity caps), even if it also charts. */
+  curated: boolean
+}
+
+function releaseTime(t: ItunesTrack): number {
+  const time = t.releaseDate ? Date.parse(t.releaseDate) : NaN
+  return Number.isFinite(time) ? time : 0
+}
+
+/**
+ * One entry per song: single vs album, "(From …)" re-releases, and versions of one recording
+ * (Radio Edit, Extended Mix, Long Version, Remaster, Remix, Rerecorded…) share a key, so the
+ * best-charting version is kept. Bracketed text never names a different song.
+ */
+function songKey(t: ItunesTrack): string {
+  const title = (t.trackName || '').toLowerCase()
+    .replace(/\s*[([][^)\]]*[)\]]/g, '')
+    .replace(/\s*-\s*(from|feat\.?|ft\.?|remaster(ed)?|radio edit|single version|live|hindi|tamil|telugu|kannada|malayalam)\b.*$/, '')
+    .replace(/[^\p{L}\p{N}]+/gu, ' ').trim()
+  const artist = (t.artistName || '').toLowerCase().split(/,|&| feat\.?| ft\.?| x /)[0].trim()
+  return `${title}|${artist}`
+}
+
+function popularityFor(c: Candidate, maxChartScore: number, now: number): number {
+  // KADENCE "discovery score": derived from Apple chart position where one exists; otherwise a
+  // modest value nudged by recency. It is not an external popularity figure.
+  if (c.chartScore > 0) return Math.round(55 + 45 * Math.min(1, c.chartScore / Math.max(maxChartScore, 1e-6)))
+  if (c.source === 'curated') return 60
+  const ageDays = (now - c.released) / DAY
+  return Math.round(30 + Math.max(0, 15 - ageDays / 30))
+}
+
+function itunesToSongNode(c: Candidate, genre: string, popularity: number): SongNode {
+  const t = c.track
+  const albumArt = t.artworkUrl100 ? t.artworkUrl100.replace('100x100bb', '600x600bb') : ''
+  const genres = t.primaryGenreName ? [t.primaryGenreName.toLowerCase(), genre] : [genre]
   return {
-    id: track.trackId.toString(),
-    name: track.trackName || 'Unknown Track',
-    artist: track.artistName || 'Unknown Artist',
-    album: track.collectionName || 'Unknown Album',
+    id: t.trackId.toString(),
+    name: t.trackName || 'Unknown Track',
+    artist: t.artistName || 'Unknown Artist',
+    album: t.collectionName || 'Unknown Album',
     albumArt,
-    previewUrl: track.previewUrl || null,
-    spotifyUrl: track.trackViewUrl || '', // Kept for frontend compatibility
+    previewUrl: t.previewUrl || null,
+    spotifyUrl: t.trackViewUrl || '', // Apple Music link; field name kept for frontend compatibility
     popularity,
-    genres: trackGenres,
+    genres,
     x: (Math.random() - 0.5) * 80,
     y: (Math.random() - 0.5) * 50,
     z: (Math.random() - 0.5) * 30,
     vx: 0,
     vy: 0,
-    color: genreToColor(trackGenres),
+    color: genreToColor(genres),
     scale: 0.5 + (popularity / 100) * 0.8,
+    releaseDate: t.releaseDate,
+    source: c.source,
+    chartRank: Number.isFinite(c.bestRank) ? c.bestRank : undefined,
   }
 }
 
-const VIBE_QUERIES: Record<Vibe, { term: string; genre: string }[]> = {
-  'global-top-50': [
-    { term: 'billboard hot 100', genre: 'pop' },
-    { term: 'top hits 2024', genre: 'pop' },
-    { term: 'viral hits', genre: 'pop' },
-    { term: 'pop anthems', genre: 'pop' },
-    { term: 'chart toppers', genre: 'pop' },
-    { term: 'global pop', genre: 'pop' },
-    { term: 'radio hits', genre: 'pop' },
-    { term: 'number one hits', genre: 'pop' }
-  ],
-  'viral-50': [
-    { term: 'tiktok viral', genre: 'pop' },
-    { term: 'trending songs', genre: 'pop' },
-    { term: 'viral music', genre: 'pop' },
-    { term: 'internet hits', genre: 'pop' },
-    { term: 'viral trends', genre: 'pop' },
-    { term: 'viral dance', genre: 'pop' },
-    { term: 'tiktok songs', genre: 'pop' },
-    { term: 'popular on social', genre: 'pop' }
-  ],
-  'new-music-friday': [
-    { term: 'new music alternative', genre: 'indie' },
-    { term: 'latest indie', genre: 'indie' },
-    { term: 'new releases', genre: 'indie' },
-    { term: 'fresh finds', genre: 'indie' },
-    { term: 'new alternative', genre: 'indie' },
-    { term: 'new indie pop', genre: 'indie' },
-    { term: 'alternative hits', genre: 'indie' },
-    { term: 'indie pop 2024', genre: 'indie' }
-  ],
-  'hip-hop-central': [
-    { term: 'rap hits', genre: 'hip-hop' },
-    { term: 'hip hop 2024', genre: 'hip-hop' },
-    { term: 'trap music', genre: 'hip-hop' },
-    { term: 'hip hop bangers', genre: 'hip-hop' },
-    { term: 'rap caviar', genre: 'hip-hop' },
-    { term: 'modern rap', genre: 'hip-hop' },
-    { term: 'hip hop classics', genre: 'hip-hop' },
-    { term: 'drill music', genre: 'hip-hop' }
-  ],
-  'pop-rising': [
-    { term: 'teen pop', genre: 'pop' },
-    { term: 'synth pop', genre: 'pop' },
-    { term: 'rising pop', genre: 'pop' },
-    { term: 'future pop', genre: 'pop' },
-    { term: 'alt pop', genre: 'pop' },
-    { term: 'bedroom pop', genre: 'pop' },
-    { term: 'hyperpop', genre: 'pop' },
-    { term: 'indie pop hits', genre: 'pop' }
-  ],
-  'dance-hits': [
-    { term: 'edm hits', genre: 'electronic' },
-    { term: 'house music', genre: 'dance' },
-    { term: 'club anthems', genre: 'dance' },
-    { term: 'dance pop', genre: 'dance' },
-    { term: 'electronic hits', genre: 'electronic' },
-    { term: 'trance', genre: 'electronic' },
-    { term: 'tech house', genre: 'dance' },
-    { term: 'dubstep', genre: 'electronic' }
-  ],
-  'mood-booster': [
-    { term: 'feel good music', genre: 'pop' },
-    { term: 'happy songs', genre: 'pop' },
-    { term: 'upbeat pop', genre: 'pop' },
-    { term: 'cheerful hits', genre: 'pop' },
-    { term: 'good vibes', genre: 'pop' },
-    { term: 'sunny days', genre: 'pop' },
-    { term: 'happy hits', genre: 'pop' },
-    { term: 'feel good pop', genre: 'pop' }
-  ],
-  'late-night': [
-    { term: 'r&b soul', genre: 'r&b' },
-    { term: 'neo soul', genre: 'r&b' },
-    { term: 'late night vibes', genre: 'r&b' },
-    { term: 'chill r&b', genre: 'r&b' },
-    { term: 'smooth r&b', genre: 'r&b' },
-    { term: 'slow jams', genre: 'r&b' },
-    { term: 'quiet storm', genre: 'r&b' },
-    { term: 'rnb hits', genre: 'r&b' }
-  ],
-  'workout': [
-    { term: 'workout motivation', genre: 'hip-hop' },
-    { term: 'hard rock', genre: 'rock' },
-    { term: 'heavy metal', genre: 'metal' },
-    { term: 'gym hype', genre: 'electronic' },
-    { term: 'pump up', genre: 'rock' },
-    { term: 'workout playlist', genre: 'electronic' },
-    { term: 'running music', genre: 'pop' },
-    { term: 'high energy', genre: 'dance' }
-  ],
-  'chill-hits': [
-    { term: 'lofi beats', genre: 'ambient' },
-    { term: 'chillout', genre: 'ambient' },
-    { term: 'acoustic relax', genre: 'indie' },
-    { term: 'ambient study', genre: 'ambient' },
-    { term: 'soft pop', genre: 'indie' },
-    { term: 'mellow hits', genre: 'indie' },
-    { term: 'chill vibes', genre: 'ambient' },
-    { term: 'relaxing music', genre: 'ambient' }
-  ],
-  'dev-special': [
-    { term: 'dev special', genre: 'pop' }
-  ],
-  // ── Regional charts: queries use verified artist / movie names only ──────────
-  // All results are post-filtered by isTeluguTrack / isTamilTrack / isHindiTrack.
-  'top-telugu': [
-    // Blockbuster soundtracks
-    { term: 'Pushpa Allu Arjun songs', genre: 'telugu' },
-    { term: 'RRR Jr NTR Ram Charan songs', genre: 'telugu' },
-    { term: 'Bahubali Telugu songs', genre: 'telugu' },
-    { term: 'Uppena Telugu movie', genre: 'telugu' },
-    { term: 'Samajavaragamana Sid Sriram', genre: 'telugu' },
-    // Verified composers (Telugu-exclusive output)
-    { term: 'Devi Sri Prasad Telugu', genre: 'telugu' },
-    { term: 'SS Thaman Tollywood', genre: 'telugu' },
-    { term: 'MM Keeravani Telugu', genre: 'telugu' },
-    { term: 'Anup Rubens Telugu', genre: 'telugu' },
-    { term: 'Thaman Tollywood hits', genre: 'telugu' },
-    { term: 'Sid Sriram Tollywood', genre: 'telugu' },
-    { term: 'Rahul Sipligunj Telugu', genre: 'telugu' },
-  ],
-  'top-tamil': [
-    // Blockbuster soundtracks
-    { term: 'Anirudh Ravichander Vikram', genre: 'tamil' },
-    { term: 'Anirudh Ravichander Jawan', genre: 'tamil' },
-    { term: 'AR Rahman Tamil Ponniyin Selvan', genre: 'tamil' },
-    { term: 'Yuvan Shankar Raja Tamil', genre: 'tamil' },
-    { term: 'GV Prakash Kumar Tamil', genre: 'tamil' },
-    { term: 'Harris Jayaraj Tamil', genre: 'tamil' },
-    { term: 'D Imman Tamil', genre: 'tamil' },
-    { term: 'Santhosh Narayanan Tamil', genre: 'tamil' },
-    { term: 'Sid Sriram Tamil songs', genre: 'tamil' },
-    { term: 'Vijay Antony songs', genre: 'tamil' },
-    { term: 'Hip Hop Tamizha', genre: 'tamil' },
-    { term: 'Dhee Arivu Tamil', genre: 'tamil' },
-  ],
-  'top-hindi': [
-    // Top Bollywood composers / directors
-    { term: 'Arijit Singh Bollywood', genre: 'hindi' },
-    { term: 'Pritam Bollywood soundtrack', genre: 'hindi' },
-    { term: 'Vishal Shekhar Hindi', genre: 'hindi' },
-    { term: 'Vishal Mishra songs', genre: 'hindi' },
-    { term: 'Shankar Ehsaan Loy Bollywood', genre: 'hindi' },
-    { term: 'Amit Trivedi Bollywood', genre: 'hindi' },
-    { term: 'Sachin Jigar Bollywood', genre: 'hindi' },
-    { term: 'Jubin Nautiyal songs', genre: 'hindi' },
-    { term: 'Neha Kakkar Bollywood', genre: 'hindi' },
-    { term: 'Shreya Ghoshal Hindi', genre: 'hindi' },
-    { term: 'Atif Aslam Hindi', genre: 'hindi' },
-    { term: 'B Praak Jaani Hindi', genre: 'hindi' },
-  ],
-  'top-kpop': [
-    { term: 'BTS songs', genre: 'pop' },
-    { term: 'BLACKPINK hits', genre: 'pop' },
-    { term: 'Stray Kids', genre: 'pop' },
-    { term: 'aespa kpop', genre: 'pop' },
-    { term: 'NewJeans kpop', genre: 'pop' },
-    { term: 'IVE kpop', genre: 'pop' },
-    { term: 'Tomorrow X Together', genre: 'pop' },
-    { term: 'TWICE kpop', genre: 'pop' },
-  ],
+/** Search queries for one rotation step: every query is reached across successive refreshes. */
+function queryBatch(plan: ChartPlan, rotation: number, year: number): string[] {
+  const n = plan.queries.length
+  return Array.from({ length: Math.min(FILL_QUERIES, n) }, (_, i) => plan.queries[(rotation * FILL_QUERIES + i) % n].replace('{year}', String(year)))
 }
 
-const fetchItunesTracks = (term: string, limit = 200) => itunesClient.search(term, limit)
-const fetchItunesTracksIN = (term: string, limit = 200) => itunesClient.search(term, limit, 'IN')
-
-const REGIONAL_VIBES = new Set<Vibe>(['top-telugu', 'top-tamil', 'top-hindi']);
-
-/** Maps each regional vibe to its confidence scorer. Returns score ≥ ACCEPT_THRESHOLD to include. */
-const REGIONAL_SCORER: Partial<Record<Vibe, (t: ItunesTrack) => number>> = {
-  'top-telugu': scoreTeluguTrack,
-  'top-tamil':  scoreTamilTrack,
-  'top-hindi':  scoreHindiTrack,
-};
-
-/** Fallback expansion queries fired when primary results yield < EXPANSION_THRESHOLD verified tracks. */
-const REGIONAL_FALLBACK_QUERIES: Partial<Record<Vibe, { term: string; genre: string }[]>> = {
-  'top-telugu': [
-    { term: 'Tollywood soundtrack 2023', genre: 'telugu' },
-    { term: 'Telugu film songs 2022',    genre: 'telugu' },
-    { term: 'Mahesh Babu Telugu',        genre: 'telugu' },
-    { term: 'Vijay Deverakonda songs',   genre: 'telugu' },
-    { term: 'Anirudh Telugu movie',      genre: 'telugu' },
-    { term: 'Mickey J Meyer Telugu',     genre: 'telugu' },
-    { term: 'Bheems Ceciroleo',          genre: 'telugu' },
-  ],
-  'top-tamil': [
-    { term: 'Kollywood soundtrack 2023',  genre: 'tamil' },
-    { term: 'Tamil film songs 2022',      genre: 'tamil' },
-    { term: 'Dhanush Tamil songs',        genre: 'tamil' },
-    { term: 'Sivakarthikeyan Tamil',      genre: 'tamil' },
-    { term: 'Rajinikanth Tamil movie',    genre: 'tamil' },
-    { term: 'Sean Roldan Tamil',          genre: 'tamil' },
-    { term: 'Ilaiyaraaja Tamil classics', genre: 'tamil' },
-  ],
-  'top-hindi': [
-    { term: 'Bollywood songs 2023',        genre: 'hindi' },
-    { term: 'Hindi film songs 2022',       genre: 'hindi' },
-    { term: 'Darshan Raval hits',          genre: 'hindi' },
-    { term: 'Pawandeep Rajan songs',       genre: 'hindi' },
-    { term: 'Tanishk Bagchi Bollywood',    genre: 'hindi' },
-    { term: 'Sachet Tandon Parampara',     genre: 'hindi' },
-    { term: 'Kumar Sanu Bollywood',        genre: 'hindi' },
-  ],
-};
-
-const EXPANSION_THRESHOLD = 80; // fire fallbacks if primary yields fewer than this many verified tracks
-
-export async function fetchSongsByVibe(
-  vibe: Vibe,
-  targetCount: number = 1000,
-  refreshOffset: number = 0
-): Promise<SongNode[]> {
-  // ── Static playlist intercepts (playlist-as-source-of-truth) ─────────────
-  if (vibe === 'dev-special') return devSpecialData;
-
-  if (isPlaylistVibe(vibe)) {
-    const songs = getPlaylistSongs(vibe);
-    if (songs && songs.length > 0) {
-      console.log(`[musicProvider] ${vibe}: returning ${songs.length} static playlist tracks`);
-      return songs;
-    }
-    // Data file empty — fall through to iTunes search as temporary fallback
-    console.warn(`[musicProvider] ${vibe}: static data empty, falling back to iTunes search`);
+/** Avoid runs of the same album/artist so a full soundtrack does not occupy one region of the wall. */
+function spread<T>(items: T[], album: (x: T) => string, artist: (x: T) => string): T[] {
+  const rest = [...items]
+  const out: T[] = []
+  while (rest.length) {
+    const recent = out.slice(-3)
+    let i = rest.findIndex(x => !recent.some(r => album(r) === album(x) || artist(r) === artist(x)))
+    if (i < 0 || i > 12) i = 0 // never pull far ahead of its rank
+    out.push(rest.splice(i, 1)[0])
   }
-  // ──────────────────────────────────────────────────────────────────────────
+  return out
+}
 
-  const isRegional = REGIONAL_VIBES.has(vibe);
-  const scorer     = REGIONAL_SCORER[vibe];
-  const queries    = VIBE_QUERIES[vibe] || VIBE_QUERIES['global-top-50'];
+export interface ChartResult {
+  songs: SongNode[]
+  /** False when some upstream chart could not be read (the caller should cache it briefly). */
+  complete: boolean
+}
 
-  const rotated = [
-    ...queries.slice(refreshOffset % queries.length),
-    ...queries.slice(0, refreshOffset % queries.length),
-  ];
+/**
+ * Build a chart. `rotation` (0 for a first visit, +1 per refresh) selects the keyword top-up
+ * batch and which songs lead the wall, so refreshing shows a genuinely different selection.
+ */
+export async function fetchChart(vibe: Vibe, targetCount = 256, rotation = 0, now = Date.now()): Promise<ChartResult> {
+  if (vibe === 'dev-special') return { songs: devSpecialData, complete: true }
+  const plan = CHART_PLANS[vibe] ?? CHART_PLANS['global-top-50']
+  const target = Math.max(1, Math.min(targetCount, 256))
+  const year = new Date(now).getFullYear()
+  const scorer = REGIONAL_SCORER[vibe]
+  const pool = new Map<number, Candidate>()
 
-  // Regional vibes use the India storefront; global vibes use the default.
-  const fetcher = isRegional ? fetchItunesTracksIN : fetchItunesTracks;
-
-  /**
-   * Run a batch of query terms through iTunes, score every track, return
-   * a flat array of { rawTrack, score, year } sorted best-first.
-   */
-  async function fetchAndScore(
-    batch: { term: string; genre: string }[]
-  ): Promise<{ track: ItunesTrack; score: number; year: number; genre: string }[]> {
-    const promises = batch.map(q =>
-      fetcher(q.term, 200).then(tracks => ({ tracks, genre: q.genre }))
-    );
-    const settled = await Promise.allSettled(promises);
-    const scored: { track: ItunesTrack; score: number; year: number; genre: string }[] = [];
-
-    for (const result of settled) {
-      if (result.status !== 'fulfilled') continue;
-      const { tracks, genre } = result.value;
-      for (const t of tracks) {
-        if (!t.trackId || !t.artworkUrl100) continue;
-        const score = scorer ? scorer(t) : 100; // non-regional tracks always pass
-        if (score >= ACCEPT_THRESHOLD) {
-          scored.push({ track: t, score, year: getReleaseYear(t), genre });
-        }
-      }
+  const accept = (t: ItunesTrack, source: Candidate['source']): boolean => {
+    if (!t.trackId || !t.artworkUrl100 || !t.previewUrl) return false // playable, with artwork
+    if (source === 'curated') return true // verified at build time
+    const text = `${t.trackName ?? ''} ${t.artistName ?? ''} ${t.collectionName ?? ''}`
+    if (JUNK.test(text)) return false
+    if (plan.genres && !plan.genres.includes(t.primaryGenreName ?? '')) return false
+    if (scorer && scorer(t) <= -100) return false // wrong script / karaoke-instrumental compilations
+    if (plan.maxAgeDays && now - releaseTime(t) > plan.maxAgeDays * DAY) return false
+    if (source === 'search' && now - releaseTime(t) > FILL_MAX_AGE_DAYS * DAY) return false
+    return true
+  }
+  const add = (t: ItunesTrack, source: Candidate['source'], chartWeight = 0) => {
+    const existing = pool.get(t.trackId)
+    if (existing) {
+      existing.chartScore += chartWeight
+      if (t.chartRank) existing.bestRank = Math.min(existing.bestRank, t.chartRank)
+      if (source === 'curated') existing.curated = true
+      if (source === 'chart' || (source === 'curated' && existing.source === 'search')) existing.source = existing.chartScore > 0 ? 'chart' : source
+      return
     }
-
-    // Sort: highest confidence score first, then newest first within same score band
-    scored.sort((a, b) =>
-      b.score !== a.score ? b.score - a.score : b.year - a.year
-    );
-    return scored;
+    pool.set(t.trackId, { track: t, source, chartScore: chartWeight, bestRank: t.chartRank ?? Infinity, released: releaseTime(t), curated: source === 'curated' })
   }
 
-  // ── Phase 1: primary queries ──────────────────────────────────────────────
-  let candidates = await fetchAndScore(rotated);
+  // 1. Apple's live charts.
+  const charts = await Promise.allSettled(plan.charts.map(([cc, genre]) => itunesClient.topSongs(cc, genre)))
+  let chartFailures = 0
+  for (const result of charts) {
+    if (result.status !== 'fulfilled') { chartFailures++; continue }
+    const length = result.value.length
+    for (const t of result.value) if (accept(t, 'chart')) add(t, 'chart', 1 - ((t.chartRank ?? length) - 1) / Math.max(length, 1))
+  }
 
-  if (!candidates.length) throw new MusicProviderError('No tracks available from the music provider')
+  // 2. Verified curated releases.
+  for (const t of CURATED_TRACKS[vibe] ?? []) if (accept(t, 'curated')) add(t, 'curated')
 
-  // ── Phase 2: expansion (regional only, if Phase 1 yields < threshold) ────
-  if (isRegional && candidates.length < EXPANSION_THRESHOLD) {
-    const fallbacks = REGIONAL_FALLBACK_QUERIES[vibe] ?? [];
-    if (fallbacks.length > 0) {
-      console.log(
-        `[${vibe.toUpperCase()}] Only ${candidates.length} verified tracks after primary queries — firing ${fallbacks.length} fallback queries`
-      );
-      const extra = await fetchAndScore(fallbacks);
-      candidates = [...candidates, ...extra];
-      // Re-sort merged list
-      candidates.sort((a, b) =>
-        b.score !== a.score ? b.score - a.score : b.year - a.year
-      );
+  // 3. Keyword top-up, only when the chart is short.
+  if (pool.size < target) {
+    const found = await Promise.allSettled(queryBatch(plan, rotation, year).map(q => itunesClient.search(q, 200, plan.country)))
+    for (const result of found) {
+      if (result.status !== 'fulfilled') continue
+      for (const t of result.value) if (accept(t, 'search')) add(t, 'search')
     }
   }
 
-  // ── Deduplication & final assembly ───────────────────────────────────────
-  const seenTrackIds = new Set<string>();
-  const seenArtists  = new Map<string, number>();
-  const seenAlbums   = new Map<string, number>();
-  const songs: SongNode[] = [];
-
-  const artistCap = isRegional ? 6 : 8;
-  const albumCap  = isRegional ? 3 : 4;
-
-  const totalRaw      = candidates.length;
-  let totalAccepted = 0;
-  let totalRejected = 0;
-
-  // Capture top rejected for the audit log
-  const rejectedSamples: string[] = [];
-
-  for (const { track: t, genre } of candidates) {
-    const trackIdStr = t.trackId.toString();
-    if (seenTrackIds.has(trackIdStr)) continue;
-
-    const artistKey = (t.artistName || '').toLowerCase();
-    const albumKey  = (t.collectionName || '').toLowerCase();
-
-    if ((seenArtists.get(artistKey) ?? 0) >= artistCap) {
-      if (rejectedSamples.length < 5) rejectedSamples.push(`[dup-artist] "${t.trackName}" — ${t.artistName}`);
-      totalRejected++;
-      continue;
-    }
-    if ((seenAlbums.get(albumKey) ?? 0) >= albumCap) {
-      if (rejectedSamples.length < 5) rejectedSamples.push(`[dup-album] "${t.trackName}" — ${t.artistName}`);
-      totalRejected++;
-      continue;
-    }
-
-    seenTrackIds.add(trackIdStr);
-    seenArtists.set(artistKey, (seenArtists.get(artistKey) ?? 0) + 1);
-    seenAlbums.set(albumKey,   (seenAlbums.get(albumKey)  ?? 0) + 1);
-
-    songs.push(itunesToSongNode(t, [genre]));
-    totalAccepted++;
+  // One entry per song (single vs album versions), keeping the best-charting version.
+  const bySong = new Map<string, Candidate>()
+  for (const c of pool.values()) {
+    const key = songKey(c.track)
+    const kept = bySong.get(key)
+    if (!kept) { bySong.set(key, c); continue }
+    const better = c.chartScore > kept.chartScore || (c.chartScore === kept.chartScore && c.source === 'curated' && kept.source !== 'curated')
+    const winner = better ? c : kept, loser = better ? kept : c
+    winner.chartScore = Math.max(winner.chartScore, loser.chartScore)
+    winner.bestRank = Math.min(winner.bestRank, loser.bestRank)
+    winner.curated ||= loser.curated
+    if (loser.source === 'curated' && winner.chartScore === 0) winner.source = 'curated'
+    bySong.set(key, winner)
   }
 
-  // ── Purity / audit report (regional only) ────────────────────────────────
-  if (isRegional) {
-    const purity = totalRaw > 0
-      ? ((totalAccepted / (totalAccepted + totalRejected)) * 100).toFixed(1)
-      : 'N/A';
-    const label = vibe.replace('top-', 'TOP ').toUpperCase();
-    console.log(`
-╔══════════════════════════════════════════════════╗
-║  [${label}] PURITY REPORT
-║  Accepted : ${totalAccepted}
-║  Rejected : ${totalRejected}
-║  Purity   : ${purity}%
-╚══════════════════════════════════════════════════╝`);
-    if (rejectedSamples.length > 0) {
-      console.log(`  ↳ Sample dedup-rejected: ${rejectedSamples.join(' | ')}`);
-    }
+  // Order: fresh chart hits and curated new releases → established chart hits → top-up.
+  const fresh = (c: Candidate) => now - c.released <= plan.freshDays * DAY
+  const tier = (c: Candidate) => c.source === 'search' ? 2 : (c.curated || fresh(c)) ? 0 : 1
+  const CURATED_WEIGHT = 0.6 // a curated song that is not (yet) charting sits mid-way through the fresh tier
+  const weight = (c: Candidate) => c.chartScore > 0 ? c.chartScore : c.source === 'curated' ? CURATED_WEIGHT : 0
+  const ranked = [...bySong.values()].sort((a, b) =>
+    tier(a) - tier(b) || weight(b) - weight(a) || b.released - a.released)
+
+  // Diversity caps for chart/search songs; verified soundtracks are kept whole.
+  const isRegional = !!plan.genres && vibe !== 'top-kpop'
+  const artistCap = isRegional ? 8 : 6
+  const albumCap = isRegional ? 4 : 3
+  const artists = new Map<string, number>(), albums = new Map<string, number>()
+  const capped = ranked.filter(c => {
+    if (c.curated) return true
+    const a = (c.track.artistName || '').toLowerCase().split(/,|&| feat/)[0].trim()
+    const al = (c.track.collectionName || '').toLowerCase()
+    if ((artists.get(a) ?? 0) >= artistCap || (albums.get(al) ?? 0) >= albumCap) return false
+    artists.set(a, (artists.get(a) ?? 0) + 1)
+    albums.set(al, (albums.get(al) ?? 0) + 1)
+    return true
+  })
+
+  let ordered = spread(capped.slice(0, target), c => (c.track.collectionName || '').toLowerCase(), c => (c.track.artistName || '').toLowerCase().split(/,|&/)[0].trim())
+  // Refresh: bring a different stretch of the chart to the centre of the wall.
+  if (rotation > 0 && ordered.length > 1) {
+    const window = Math.min(ordered.length, 96)
+    const offset = (rotation * 29) % window
+    ordered = [...ordered.slice(offset, window), ...ordered.slice(0, offset), ...ordered.slice(window)]
   }
 
-  // NodeField's texIndices pool algorithm already maps any number of songs
-  // across the massive virtual grid. No need to bloat memory with duplicate objects.
-  return songs.slice(0, Math.max(1, Math.min(targetCount, 256)));
+  if (!ordered.length) throw new MusicProviderError('No tracks available from the music provider')
+  const maxChartScore = Math.max(0, ...ordered.map(c => c.chartScore))
+  const songs = ordered.map(c => itunesToSongNode(c, plan.genre, popularityFor(c, maxChartScore, now)))
+
+  if (MUSIC_DEBUG) {
+    const counts = { chart: 0, curated: 0, search: 0 }
+    for (const s of songs) counts[s.source ?? 'search']++
+    console.log(`[musicProvider] ${vibe} r${rotation}: ${songs.length} songs`, counts, `chart feeds failed: ${chartFailures}`)
+  }
+  return { songs, complete: chartFailures === 0 }
+}
+
+/** Chart songs for a vibe (see fetchChart). */
+export async function fetchSongsByVibe(vibe: Vibe, targetCount = 256, rotation = 0): Promise<SongNode[]> {
+  return (await fetchChart(vibe, targetCount, rotation)).songs
 }
 
 export async function searchSongsByMood(query: string): Promise<SongNode[]> {
-  const tracks = await fetchItunesTracks(query, 50);
-  const seen = new Set<string>();
-  const results: SongNode[] = [];
-  
+  const tracks = await itunesClient.search(query, 50)
+  const seen = new Set<string>()
+  const results: SongNode[] = []
   for (const t of tracks) {
-    if (!t.trackId || !t.artworkUrl100) continue;
-    const trackIdStr = t.trackId.toString();
-    if (!seen.has(trackIdStr)) {
-      seen.add(trackIdStr);
-      results.push(itunesToSongNode(t, ['pop']));
-    }
+    if (!t.trackId || !t.artworkUrl100 || JUNK.test(`${t.trackName} ${t.artistName}`)) continue
+    const key = songKey(t)
+    if (seen.has(key)) continue
+    seen.add(key)
+    results.push(itunesToSongNode({ track: t, source: 'search', chartScore: 0, bestRank: Infinity, released: releaseTime(t), curated: false }, 'pop', 50))
   }
-  return results;
-}
-
-export async function fetchChartPreviews(vibeId: Vibe): Promise<SongNode[]> {
-  if (vibeId === 'dev-special') {
-    return devSpecialData.filter(s => s.previewUrl && s.albumArt).slice(0, 8);
-  }
-
-  const queries = VIBE_QUERIES[vibeId] || VIBE_QUERIES['global-top-50'];
-  const tracks = await fetchItunesTracks(queries[0].term, 40);
-  
-  const validItems = tracks.filter((t: ItunesTrack) => t.previewUrl && t.artworkUrl100);
-  
-  // Shuffle
-  for (let i = validItems.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    const temp = validItems[i]
-    validItems[i] = validItems[j]
-    validItems[j] = temp
-  }
-  
-  return validItems.slice(0, 8).map((t: ItunesTrack) => itunesToSongNode(t, [queries[0].genre]));
-}
-
-export async function fetchTopSongByVibe(vibeId: Vibe): Promise<SongNode | null> {
-  if (vibeId === 'dev-special') {
-    return devSpecialData[0] || null;
-  }
-
-  const queries = VIBE_QUERIES[vibeId] || VIBE_QUERIES['global-top-50'];
-  const tracks = await fetchItunesTracks(queries[0].term, 10);
-  
-  const valid = tracks.find((t: ItunesTrack) => t.previewUrl && t.artworkUrl100);
-  if (valid) {
-    return itunesToSongNode(valid, [queries[0].genre]);
-  }
-  return tracks.length > 0 ? itunesToSongNode(tracks[0], [queries[0].genre]) : null;
+  return results
 }

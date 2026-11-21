@@ -13,6 +13,8 @@ class VibeService {
   private clientCache = new Map<string, CachedVibe>()
   private inFlightFetches = new Map<string, Promise<SongNode[]>>()
   private prewarmedArtworks = new Set<string>()
+  /** Refresh count per chart; sent as `rotation` so each refresh is a new selection. */
+  private rotations = new Map<string, number>()
 
   /**
    * Checks if a vibe's track metadata is already cached on the client.
@@ -41,24 +43,22 @@ class VibeService {
    * If a fetch is already in flight for this vibe, returns the existing Promise.
    */
   public async fetchVibeSongs(vibe: Vibe, forceRefresh = false): Promise<SongNode[]> {
-    const running = this.inFlightFetches.get(vibe)
+    // A refresh asks the server for the next rotation of the chart (a different selection,
+    // cached under its own URL), so it never gets the previous answer back. A refresh while a
+    // normal load is in flight still starts its own request.
+    if (forceRefresh) this.rotations.set(vibe, (this.rotations.get(vibe) ?? 0) + 1)
+    const rotation = this.rotations.get(vibe) ?? 0
+    const key = `${vibe}:${rotation}`
+    const running = this.inFlightFetches.get(key)
     if (running) return running
     if (!forceRefresh) {
       const cached = this.getCachedSongs(vibe)
-      if (cached && cached.length > 0) {
-        return cached
-      }
-
-      // In-flight deduplication: reuse running request
-      const running = this.inFlightFetches.get(vibe)
-      if (running) {
-        return running
-      }
+      if (cached && cached.length > 0) return cached
     }
 
     const fetchPromise = (async () => {
       try {
-        const qs = forceRefresh ? `?vibe=${vibe}&refresh=1` : `?vibe=${vibe}`
+        const qs = rotation ? `?vibe=${vibe}&rotation=${rotation}` : `?vibe=${vibe}`
         const res = await fetch(`/api/songs${qs}`, { signal: AbortSignal.timeout(20000) })
         if (!res.ok) throw new Error(`HTTP ${res.status}`)
         const data = await res.json()
@@ -72,11 +72,11 @@ class VibeService {
         console.warn(`[VibeService] Failed to load vibe ${vibe}:`, err)
         throw err
       } finally {
-        this.inFlightFetches.delete(vibe)
+        this.inFlightFetches.delete(key)
       }
     })()
 
-    this.inFlightFetches.set(vibe, fetchPromise)
+    this.inFlightFetches.set(key, fetchPromise)
     return fetchPromise
   }
 
