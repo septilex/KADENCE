@@ -120,7 +120,7 @@ const STYLES = `
 @keyframes kdc-pulse { 0%, 100% { transform: scale(1); opacity: .55; } 50% { transform: scale(1.35); opacity: 0; } }
 `
 
-export default function DiscoverConstellation({ onVibeSelect, onClose }: { onVibeSelect: (vibe: Vibe) => void; onClose: () => void }) {
+export default function DiscoverConstellation({ onVibeSelect, onClose }: { onVibeSelect: (vibe: Vibe, origin?: { x: number; y: number }) => void; onClose: () => void }) {
   const reducedMotion = useReducedMotion()
   const tall = useSyncExternalStore(subscribeTall, getTall, () => false)
   const openSearchWith = useLibraryStore((s) => s.openSearchWith)
@@ -210,14 +210,15 @@ export default function DiscoverConstellation({ onVibeSelect, onClose }: { onVib
 
   const colorOf = useCallback((id: Target) => (id === 'dev-special' ? GOLD : byId.get(id)?.bgColor ?? '#fff'), [byId])
 
-  /** Enter a chart: the chosen star swells to fill the screen, then the chart loads. */
+  /** Enter a chart: the shared chart transition flashes outward from the chosen star. */
   const enter = useCallback((id: Target) => {
     if (entering) return
-    if (reducedMotion) { onVibeSelect(id); return }
     const [x, y] = position(id)
     setFocused(id)
     setEntering({ id, x, y, color: colorOf(id) })
-  }, [entering, reducedMotion, onVibeSelect, position, colorOf])
+    const rect = starRefs.current.get(id)?.getBoundingClientRect()
+    onVibeSelect(id, rect ? { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 } : undefined)
+  }, [entering, onVibeSelect, position, colorOf])
 
   /** Surprise Me: the highlight skips across the sky, slows, and lands on a chart. */
   const surprise = useCallback(() => {
@@ -462,17 +463,7 @@ export default function DiscoverConstellation({ onVibeSelect, onClose }: { onVib
           )
         })()}
 
-        {/* Entering: the chosen star swells until it becomes the screen */}
-        {entering && (
-          <motion.span
-            aria-hidden="true"
-            className="pointer-events-none absolute z-10 h-6 w-6 rounded-full"
-            style={{ left: `${entering.x}%`, top: `${entering.y}%`, x: '-50%', y: '-50%', background: `radial-gradient(circle, #fff 0%, ${entering.color} 35%, ${entering.color}00 72%)` }}
-            initial={{ scale: 0.4, opacity: 0.9 }} animate={{ scale: 190, opacity: 1 }}
-            transition={{ duration: 0.75, ease: [0.7, 0, 0.84, 0] }}
-            onAnimationComplete={() => onVibeSelect(entering.id)}
-          />
-        )}
+        {/* Entering is handled by the shared ChartTransitionOverlay (flash from the star). */}
       </div>
 
       {/* ── Readout: what the focused star is ── */}

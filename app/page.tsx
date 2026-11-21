@@ -17,7 +17,15 @@ import { PreviewVideoLayer } from '@/components/ui/PreviewVideoLayer'
 import { GlobalAudioPlayer } from '@/components/GlobalAudioPlayer'
 import { useAudioStore } from '@/store/audioStore'
 import { ChangeVibeOverlay } from '@/components/ui/ChangeVibeOverlay'
+import { ChartTransitionOverlay } from '@/components/ui/ChartTransitionOverlay'
+import {
+  startChartTransition, setChartTransitionStatus, beginSceneWarmup,
+  whenChartRevealable, revealChartTransition, cancelChartTransition,
+} from '@/store/chartTransitionStore'
 const getAtlasManager = () => import('@/lib/atlasManager').then(m => m.atlasManager)
+// Same module as the dynamic() import below: starting it on chart click overlaps the 3D
+// chunk download with the data fetch instead of after it.
+const preloadUniverse = () => import('@/components/universe/Universe')
 import { vibeService } from '@/lib/vibeService'
 import { logAudioDebug } from '@/lib/audioDebug'
 import { getFirstTrackForVibe } from '@/lib/signatureSongs'
@@ -121,11 +129,18 @@ export default function Home() {
   const [loadError, setLoadError] = useState<string | null>(null)
   const [introAttempt, setIntroAttempt] = useState(0)
 
-  const loadChart = useCallback(async (vibe: Vibe, refresh = false) => {
+  const loadChart = useCallback(async (vibe: Vibe, refresh = false, origin?: { x: number; y: number }) => {
     const request = ++loadRequest.current
     const previous = useSongStore.getState()
     const entering = !previous.introComplete
     const previousUrl = useAudioStore.getState().currentUrl
+    // Every chart selection (homepage, Discover, Switch Chart, Profile) plays the shared
+    // transition; a refresh of the current chart does not.
+    const transition = !refresh
+    if (transition) {
+      startChartTransition(vibe, request, origin)
+      void preloadUniverse()
+    }
     useUIStore.getState().setHoveredVibe(null)
     setLoadError(null)
     setRefreshing(true)
@@ -141,20 +156,30 @@ export default function Home() {
       if (request !== loadRequest.current) return
       if (!newSongs.length) throw new Error('No tracks available')
       setLoading(true, 35)
+      setChartTransitionStatus(request, 'artwork')
       await atlasManager.prepareCriticalVibe(newSongs, ratio => {
         if (request === loadRequest.current) setLoading(true, Math.round(35 + ratio * 60))
       })
       if (request !== loadRequest.current) return
-      // Commit metadata and its prepared artwork together. The old wall stays visible
-      // during the fetch; a late request cannot replace a more recently chosen chart.
+      // Commit metadata and its prepared artwork together. A late request cannot replace a
+      // more recently chosen chart.
       setVibe(vibe)
       setSongs(newSongs)
       useAudioStore.getState().setPreloadUrls(newSongs.flatMap(s => s.previewUrl ? [s.previewUrl] : []))
       if (!refresh && !firstTrack?.previewUrl) playUrl(newSongs.find(s => s.previewUrl)?.previewUrl ?? null)
+      if (transition) {
+        // The universe mounts (or rebuilds) behind the overlay and draws one frame; the
+        // overlay stays until that frame exists and the artwork has had its minimum time.
+        beginSceneWarmup(request)
+        const revealable = await whenChartRevealable(request)
+        if (!revealable || request !== loadRequest.current) return
+      }
       setIntroComplete(true)
+      if (transition) revealChartTransition(request)
       void atlasManager.startBackgroundLoading(newSongs)
     } catch (error) {
       if (request !== loadRequest.current) return
+      cancelChartTransition(request)
       console.error('[KADENCE] Chart load failed:', error)
       setLoadError('This chart could not be loaded. Please try again or choose another chart.')
       playUrl(previousUrl)
@@ -167,7 +192,7 @@ export default function Home() {
     }
   }, [setSongs, setVibe, setLoading, setRefreshing, setIntroComplete, selectSong, hoverSong, playUrl])
 
-  const handleVibeSelect = useCallback((vibe: Vibe) => { void loadChart(vibe) }, [loadChart])
+  const handleVibeSelect = useCallback((vibe: Vibe, origin?: { x: number; y: number }) => { void loadChart(vibe, false, origin) }, [loadChart])
   const handleChangeVibe = useCallback((vibe: Vibe) => {
     if (vibe !== useSongStore.getState().currentVibe) void loadChart(vibe)
   }, [loadChart])
@@ -186,6 +211,7 @@ export default function Home() {
    *  again is instant; picking any chart on the homepage loads it as usual. */
   const handleGoHome = useCallback(() => {
     loadRequest.current++ // a chart load still in flight must not reopen the universe
+    cancelChartTransition()
     setRefreshing(false) // ...and its own cleanup is skipped once superseded
     setLoading(false, 100)
     selectSong(null)
@@ -303,6 +329,10 @@ export default function Home() {
           />
         )}
       </AnimatePresence>
+
+      {/* Chart-selection transition: colour flash → chart artwork + visualiser → universe.
+          Self-subscribing (renders nothing while idle), so Home never re-renders for it. */}
+      <ChartTransitionOverlay />
 
       {/* Hover Tooltip — rendered by isolated memo component to prevent full-page re-renders */}
       <HoverTooltip />

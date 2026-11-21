@@ -6,14 +6,24 @@ import { useChartHover } from '@/hooks/useChartHover'
 import { devSpecialData } from '@/lib/devSpecialData'
 
 import { VIBE_CONFIGS, VibeConfig } from '@/lib/vibeConfig'
-import { GlowingRingLoader } from './GlowingRingLoader'
 import { HubPanels } from './HubPanels'
-import { useLibraryStore, type HubPanel } from '@/store/libraryStore'
+import { NavSlider } from './NavSlider'
+import { useLibraryStore } from '@/store/libraryStore'
 
 interface IntroScreenProps {
   loadingProgress?: number
-  onVibeSelect: (vibe: Vibe) => void
+  /** `origin` (viewport px) is where the transition flash starts; defaults to the last click. */
+  onVibeSelect: (vibe: Vibe, origin?: { x: number; y: number }) => void
 }
+
+// Homepage grid order. Whole tiles move (artwork, colour, glow, badge, link); the first five
+// slots are fixed below and every other chart keeps its existing relative order after them.
+const HOMEPAGE_LEAD: Vibe[] = ['global-top-50', 'new-music-friday', 'hip-hop-central', 'viral-50', 'top-tamil']
+const HOMEPAGE_TILES: VibeConfig[] = (() => {
+  const tiles = VIBE_CONFIGS.filter(v => v.id !== 'dev-special')
+  const lead = HOMEPAGE_LEAD.flatMap(id => tiles.filter(v => v.id === id))
+  return [...lead, ...tiles.filter(v => !HOMEPAGE_LEAD.includes(v.id))]
+})()
 
 // ── 3D Bubble Pop Card for the 14 Homepage Editorial Grid Tracks ──
 const HomepageVibeCard = memo(function HomepageVibeCard({
@@ -567,11 +577,11 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
   const activePanel = useLibraryStore((s) => s.activePanel)
   const openPanel = useLibraryStore((s) => s.openPanel)
 
-  const handleVibeSelect = useCallback((vibe: Vibe) => {
+  const handleVibeSelect = useCallback((vibe: Vibe, origin?: { x: number; y: number }) => {
     useLibraryStore.getState().openPanel(null)
     setSelectedVibe(vibe)
     setStep('loading')
-    onVibeSelect(vibe)
+    onVibeSelect(vibe, origin)
   }, [onVibeSelect])
 
   const handleCardHoverStart = useCallback((vibe: Vibe) => {
@@ -906,39 +916,13 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
 
       {/* ── Global Top Navigation Header ── */}
       <header className="fixed top-0 left-0 w-full z-[100] flex items-center justify-between px-6 md:px-12 py-8 pointer-events-auto">
-        {/* Top Left Logo */}
+        {/* Top Left Navigation */}
+        <NavSlider active={activePanel} onToggle={(panel) => openPanel(activePanel === panel ? null : panel)} />
+
+        {/* Top Right Logo */}
         <div className="flex items-center">
           <img src="/kadence-horizontal-logo.png" alt="Kadence" className="h-[44px] object-contain select-none" draggable={false} />
         </div>
-        
-        {/* Top Right Navigation */}
-        <nav className="flex items-center space-x-8 md:space-x-12" aria-label="Main">
-          {(['discover', 'search', 'library'] as HubPanel[]).map((item) => (
-            <button
-              key={item}
-              type="button"
-              onClick={() => openPanel(activePanel === item ? null : item)}
-              aria-expanded={activePanel === item}
-              className={`relative text-[11px] font-bold uppercase tracking-[0.25em] transition-colors duration-300 select-none ${activePanel === item ? 'text-white' : 'text-white/70 hover:text-white'}`}
-            >
-              {item}
-              <span className={`absolute -bottom-2 left-0 h-px bg-white transition-all duration-300 ${activePanel === item ? 'w-full opacity-100' : 'w-0 opacity-0'}`} />
-            </button>
-          ))}
-          {/* Profile Icon */}
-          <button
-            type="button"
-            onClick={() => openPanel(activePanel === 'profile' ? null : 'profile')}
-            aria-label="Your profile"
-            aria-expanded={activePanel === 'profile'}
-            className={`transition-colors duration-300 ml-4 rounded-full border p-[6px] ${activePanel === 'profile' ? 'text-white border-white/80 shadow-[0_0_18px_rgba(255,255,255,0.35)]' : 'text-white/70 hover:text-white border-white/20 hover:border-white/60'}`}
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-[18px] h-[18px]">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
-          </button>
-        </nav>
       </header>
 
       {/* Discover / Search / Library / Profile panels */}
@@ -1015,7 +999,7 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
 
               {/* Vibe grid — strict 7×2 on desktop with 3D Bubble Pop Hover */}
               <div className="grid gap-3 w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
-                {VIBE_CONFIGS.filter(v => v.id !== 'dev-special').map((v, i) => (
+                {HOMEPAGE_TILES.map((v, i) => (
                   <HomepageVibeCard
                     key={v.id}
                     vibe={v}
@@ -1070,10 +1054,8 @@ export function IntroScreen({ loadingProgress, onVibeSelect }: IntroScreenProps)
             </motion.div>
           )}
 
-          {/* ────────────────── STEP 2: Loading / Universe Warming ───── */}
-          {step === 'loading' && (
-            <GlowingRingLoader key="step-loading" size={340} />
-          )}
+          {/* STEP 2 (loading) renders nothing here: the shared ChartTransitionOverlay
+              (mounted in app/page.tsx) covers the screen for every chart selection. */}
 
         </AnimatePresence>
         </div>

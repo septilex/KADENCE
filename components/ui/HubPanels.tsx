@@ -239,9 +239,10 @@ function LibraryDrawer({ onClose }: { onClose: () => void }) {
   return (
     <motion.aside
       role="dialog" aria-label="Library"
-      initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 40 }}
+      initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -40 }}
       transition={{ duration: 0.32, ease: EASE }}
-      className={`fixed bottom-4 right-4 top-24 z-[120] flex w-[min(440px,calc(100vw-2rem))] flex-col rounded-3xl p-6 ${GLASS}`}
+      // Opens under the nav bar, which sits on the left of the homepage header.
+      className={`fixed bottom-4 left-4 top-24 z-[120] flex w-[min(440px,calc(100vw-2rem))] flex-col rounded-3xl p-6 ${GLASS}`}
     >
       <PanelHeader kicker="Saved on this device" title="Library" onClose={onClose} />
       <div className="mb-4 flex gap-1.5 rounded-full border border-white/10 bg-white/5 p-1" role="tablist">
@@ -470,7 +471,7 @@ function ProfileCard({ onClose, onVibeSelect }: { onClose: () => void; onVibeSel
 // ── Host ─────────────────────────────────────────────────────────────────────
 
 /** Renders whichever hub panel is open, over a click-away backdrop. Escape closes it. */
-export function HubPanels({ onVibeSelect }: { onVibeSelect: (vibe: Vibe) => void }) {
+export function HubPanels({ onVibeSelect }: { onVibeSelect: (vibe: Vibe, origin?: { x: number; y: number }) => void }) {
   const panel = useLibraryStore((s) => s.activePanel)
   const openPanel = useLibraryStore((s) => s.openPanel)
   const close = useCallback(() => openPanel(null), [openPanel])

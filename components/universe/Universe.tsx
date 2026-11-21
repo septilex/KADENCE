@@ -1,11 +1,39 @@
 'use client'
-import { Component, Suspense, useEffect, useState, useSyncExternalStore, type ReactNode } from 'react'
-import { Canvas } from '@react-three/fiber'
+import { Component, Suspense, useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { SongNode, Vibe } from '@/lib/types'
 import { NodeField } from './NodeField'
 import { CameraController } from './CameraController'
 import { INTRO_Z, FOV_DEG } from '@/lib/gridCalc'
 import { TrackList } from './TrackList'
+import { useChartTransition, reportFirstFrame } from '@/store/chartTransitionStore'
+
+/**
+ * Scene warm-up for the chart transition: asks for exactly one frame while the wall is still
+ * covered by the loading overlay, and reports once that frame (with the new chart's NodeField,
+ * shaders compiled) has been drawn. No loop of its own: one invalidate per warm-up request.
+ */
+function FirstFrameSignal({ request }: { request: number }) {
+  const invalidate = useThree(s => s.invalidate)
+  const frameloop = useThree(s => s.frameloop)
+  const reported = useRef<number | null>(null)
+  useEffect(() => { if (reported.current !== request) invalidate() }, [request, frameloop, invalidate])
+  useFrame(() => {
+    if (reported.current === request) return
+    reported.current = request
+    // useFrame runs right before this frame's gl.render in the same task; the microtask runs
+    // after the render has been issued.
+    queueMicrotask(() => reportFirstFrame(request))
+  })
+  return null
+}
+
+/** Non-WebGL views (list mode, renderer failure) are ready as soon as they mount. */
+function ReadyOnMount() {
+  const warmRequest = useChartTransition(s => s.warmRequest)
+  useEffect(() => { if (warmRequest !== null) reportFirstFrame(warmRequest) }, [warmRequest])
+  return null
+}
 
 const subscribeVisibility = (notify: () => void) => { document.addEventListener('visibilitychange', notify); return () => document.removeEventListener('visibilitychange', notify) }
 const getVisible = () => document.visibilityState === 'visible'
@@ -52,10 +80,14 @@ export function Universe({
   const [contextLost, setContextLost] = useState(false)
   const showList = contextLost || (listMode ?? reducedMotion)
   useEffect(() => { if (showList || isPaused || !visible) onHover(null) }, [showList, isPaused, visible, onHover])
-  const fallback = <TrackList songs={songs} onSelect={onSelect} />
+  const warmRequest = useChartTransition(s => s.warmRequest)
+  const fallback = <><TrackList songs={songs} onSelect={onSelect} /><ReadyOnMount /></>
   // Render continuously only while the wall is visible. When it is covered, 'never'
-  // stops the R3F loop entirely (no draws, no jelly sim, no hover raycasts).
-  const frameloop = !visible || isPaused ? 'never' : songs.length === 0 ? 'demand' : 'always'
+  // stops the R3F loop entirely (no draws, no jelly sim, no hover raycasts) — except during a
+  // chart-transition warm-up, where 'demand' lets FirstFrameSignal draw a single frame.
+  const frameloop = !visible ? 'never'
+    : isPaused ? (warmRequest !== null ? 'demand' : 'never')
+    : songs.length === 0 ? 'demand' : 'always'
   return (
     <>
     {showList ? fallback : <RendererBoundary fallback={fallback}>
@@ -86,6 +118,7 @@ export function Universe({
       <Suspense fallback={null}>
         {songs.length > 0 && (
           <NodeField
+            enabled={visible && !isPaused}
             songs={songs}
             currentVibe={currentVibe}
 
@@ -95,6 +128,8 @@ export function Universe({
             onPreview={onPreview}
           />
         )}
+        {/* Inside the Suspense boundary: while NodeField suspends, no frame is reported. */}
+        {songs.length > 0 && warmRequest !== null && <FirstFrameSignal request={warmRequest} />}
         <CameraController
           targetNodePos={selectedSong ? { x: selectedSong.x, y: selectedSong.y, z: 0 } : null}
           isDetailOpen={isDetailOpen}
