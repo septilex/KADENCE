@@ -1,4 +1,5 @@
 'use client'
+import { installBeatDebug } from '@/lib/beatDebug'
 import { useEffect } from 'react'
 import { useAudioStore } from '@/store/audioStore'
 import { startAudioDirector } from '@/lib/audioDirector'
@@ -7,6 +8,7 @@ import { startListeningTracker } from '@/lib/listeningTracker'
 
 export function GlobalAudioPlayer() {
   useEffect(() => {
+    const stopDebug = installBeatDebug()
     const state = useAudioStore.getState()
     const engine = new AudioEngine({ playing: state.setPlayingState, progress: state.setProgressState, error: state.setPlaybackError })
     // Synchronous commands preserve the originating click's autoplay activation.
@@ -24,7 +26,7 @@ export function GlobalAudioPlayer() {
     const stopDirector = startAudioDirector()
     // Listening history for the profile card (plays, charts opened); browser-local.
     const stopTracker = startListeningTracker()
-    return () => { stopTracker(); stopDirector(); unsubscribe(); engine.dispose() }
+    return () => { stopDebug(); stopTracker(); stopDirector(); unsubscribe(); engine.dispose() }
   }, [])
   return null
 }

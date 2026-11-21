@@ -2,13 +2,14 @@ import { create } from 'zustand'
 import { usePlaybackProgressStore } from './playbackProgressStore'
 
 interface AudioStoreState {
+  beatEligible: boolean
   currentUrl: string | null
   isPlaying: boolean
   playbackError: string | null
   setPlaybackError: (error: string | null) => void
 
   // Actions to command the player
-  playUrl: (url: string | null) => void
+  playUrl: (url: string | null, origin?: 'selected' | 'hover') => void
   play: () => void
   pause: () => void
   togglePlay: () => void
@@ -29,25 +30,27 @@ interface AudioStoreState {
 }
 
 export const useAudioStore = create<AudioStoreState>((set, get) => ({
+  beatEligible: false,
   currentUrl: null,
   isPlaying: false,
   playbackError: null,
   setPlaybackError: (playbackError) => set({ playbackError }),
   seekRequest: null,
 
-  playUrl: (url) => {
-    if (get().currentUrl === url) { if (url) set({ isPlaying: true }); return }
+  playUrl: (url, origin = 'selected') => {
+    const beatEligible = !!url && origin === 'selected'
+    if (get().currentUrl === url) { if (url) set({ isPlaying: true, beatEligible }); return }
     usePlaybackProgressStore.getState().setProgress(0, usePlaybackProgressStore.getState().duration)
-    set({ currentUrl: url, isPlaying: !!url, seekRequest: null, playbackError: null })
+    set({ beatEligible, currentUrl: url, isPlaying: !!url, seekRequest: null, playbackError: null })
   },
 
   play: () => {
-    if (get().currentUrl) set({ isPlaying: true })
+    if (get().currentUrl) set({ isPlaying: true, beatEligible: true })
   },
 
   pause: () => set({ isPlaying: false }),
 
-  togglePlay: () => set((state) => ({ isPlaying: !state.isPlaying && !!state.currentUrl })),
+  togglePlay: () => set((state) => ({ isPlaying: !state.isPlaying && !!state.currentUrl, beatEligible: !!state.currentUrl })),
 
   seekTo: (progressPercent) => set({ seekRequest: progressPercent }),
 

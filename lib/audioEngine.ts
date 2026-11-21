@@ -1,3 +1,5 @@
+import { createTrackBeatChannel } from './homepageBeatAudio'
+
 type Entry = { audio: HTMLAudioElement; ready: boolean; cleanup: () => void }
 export interface AudioEngineCallbacks {
   playing: (playing: boolean) => void
@@ -7,6 +9,7 @@ export interface AudioEngineCallbacks {
 
 /** One lifecycle owner for playback, bounded preloading, and all media callbacks. */
 export class AudioEngine {
+  private beats = createTrackBeatChannel()
   readonly pool = new Map<string, Entry>()
   private active: Entry | null = null
   private url: string | null = null
@@ -23,6 +26,7 @@ export class AudioEngine {
     const entry = this.pool.get(url)
     if (!entry) return
     this.pool.delete(url)
+    this.beats.release(entry.audio)
     entry.cleanup()
     entry.audio.pause()
     entry.audio.removeAttribute('src')
@@ -98,6 +102,7 @@ export class AudioEngine {
   setSource(url: string | null, playing: boolean) {
     if (this.disposed) return
     this.generation++
+    this.beats.setActive(null)
     const previous = this.active
     previous?.audio.pause()
     this.stopProgress()
@@ -114,13 +119,14 @@ export class AudioEngine {
   setPlaying(playing: boolean) {
     if (this.disposed) return
     this.generation++
-    if (!playing) { this.active?.audio.pause(); this.stopProgress(); return }
+    if (!playing) { this.beats.setActive(null); this.active?.audio.pause(); this.stopProgress(); return }
     if (!this.active && this.url) this.active = this.get(this.url)
     if (this.active) this.play()
   }
   private play() {
     const entry = this.active
     if (!entry) return
+    this.beats.setActive(entry.audio)
     const generation = ++this.generation
     this.callbacks.error(null)
     if (entry.audio.ended) entry.audio.currentTime = 0
@@ -153,6 +159,7 @@ export class AudioEngine {
   }
   private stopProgress() { if (this.progressTimer) clearInterval(this.progressTimer); this.progressTimer = null }
   dispose() {
+    this.beats.dispose()
     this.disposed = true
     this.generation++
     this.stopProgress()

@@ -53,19 +53,22 @@ export function startAudioDirector(): () => void {
       useAudioStore.getState().playUrl(null)
       return
     }
-    if (target === lastTarget) return
+    // A click promotes even the same pending hover target immediately. It also
+    // resumes a paused/ended preview when selected again through search or a list.
+    const selected = !!state.selectedSong && state.selectedSong !== prev.selectedSong
+    if (target === lastTarget && !selected) return
     lastTarget = target
     clear()
     if (!target) return
 
     const play = () => {
       if (targetUrl(useSongStore.getState()) !== target) return
-      if (useAudioStore.getState().currentUrl === target) return
+      if (useAudioStore.getState().currentUrl === target && !selected) return
       logAudioDebug('audioDirector → playUrl', target)
-      useAudioStore.getState().playUrl(target)
+      useAudioStore.getState().playUrl(target, selected ? 'selected' : 'hover')
     }
 
-    if (state.selectedSong !== prev.selectedSong) play()
+    if (selected) play()
     else timer = setTimeout(() => { timer = null; play() }, HOVER_DWELL_MS)
   })
 
