@@ -9,11 +9,27 @@ import { VIBE_CONFIGS } from '@/lib/vibeConfig'
 import { GlassButton } from './GlassButton'
 import { EditorialOverlay } from './EditorialOverlay'
 import { useLibraryStore } from '@/store/libraryStore'
+import { getArtworkPalette, type ArtworkPalette } from '@/lib/artworkPalette'
+
+/** Palette sampled from the song's artwork; null until ready (or if unreadable). */
+function useArtworkPalette(url: string | undefined): ArtworkPalette | null {
+  const [state, setState] = useState<{ url: string; palette: ArtworkPalette | null } | null>(null)
+  useEffect(() => {
+    if (!url) return
+    let alive = true
+    void getArtworkPalette(url).then(palette => { if (alive) setState({ url, palette }) })
+    return () => { alive = false }
+  }, [url])
+  return state && state.url === url ? state.palette : null
+}
 
 interface LiquidScrubberProps {
   progress: number
   duration: number
   hasPreview: boolean
+  isPlaying: boolean
+  /** Colours sampled from the song's artwork; null keeps the neutral white glass. */
+  palette: ArtworkPalette | null
   onSeek: (pct: number) => void
   formatTime: (secs: number) => string
 }
@@ -22,9 +38,15 @@ function LiquidScrubber({
   progress,
   duration,
   hasPreview,
+  isPlaying,
+  palette,
   onSeek,
   formatTime,
 }: LiquidScrubberProps) {
+  const fillFrom = palette?.secondary ?? '#ffffff'
+  const fillTo = palette?.primary ?? '#ffffff'
+  const glow = palette?.primary ?? '#ffffff'
+  const highlight = palette?.highlight ?? '#ffffff'
   const trackRef = useRef<HTMLDivElement>(null)
   const [isScrubbing, setIsScrubbing] = useState(false)
   const [scrubProgress, setScrubProgress] = useState(0)
@@ -131,7 +153,7 @@ function LiquidScrubber({
   const currentPct = isScrubbing ? scrubProgress : progress
 
   return (
-    <div className="space-y-2 mb-6 select-none">
+    <div className="space-y-2 select-none" style={{ marginBottom: 'clamp(8px, 1.6dvh, 22px)' }}>
       {/* Interactive track wrapper with comfortable touch/pointer target */}
       <div
         ref={trackRef}
@@ -141,17 +163,63 @@ function LiquidScrubber({
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
       >
-        {/* Base 8px Progress Track - Kept identical to default */}
-        <div className="h-2 bg-white/15 border border-white/25 backdrop-blur-md rounded-full overflow-hidden relative shadow-[inset_0_1px_2px_rgba(0,0,0,0.2)] pointer-events-none">
+        {/* Liquid-glass progress tube, filled with the song's own artwork colours */}
+        <div className="relative h-2.5 pointer-events-none">
+          {/* Glass tube */}
           <div
-            className="h-full rounded-full origin-left relative shadow-[0_0_12px_rgba(255,255,255,0.8)] transition-all ease-linear"
-            style={{ width: `${hasPreview ? currentPct : 0}%`, backgroundColor: '#fff' }}
-          >
-            {/* Default resting hover indicator (hidden while liquid bubble is active) */}
+            className="absolute inset-0 rounded-full"
+            style={{
+              background: 'linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.20) 100%)',
+              border: '1px solid rgba(255,255,255,0.30)',
+              boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.40), inset 0 -1px 2px rgba(0,0,0,0.28), 0 1px 0 rgba(255,255,255,0.08)',
+              backdropFilter: 'blur(8px) saturate(170%)',
+              WebkitBackdropFilter: 'blur(8px) saturate(170%)',
+            }}
+          />
+          {/* Coloured liquid: one full-width gradient revealed by clip-path, so the rounded
+              leading edge keeps its shape at every progress value (scaleX would squash it). */}
+          <div className="absolute inset-0" style={{ filter: `drop-shadow(0 0 6px ${glow}99)` }}>
             <div
-              className={`absolute right-0 top-1/2 -translate-y-1/2 w-3.5 h-3.5 bg-white rounded-full shadow-[0_0_12px_rgba(255,255,255,0.95)] transition-opacity ${
+              className="absolute inset-[1.5px] rounded-full overflow-hidden"
+              style={{
+                clipPath: `inset(0 ${100 - (hasPreview ? currentPct : 0)}% 0 0 round 999px)`,
+                transition: isScrubbing ? 'none' : 'clip-path 160ms linear',
+                background: `linear-gradient(90deg, ${fillFrom} 0%, ${fillTo} 100%)`,
+              }}
+            >
+              {/* Glossy upper meniscus */}
+              <div
+                className="absolute inset-x-0 top-0 h-[55%] rounded-full"
+                style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.12) 100%)' }}
+              />
+              {/* Lower refraction rim */}
+              <div className="absolute inset-0 rounded-full" style={{ boxShadow: 'inset 0 -1px 1.5px rgba(0,0,0,0.25)' }} />
+              {/* Slow light ripple travelling through the liquid while playing */}
+              <div
+                className="kd-liquid-ripple absolute inset-y-0 w-1/3"
+                style={{
+                  background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.45) 50%, transparent 100%)',
+                  animationPlayState: isPlaying ? 'running' : 'paused',
+                  opacity: isPlaying ? 1 : 0,
+                }}
+              />
+            </div>
+          </div>
+          {/* Resting droplet at the liquid's edge (hover). translateX % is relative to this
+              full-width layer, so moving it costs no layout. */}
+          <div
+            className="absolute inset-0"
+            style={{ transform: `translateX(${hasPreview ? currentPct : 0}%)`, transition: isScrubbing ? 'none' : 'transform 160ms linear' }}
+          >
+            <div
+              className={`absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full transition-opacity ${
                 isScrubbing ? 'opacity-0' : 'opacity-0 group-hover:opacity-100'
               }`}
+              style={{
+                background: `radial-gradient(circle at 35% 30%, #ffffff 0%, ${highlight} 45%, ${glow} 100%)`,
+                border: '1px solid rgba(255,255,255,0.8)',
+                boxShadow: `inset 0 1px 1.5px rgba(255,255,255,0.9), 0 0 10px ${glow}cc, 0 2px 6px rgba(0,0,0,0.35)`,
+              }}
             />
           </div>
         </div>
@@ -185,11 +253,11 @@ function LiquidScrubber({
               }}
               className="-translate-x-1/2 -translate-y-1/2 flex items-center justify-center select-none"
             >
-              {/* Outer soft whitish liquid-glass bloom halo */}
+              {/* Outer soft liquid-glass bloom halo, tinted by the song */}
               <div
                 className="absolute -inset-2.5 rounded-full pointer-events-none"
                 style={{
-                  background: 'radial-gradient(circle, rgba(255,255,255,0.42) 0%, rgba(255,255,255,0.15) 50%, transparent 72%)',
+                  background: `radial-gradient(circle, ${glow}6b 0%, ${glow}26 50%, transparent 72%)`,
                   filter: 'blur(5px)',
                 }}
               />
@@ -198,15 +266,15 @@ function LiquidScrubber({
               <div
                 className="relative w-8 h-6 rounded-full flex items-center justify-center overflow-hidden"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.20) 45%, rgba(255, 255, 255, 0.35) 100%)',
+                  background: `linear-gradient(135deg, rgba(255, 255, 255, 0.55) 0%, ${glow}40 45%, rgba(255, 255, 255, 0.35) 100%)`,
                   backdropFilter: 'blur(16px) saturate(180%)',
                   WebkitBackdropFilter: 'blur(16px) saturate(180%)',
                   border: '1.5px solid rgba(255, 255, 255, 0.75)',
                   boxShadow: `
                     inset 0 1.5px 2.5px rgba(255, 255, 255, 0.9),
                     inset 0 -1.5px 2px rgba(255, 255, 255, 0.3),
-                    0 0 16px rgba(255, 255, 255, 0.45),
-                    0 0 30px rgba(255, 255, 255, 0.2),
+                    0 0 16px ${glow}73,
+                    0 0 30px ${glow}33,
                     0 6px 16px rgba(0, 0, 0, 0.35)
                   `,
                 }}
@@ -221,9 +289,10 @@ function LiquidScrubber({
 
                 {/* Center luminous droplet core */}
                 <div
-                  className="w-2 h-2 rounded-full bg-white relative z-10"
+                  className="w-2 h-2 rounded-full relative z-10"
                   style={{
-                    boxShadow: '0 0 6px rgba(255, 255, 255, 0.95), 0 0 12px rgba(255, 255, 255, 0.6)',
+                    background: `radial-gradient(circle at 35% 30%, #ffffff 0%, ${highlight} 70%)`,
+                    boxShadow: `0 0 6px ${highlight}f2, 0 0 12px ${glow}99`,
                   }}
                 />
               </div>
@@ -246,7 +315,7 @@ function LiquidScrubber({
       {/* Time display */}
       <div className="flex justify-between text-[11px] font-mono text-white/60 tracking-wider font-medium">
         <span>{hasPreview ? formatTime((currentPct / 100) * duration) : '0:00'}</span>
-        <span>{hasPreview ? '0:30' : '--:--'}</span>
+        <span>{hasPreview && duration > 0 ? formatTime(duration) : '--:--'}</span>
       </div>
     </div>
   )
@@ -271,18 +340,25 @@ const MAIN_WAVE_HEIGHTS = [
 // CSS-only waveform animation style — generated once at module level, zero JS per frame.
 const WAVEFORM_STYLE = WAVE_BARS.map((h, i) => `
   .kd-wave-bar:nth-child(${i + 1}) {
-    min-height: 2px;
+    height: ${h}px;
+    transform-origin: bottom;
     animation: kd-wave-${i} ${(0.5 + (i % 5) * 0.08).toFixed(2)}s ${(i * 0.04).toFixed(2)}s ease-in-out infinite alternate;
   }
   @keyframes kd-wave-${i} {
-    from { height: ${Math.round(h * 0.4)}px; }
-    to   { height: ${h}px; }
+    from { transform: scaleY(0.4); }
+    to   { transform: scaleY(1); }
   }
 `).join('') + `
   @keyframes kd-pulse-wave {
     0% { transform: scaleY(0.75); }
     100% { transform: scaleY(1.2); }
   }
+  .kd-liquid-ripple { left: 0; animation: kd-liquid-ripple 2.8s cubic-bezier(.45,0,.25,1) infinite; transition: opacity .3s; }
+  @keyframes kd-liquid-ripple {
+    from { transform: translateX(-100%); }
+    to   { transform: translateX(300%); }
+  }
+  @media (prefers-reduced-motion: reduce) { .kd-liquid-ripple { animation: none; opacity: 0 !important; } }
 `
 
 function formatTime(secs: number) {
@@ -296,23 +372,28 @@ function formatTime(secs: number) {
  * usePlaybackProgressStore itself, so progress ticks re-render this subtree only
  * (waveform + scrubber) instead of the whole drawer and the page root.
  */
-function PlaybackProgressSection({ hasPreview, isPlaying, onSeek }: { hasPreview: boolean; isPlaying: boolean; onSeek: (pct: number) => void }) {
+function PlaybackProgressSection({ hasPreview, isPlaying, palette, onSeek }: { hasPreview: boolean; isPlaying: boolean; palette: ArtworkPalette | null; onSeek: (pct: number) => void }) {
   const progress = usePlaybackProgressStore((s) => s.progress)
   const duration = usePlaybackProgressStore((s) => s.duration)
+  const played = palette?.highlight ?? '#ffffff'
+  const glow = palette?.primary ?? '#ffffff'
   return (
     <>
       {/* ── Waveform Visualizer ── */}
-      <div className="flex items-end justify-between h-10 mb-5 px-1 opacity-90 mix-blend-screen">
+      <div
+        className="flex items-end justify-between px-1 opacity-90 mix-blend-screen"
+        style={{ height: 'clamp(26px, 4.2dvh, 40px)', marginBottom: 'clamp(8px, 1.8dvh, 20px)' }}
+      >
         {MAIN_WAVE_HEIGHTS.map((h, i) => (
           <div key={i} className="w-[3px] rounded-full origin-bottom"
                style={{
-                 backgroundColor: i < (progress / 100) * 40 ? '#ffffff' : 'rgba(255,255,255,0.2)',
+                 backgroundColor: i < (progress / 100) * 40 ? played : 'rgba(255,255,255,0.2)',
                  height: `${h}%`,
                  animation: `kd-pulse-wave ${0.4 + (i % 3) * 0.15}s ease-in-out infinite alternate`,
                  animationDelay: `${i * 0.05}s`,
                  animationPlayState: isPlaying ? 'running' : 'paused',
                  transition: 'background-color 0.2s',
-                 boxShadow: i < (progress / 100) * 40 && isPlaying ? `0 0 8px rgba(255,255,255,0.6)` : 'none'
+                 boxShadow: i < (progress / 100) * 40 && isPlaying ? `0 0 8px ${glow}99` : 'none'
                }}
           />
         ))}
@@ -323,6 +404,8 @@ function PlaybackProgressSection({ hasPreview, isPlaying, onSeek }: { hasPreview
         progress={progress}
         duration={duration}
         hasPreview={hasPreview}
+        isPlaying={isPlaying}
+        palette={palette}
         onSeek={onSeek}
         formatTime={formatTime}
       />
@@ -362,6 +445,8 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
   const playbackError = useAudioStore(s => s.playbackError)
   const [loadedArtwork, setLoadedArtwork] = useState<string | null>(null)
   const imageLoaded = loadedArtwork === song?.albumArt
+  const palette = useArtworkPalette(song?.albumArt)
+  const genres = song ? song.genres.filter((g, i, all) => all.findIndex(x => x.toLowerCase() === g.toLowerCase()) === i) : []
   const navigateTrack = (direction: number | 'shuffle') => {
     const state = useSongStore.getState()
     const tracks = state.songs.filter(track => track.previewUrl)
@@ -501,16 +586,24 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
               </GlassButton>
             </div>
 
-            {/* ── Scrollable Content Area ───────────────────────── */}
-            <div className="flex-1 overflow-y-auto overscroll-contain flex flex-col relative z-10 space-y-5 pt-6 pb-6" style={{ scrollbarWidth: 'none' }}>
-              
+            {/* ── Content Area ───────────────────────────────────
+                Sized to the viewport: everything below the artwork keeps its natural height and
+                the artwork square absorbs the difference (down to a floor), so the whole player
+                fits without scrolling. Only very short windows fall back to scrolling. */}
+            <div
+              className="flex-1 min-h-0 overflow-y-auto overscroll-contain flex flex-col relative z-10"
+              style={{ scrollbarWidth: 'none', gap: 'clamp(10px, 1.9dvh, 20px)', paddingTop: 'clamp(14px, 2.4dvh, 24px)', paddingBottom: 'clamp(14px, 2.4dvh, 24px)' }}
+            >
+
               {/* ── Album Art Hero ────────────────────────────── */}
-              <div className="relative flex-shrink-0 w-full px-5 pb-0">
-                <div className="relative rounded-2xl overflow-hidden backdrop-blur-xl" 
-                     style={{ 
-                       aspectRatio: '1/1', 
-                       border: `1px solid rgba(255,255,255,0.35)`, 
-                       boxShadow: `inset 0 1.5px 2px rgba(255,255,255,0.6), 0 20px 40px -10px rgba(0,0,0,0.5)` 
+              {/* Outer box: full width, square by default, allowed to shrink in height.
+                  Inner box: always square (its height fills the outer box), centred. */}
+              <div className="relative mx-5 flex justify-center" style={{ aspectRatio: '1 / 1', flex: '0 1 auto', minHeight: 'min(190px, calc(100vw - 4.5rem))' }}>
+                <div className="relative h-full max-w-full rounded-2xl overflow-hidden backdrop-blur-xl"
+                     style={{
+                       aspectRatio: '1/1',
+                       border: `1px solid rgba(255,255,255,0.35)`,
+                       boxShadow: `inset 0 1.5px 2px rgba(255,255,255,0.6), 0 20px 40px -10px rgba(0,0,0,0.5)`
                      }}>
                   
                   {/* Image */}
@@ -519,13 +612,13 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
                     src={song.albumArt}
                     alt={song.album}
                     className="w-full h-full object-cover"
-                    initial={{ scale: 1.06, opacity: 0, filter: 'blur(12px)' }}
+                    decoding="async"
+                    initial={{ scale: 1.03, opacity: 0 }}
                     animate={{ 
-                      scale: imageLoaded ? 1 : 1.06, 
+                      scale: imageLoaded ? 1 : 1.03,
                       opacity: imageLoaded ? 1 : 0,
-                      filter: imageLoaded ? 'blur(0px)' : 'blur(12px)'
                     }}
-                    transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
                     onLoad={() => setLoadedArtwork(song.albumArt)}
                   />
 
@@ -546,8 +639,8 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
                     <div className="absolute bottom-3 right-3 pointer-events-auto">
                       <GlassButton size="xs" contentClassName="flex items-center gap-1.5 text-white cursor-default">
                         <div className="flex items-end gap-[2px] h-3">
-                          {WAVE_BARS.slice(0,4).map((h, i) => (
-                            <div key={i} className="kd-wave-bar w-[2px] rounded-full" style={{ backgroundColor: '#fff', height: `${h * 0.4}px` }} />
+                          {WAVE_BARS.slice(0,4).map((_, i) => (
+                            <div key={i} className="kd-wave-bar w-[2px] rounded-full" style={{ backgroundColor: '#fff' }} />
                           ))}
                         </div>
                         <span>Now Playing</span>
@@ -568,8 +661,8 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
                         song.name.length > 36
                           ? 'clamp(1.2rem, 3.8vw, 1.45rem)'
                           : song.name.length > 22
-                          ? 'clamp(1.42rem, 4.6vw, 1.75rem)'
-                          : 'clamp(1.75rem, 6vw, 2.2rem)',
+                          ? 'clamp(1.3rem, min(4.6vw, 3.4dvh), 1.75rem)'
+                          : 'clamp(1.5rem, min(6vw, 4dvh), 2.2rem)',
                       fontWeight: song.name.length > 36 ? 600 : 700,
                       letterSpacing: song.name.length > 36 ? '-0.01em' : '-0.02em',
                       textShadow: '0 2px 14px rgba(0,0,0,0.65), 0 0 24px rgba(255,255,255,0.12)',
@@ -603,10 +696,10 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
                   </p>
                 </motion.div>
 
-                {/* Genre Tags */}
-                {song.genres.length > 0 && (
+                {/* Genre Tags (case-insensitive de-dupe: "Tamil" + "tamil" showed twice) */}
+                {genres.length > 0 && (
                   <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="flex flex-wrap gap-2 pt-1">
-                    {song.genres.map((g) => (
+                    {genres.map((g) => (
                       <GlassButton key={g} size="xs" contentClassName="text-white cursor-default">
                         {g}
                       </GlassButton>
@@ -621,6 +714,7 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
                 <PlaybackProgressSection
                   hasPreview={!!song.previewUrl}
                   isPlaying={isPlaying}
+                  palette={palette}
                   onSeek={seekTo}
                 />
 
@@ -703,7 +797,7 @@ export function SongDetail({ song, onClose }: SongDetailProps) {
               </motion.div>
               
               {/* ── Footer Stats ────────────────────────────── */}
-              <div className="px-5 space-y-4">
+              <div className="px-5 space-y-3">
                 <div className="flex items-center gap-3">
                   <GlassButton
                     size="none"
