@@ -1,0 +1,20 @@
+{
+ "phase": "pilot",
+ "startedAt": "2026-11-11T07:23:51.717Z",
+ "browser": "Chrome/157.0.8103.39",
+ "launch": {
+  "reused": true
+ },
+ "neutral": {
+  "x": 1694,
+  "y": 455,
+  "el": "DIV.relative w-full min-h-[100dvh] flex flex-col items-center ju"
+ },
+ "page": {
+  "vp": "1718x910@1.090000033378601",
+  "activation": false,
+  "conn": null,
+  "videos": 3
+ },
+ "finishedAt": "2026-11-11T07:24:05.327Z"
+}

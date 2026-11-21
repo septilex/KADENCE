@@ -1,0 +1,4347 @@
+{
+  "samples": [
+    {
+      "t": 28646.7,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28653.6,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28660.6,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28667.5,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28674.4,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28681.4,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28688.4,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28695.3,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28702.2,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28709.1,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28716.1,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28723,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28730,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28736.9,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28743.8,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28750.8,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28757.7,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28764.7,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28771.6,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28778.5,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28785.5,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28792.5,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28799.4,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28806.4,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28813.3,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28820.3,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28827.2,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28834.1,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28841.1,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28848,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28855,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28861.9,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28868.9,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28875.8,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28882.8,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28889.7,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28896.6,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28903.5,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28910.5,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28917.4,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28924.4,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28931.3,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28938.3,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28945.3,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28952.2,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28959.1,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28966,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28973,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28979.9,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28986.8,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 28993.9,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29000.8,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29007.7,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29014.6,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29021.6,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29028.5,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29035.4,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29042.4,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29049.4,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29056.3,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29063.2,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29070.2,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29077.1,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29084.1,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29091.1,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29098,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29104.9,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29111.9,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29118.8,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29125.8,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29132.7,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29139.6,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29146.7,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29153.6,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29160.4,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29167.5,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29174.4,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29181.3,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29188.3,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29195.2,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29202.1,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29209.1,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29216,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29223,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29229.9,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29236.9,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29243.8,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29250.8,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29257.6,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29264.7,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29271.6,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29278.5,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29285.4,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29292.4,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29299.3,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29306.3,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29313.2,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29320.2,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29327.1,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29334.1,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29341,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29348,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29354.9,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29361.9,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29368.8,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29375.7,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29382.7,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29389.6,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29396.5,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29403.6,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29410.4,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29417.5,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29424.3,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29431.3,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29438.2,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29445.2,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29452.1,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29459,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29466,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29473,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29479.9,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29486.9,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29493.8,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29500.7,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29507.6,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29514.6,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29521.5,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29528.4,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29535.4,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29542.4,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29549.4,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29556.3,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29563.2,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29570.1,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29577.2,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29584,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29591,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29597.9,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29604.9,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29611.7,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29618.7,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29625.7,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29632.6,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29639.6,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29646.5,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29653.4,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29660.4,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29667.5,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29674.2,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29681.3,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29688.2,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29695.1,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29702.1,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29709,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29716,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29722.9,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29729.8,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29736.8,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29743.7,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29750.7,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29757.6,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29764.6,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29771.5,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29778.4,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29785.4,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29792.3,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29799.3,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29806.2,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29813.2,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29820.1,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29827,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29834,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29840.9,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29848,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29854.8,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29861.8,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29868.7,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29875.7,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29882.7,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29889.6,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29896.6,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29903.6,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29910.5,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29917.5,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29924.3,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29931.2,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29938.2,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29945.1,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29952.1,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29958.9,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29966,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29972.9,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29979.8,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29986.7,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 29993.7,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 30000.7,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 30007.5,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 30014.6,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 30021.5,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 30028.5,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 30035.4,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 30042.3,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 30049.3,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 30056.2,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 30063.2,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 30070.1,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 30077,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 30084,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 30090.9,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 30097.8,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 30104.9,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 30111.7,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 30118.7,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 30125.6,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 30132.6,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 30139.5,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "t": 30146.5,
+      "debug": {
+        "source": "http://localhost:3000/videos/globe-hq.mp4",
+        "media": "VIDEO",
+        "playing": true,
+        "context": "running",
+        "status": "analysing",
+        "readable": false,
+        "bass": 0,
+        "flux": 0,
+        "threshold": 0.00015,
+        "beats": 15,
+        "animations": 15,
+        "surface": "http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "error": ""
+      },
+      "transform": "matrix(1, 0, 0, 1, 0, 0)"
+    }
+  ],
+  "canvas": false,
+  "activeWrappers": 1,
+  "text": "Discover\nSearch\nLibrary\n\nITUNES UNIVERSE\n\nWhat are you listening to?\n\nChoose your editorial chart\n\n✦\nCREATOR'S PICK\nExplore Dev's Universe\n79 HANDPICKED TRACKS\nCREATOR COLLECTION\n\nA PERSONAL UNIVERSE CURATED BY DEV\n\n★\n👑 Creator's Pick\n✨ Dev's Universe\nCURATED BY DEV\n• 80 HANDPICKED TRACKS\nKADENCE beat diagnostics (development only)\n{\n  \"source\": \"http://localhost:3000/videos/globe-hq.mp4\",\n  \"media\": \"VIDEO\",\n  \"playing\": true,\n  \"context\": \"running\",\n  \"status\": \"analysing\",\n  \"readable\": false,\n  \"bass\": 0,\n  \"flux\": 0,\n  \"threshold\": 0.00015,\n  \"beats\": 15,\n  \"animations\": 15,\n  \"surface\": \"http://localhost:3000/audio/intro/Fa%20Fa%20Fa%2030secs.mp4\",\n  \"transform\": \"matrix(1, 0, 0, 1, 0, 0)\",\n  \"error\": \"\"\n}"
+}

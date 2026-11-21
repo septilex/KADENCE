@@ -1,0 +1,121 @@
+{
+ "method": "Frame signature (24x24 luma) of the preview at 0.5/1.5/2.5 s compared against the full video sampled every 0.25 s over 0-4.5 s; bestFullT = best matching full-video time. Run in a clean Brave profile on the production origin (favicon page, app not running).",
+ "results": [
+  {
+   "stem": "Loser",
+   "previewDuration": 3,
+   "fullDuration": 30.083,
+   "pW": 1920,
+   "pH": 788,
+   "fW": 1920,
+   "fH": 788,
+   "checks": [
+    {
+     "previewT": 0.5,
+     "bestFullT": 0.5,
+     "bestDiff": 0.55,
+     "diffAtSameT": 0.55
+    },
+    {
+     "previewT": 1.5,
+     "bestFullT": 1.5,
+     "bestDiff": 0.53,
+     "diffAtSameT": 0.53
+    },
+    {
+     "previewT": 2.5,
+     "bestFullT": 2.5,
+     "bestDiff": 0.31,
+     "diffAtSameT": 0.31
+    }
+   ]
+  },
+  {
+   "stem": "One Of The Girls",
+   "previewDuration": 3,
+   "fullDuration": 30.017,
+   "pW": 1920,
+   "pH": 1080,
+   "fW": 1920,
+   "fH": 1080,
+   "checks": [
+    {
+     "previewT": 0.5,
+     "bestFullT": 0.5,
+     "bestDiff": 0.28,
+     "diffAtSameT": 0.28
+    },
+    {
+     "previewT": 1.5,
+     "bestFullT": 1.5,
+     "bestDiff": 0.35,
+     "diffAtSameT": 0.35
+    },
+    {
+     "previewT": 2.5,
+     "bestFullT": 2.5,
+     "bestDiff": 0.34,
+     "diffAtSameT": 0.34
+    }
+   ]
+  },
+  {
+   "stem": "Gehra Hua",
+   "previewDuration": 3,
+   "fullDuration": 30.004,
+   "pW": 1920,
+   "pH": 1080,
+   "fW": 1920,
+   "fH": 1080,
+   "checks": [
+    {
+     "previewT": 0.5,
+     "bestFullT": 0.5,
+     "bestDiff": 0.34,
+     "diffAtSameT": 0.34
+    },
+    {
+     "previewT": 1.5,
+     "bestFullT": 1.5,
+     "bestDiff": 0.44,
+     "diffAtSameT": 0.44
+    },
+    {
+     "previewT": 2.5,
+     "bestFullT": 2.5,
+     "bestDiff": 0.43,
+     "diffAtSameT": 0.43
+    }
+   ]
+  },
+  {
+   "stem": "God Mode",
+   "previewDuration": 3,
+   "fullDuration": 30.034,
+   "pW": 1920,
+   "pH": 1080,
+   "fW": 1920,
+   "fH": 1080,
+   "checks": [
+    {
+     "previewT": 0.5,
+     "bestFullT": 0.5,
+     "bestDiff": 0.54,
+     "diffAtSameT": 0.54
+    },
+    {
+     "previewT": 1.5,
+     "bestFullT": 1.5,
+     "bestDiff": 0.62,
+     "diffAtSameT": 0.62
+    },
+    {
+     "previewT": 2.5,
+     "bestFullT": 2.5,
+     "bestDiff": 0.55,
+     "diffAtSameT": 0.55
+    }
+   ]
+  }
+ ]
+}

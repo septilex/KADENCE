@@ -1,0 +1,54 @@
+{
+ "phase": "main",
+ "startedAt": "2026-11-11T07:25:11.620Z",
+ "browser": "Chrome/157.0.8103.39",
+ "launch": {
+  "reused": true
+ },
+ "neutral": {
+  "x": 1694,
+  "y": 455,
+  "el": "DIV.relative w-full min-h-[100dvh] flex flex-col items-center ju"
+ },
+ "page": {
+  "vp": "1718x910@1.090000033378601",
+  "activation": false,
+  "conn": null,
+  "videos": 3
+ },
+ "idleCpuUntraced": {
+  "seconds": 15.014,
+  "perProcess": [
+   {
+    "type": "browser",
+    "id": 4056,
+    "pctOfOneCore": 0.4
+   },
+   {
+    "type": "renderer",
+    "id": 8440,
+    "pctOfOneCore": 26.1
+   },
+   {
+    "type": "GPU",
+    "id": 5088,
+    "pctOfOneCore": 89.6
+   }
+  ],
+  "globe": {
+   "paused": false,
+   "readyState": 4,
+   "w": 1080
+  }
+ },
+ "activationClick": {
+  "at": {
+   "x": 684.8778686523438,
+   "y": 342.1659984588623
+  },
+  "activation": true,
+  "stillOnIntro": true,
+  "wall": 1794382144843
+ },
+ "finishedAt": "2026-11-11T07:40:17.211Z"
+}

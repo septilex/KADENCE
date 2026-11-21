@@ -1,0 +1,20 @@
+[
+  {
+    "path": "/api/songs?vibe=top-tamil",
+    "status": 200,
+    "ms": 422,
+    "songs": 152
+  },
+  {
+    "path": "/api/songs?vibe=top-telugu",
+    "status": 200,
+    "ms": 233,
+    "songs": 90
+  },
+  {
+    "path": "/api/search?q=daft%20punk",
+    "status": 200,
+    "ms": 1002,
+    "songs": 50
+  }
+]

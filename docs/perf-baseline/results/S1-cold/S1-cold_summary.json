@@ -1,0 +1,356 @@
+[
+ {
+  "run": "cpu1x_r1",
+  "cpu": 1,
+  "startedAt": "2026-11-11T06:03:51.577Z",
+  "ttfb": 334.3,
+  "dcl": 1632.5,
+  "load": 5656.8,
+  "fcp": 1720,
+  "lcp": 6120,
+  "lcpEl": "/kadence-chrome-logo.png",
+  "cls": 0,
+  "longTasks": 0,
+  "longTaskMax": 0,
+  "longTaskTotalBlocking": 0,
+  "loafMax": 1244,
+  "requests": 33,
+  "completed": 32,
+  "bytesExclGlobe": 2720642,
+  "allFromNetwork": true,
+  "cssAndFontCssDoneMs": 1525,
+  "allJsDoneMs": 6398,
+  "lastResourceDoneMs": 6398,
+  "effectiveKbpsUntilLastDone": 3402,
+  "bigTransfers": [
+   {
+    "url": "kadence-horizontal-logo.png",
+    "kb": 783,
+    "ms": 1205,
+    "kbps": 5323
+   },
+   {
+    "url": "kadence-chrome-logo.png",
+    "kb": 230,
+    "ms": 1400,
+    "kbps": 1348
+   }
+  ],
+  "globe": {
+   "status": "no-response",
+   "ttfbMs": null,
+   "xVercelCache": null,
+   "finished": false
+  },
+  "globeDecoder": [],
+  "globePipelineBufferingStates": [],
+  "idle": {
+   "count": 901,
+   "fps": 60.1,
+   "p50": 16.7,
+   "p95": 16.8,
+   "p99": 16.8,
+   "max": 17.1,
+   "over20ms": 0,
+   "over50ms": 0,
+   "missed": 0
+  },
+  "idleLongTasks": 0,
+  "idleGlDraws": 0,
+  "idleGlobe": {
+   "decoded": 0,
+   "dropped": 0,
+   "paused": false,
+   "w": 0,
+   "h": 0
+  },
+  "idleHoverVideos": 0,
+  "idleActivation": false,
+  "idleCpuPctOneCore_TRACING_ON": {
+   "browser:4056": 10.6,
+   "renderer:7144": 28,
+   "GPU:5088": 83.2,
+   "network.mojom.NetworkService:6072": 0.6,
+   "tracing.mojom.TracingService:21440": 22.8
+  },
+  "canvasCount": 1,
+  "three": "184"
+ },
+ {
+  "run": "cpu1x_r2",
+  "cpu": 1,
+  "startedAt": "2026-11-11T06:04:39.923Z",
+  "ttfb": 10485.1,
+  "dcl": 13065.3,
+  "load": 25299.5,
+  "fcp": 13104,
+  "lcp": 26104,
+  "lcpEl": "/kadence-chrome-logo.png",
+  "cls": 0,
+  "longTasks": 0,
+  "longTaskMax": 0,
+  "longTaskTotalBlocking": 0,
+  "loafMax": 2540,
+  "requests": 33,
+  "completed": 30,
+  "bytesExclGlobe": 2561055,
+  "allFromNetwork": true,
+  "cssAndFontCssDoneMs": 12981,
+  "allJsDoneMs": 25260,
+  "lastResourceDoneMs": 25260,
+  "effectiveKbpsUntilLastDone": 811,
+  "bigTransfers": [
+   {
+    "url": "kadence-horizontal-logo.png",
+    "kb": 783,
+    "ms": 2095,
+    "kbps": 3063
+   },
+   {
+    "url": "kadence-chrome-logo.png",
+    "kb": 230,
+    "ms": 1117,
+    "kbps": 1690
+   }
+  ],
+  "globe": {
+   "status": 206,
+   "ttfbMs": 6360,
+   "xVercelCache": "HIT",
+   "finished": false
+  },
+  "globeDecoder": [
+   "kVideoDecoderName=D3D11VideoDecoder",
+   "kIsPlatformVideoDecoder=true"
+  ],
+  "globePipelineBufferingStates": [
+   "BUFFERING_HAVE_NOTHING",
+   "BUFFERING_HAVE_ENOUGH",
+   "BUFFERING_HAVE_NOTHING",
+   "BUFFERING_HAVE_ENOUGH",
+   "BUFFERING_HAVE_NOTHING",
+   "BUFFERING_HAVE_ENOUGH",
+   "BUFFERING_HAVE_NOTHING",
+   "BUFFERING_HAVE_ENOUGH",
+   "BUFFERING_HAVE_NOTHING"
+  ],
+  "idle": {
+   "count": 902,
+   "fps": 60.1,
+   "p50": 16.7,
+   "p95": 16.8,
+   "p99": 16.8,
+   "max": 17.1,
+   "over20ms": 0,
+   "over50ms": 0,
+   "missed": 0
+  },
+  "idleLongTasks": 0,
+  "idleGlDraws": 0,
+  "idleGlobe": {
+   "decoded": 90,
+   "dropped": 2,
+   "paused": false,
+   "w": 1080,
+   "h": 1080
+  },
+  "idleHoverVideos": 0,
+  "idleActivation": false,
+  "idleCpuPctOneCore_TRACING_ON": {
+   "browser:4056": 11,
+   "renderer:4272": 31.4,
+   "GPU:5088": 108.8,
+   "network.mojom.NetworkService:6072": 0.8,
+   "tracing.mojom.TracingService:21440": 24.8
+  },
+  "canvasCount": 0,
+  "three": "184"
+ },
+ {
+  "run": "cpu1x_r3",
+  "cpu": 1,
+  "startedAt": "2026-11-11T06:22:40.941Z",
+  "ttfb": 2528.6,
+  "dcl": 7833.8,
+  "load": 49013.4,
+  "fcp": 7868,
+  "lcp": 49148,
+  "lcpEl": "/kadence-chrome-logo.png",
+  "cls": 0,
+  "longTasks": 0,
+  "longTaskMax": 0,
+  "longTaskTotalBlocking": 0,
+  "loafMax": 5261,
+  "requests": 33,
+  "completed": 30,
+  "bytesExclGlobe": 2562030,
+  "allFromNetwork": true,
+  "cssAndFontCssDoneMs": 7708,
+  "allJsDoneMs": 48972,
+  "lastResourceDoneMs": 96476,
+  "effectiveKbpsUntilLastDone": 212,
+  "bigTransfers": [
+   {
+    "url": "kadence-horizontal-logo.png",
+    "kb": 783,
+    "ms": 1219,
+    "kbps": 5265
+   },
+   {
+    "url": "kadence-chrome-logo.png",
+    "kb": 231,
+    "ms": 1362,
+    "kbps": 1387
+   }
+  ],
+  "globe": {
+   "status": 206,
+   "ttfbMs": 1326,
+   "xVercelCache": "HIT",
+   "finished": false
+  },
+  "globeDecoder": [
+   "kVideoDecoderName=D3D11VideoDecoder",
+   "kIsPlatformVideoDecoder=true"
+  ],
+  "globePipelineBufferingStates": [
+   "BUFFERING_HAVE_ENOUGH",
+   "BUFFERING_HAVE_NOTHING",
+   "BUFFERING_HAVE_NOTHING",
+   "BUFFERING_HAVE_ENOUGH",
+   "BUFFERING_HAVE_NOTHING",
+   "BUFFERING_HAVE_ENOUGH",
+   "BUFFERING_HAVE_NOTHING",
+   "BUFFERING_HAVE_ENOUGH",
+   "BUFFERING_HAVE_NOTHING",
+   "BUFFERING_HAVE_ENOUGH",
+   "BUFFERING_HAVE_NOTHING",
+   "BUFFERING_HAVE_ENOUGH",
+   "BUFFERING_HAVE_NOTHING"
+  ],
+  "idle": {
+   "count": 902,
+   "fps": 60.1,
+   "p50": 16.7,
+   "p95": 16.8,
+   "p99": 16.8,
+   "max": 17,
+   "over20ms": 0,
+   "over50ms": 0,
+   "missed": 0
+  },
+  "idleLongTasks": 0,
+  "idleGlDraws": 0,
+  "idleGlobe": {
+   "decoded": 27,
+   "dropped": 0,
+   "paused": false,
+   "w": 1080,
+   "h": 1080
+  },
+  "idleHoverVideos": 0,
+  "idleActivation": false,
+  "idleCpuPctOneCore_TRACING_ON": {
+   "browser:4056": 10,
+   "renderer:21084": 30.2,
+   "GPU:5088": 94.8,
+   "tracing.mojom.TracingService:21440": 22.3
+  },
+  "canvasCount": 0,
+  "three": "184"
+ },
+ {
+  "run": "cpu4x_r1",
+  "cpu": 4,
+  "startedAt": "2026-11-11T06:28:47.292Z",
+  "ttfb": 617,
+  "dcl": 5179.5,
+  "load": 26258.3,
+  "fcp": 5156,
+  "lcp": 26640,
+  "lcpEl": "/kadence-chrome-logo.png",
+  "cls": 0,
+  "longTasks": 4,
+  "longTaskMax": 168,
+  "longTaskTotalBlocking": 248,
+  "loafMax": 4409,
+  "requests": 33,
+  "completed": 32,
+  "bytesExclGlobe": 2720543,
+  "allFromNetwork": true,
+  "cssAndFontCssDoneMs": 4613,
+  "allJsDoneMs": 75242,
+  "lastResourceDoneMs": 75242,
+  "effectiveKbpsUntilLastDone": 289,
+  "bigTransfers": [
+   {
+    "url": "kadence-horizontal-logo.png",
+    "kb": 783,
+    "ms": 3681,
+    "kbps": 1743
+   },
+   {
+    "url": "kadence-chrome-logo.png",
+    "kb": 230,
+    "ms": 3971,
+    "kbps": 475
+   }
+  ],
+  "globe": {
+   "status": 206,
+   "ttfbMs": 830,
+   "xVercelCache": "HIT",
+   "finished": false
+  },
+  "globeDecoder": [
+   "kVideoDecoderName=D3D11VideoDecoder",
+   "kIsPlatformVideoDecoder=true"
+  ],
+  "globePipelineBufferingStates": [
+   "BUFFERING_HAVE_ENOUGH",
+   "BUFFERING_HAVE_NOTHING",
+   "BUFFERING_HAVE_NOTHING",
+   "BUFFERING_HAVE_ENOUGH",
+   "BUFFERING_HAVE_NOTHING",
+   "BUFFERING_HAVE_ENOUGH",
+   "BUFFERING_HAVE_NOTHING",
+   "BUFFERING_HAVE_ENOUGH",
+   "BUFFERING_HAVE_NOTHING",
+   "BUFFERING_HAVE_ENOUGH",
+   "BUFFERING_HAVE_NOTHING",
+   "BUFFERING_HAVE_ENOUGH",
+   "BUFFERING_HAVE_NOTHING"
+  ],
+  "idle": {
+   "count": 793,
+   "fps": 52.8,
+   "p50": 17.3,
+   "p95": 17.7,
+   "p99": 17.8,
+   "max": 915.5,
+   "over20ms": 2,
+   "over50ms": 2,
+   "missed": 80
+  },
+  "idleLongTasks": 0,
+  "idleGlDraws": 0,
+  "idleGlobe": {
+   "decoded": 130,
+   "dropped": 13,
+   "paused": false,
+   "w": 1080,
+   "h": 1080
+  },
+  "idleHoverVideos": 0,
+  "idleActivation": false,
+  "idleCpuPctOneCore_TRACING_ON": {
+   "browser:4056": 9.7,
+   "renderer:18696": 160.9,
+   "GPU:5088": 70.9,
+   "network.mojom.NetworkService:6072": 0.5,
+   "tracing.mojom.TracingService:21440": 24.2
+  },
+  "canvasCount": 0,
+  "three": "184"
+ }
+]

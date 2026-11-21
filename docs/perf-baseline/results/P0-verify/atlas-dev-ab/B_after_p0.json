@@ -1,0 +1,24 @@
+{
+ "run": "B_after_p0",
+ "url": "http://localhost:3000/",
+ "entry": {
+  "fullUploads": 4,
+  "maxUploadCallMs": 1.6,
+  "imgSrcSets": 256,
+  "uniqueUrls": 243,
+  "loaded": 256,
+  "errored": 0
+ },
+ "search": {
+  "opened": true,
+  "fullUploads": 0,
+  "imgSrcSets": 13,
+  "uniqueUrls": 13,
+  "loaded": 13,
+  "errored": 0,
+  "sizeVariants": [
+   "600x600"
+  ]
+ },
+ "capturedAt": "2026-11-13T07:48:13.907Z"
+}

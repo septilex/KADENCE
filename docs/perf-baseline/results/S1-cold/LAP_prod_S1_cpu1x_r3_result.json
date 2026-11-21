@@ -1,0 +1,1623 @@
+{
+ "run": "cpu1x_r3",
+ "cpuThrottle": 1,
+ "startedAt": "2026-11-11T06:22:40.941Z",
+ "load": {
+  "viewport": "1718x910@1.090000033378601",
+  "userActivation": false,
+  "nav": {
+   "type": "navigate",
+   "proto": "h2",
+   "delivery": "",
+   "transfer": 9062,
+   "encoded": 8762,
+   "decoded": 58625,
+   "dns": 1843.8,
+   "connect": 592.9,
+   "tls": 466,
+   "ttfb": 2528.6,
+   "responseEnd": 2794.6,
+   "domInteractive": 7833.6,
+   "dcl": 7833.8,
+   "load": 49013.4
+  },
+  "paint": {
+   "first-paint": 7868,
+   "first-contentful-paint": 7868
+  },
+  "lcp": [
+   {
+    "t": 7868,
+    "size": 5817,
+    "el": "IMG",
+    "url": "/kadence-horizontal-logo.png"
+   },
+   {
+    "t": 49148,
+    "size": 269044,
+    "el": "IMG",
+    "url": "/kadence-chrome-logo.png"
+   }
+  ],
+  "cls": 0,
+  "clsEntries": 1,
+  "longTasks": [],
+  "longtaskObserverError": null,
+  "loaf": [
+   {
+    "t": 2559.9,
+    "ms": 5261,
+    "blockingMs": 69,
+    "styleLayoutMs": 111,
+    "scripts": []
+   },
+   {
+    "t": 49068.9,
+    "ms": 52,
+    "blockingMs": 0,
+    "styleLayoutMs": 1,
+    "scripts": []
+   }
+  ],
+  "canvasCount": 0,
+  "three": "184",
+  "domNodes": 295
+ },
+ "idle": {
+  "startMs": 108206.7,
+  "seconds": 15.01,
+  "focus": true,
+  "visibility": "visible",
+  "frames": {
+   "count": 902,
+   "fps": 60.1,
+   "p50": 16.7,
+   "p95": 16.8,
+   "p99": 16.8,
+   "max": 17,
+   "over20ms": 0,
+   "over50ms": 0,
+   "missed": 0
+  },
+  "longTasks": [],
+  "loaf": [],
+  "webgl": {
+   "draws": 0,
+   "tex": 0
+  },
+  "globe": {
+   "decoded": 27,
+   "dropped": 0,
+   "paused": false,
+   "w": 1080,
+   "h": 1080
+  },
+  "hoverVideosWithSrc": 0,
+  "userActivation": false,
+  "heapMB": 6.1
+ },
+ "idleProcessCpu": [
+  {
+   "type": "browser",
+   "id": 4056,
+   "cpuSec": 1.503,
+   "cpuPctOfOneCore": 10
+  },
+  {
+   "type": "renderer",
+   "id": 18696,
+   "cpuSec": 0.005,
+   "cpuPctOfOneCore": 0
+  },
+  {
+   "type": "renderer",
+   "id": 21084,
+   "cpuSec": 4.537,
+   "cpuPctOfOneCore": 30.2
+  },
+  {
+   "type": "renderer",
+   "id": 22748,
+   "cpuSec": 0.006,
+   "cpuPctOfOneCore": 0
+  },
+  {
+   "type": "renderer",
+   "id": 7356,
+   "cpuSec": 0.006,
+   "cpuPctOfOneCore": 0
+  },
+  {
+   "type": "GPU",
+   "id": 5088,
+   "cpuSec": 14.222,
+   "cpuPctOfOneCore": 94.8
+  },
+  {
+   "type": "network.mojom.NetworkService",
+   "id": 6072,
+   "cpuSec": 0.044,
+   "cpuPctOfOneCore": 0.3
+  },
+  {
+   "type": "storage.mojom.StorageService",
+   "id": 20896,
+   "cpuSec": 0.006,
+   "cpuPctOfOneCore": 0
+  },
+  {
+   "type": "on_device_model.mojom.OnDeviceModelService",
+   "id": 18700,
+   "cpuSec": 0.029,
+   "cpuPctOfOneCore": 0.2
+  },
+  {
+   "type": "tracing.mojom.TracingService",
+   "id": 21440,
+   "cpuSec": 3.349,
+   "cpuPctOfOneCore": 22.3
+  },
+  {
+   "type": "audio.mojom.AudioService",
+   "id": 4500,
+   "cpuSec": 0.006,
+   "cpuPctOfOneCore": 0
+  }
+ ],
+ "idlePerfMetricsDelta": {
+  "Timestamp": 20.536,
+  "AudioHandlers": 0,
+  "AudioWorkletProcessors": 0,
+  "Documents": 0,
+  "Frames": 0,
+  "JSEventListeners": 0,
+  "LayoutObjects": 0,
+  "MediaKeySessions": 0,
+  "MediaKeys": 0,
+  "Nodes": 0,
+  "Resources": 0,
+  "ContextLifecycleStateObservers": 0,
+  "V8PerContextDatas": 0,
+  "WorkerGlobalScopes": 0,
+  "UACSSResources": 0,
+  "RTCPeerConnections": 0,
+  "ResourceFetchers": 0,
+  "AdSubframes": 0,
+  "DetachedScriptStates": 0,
+  "ArrayBufferContents": 0,
+  "LayoutCount": 0,
+  "RecalcStyleCount": 957,
+  "LayoutDuration": 0,
+  "RecalcStyleDuration": 0.441,
+  "DevToolsCommandDuration": 0.022,
+  "ScriptDuration": 0.087,
+  "V8CompileDuration": 0,
+  "TaskDuration": 1.49,
+  "TaskOtherDuration": 0.939,
+  "ThreadTime": 1.699,
+  "ProcessTime": 4.537,
+  "JSHeapUsedSize": 315348,
+  "JSHeapTotalSize": 0,
+  "FirstMeaningfulPaint": 0,
+  "DomContentLoaded": 0,
+  "NavigationStart": 0
+ },
+ "perfMetricsEnd": {
+  "Timestamp": 12075.027373,
+  "AudioHandlers": 0,
+  "AudioWorkletProcessors": 0,
+  "Documents": 1,
+  "Frames": 1,
+  "JSEventListeners": 468,
+  "LayoutObjects": 272,
+  "MediaKeySessions": 0,
+  "MediaKeys": 0,
+  "Nodes": 770,
+  "Resources": 85,
+  "ContextLifecycleStateObservers": 28,
+  "V8PerContextDatas": 2,
+  "WorkerGlobalScopes": 0,
+  "UACSSResources": 0,
+  "RTCPeerConnections": 0,
+  "ResourceFetchers": 1,
+  "AdSubframes": 0,
+  "DetachedScriptStates": 0,
+  "ArrayBufferContents": 6,
+  "LayoutCount": 12,
+  "RecalcStyleCount": 2481,
+  "LayoutDuration": 0.108913,
+  "RecalcStyleDuration": 1.15302,
+  "DevToolsCommandDuration": 0.024673,
+  "ScriptDuration": 25.055435,
+  "V8CompileDuration": 0.002921,
+  "TaskDuration": 43.216583,
+  "TaskOtherDuration": 16.871621,
+  "ThreadTime": 42.940455,
+  "ProcessTime": 63.858787,
+  "JSHeapUsedSize": 5148040,
+  "JSHeapTotalSize": 5767168,
+  "FirstMeaningfulPaint": 0,
+  "DomContentLoaded": 11954.146942,
+  "NavigationStart": 11946.313218
+ },
+ "network": [
+  {
+   "url": "https://kadence-musicz.vercel.app/",
+   "method": "GET",
+   "range": null,
+   "type": "Document",
+   "start": 11946.314346,
+   "wall": 1794378160.951091,
+   "initiator": "other",
+   "status": 200,
+   "mime": "text/html",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public, max-age=0, must-revalidate",
+   "xVercelCache": "HIT",
+   "contentRange": null,
+   "contentLength": null,
+   "ttfbMs": 88,
+   "respAt": 11948.858169,
+   "end": 11949.107863,
+   "encodedDataLength": 9172,
+   "startMs": 0,
+   "durMs": 2794
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/kadence-horizontal-logo.png",
+   "method": "GET",
+   "range": null,
+   "type": "Image",
+   "start": 11948.865473,
+   "wall": 1794378163.502275,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "image/png",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public, max-age=0, must-revalidate",
+   "xVercelCache": "HIT",
+   "contentRange": null,
+   "contentLength": "801286",
+   "ttfbMs": 535,
+   "respAt": 11949.430144,
+   "end": 11950.083979,
+   "encodedDataLength": 801907,
+   "startMs": 2551,
+   "durMs": 1219
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/kadence-chrome-logo.png",
+   "method": "GET",
+   "range": null,
+   "type": "Image",
+   "start": 11948.865964,
+   "wall": 1794378163.502719,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "image/png",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public, max-age=0, must-revalidate",
+   "xVercelCache": "HIT",
+   "contentRange": null,
+   "contentLength": "235696",
+   "ttfbMs": 1268,
+   "respAt": 11950.16457,
+   "end": 11950.227608,
+   "encodedDataLength": 236041,
+   "startMs": 2552,
+   "durMs": 1362
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/images/vibes/01-global-top-50.webp",
+   "method": "GET",
+   "range": null,
+   "type": "Image",
+   "start": 11948.866123,
+   "wall": 1794378163.502882,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "image/webp",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public, max-age=0, must-revalidate",
+   "xVercelCache": "HIT",
+   "contentRange": null,
+   "contentLength": "75166",
+   "ttfbMs": 356,
+   "respAt": 11949.253549,
+   "end": 11949.389074,
+   "encodedDataLength": 75386,
+   "startMs": 2552,
+   "durMs": 523
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/images/vibes/02-viral-50.webp",
+   "method": "GET",
+   "range": null,
+   "type": "Image",
+   "start": 11948.866218,
+   "wall": 1794378163.502962,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "image/webp",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public, max-age=0, must-revalidate",
+   "xVercelCache": "HIT",
+   "contentRange": null,
+   "contentLength": "72750",
+   "ttfbMs": 1188,
+   "respAt": 11950.08548,
+   "end": 11950.163458,
+   "encodedDataLength": 73001,
+   "startMs": 2552,
+   "durMs": 1297
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/images/vibes/03-new-music-friday.webp",
+   "method": "GET",
+   "range": null,
+   "type": "Image",
+   "start": 11948.86629,
+   "wall": 1794378163.503034,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "image/webp",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public, max-age=0, must-revalidate",
+   "xVercelCache": "HIT",
+   "contentRange": null,
+   "contentLength": "84650",
+   "ttfbMs": 544,
+   "respAt": 11949.441534,
+   "end": 11949.621869,
+   "encodedDataLength": 84889,
+   "startMs": 2552,
+   "durMs": 756
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/images/vibes/04-hip-hop-central.webp",
+   "method": "GET",
+   "range": null,
+   "type": "Image",
+   "start": 11948.866355,
+   "wall": 1794378163.503099,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "image/webp",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public, max-age=0, must-revalidate",
+   "xVercelCache": "HIT",
+   "contentRange": null,
+   "contentLength": "78442",
+   "ttfbMs": 544,
+   "respAt": 11949.44173,
+   "end": 11949.899796,
+   "encodedDataLength": 78667,
+   "startMs": 2552,
+   "durMs": 1033
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/images/vibes/05-pop-rising.webp",
+   "method": "GET",
+   "range": null,
+   "type": "Image",
+   "start": 11948.866415,
+   "wall": 1794378163.503163,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "image/webp",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public, max-age=0, must-revalidate",
+   "xVercelCache": "HIT",
+   "contentRange": null,
+   "contentLength": "60676",
+   "ttfbMs": 210,
+   "respAt": 11949.109691,
+   "end": 11949.252099,
+   "encodedDataLength": 60911,
+   "startMs": 2552,
+   "durMs": 386
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/images/vibes/06-dance-hits.webp",
+   "method": "GET",
+   "range": null,
+   "type": "Image",
+   "start": 11948.86647,
+   "wall": 1794378163.503213,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "image/webp",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public, max-age=0, must-revalidate",
+   "xVercelCache": "HIT",
+   "contentRange": null,
+   "contentLength": "73824",
+   "ttfbMs": 492,
+   "respAt": 11949.390632,
+   "end": 11949.43397,
+   "encodedDataLength": 74055,
+   "startMs": 2552,
+   "durMs": 567
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/images/vibes/07-mood-booster.webp",
+   "method": "GET",
+   "range": null,
+   "type": "Image",
+   "start": 11948.866555,
+   "wall": 1794378163.5033,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "image/webp",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public, max-age=0, must-revalidate",
+   "xVercelCache": "HIT",
+   "contentRange": null,
+   "contentLength": "76578",
+   "ttfbMs": 492,
+   "respAt": 11949.390903,
+   "end": 11949.434129,
+   "encodedDataLength": 76811,
+   "startMs": 2552,
+   "durMs": 568
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/_next/static/chunks/0b6k3dtnwmqbe.css",
+   "method": "GET",
+   "range": null,
+   "type": "Stylesheet",
+   "start": 11948.866631,
+   "wall": 1794378163.50338,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "text/css",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public,max-age=31536000,immutable",
+   "xVercelCache": "HIT",
+   "contentRange": null,
+   "contentLength": null,
+   "ttfbMs": 1009,
+   "respAt": 11949.905176,
+   "end": 11949.915816,
+   "encodedDataLength": 10656,
+   "startMs": 2552,
+   "durMs": 1049
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/_next/static/chunks/0fpki3y6aj230.js",
+   "method": "GET",
+   "range": null,
+   "type": "Script",
+   "start": 11948.866818,
+   "wall": 1794378163.503568,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "application/javascript",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public,max-age=31536000,immutable",
+   "xVercelCache": "HIT",
+   "contentRange": null,
+   "contentLength": null,
+   "ttfbMs": 1808,
+   "respAt": 11950.707369,
+   "end": 11950.77876,
+   "encodedDataLength": 7909,
+   "startMs": 2552,
+   "durMs": 1912
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/_next/static/chunks/140ovxvjat1ch.js",
+   "method": "GET",
+   "range": null,
+   "type": "Script",
+   "start": 11948.866927,
+   "wall": 1794378163.503675,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "application/javascript",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public,max-age=31536000,immutable",
+   "xVercelCache": "HIT",
+   "contentRange": null,
+   "contentLength": null,
+   "ttfbMs": 1882,
+   "respAt": 11950.782303,
+   "end": 11954.087633,
+   "encodedDataLength": 50314,
+   "startMs": 2553,
+   "durMs": 5221
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/_next/static/chunks/07lhk_q6pmm3r.js",
+   "method": "GET",
+   "range": null,
+   "type": "Script",
+   "start": 11948.867011,
+   "wall": 1794378163.503761,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "application/javascript",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public,max-age=31536000,immutable",
+   "xVercelCache": "HIT",
+   "contentRange": null,
+   "contentLength": null,
+   "ttfbMs": 1676,
+   "respAt": 11950.577338,
+   "end": 11954.088199,
+   "encodedDataLength": 72597,
+   "startMs": 2553,
+   "durMs": 5221
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/_next/static/chunks/turbopack-08fpdsd.-ns2y.js",
+   "method": "GET",
+   "range": null,
+   "type": "Script",
+   "start": 11948.867095,
+   "wall": 1794378163.503841,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "application/javascript",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public,max-age=31536000,immutable",
+   "xVercelCache": "HIT",
+   "contentRange": null,
+   "contentLength": null,
+   "ttfbMs": 5501,
+   "respAt": 11954.402859,
+   "end": 11954.401827,
+   "encodedDataLength": 4714,
+   "startMs": 2553,
+   "durMs": 5535
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/_next/static/chunks/0dbhjjzl8qfwv.js",
+   "method": "GET",
+   "range": null,
+   "type": "Script",
+   "start": 11948.867214,
+   "wall": 1794378163.503965,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "application/javascript",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public,max-age=31536000,immutable",
+   "xVercelCache": "HIT",
+   "contentRange": null,
+   "contentLength": null,
+   "ttfbMs": 1498,
+   "respAt": 11950.39959,
+   "end": 11950.497122,
+   "encodedDataLength": 14554,
+   "startMs": 2553,
+   "durMs": 1630
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/_next/static/chunks/0vqcej9vd1e~z.js",
+   "method": "GET",
+   "range": null,
+   "type": "Script",
+   "start": 11948.867289,
+   "wall": 1794378163.504036,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "application/javascript",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public,max-age=31536000,immutable",
+   "xVercelCache": "HIT",
+   "contentRange": null,
+   "contentLength": "215",
+   "ttfbMs": 20888,
+   "respAt": 11969.790494,
+   "end": 11975.72468,
+   "encodedDataLength": 382,
+   "startMs": 2553,
+   "durMs": 26857
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/_next/static/chunks/02hvssugk.d_m.js",
+   "method": "GET",
+   "range": null,
+   "type": "Script",
+   "start": 11948.867422,
+   "wall": 1794378163.504169,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "application/javascript",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public,max-age=31536000,immutable",
+   "xVercelCache": "HIT",
+   "contentRange": null,
+   "contentLength": null,
+   "ttfbMs": 20887,
+   "respAt": 11969.790081,
+   "end": 11995.286333,
+   "encodedDataLength": 104236,
+   "startMs": 2553,
+   "durMs": 46419
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/_next/static/chunks/0eeoal4h.6o6h.js",
+   "method": "GET",
+   "range": null,
+   "type": "Script",
+   "start": 11948.86755,
+   "wall": 1794378163.504299,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "application/javascript",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public,max-age=31536000,immutable",
+   "xVercelCache": "HIT",
+   "contentRange": null,
+   "contentLength": null,
+   "ttfbMs": 1438,
+   "respAt": 11950.340277,
+   "end": 11950.859187,
+   "encodedDataLength": 90772,
+   "startMs": 2553,
+   "durMs": 1992
+  },
+  {
+   "url": "https://fonts.googleapis.com/css2",
+   "method": "GET",
+   "range": null,
+   "type": "Stylesheet",
+   "start": 11948.867633,
+   "wall": 1794378163.50438,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "text/css",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "private, max-age=86400, stale-while-revalidate=604800",
+   "xVercelCache": null,
+   "contentRange": null,
+   "contentLength": null,
+   "ttfbMs": 239,
+   "respAt": 11953.541654,
+   "end": 11954.021918,
+   "encodedDataLength": 3265,
+   "startMs": 2553,
+   "durMs": 5154
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+   "method": "GET",
+   "range": "bytes=0-",
+   "type": "Media",
+   "start": 11948.883561,
+   "wall": 1794378163.520329,
+   "initiator": "parser",
+   "status": 206,
+   "mime": "video/mp4",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public, max-age=31536000, immutable",
+   "xVercelCache": "HIT",
+   "contentRange": null,
+   "contentLength": null,
+   "ttfbMs": 1326,
+   "respAt": 11950.229006,
+   "startMs": 2569,
+   "durMs": null
+  },
+  {
+   "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+   "method": "GET",
+   "range": null,
+   "type": "Font",
+   "start": 11954.035315,
+   "wall": 1794378168.672081,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "font/woff2",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public, max-age=31536000",
+   "xVercelCache": null,
+   "contentRange": null,
+   "contentLength": "48256",
+   "ttfbMs": 264,
+   "respAt": 11958.699632,
+   "end": 11960.465953,
+   "encodedDataLength": 48809,
+   "startMs": 7721,
+   "durMs": 6431
+  },
+  {
+   "url": "https://fonts.gstatic.com/s/spacegrotesk/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4Cw.woff2",
+   "method": "GET",
+   "range": null,
+   "type": "Font",
+   "start": 11954.035645,
+   "wall": 1794378168.672402,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "font/woff2",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public, max-age=31536000",
+   "xVercelCache": null,
+   "contentRange": null,
+   "contentLength": "22288",
+   "ttfbMs": 850,
+   "respAt": 11959.285354,
+   "end": 11960.465617,
+   "encodedDataLength": 22417,
+   "startMs": 7721,
+   "durMs": 6430
+  },
+  {
+   "url": "https://fonts.gstatic.com/s/syne/v24/8vIH7w4qzmVxm2BL9A.woff2",
+   "method": "GET",
+   "range": null,
+   "type": "Font",
+   "start": 11954.035865,
+   "wall": 1794378168.672619,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "font/woff2",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public, max-age=31536000",
+   "xVercelCache": null,
+   "contentRange": null,
+   "contentLength": "34608",
+   "ttfbMs": 310,
+   "respAt": 11958.744179,
+   "end": 11960.466121,
+   "encodedDataLength": 34744,
+   "startMs": 7722,
+   "durMs": 6430
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/images/vibes/08-late-night.webp",
+   "method": "GET",
+   "range": null,
+   "type": "Image",
+   "start": 11954.139544,
+   "wall": 1794378168.776315,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "image/webp",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public, max-age=0, must-revalidate",
+   "xVercelCache": "HIT",
+   "contentRange": null,
+   "contentLength": "78214",
+   "ttfbMs": 86656,
+   "respAt": 12040.802368,
+   "end": 12041.417079,
+   "encodedDataLength": 78445,
+   "startMs": 7825,
+   "durMs": 87278
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/images/vibes/09-workout.webp",
+   "method": "GET",
+   "range": null,
+   "type": "Image",
+   "start": 11954.13997,
+   "wall": 1794378168.776729,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "image/webp",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public, max-age=0, must-revalidate",
+   "xVercelCache": "HIT",
+   "contentRange": null,
+   "contentLength": "77302",
+   "ttfbMs": 88116,
+   "respAt": 12042.259082,
+   "end": 12042.790027,
+   "encodedDataLength": 77510,
+   "startMs": 7826,
+   "durMs": 88650
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/images/vibes/10-chill-hits.webp",
+   "method": "GET",
+   "range": null,
+   "type": "Image",
+   "start": 11954.140144,
+   "wall": 1794378168.776895,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "image/webp",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public, max-age=0, must-revalidate",
+   "xVercelCache": "HIT",
+   "contentRange": null,
+   "contentLength": "62970",
+   "ttfbMs": 86131,
+   "respAt": 12040.274636,
+   "end": 12040.796778,
+   "encodedDataLength": 63164,
+   "startMs": 7826,
+   "durMs": 86657
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/images/vibes/11-top-telugu.webp",
+   "method": "GET",
+   "range": null,
+   "type": "Image",
+   "start": 11954.140376,
+   "wall": 1794378168.777127,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "image/webp",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public, max-age=0, must-revalidate",
+   "xVercelCache": "HIT",
+   "contentRange": null,
+   "contentLength": "69964",
+   "ttfbMs": 83594,
+   "respAt": 12037.740578,
+   "end": 12040.27008,
+   "encodedDataLength": 70194,
+   "startMs": 7826,
+   "durMs": 86130
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/images/vibes/12-top-tamil.webp",
+   "method": "GET",
+   "range": null,
+   "type": "Image",
+   "start": 11954.140584,
+   "wall": 1794378168.777333,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "image/webp",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public, max-age=0, must-revalidate",
+   "xVercelCache": "HIT",
+   "contentRange": null,
+   "contentLength": "71366",
+   "ttfbMs": 87275,
+   "respAt": 12041.419975,
+   "end": 12042.256787,
+   "encodedDataLength": 71618,
+   "startMs": 7826,
+   "durMs": 88116
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/images/vibes/13-top-hindi.webp",
+   "method": "GET",
+   "range": null,
+   "type": "Image",
+   "start": 11954.140914,
+   "wall": 1794378168.777664,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "image/webp",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public, max-age=0, must-revalidate",
+   "xVercelCache": "HIT",
+   "contentRange": null,
+   "contentLength": "82794",
+   "ttfbMs": 82919,
+   "respAt": 12037.064246,
+   "end": 12037.736297,
+   "encodedDataLength": 83080,
+   "startMs": 7827,
+   "durMs": 83595
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/images/vibes/14-top-k-pop.webp",
+   "method": "GET",
+   "range": null,
+   "type": "Image",
+   "start": 11954.141087,
+   "wall": 1794378168.777913,
+   "initiator": "parser",
+   "status": 200,
+   "mime": "image/webp",
+   "proto": "h2",
+   "fromDiskCache": false,
+   "fromMemCache": false,
+   "cacheControl": "public, max-age=0, must-revalidate",
+   "xVercelCache": "HIT",
+   "contentRange": null,
+   "contentLength": "81574",
+   "ttfbMs": 87274,
+   "respAt": 12041.419634,
+   "end": 12042.183744,
+   "encodedDataLength": 81810,
+   "startMs": 7827,
+   "durMs": 88043
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/favicon.ico",
+   "method": "GET",
+   "range": null,
+   "type": "Other",
+   "start": 11995.346967,
+   "wall": 1794378209.983733,
+   "initiator": "other",
+   "startMs": 49033,
+   "durMs": null
+  },
+  {
+   "url": "https://kadence-musicz.vercel.app/_next/static/chunks/13-nfzv1f1bkb.js",
+   "method": "GET",
+   "range": null,
+   "type": "Script",
+   "start": 11995.354821,
+   "wall": 1794378209.991648,
+   "initiator": "script",
+   "startMs": 49040,
+   "durMs": null
+  }
+ ],
+ "media": [
+  {
+   "m": "Media.playerCreated",
+   "p": {
+    "player": {
+     "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF"
+    }
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 11948.882151,
+      "value": "{\"created\":\"2026-11-11 06:22:43.518889 UTC\",\"event\":\"kMediaLogCreated\"}"
+     },
+     {
+      "timestamp": 11948.883275,
+      "value": "{\"event\":\"kWebMediaPlayerCreated\",\"origin_url\":\"https://kadence-musicz.vercel.app/\"}"
+     },
+     {
+      "timestamp": 11948.88345,
+      "value": "{\"event\":\"kLoad\",\"url\":\"https://kadence-musicz.vercel.app/videos/globe.mp4\"}"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerPropertiesChanged",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "properties": [
+     {
+      "name": "kFrameUrl",
+      "value": "https://kadence-musicz.vercel.app/"
+     },
+     {
+      "name": "kFrameTitle",
+      "value": "KADENCE — Music Discovery Universe"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 11950.241478,
+      "value": "{\"event\":\"kPipelineStateChange\",\"pipeline_state\":\"kStarting\"}"
+     },
+     {
+      "timestamp": 11950.363551,
+      "value": "{\"event\":\"kPipelineStateChange\",\"pipeline_state\":\"kPlaying\"}"
+     },
+     {
+      "timestamp": 11950.377374,
+      "value": "{\"dimensions\":\"1080x1080\",\"event\":\"kVideoSizeChanged\"}"
+     },
+     {
+      "timestamp": 11950.353298,
+      "value": "{\"duration\":30.0,\"event\":\"kDurationChanged\"}"
+     },
+     {
+      "timestamp": 11950.381687,
+      "value": "{\"event\":\"kBufferingStateChanged\",\"video_buffering_state\":{\"state\":\"BUFFERING_HAVE_ENOUGH\"}}"
+     },
+     {
+      "timestamp": 11950.371349,
+      "value": "{\"audio_buffering_state\":{\"state\":\"BUFFERING_HAVE_ENOUGH\"},\"event\":\"kBufferingStateChanged\"}"
+     },
+     {
+      "timestamp": 11950.38172,
+      "value": "{\"event\":\"kBufferingStateChanged\",\"pipeline_buffering_state\":{\"for_suspended_start\":false,\"state\":\"BUFFERING_HAVE_ENOUGH\"}}"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerPropertiesChanged",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "properties": [
+     {
+      "name": "kVideoDecoderName",
+      "value": "D3D11VideoDecoder"
+     },
+     {
+      "name": "kIsStreaming",
+      "value": "false"
+     },
+     {
+      "name": "kFrameUrl",
+      "value": "https://kadence-musicz.vercel.app/"
+     },
+     {
+      "name": "kAudioTracks",
+      "value": "[{\"bytes per channel\":4,\"bytes per frame\":8,\"channel layout\":\"STEREO\",\"channels\":2,\"codec\":\"aac\",\"codec delay\":0,\"discard decoder delay\":true,\"encryption scheme\":\"Unencrypted\",\"has extra data\":true,\"profile\":\"unknown\",\"sample format\":\"Float 32-bit planar\",\"samples per second\":48000,\"seek preroll\":\"0us\"}]"
+     },
+     {
+      "name": "kResolution",
+      "value": "1080x1080"
+     },
+     {
+      "name": "kRendererName",
+      "value": "RendererImpl"
+     },
+     {
+      "name": "kTotalBytes",
+      "value": "0xb40570"
+     },
+     {
+      "name": "kMaxDuration",
+      "value": "30.0"
+     },
+     {
+      "name": "kFrameTitle",
+      "value": "KADENCE — Music Discovery Universe"
+     },
+     {
+      "name": "kIsPlatformAudioDecoder",
+      "value": "false"
+     },
+     {
+      "name": "kAudioDecoderName",
+      "value": "FFmpegAudioDecoder"
+     },
+     {
+      "name": "kVideoTracks",
+      "value": "[{\"alpha mode\":\"is_opaque\",\"codec\":\"h264\",\"coded size\":\"1080x1080\",\"color space\":{\"matrix\":\"BT709\",\"primaries\":\"BT709\",\"range\":\"LIMITED\",\"transfer\":\"BT709\"},\"encryption scheme\":\"Unencrypted\",\"has extra data\":true,\"hdr metadata\":{},\"natural size\":\"1080x1080\",\"orientation\":\"0°\",\"profile\":\"h264 high\",\"visible rect\":\"0,0 1080x1080\"}]"
+     },
+     {
+      "name": "kIsRangeHeaderSupported",
+      "value": "true"
+     },
+     {
+      "name": "kIsVideoDecryptingDemuxerStream",
+      "value": "false"
+     },
+     {
+      "name": "kStartTime",
+      "value": "-0.021333"
+     },
+     {
+      "name": "kBitrate",
+      "value": "3146099"
+     },
+     {
+      "name": "kIsPlatformVideoDecoder",
+      "value": "true"
+     },
+     {
+      "name": "kIsSingleOrigin",
+      "value": "true"
+     },
+     {
+      "name": "kIsAudioDecryptingDemuxerStream",
+      "value": "false"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerMessagesLogged",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "messages": [
+     {
+      "level": "info",
+      "message": "FFmpegDemuxer: created video stream, config codec: h264, profile: h264 high, level: not available, alpha_mode: is_opaque, coded size: [1080,1080], visible rect: [0,0,1080,1080], natural size: [1080,1080], has extra data: true, encryption scheme: Unencrypted, rotation: 0°, flipped: 0, color space: {primaries:BT709, transfer:BT709, matrix:BT709, range:LIMITED}, spatial format: [projection_type: none, stereo_mode: mono]"
+     },
+     {
+      "level": "info",
+      "message": "FFmpegDemuxer: created audio stream, config codec: aac, profile: unknown, bytes_per_channel: 4, channel_layout: STEREO, channels: 2, samples_per_second: 48000, sample_format: Float 32-bit planar, bytes_per_frame: 8, seek_preroll: 0us, codec_delay: 0, has extra data: true, encryption scheme: Unencrypted, discard decoder delay: true, target_output_channel_layout: NONE, target_output_sample_format: Unknown sample format"
+     },
+     {
+      "level": "info",
+      "message": "Cannot select SymphoniaAudioDecoder for audio decoding. status=DecoderStatus::Codes::kUnsupportedCodec"
+     },
+     {
+      "level": "info",
+      "message": "Cannot select IamfAudioDecoder for audio decoding. status=DecoderStatus::Codes::kUnsupportedCodec"
+     },
+     {
+      "level": "info",
+      "message": "Cannot select OpusAudioDecoder for audio decoding. status=DecoderStatus::Codes::kUnsupportedConfig"
+     },
+     {
+      "level": "info",
+      "message": "Selected FFmpegAudioDecoder for audio decoding, config: codec: aac, profile: unknown, bytes_per_channel: 4, channel_layout: STEREO, channels: 2, samples_per_second: 48000, sample_format: Float 32-bit planar, bytes_per_frame: 8, seek_preroll: 0us, codec_delay: 0, has extra data: true, encryption scheme: Unencrypted, discard decoder delay: true, target_output_channel_layout: STEREO, target_output_sample_format: Unknown sample format"
+     },
+     {
+      "level": "info",
+      "message": "D3DVideoDecoder is using h264 high / 4:2:0"
+     },
+     {
+      "level": "info",
+      "message": "D3DVideoDecoder is using D3D11 backend"
+     },
+     {
+      "level": "info",
+      "message": "D3DVideoDecoder is using array texture"
+     },
+     {
+      "level": "info",
+      "message": "D3DVideoDecoder producing NV12"
+     },
+     {
+      "level": "info",
+      "message": "D3DVideoDecoder: Selected NV12"
+     },
+     {
+      "level": "info",
+      "message": "D3DVideoDecoder is binding textures"
+     },
+     {
+      "level": "info",
+      "message": "Selected D3DVideoDecoder adapter LUID:{0, 65908}"
+     },
+     {
+      "level": "info",
+      "message": "Video is supported by D3DVideoDecoder"
+     },
+     {
+      "level": "info",
+      "message": "Selected D3D11VideoDecoder for video decoding, config: codec: h264, profile: h264 high, level: not available, alpha_mode: is_opaque, coded size: [1080,1080], visible rect: [0,0,1080,1080], natural size: [1080,1080], has extra data: true, encryption scheme: Unencrypted, rotation: 0°, flipped: 0, color space: {primaries:BT709, transfer:BT709, matrix:BT709, range:LIMITED}, spatial format: [projection_type: none, stereo_mode: mono]"
+     },
+     {
+      "level": "info",
+      "message": "D3DVideoDecoder config change: profile: h264 high, chroma_sampling_format: 4:2:0, coded_size: 1088x1088, visible_rect: 0,0 1080x1080, bit_depth: 8, color_space: {primary=1, transfer=1, matrix=1, range=1}"
+     },
+     {
+      "level": "info",
+      "message": "D3DVideoDecoder is using h264 high / 4:2:0"
+     },
+     {
+      "level": "info",
+      "message": "D3DVideoDecoder is using D3D11 backend"
+     },
+     {
+      "level": "info",
+      "message": "D3DVideoDecoder is using array texture"
+     },
+     {
+      "level": "info",
+      "message": "D3DVideoDecoder producing NV12"
+     },
+     {
+      "level": "info",
+      "message": "D3DVideoDecoder: Selected NV12"
+     },
+     {
+      "level": "info",
+      "message": "D3DVideoDecoder is binding textures"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerMessagesLogged",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "messages": [
+     {
+      "level": "info",
+      "message": "Effective playback rate changed from 0 to 1"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 11954.146688,
+      "value": "{\"event\":\"kPlay\"}"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 11960.863373,
+      "value": "{\"event\":\"kBufferingStateChanged\",\"video_buffering_state\":{\"reason\":\"DEMUXER_UNDERFLOW\",\"state\":\"BUFFERING_HAVE_NOTHING\"}}"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 11960.867624,
+      "value": "{\"audio_buffering_state\":{\"reason\":\"DEMUXER_UNDERFLOW\",\"state\":\"BUFFERING_HAVE_NOTHING\"},\"event\":\"kBufferingStateChanged\"}"
+     },
+     {
+      "timestamp": 11960.868304,
+      "value": "{\"event\":\"kBufferingStateChanged\",\"pipeline_buffering_state\":{\"for_suspended_start\":false,\"reason\":\"DEMUXER_UNDERFLOW\",\"state\":\"BUFFERING_HAVE_NOTHING\"}}"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 11965.667226,
+      "value": "{\"event\":\"kBufferingStateChanged\",\"video_buffering_state\":{\"state\":\"BUFFERING_HAVE_ENOUGH\"}}"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 11966.362663,
+      "value": "{\"event\":\"kBufferingStateChanged\",\"video_buffering_state\":{\"reason\":\"DEMUXER_UNDERFLOW\",\"state\":\"BUFFERING_HAVE_NOTHING\"}}"
+     },
+     {
+      "timestamp": 11966.37169,
+      "value": "{\"audio_buffering_state\":{\"reason\":\"DEMUXER_UNDERFLOW\",\"state\":\"BUFFERING_HAVE_NOTHING\"},\"event\":\"kBufferingStateChanged\"}"
+     },
+     {
+      "timestamp": 11966.371831,
+      "value": "{\"event\":\"kBufferingStateChanged\",\"pipeline_buffering_state\":{\"for_suspended_start\":false,\"reason\":\"DEMUXER_UNDERFLOW\",\"state\":\"BUFFERING_HAVE_NOTHING\"}}"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 11968.526299,
+      "value": "{\"event\":\"kBufferingStateChanged\",\"video_buffering_state\":{\"state\":\"BUFFERING_HAVE_ENOUGH\"}}"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 11969.324485,
+      "value": "{\"audio_buffering_state\":{\"state\":\"BUFFERING_HAVE_ENOUGH\"},\"event\":\"kBufferingStateChanged\"}"
+     },
+     {
+      "timestamp": 11969.324531,
+      "value": "{\"event\":\"kBufferingStateChanged\",\"pipeline_buffering_state\":{\"for_suspended_start\":false,\"state\":\"BUFFERING_HAVE_ENOUGH\"}}"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 11971.764793,
+      "value": "{\"audio_buffering_state\":{\"reason\":\"DEMUXER_UNDERFLOW\",\"state\":\"BUFFERING_HAVE_NOTHING\"},\"event\":\"kBufferingStateChanged\"}"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 11971.764982,
+      "value": "{\"event\":\"kBufferingStateChanged\",\"pipeline_buffering_state\":{\"for_suspended_start\":false,\"reason\":\"DEMUXER_UNDERFLOW\",\"state\":\"BUFFERING_HAVE_NOTHING\"}}"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 11975.00732,
+      "value": "{\"audio_buffering_state\":{\"state\":\"BUFFERING_HAVE_ENOUGH\"},\"event\":\"kBufferingStateChanged\"}"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 11975.007484,
+      "value": "{\"event\":\"kBufferingStateChanged\",\"pipeline_buffering_state\":{\"for_suspended_start\":false,\"state\":\"BUFFERING_HAVE_ENOUGH\"}}"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 11976.911544,
+      "value": "{\"event\":\"kBufferingStateChanged\",\"video_buffering_state\":{\"reason\":\"DEMUXER_UNDERFLOW\",\"state\":\"BUFFERING_HAVE_NOTHING\"}}"
+     },
+     {
+      "timestamp": 11976.927935,
+      "value": "{\"audio_buffering_state\":{\"reason\":\"DEMUXER_UNDERFLOW\",\"state\":\"BUFFERING_HAVE_NOTHING\"},\"event\":\"kBufferingStateChanged\"}"
+     },
+     {
+      "timestamp": 11976.928143,
+      "value": "{\"event\":\"kBufferingStateChanged\",\"pipeline_buffering_state\":{\"for_suspended_start\":false,\"reason\":\"DEMUXER_UNDERFLOW\",\"state\":\"BUFFERING_HAVE_NOTHING\"}}"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 11995.329957,
+      "value": "{\"event\":\"kBufferingStateChanged\",\"video_buffering_state\":{\"state\":\"BUFFERING_HAVE_ENOUGH\"}}"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 12010.704402,
+      "value": "{\"audio_buffering_state\":{\"state\":\"BUFFERING_HAVE_ENOUGH\"},\"event\":\"kBufferingStateChanged\"}"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 12010.704603,
+      "value": "{\"event\":\"kBufferingStateChanged\",\"pipeline_buffering_state\":{\"for_suspended_start\":false,\"state\":\"BUFFERING_HAVE_ENOUGH\"}}"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 12013.940079,
+      "value": "{\"event\":\"kBufferingStateChanged\",\"video_buffering_state\":{\"reason\":\"DEMUXER_UNDERFLOW\",\"state\":\"BUFFERING_HAVE_NOTHING\"}}"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 12013.96542,
+      "value": "{\"audio_buffering_state\":{\"reason\":\"DEMUXER_UNDERFLOW\",\"state\":\"BUFFERING_HAVE_NOTHING\"},\"event\":\"kBufferingStateChanged\"}"
+     },
+     {
+      "timestamp": 12013.965508,
+      "value": "{\"event\":\"kBufferingStateChanged\",\"pipeline_buffering_state\":{\"for_suspended_start\":false,\"reason\":\"DEMUXER_UNDERFLOW\",\"state\":\"BUFFERING_HAVE_NOTHING\"}}"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 12015.723702,
+      "value": "{\"event\":\"kBufferingStateChanged\",\"video_buffering_state\":{\"state\":\"BUFFERING_HAVE_ENOUGH\"}}"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 12030.331291,
+      "value": "{\"audio_buffering_state\":{\"state\":\"BUFFERING_HAVE_ENOUGH\"},\"event\":\"kBufferingStateChanged\"}"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 12030.331404,
+      "value": "{\"event\":\"kBufferingStateChanged\",\"pipeline_buffering_state\":{\"for_suspended_start\":false,\"state\":\"BUFFERING_HAVE_ENOUGH\"}}"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 12034.053319,
+      "value": "{\"audio_buffering_state\":{\"reason\":\"DEMUXER_UNDERFLOW\",\"state\":\"BUFFERING_HAVE_NOTHING\"},\"event\":\"kBufferingStateChanged\"}"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 12034.053481,
+      "value": "{\"event\":\"kBufferingStateChanged\",\"pipeline_buffering_state\":{\"for_suspended_start\":false,\"reason\":\"DEMUXER_UNDERFLOW\",\"state\":\"BUFFERING_HAVE_NOTHING\"}}"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 12051.88957,
+      "value": "{\"audio_buffering_state\":{\"state\":\"BUFFERING_HAVE_ENOUGH\"},\"event\":\"kBufferingStateChanged\"}"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 12051.889703,
+      "value": "{\"event\":\"kBufferingStateChanged\",\"pipeline_buffering_state\":{\"for_suspended_start\":false,\"state\":\"BUFFERING_HAVE_ENOUGH\"}}"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 12055.589991,
+      "value": "{\"audio_buffering_state\":{\"reason\":\"DEMUXER_UNDERFLOW\",\"state\":\"BUFFERING_HAVE_NOTHING\"},\"event\":\"kBufferingStateChanged\"}"
+     }
+    ]
+   }
+  },
+  {
+   "m": "Media.playerEventsAdded",
+   "p": {
+    "playerId": "31491EDAEFD3D8903AD43423A1A7A9DF",
+    "events": [
+     {
+      "timestamp": 12055.590141,
+      "value": "{\"event\":\"kBufferingStateChanged\",\"pipeline_buffering_state\":{\"for_suspended_start\":false,\"reason\":\"DEMUXER_UNDERFLOW\",\"state\":\"BUFFERING_HAVE_NOTHING\"}}"
+     }
+    ]
+   }
+  }
+ ]
+}

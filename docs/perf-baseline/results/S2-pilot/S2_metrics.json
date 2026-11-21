@@ -1,0 +1,186 @@
+[
+ {
+  "id": "pilot_warm_hip-hop-central",
+  "phase": "pilot",
+  "target": "hip-hop-central",
+  "vibe": "hip-hop-central",
+  "sweep": false,
+  "cold": false,
+  "recorded": false,
+  "traced": false,
+  "activation": false,
+  "cacheState": "warm(disk-cache)",
+  "inputDeliveryMs": 33,
+  "previewFile": "Loser_preview_3s.mp4",
+  "previewSrcSetMs": -1,
+  "previewReqStartMs": 8,
+  "previewFirstByteMs": 23,
+  "previewReqStatus": 206,
+  "dimStartMs": 119,
+  "dimFullMs": 285,
+  "loadedMetadataMs": 29,
+  "loadedDataMs": 90,
+  "canplayMs": 91,
+  "playCallMs": 91,
+  "playCallMuted": false,
+  "playCallActivation": false,
+  "playResolvedMs": null,
+  "playRejected": "NotAllowedError",
+  "playingEventMs": null,
+  "firstPresentedFrameMs": 122,
+  "firstPresentedLuma": 63,
+  "previewLayerVisibleMs": 269,
+  "firstVisibleMotionMs": null,
+  "previewFramesPresentedInDwell": 1,
+  "previewMediaAdvanceSec": 0,
+  "frozenVisibleMs": 9766,
+  "previewVisibleMs": 9749,
+  "playOutcome": "rejected:NotAllowedError",
+  "handoff": null,
+  "maxActivePlayingVideos": 1,
+  "rafDuringDwell": {
+   "n": 593,
+   "p50": 16.7,
+   "p95": 16.8,
+   "p99": 16.8,
+   "max": 83.3,
+   "over20": 3,
+   "over50": 2
+  },
+  "longAnimationFrames": {
+   "n": 3,
+   "max": 141,
+   "blockingTotal": 10,
+   "top": [
+    {
+     "at": 38,
+     "ms": 141,
+     "blocking": 10,
+     "styleLayout": 0,
+     "scripts": [
+      [
+       56,
+       "VideoFrameRequestCallback",
+       "",
+       "",
+       0
+      ]
+     ]
+    },
+    {
+     "at": 222,
+     "ms": 57,
+     "blocking": 0,
+     "styleLayout": 0,
+     "scripts": []
+    },
+    {
+     "at": 10038,
+     "ms": 51,
+     "blocking": 0,
+     "styleLayout": 1,
+     "scripts": [
+      [
+       8,
+       "TimerHandler:setTimeout",
+       "",
+       "0eeoal4h.6o6h.js",
+       0
+      ]
+     ]
+    }
+   ]
+  },
+  "longTasks": {
+   "n": 1,
+   "max": 60,
+   "list": [
+    [
+     120,
+     60
+    ]
+   ]
+  },
+  "network": {
+   "videoByFile": {
+    "Loser_preview_3s.mp4": {
+     "requests": 2,
+     "bytes": 0,
+     "fromCache": 2,
+     "canceled": 1,
+     "firstStart": 8,
+     "firstByte": 23
+    }
+   },
+   "videoRequests": [
+    {
+     "file": "Loser_preview_3s.mp4",
+     "start": 8,
+     "firstByte": 23,
+     "end": 92,
+     "status": 206,
+     "range": "bytes=0-",
+     "contentRange": null,
+     "fromDiskCache": true,
+     "servedFromCache": false,
+     "bytes": 0,
+     "canceled": true,
+     "failed": "net::ERR_ABORTED"
+    },
+    {
+     "file": "Loser_preview_3s.mp4",
+     "start": 93,
+     "firstByte": 96,
+     "end": 96,
+     "status": 206,
+     "range": "bytes=688128-",
+     "contentRange": null,
+     "fromDiskCache": true,
+     "servedFromCache": false,
+     "bytes": 0,
+     "canceled": false,
+     "failed": null
+    }
+   ],
+   "api": [
+    {
+     "path": "/api/songs",
+     "start": 181,
+     "end": null,
+     "status": 200,
+     "bytes": 0,
+     "xVercelCache": "MISS"
+    }
+   ],
+   "artworkRequests": 0
+  },
+  "leave": {
+   "srcRemovedMs": 66,
+   "dimGoneMs": 282,
+   "stillPlayingAt1s": false,
+   "endState": {
+    "containerOp": 0,
+    "previewPaused": 1,
+    "fullPaused": 1,
+    "globePaused": 0,
+    "activePlaying": 1
+   },
+   "videoRequestsInFlightAtLeave": []
+  },
+  "sweepDetail": null,
+  "decoders": {
+   "B10629B05914ECA5BEC4C6788839809D": {
+    "kVideoDecoderName": "D3D11VideoDecoder",
+    "kFrameUrl": "https://kadence-musicz.vercel.app/",
+    "kResolution": "1920x788",
+    "kAudioDecoderName": "FFmpegAudioDecoder",
+    "kIsVideoDecryptingDemuxerStream": "false",
+    "kIsPlatformVideoDecoder": "true"
+   }
+  },
+  "mediaErrors": 0,
+  "gpuProcessCpuSec": 7.193,
+  "gpuProcessCpuPct": 57.3,
+  "foreignPointerEvents": 0
+ }
+]

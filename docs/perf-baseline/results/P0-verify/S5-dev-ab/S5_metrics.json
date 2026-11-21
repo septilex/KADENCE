@@ -1,0 +1,1001 @@
+[
+ {
+  "run": "A_before_p0",
+  "target": "dev",
+  "cpu": 1,
+  "traced": false,
+  "revealMs": 2611,
+  "settleMs": 7238,
+  "foreignPointer": 0,
+  "drawerOpen": {
+   "clickAt": 2274,
+   "firstChangeAfterClickMs": 2,
+   "lastChangeAfterClickMs": 1273,
+   "stateChanges": 47,
+   "frames": {
+    "n": 42,
+    "p50": 20.6,
+    "p95": 83.4,
+    "max": 159.7,
+    "over20": 21,
+    "over50": 6,
+    "missed": 130
+   },
+   "longTasks": [
+    [
+     2274,
+     80
+    ],
+    [
+     2426,
+     77
+    ],
+    [
+     2510,
+     72
+    ],
+    [
+     2664,
+     78
+    ],
+    [
+     2754,
+     61
+    ]
+   ],
+   "loaf": [
+    [
+     101,
+     123,
+     54
+    ],
+    [
+     229,
+     78,
+     24
+    ],
+    [
+     308,
+     159,
+     60
+    ],
+    [
+     469,
+     72,
+     14
+    ]
+   ]
+  },
+  "idleOpen": {
+   "reactDomCommitsPerSec": 8.3,
+   "compositesPerCommit": 89,
+   "homeCommitsPerSec": 8.3,
+   "songDetailCommitsPerSec": 8.3,
+   "liquidScrubberCommitsPerSec": 8.3,
+   "getBoundingClientRectPerSec": 8.4,
+   "frames": {
+    "n": 731,
+    "p50": 7,
+    "p95": 27.7,
+    "max": 55.6,
+    "over20": 69,
+    "over50": 1,
+    "missed": 279
+   },
+   "webglDrawFramesPerSec": 104.4,
+   "longTasks": [],
+   "loafN": 0,
+   "cpu": {
+    "renderer": 113,
+    "GPU": 179.3
+   },
+   "canvasWrapper": [
+    [
+     2894,
+     "0.00|blur(9.99862px) brightness(0.000137526)"
+    ],
+    [
+     2929,
+     "0.00|blur(9.99989px) brightness(1.08452e-05)"
+    ],
+    [
+     2957,
+     "0.00|blur(10px) brightness(0)"
+    ]
+   ]
+  },
+  "idleWall": {
+   "frames": {
+    "n": 288,
+    "p50": 6.9,
+    "p95": 7.1,
+    "max": 7.2,
+    "over20": 0,
+    "over50": 0,
+    "missed": 0
+   },
+   "webglDrawFramesPerSec": 144,
+   "reactDomCommitsPerSec": 8,
+   "getBoundingClientRectPerSec": 0,
+   "cpu": {
+    "renderer": 57.4,
+    "GPU": 70.6
+   }
+  },
+  "pausePlay": {
+   "interactions": [
+    {
+     "t": 10105,
+     "type": "pointerup",
+     "ms": 104,
+     "inputDelay": 6,
+     "processing": 1,
+     "presentation": 97,
+     "target": "Play"
+    },
+    {
+     "t": 12066,
+     "type": "pointerdown",
+     "ms": 64,
+     "inputDelay": 1,
+     "processing": 0,
+     "presentation": 63,
+     "target": "Pause"
+    }
+   ],
+   "commitsPerSecWhilePaused": 0,
+   "gbcrPerSecWhilePaused": 1.8
+  },
+  "scrub": {
+   "interactions": [
+    {
+     "t": 14055,
+     "type": "pointerdown",
+     "ms": 72,
+     "inputDelay": 19,
+     "processing": 26,
+     "presentation": 28,
+     "target": "DIV"
+    },
+    {
+     "t": 18055,
+     "type": "pointerdown",
+     "ms": 88,
+     "inputDelay": 17,
+     "processing": 13,
+     "presentation": 58,
+     "target": "DIV"
+    }
+   ],
+   "worstMs": 88,
+   "frames": {
+    "n": 195,
+    "p50": 7.1,
+    "p95": 90.3,
+    "max": 125,
+    "over20": 80,
+    "over50": 30,
+    "missed": 526
+   },
+   "longTasks": [
+    [
+     14019,
+     54
+    ],
+    [
+     14304,
+     66
+    ],
+    [
+     14377,
+     56
+    ],
+    [
+     14462,
+     69
+    ],
+    [
+     15210,
+     63
+    ],
+    [
+     15279,
+     78
+    ],
+    [
+     15396,
+     58
+    ],
+    [
+     15489,
+     61
+    ],
+    [
+     15555,
+     50
+    ],
+    [
+     15917,
+     52
+    ],
+    [
+     16237,
+     77
+    ],
+    [
+     16320,
+     75
+    ],
+    [
+     16429,
+     65
+    ],
+    [
+     16500,
+     65
+    ],
+    [
+     16570,
+     71
+    ],
+    [
+     16678,
+     61
+    ],
+    [
+     17033,
+     51
+    ],
+    [
+     17250,
+     62
+    ],
+    [
+     17317,
+     65
+    ],
+    [
+     17409,
+     69
+    ],
+    [
+     17509,
+     68
+    ],
+    [
+     17582,
+     64
+    ],
+    [
+     18022,
+     50
+    ]
+   ],
+   "reactDomCommitsPerSec": 41.3,
+   "gbcrPerSec": 17.7
+  },
+  "next": {
+   "interaction": [
+    {
+     "t": 20097,
+     "type": "pointerdown",
+     "ms": 56,
+     "inputDelay": 17,
+     "processing": 1,
+     "presentation": 39,
+     "target": "Next Track"
+    }
+   ],
+   "playCallsAfter": 1,
+   "drawerChangesAfter": 0,
+   "commitsAfter1s": 5,
+   "wrapperChanges": 0
+  },
+  "drawerClose": {
+   "firstChangeAfterClickMs": 0,
+   "lastChangeAfterClickMs": 0,
+   "stateChanges": 1,
+   "frames": {
+    "n": 135,
+    "p50": 7,
+    "p95": 20.9,
+    "max": 48.6,
+    "over20": 9,
+    "over50": 0,
+    "missed": 38
+   },
+   "longTasks": []
+  },
+  "trk06": {
+   "audioPlayCallsWhileOpen": [
+    [
+     2722,
+     "mzaf_11477906552024336945.pl"
+    ],
+    [
+     2810,
+     "mzaf_11884202118301913436.pl"
+    ],
+    [
+     3079,
+     "mzaf_4418467602424826914.plu"
+    ],
+    [
+     10090,
+     "mzaf_18370425315773832128.pl"
+    ],
+    [
+     12092,
+     "mzaf_18370425315773832128.pl"
+    ],
+    [
+     14068,
+     "mzaf_16891108424591513966.pl"
+    ],
+    [
+     18065,
+     "mzaf_8409292788677471339.plu"
+    ],
+    [
+     20106,
+     "mzaf_7949949918111481006.plu"
+    ]
+   ],
+   "distinctFilesWhileOpen": 7
+  },
+  "glOpen": {
+   "seconds": 5,
+   "frames": 603,
+   "framesWithDraws": 603,
+   "framesWithDrawsPerSec": 120.5,
+   "detailOpen": true
+  },
+  "cpuSeg": {
+   "idle_wall": {
+    "renderer": 57.4,
+    "GPU": 70.6
+   },
+   "detail_open_idle": {
+    "renderer": 113,
+    "GPU": 179.3
+   },
+   "paused": {
+    "renderer": 38.2,
+    "GPU": 49.1
+   },
+   "playing_again": {
+    "renderer": 112.9,
+    "GPU": 176
+   },
+   "scrub": {
+    "renderer": 134.6,
+    "GPU": 181.5
+   },
+   "next": {
+    "renderer": 110.1,
+    "GPU": 185.7
+   },
+   "close": {
+    "renderer": 73.9,
+    "GPU": 92
+   }
+  },
+  "interactionsWorst": [
+   {
+    "t": 2269,
+    "type": "pointerdown",
+    "ms": 144,
+    "inputDelay": 3,
+    "processing": 0,
+    "presentation": 141,
+    "target": "CANVAS"
+   },
+   {
+    "t": 10105,
+    "type": "pointerup",
+    "ms": 104,
+    "inputDelay": 6,
+    "processing": 1,
+    "presentation": 97,
+    "target": "Play"
+   },
+   {
+    "t": 24103,
+    "type": "pointerup",
+    "ms": 104,
+    "inputDelay": 3,
+    "processing": 0,
+    "presentation": 101,
+    "target": null
+   },
+   {
+    "t": 18055,
+    "type": "pointerdown",
+    "ms": 88,
+    "inputDelay": 17,
+    "processing": 13,
+    "presentation": 58,
+    "target": "DIV"
+   },
+   {
+    "t": 14055,
+    "type": "pointerdown",
+    "ms": 72,
+    "inputDelay": 19,
+    "processing": 26,
+    "presentation": 28,
+    "target": "DIV"
+   }
+  ]
+ },
+ {
+  "run": "B_after_p0",
+  "target": "dev",
+  "cpu": 1,
+  "traced": false,
+  "revealMs": 4830,
+  "settleMs": 9918,
+  "foreignPointer": 0,
+  "drawerOpen": {
+   "clickAt": 2275,
+   "firstChangeAfterClickMs": 2,
+   "lastChangeAfterClickMs": 1294,
+   "stateChanges": 63,
+   "frames": {
+    "n": 57,
+    "p50": 14.2,
+    "p95": 48.7,
+    "max": 83.3,
+    "over20": 28,
+    "over50": 2,
+    "missed": 115
+   },
+   "longTasks": [],
+   "loaf": []
+  },
+  "idleOpen": {
+   "reactDomCommitsPerSec": 8,
+   "compositesPerCommit": 4,
+   "homeCommitsPerSec": 0,
+   "songDetailCommitsPerSec": 0,
+   "liquidScrubberCommitsPerSec": 8,
+   "getBoundingClientRectPerSec": 0.4,
+   "frames": {
+    "n": 825,
+    "p50": 7,
+    "p95": 14,
+    "max": 34.9,
+    "over20": 34,
+    "over50": 0,
+    "missed": 184
+   },
+   "webglDrawFramesPerSec": 0,
+   "longTasks": [],
+   "loafN": 0,
+   "cpu": {
+    "renderer": 95.3,
+    "GPU": 172
+   },
+   "canvasWrapper": [
+    [
+     2645,
+     "0.03|none"
+    ],
+    [
+     2708,
+     "0.01|none"
+    ],
+    [
+     2777,
+     "0.00|none"
+    ]
+   ]
+  },
+  "idleWall": {
+   "frames": {
+    "n": 288,
+    "p50": 6.9,
+    "p95": 7.1,
+    "max": 7.2,
+    "over20": 0,
+    "over50": 0,
+    "missed": 0
+   },
+   "webglDrawFramesPerSec": 144,
+   "reactDomCommitsPerSec": 0,
+   "getBoundingClientRectPerSec": 0,
+   "cpu": {
+    "renderer": 48.6,
+    "GPU": 67.9
+   }
+  },
+  "pausePlay": {
+   "interactions": [
+    {
+     "t": 10090,
+     "type": "pointerup",
+     "ms": 96,
+     "inputDelay": 5,
+     "processing": 1,
+     "presentation": 90,
+     "target": "Play"
+    },
+    {
+     "t": 12068,
+     "type": "pointerdown",
+     "ms": 72,
+     "inputDelay": 3,
+     "processing": 1,
+     "presentation": 68,
+     "target": "Pause"
+    }
+   ],
+   "commitsPerSecWhilePaused": 0,
+   "gbcrPerSecWhilePaused": 1.8
+  },
+  "scrub": {
+   "interactions": [
+    {
+     "t": 14052,
+     "type": "pointerdown",
+     "ms": 48,
+     "inputDelay": 1,
+     "processing": 10,
+     "presentation": 37,
+     "target": "DIV"
+    },
+    {
+     "t": 18056,
+     "type": "pointerdown",
+     "ms": 40,
+     "inputDelay": 2,
+     "processing": 6,
+     "presentation": 32,
+     "target": "DIV"
+    }
+   ],
+   "worstMs": 48,
+   "frames": {
+    "n": 603,
+    "p50": 7,
+    "p95": 13.9,
+    "max": 27.7,
+    "over20": 12,
+    "over50": 0,
+    "missed": 117
+   },
+   "longTasks": [],
+   "reactDomCommitsPerSec": 47.7,
+   "gbcrPerSec": 19.4
+  },
+  "next": {
+   "interaction": [
+    {
+     "t": 20073,
+     "type": "pointerdown",
+     "ms": 32,
+     "inputDelay": 3,
+     "processing": 1,
+     "presentation": 28,
+     "target": "Next Track"
+    }
+   ],
+   "playCallsAfter": 0,
+   "drawerChangesAfter": 0,
+   "commitsAfter1s": 8,
+   "wrapperChanges": 0
+  },
+  "drawerClose": {
+   "firstChangeAfterClickMs": null,
+   "lastChangeAfterClickMs": null,
+   "stateChanges": 0,
+   "frames": {
+    "n": 142,
+    "p50": 7,
+    "p95": 13.9,
+    "max": 83.4,
+    "over20": 6,
+    "over50": 1,
+    "missed": 31
+   },
+   "longTasks": []
+  },
+  "trk06": {
+   "audioPlayCallsWhileOpen": [
+    [
+     12098,
+     "mzaf_950015543760123766.plus"
+    ]
+   ],
+   "distinctFilesWhileOpen": 1
+  },
+  "glOpen": {
+   "seconds": 5,
+   "frames": 688,
+   "framesWithDraws": 0,
+   "framesWithDrawsPerSec": 0,
+   "detailOpen": true
+  },
+  "cpuSeg": {
+   "idle_wall": {
+    "renderer": 48.6,
+    "GPU": 67.9
+   },
+   "detail_open_idle": {
+    "renderer": 95.3,
+    "GPU": 172
+   },
+   "paused": {
+    "renderer": 29.8,
+    "GPU": 45.9
+   },
+   "playing_again": {
+    "renderer": 99.1,
+    "GPU": 175
+   },
+   "scrub": {
+    "renderer": 106.6,
+    "GPU": 179.2
+   },
+   "next": {
+    "renderer": 100.2,
+    "GPU": 165.3
+   },
+   "close": {
+    "renderer": 56,
+    "GPU": 91.3
+   }
+  },
+  "interactionsWorst": [
+   {
+    "t": 2274,
+    "type": "pointerup",
+    "ms": 144,
+    "inputDelay": 1,
+    "processing": 0,
+    "presentation": 143,
+    "target": "CANVAS"
+   },
+   {
+    "t": 24074,
+    "type": "pointerdown",
+    "ms": 144,
+    "inputDelay": 4,
+    "processing": 0,
+    "presentation": 140,
+    "target": null
+   },
+   {
+    "t": 10090,
+    "type": "pointerup",
+    "ms": 96,
+    "inputDelay": 5,
+    "processing": 1,
+    "presentation": 90,
+    "target": "Play"
+   },
+   {
+    "t": 12068,
+    "type": "pointerdown",
+    "ms": 72,
+    "inputDelay": 3,
+    "processing": 1,
+    "presentation": 68,
+    "target": "Pause"
+   },
+   {
+    "t": 14052,
+    "type": "pointerdown",
+    "ms": 48,
+    "inputDelay": 1,
+    "processing": 10,
+    "presentation": 37,
+    "target": "DIV"
+   }
+  ]
+ },
+ {
+  "run": "C_after_keyfix",
+  "target": "dev",
+  "cpu": 1,
+  "traced": false,
+  "revealMs": 2961,
+  "settleMs": 8125,
+  "foreignPointer": 0,
+  "drawerOpen": {
+   "clickAt": 2301,
+   "firstChangeAfterClickMs": 9,
+   "lastChangeAfterClickMs": 2609,
+   "stateChanges": 5,
+   "frames": {
+    "n": 3,
+    "p50": 266.6,
+    "p95": 833.5,
+    "max": 833.5,
+    "over20": 2,
+    "over50": 2,
+    "missed": 64
+   },
+   "longTasks": [
+    [
+     2642,
+     64
+    ]
+   ],
+   "loaf": [
+    [
+     341,
+     806,
+     41
+    ],
+    [
+     1156,
+     178,
+     9
+    ],
+    [
+     1337,
+     1301,
+     0
+    ]
+   ]
+  },
+  "idleOpen": {
+   "reactDomCommitsPerSec": 8.1,
+   "compositesPerCommit": 4,
+   "homeCommitsPerSec": 0,
+   "songDetailCommitsPerSec": 0,
+   "liquidScrubberCommitsPerSec": 8,
+   "getBoundingClientRectPerSec": 0.4,
+   "frames": {
+    "n": 271,
+    "p50": 16.7,
+    "p95": 33.3,
+    "max": 1333.2,
+    "over20": 23,
+    "over50": 5,
+    "missed": 174
+   },
+   "webglDrawFramesPerSec": 0,
+   "longTasks": [],
+   "loafN": 5,
+   "cpu": {
+    "renderer": 75.8,
+    "GPU": 173.1
+   },
+   "canvasWrapper": [
+    [
+     11,
+     "1.00|none"
+    ],
+    [
+     2577,
+     "0.97|none"
+    ],
+    [
+     3411,
+     "0.00|none"
+    ]
+   ]
+  },
+  "idleWall": {
+   "frames": {
+    "n": 120,
+    "p50": 16.7,
+    "p95": 16.9,
+    "max": 17,
+    "over20": 0,
+    "over50": 0,
+    "missed": 0
+   },
+   "webglDrawFramesPerSec": 60,
+   "reactDomCommitsPerSec": 0,
+   "getBoundingClientRectPerSec": 0,
+   "cpu": {
+    "renderer": 57.2,
+    "GPU": 69.4
+   }
+  },
+  "pausePlay": {
+   "interactions": [
+    {
+     "t": 10098,
+     "type": "pointerdown",
+     "ms": 248,
+     "inputDelay": 8,
+     "processing": 3,
+     "presentation": 237,
+     "target": "Play"
+    },
+    {
+     "t": 12102,
+     "type": "pointerup",
+     "ms": 208,
+     "inputDelay": 5,
+     "processing": 1,
+     "presentation": 202,
+     "target": "Pause"
+    }
+   ],
+   "commitsPerSecWhilePaused": 0,
+   "gbcrPerSecWhilePaused": 1.8
+  },
+  "scrub": {
+   "interactions": [
+    {
+     "t": 14109,
+     "type": "pointerdown",
+     "ms": 232,
+     "inputDelay": 3,
+     "processing": 21,
+     "presentation": 208,
+     "target": "DIV"
+    },
+    {
+     "t": 18070,
+     "type": "pointerdown",
+     "ms": 104,
+     "inputDelay": 5,
+     "processing": 21,
+     "presentation": 78,
+     "target": "DIV"
+    }
+   ],
+   "worstMs": 232,
+   "frames": {
+    "n": 127,
+    "p50": 33.3,
+    "p95": 83.5,
+    "max": 433.3,
+    "over20": 79,
+    "over50": 15,
+    "missed": 173
+   },
+   "longTasks": [],
+   "reactDomCommitsPerSec": 46.8,
+   "gbcrPerSec": 19.7
+  },
+  "next": {
+   "interaction": [
+    {
+     "t": 20112,
+     "type": "pointerup",
+     "ms": 128,
+     "inputDelay": 12,
+     "processing": 1,
+     "presentation": 116,
+     "target": "Next Track"
+    }
+   ],
+   "playCallsAfter": 0,
+   "drawerChangesAfter": 0,
+   "commitsAfter1s": 8,
+   "wrapperChanges": 0
+  },
+  "drawerClose": {
+   "firstChangeAfterClickMs": 223,
+   "lastChangeAfterClickMs": 856,
+   "stateChanges": 15,
+   "frames": {
+    "n": 32,
+    "p50": 16.7,
+    "p95": 183.3,
+    "max": 250,
+    "over20": 8,
+    "over50": 5,
+    "missed": 42
+   },
+   "longTasks": [
+    [
+     24235,
+     113
+    ],
+    [
+     24365,
+     97
+    ],
+    [
+     24605,
+     98
+    ],
+    [
+     25175,
+     51
+    ]
+   ]
+  },
+  "trk06": {
+   "audioPlayCallsWhileOpen": [
+    [
+     12168,
+     "mzaf_950015543760123766.plus"
+    ]
+   ],
+   "distinctFilesWhileOpen": 1
+  },
+  "glOpen": {
+   "seconds": 5,
+   "frames": 273,
+   "framesWithDraws": 0,
+   "framesWithDrawsPerSec": 0,
+   "detailOpen": true
+  },
+  "cpuSeg": {
+   "idle_wall": {
+    "renderer": 57.2,
+    "GPU": 69.4
+   },
+   "detail_open_idle": {
+    "renderer": 75.8,
+    "GPU": 173.1
+   },
+   "paused": {
+    "renderer": 27.1,
+    "GPU": 45.4
+   },
+   "playing_again": {
+    "renderer": 93.3,
+    "GPU": 195.4
+   },
+   "scrub": {
+    "renderer": 105,
+    "GPU": 180.5
+   },
+   "next": {
+    "renderer": 103.4,
+    "GPU": 196.2
+   },
+   "close": {
+    "renderer": 71.2,
+    "GPU": 109.6
+   }
+  },
+  "interactionsWorst": [
+   {
+    "t": 2298,
+    "type": "pointerup",
+    "ms": 1128,
+    "inputDelay": 2,
+    "processing": 1,
+    "presentation": 1125,
+    "target": "CANVAS"
+   },
+   {
+    "t": 24102,
+    "type": "pointerdown",
+    "ms": 488,
+    "inputDelay": 2,
+    "processing": 1,
+    "presentation": 485,
+    "target": "Close"
+   },
+   {
+    "t": 10098,
+    "type": "pointerdown",
+    "ms": 248,
+    "inputDelay": 8,
+    "processing": 3,
+    "presentation": 237,
+    "target": "Play"
+   },
+   {
+    "t": 14109,
+    "type": "pointerdown",
+    "ms": 232,
+    "inputDelay": 3,
+    "processing": 21,
+    "presentation": 208,
+    "target": "DIV"
+   },
+   {
+    "t": 12102,
+    "type": "pointerup",
+    "ms": 208,
+    "inputDelay": 5,
+    "processing": 1,
+    "presentation": 202,
+    "target": "Pause"
+   }
+  ]
+ }
+]

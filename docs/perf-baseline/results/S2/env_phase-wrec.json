@@ -1,0 +1,20 @@
+{
+ "phase": "wrec",
+ "startedAt": "2026-11-11T08:06:22.594Z",
+ "browser": "Chrome/157.0.8103.39",
+ "launch": {
+  "reused": true
+ },
+ "neutral": {
+  "x": 1694,
+  "y": 455,
+  "el": "DIV.relative w-full min-h-[100dvh] flex flex-col items-center ju"
+ },
+ "page": {
+  "vp": "1718x910@1.090000033378601",
+  "activation": true,
+  "conn": null,
+  "videos": 3
+ },
+ "finishedAt": "2026-11-11T08:06:32.472Z"
+}

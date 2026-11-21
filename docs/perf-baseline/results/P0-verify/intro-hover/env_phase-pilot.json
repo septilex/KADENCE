@@ -1,0 +1,32 @@
+{
+ "phase": "pilot",
+ "startedAt": "2026-11-13T07:34:23.492Z",
+ "browser": "Chrome/157.0.8103.50",
+ "launch": {
+  "reused": false,
+  "args": [
+   "--user-data-dir=C:\\Users\\praji\\AppData\\Local\\Temp\\claude\\4e8163e5dc6b8abe\\f59513b8-5597-4633-82bd-c952a49b333c\\scratchpad\\brave-clean-profile",
+   "--remote-debugging-port=9333",
+   "--remote-allow-origins=*",
+   "--no-first-run",
+   "--no-default-browser-check",
+   "--start-maximized",
+   "--disable-features=CalculateNativeWinOcclusion",
+   "--disable-backgrounding-occluded-windows",
+   "--disable-renderer-backgrounding",
+   "about:blank"
+  ]
+ },
+ "neutral": {
+  "x": 1694,
+  "y": 455,
+  "el": "DIV.relative w-full min-h-[100dvh] flex flex-col items-center ju"
+ },
+ "page": {
+  "vp": "1718x910@1.090000033378601",
+  "activation": false,
+  "conn": null,
+  "videos": 3
+ },
+ "finishedAt": "2026-11-13T07:34:37.096Z"
+}

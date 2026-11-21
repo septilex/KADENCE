@@ -1,0 +1,3079 @@
+[
+ {
+  "run": "S4_dev_cpu1x_r1",
+  "target": "dev",
+  "cpu": 1,
+  "traced": false,
+  "revealMs": 12935,
+  "settleMs": 0,
+  "mapsFound": true,
+  "renderers": 3,
+  "reactDomRendererId": 1,
+  "walkMsP95": 0.1,
+  "foreignPointer": 0,
+  "segments": [
+   {
+    "segment": "passive",
+    "commitsTotal": 245,
+    "commitsPerSec": 24.5,
+    "reactDomCommits": 80,
+    "reactDomCommitsPerSec": 8,
+    "compositesPerDomCommit": {
+     "p50": 53,
+     "max": 53
+    },
+    "homeCommits": 80,
+    "tooltipChanges": 0,
+    "newAudio": 2,
+    "audioPlayCalls": 0,
+    "audioPlayRejected": 0,
+    "m4aRequestsStarted": 2,
+    "raf": {
+     "n": 1440,
+     "p50": 6.9,
+     "p95": 7,
+     "p99": 7.1,
+     "max": 7.3,
+     "over20": 0,
+     "over50": 0,
+     "missed": 0
+    },
+    "webglFramesWithDrawsPerSec": 144,
+    "longTasks": [],
+    "loaf": {
+     "n": 0,
+     "max": 0,
+     "blocking": 0
+    },
+    "cpu": {
+     "renderer": 42.4,
+     "GPU": 56.9
+    }
+   },
+   {
+    "segment": "slow_hover",
+    "commitsTotal": 122,
+    "commitsPerSec": 8.1,
+    "reactDomCommits": 56,
+    "reactDomCommitsPerSec": 3.7,
+    "compositesPerDomCommit": {
+     "p50": 57,
+     "max": 58
+    },
+    "homeCommits": 56,
+    "tooltipChanges": 21,
+    "newAudio": 19,
+    "audioPlayCalls": 22,
+    "audioPlayRejected": 20,
+    "m4aRequestsStarted": 19,
+    "raf": {
+     "n": 2106,
+     "p50": 6.9,
+     "p95": 7.1,
+     "p99": 20.7,
+     "max": 27.9,
+     "over20": 23,
+     "over50": 0,
+     "missed": 54
+    },
+    "webglFramesWithDrawsPerSec": 140.4,
+    "longTasks": [],
+    "loaf": {
+     "n": 0,
+     "max": 0,
+     "blocking": 0
+    },
+    "cpu": {
+     "renderer": 42.1,
+     "GPU": 67.7
+    }
+   },
+   {
+    "segment": "fast_sweep",
+    "commitsTotal": 920,
+    "commitsPerSec": 92,
+    "reactDomCommits": 460,
+    "reactDomCommitsPerSec": 46,
+    "compositesPerDomCommit": {
+     "p50": 57,
+     "max": 58
+    },
+    "homeCommits": 460,
+    "tooltipChanges": 204,
+    "newAudio": 74,
+    "audioPlayCalls": 225,
+    "audioPlayRejected": 214,
+    "m4aRequestsStarted": 74,
+    "raf": {
+     "n": 982,
+     "p50": 7,
+     "p95": 20.9,
+     "p99": 34.6,
+     "max": 41.7,
+     "over20": 163,
+     "over50": 0,
+     "missed": 458
+    },
+    "webglFramesWithDrawsPerSec": 98.2,
+    "longTasks": [],
+    "loaf": {
+     "n": 0,
+     "max": 0,
+     "blocking": 0
+    },
+    "cpu": {
+     "renderer": 99.7,
+     "GPU": 64.1
+    }
+   },
+   {
+    "segment": "pop_click",
+    "commitsTotal": 49,
+    "commitsPerSec": 4.9,
+    "reactDomCommits": 21,
+    "reactDomCommitsPerSec": 2.1,
+    "compositesPerDomCommit": {
+     "p50": 58,
+     "max": 104
+    },
+    "homeCommits": 18,
+    "tooltipChanges": 7,
+    "newAudio": 3,
+    "audioPlayCalls": 8,
+    "audioPlayRejected": 8,
+    "m4aRequestsStarted": 3,
+    "raf": {
+     "n": 1285,
+     "p50": 7,
+     "p95": 13.9,
+     "p99": 21,
+     "max": 111.2,
+     "over20": 24,
+     "over50": 4,
+     "missed": 156
+    },
+    "webglFramesWithDrawsPerSec": 128.5,
+    "longTasks": [
+     [
+      39676,
+      68
+     ],
+     [
+      39795,
+      69
+     ],
+     [
+      39871,
+      55
+     ]
+    ],
+    "loaf": {
+     "n": 5,
+     "max": 89,
+     "blocking": 54
+    },
+    "cpu": {
+     "renderer": 62,
+     "GPU": 119.3
+    }
+   },
+   {
+    "segment": "passive2",
+    "commitsTotal": 45,
+    "commitsPerSec": 3,
+    "reactDomCommits": 15,
+    "reactDomCommitsPerSec": 1,
+    "compositesPerDomCommit": {
+     "p50": 90,
+     "max": 90
+    },
+    "homeCommits": 15,
+    "tooltipChanges": 0,
+    "newAudio": 0,
+    "audioPlayCalls": 0,
+    "audioPlayRejected": 0,
+    "m4aRequestsStarted": 1,
+    "raf": {
+     "n": 2096,
+     "p50": 6.9,
+     "p95": 7.1,
+     "p99": 13.9,
+     "max": 41.8,
+     "over20": 16,
+     "over50": 0,
+     "missed": 64
+    },
+    "webglFramesWithDrawsPerSec": 139.7,
+    "longTasks": [],
+    "loaf": {
+     "n": 0,
+     "max": 0,
+     "blocking": 0
+    },
+    "cpu": {
+     "renderer": 83,
+     "GPU": 157.7
+    }
+   }
+  ],
+  "commitsPerTileChangeSlow": 2.67,
+  "audio": {
+   "newAudioTotal60s": 98,
+   "playCalls60s": 255,
+   "m4a": {
+    "requests": 99,
+    "distinct": 99,
+    "bytes": 4853987,
+    "unfinishedAtDump": 99,
+    "failed": 0,
+    "pendingOver10s": 99
+   },
+   "poolAtSweepEnd": {
+    "plus0": {
+     "t": 34761,
+     "size": 103,
+     "loading": 95,
+     "loaded": 8,
+     "error": 0,
+     "playing": 1
+    },
+    "plus10": {
+     "t": 44744,
+     "size": 106,
+     "loading": 98,
+     "loaded": 8,
+     "error": 0,
+     "playing": 1
+    },
+    "plus30": {
+     "t": 64742,
+     "size": 106,
+     "loading": 84,
+     "loaded": 22,
+     "error": 0,
+     "playing": 1
+    },
+    "last": {
+     "t": 69743,
+     "size": 106,
+     "loading": 80,
+     "loaded": 26,
+     "error": 0,
+     "playing": 1
+    }
+   }
+  },
+  "artworkRequestsDuringScript": 308,
+  "atlasUploadsDuringScript": 38,
+  "passiveRenderedComponentsTop": [
+   [
+    "motion.div",
+    800
+   ],
+   [
+    "AnimatePresence",
+    640
+   ],
+   [
+    "GlassButton",
+    400
+   ],
+   [
+    "PresenceChild",
+    320
+   ],
+   [
+    "PopChild",
+    320
+   ],
+   [
+    "PopChildMeasure",
+    320
+   ],
+   [
+    "Home",
+    80
+   ],
+   [
+    "GlobalAudioPlayer",
+    80
+   ],
+   [
+    "HeroBackgroundVideo",
+    80
+   ],
+   [
+    "HoverMediaBackground",
+    80
+   ],
+   [
+    "PreviewVideoLayer",
+    80
+   ],
+   [
+    "LoadableComponent",
+    80
+   ],
+   [
+    "BailoutToCSR",
+    80
+   ],
+   [
+    "Universe",
+    80
+   ],
+   [
+    "Canvas",
+    80
+   ],
+   [
+    "m",
+    80
+   ],
+   [
+    "CanvasImpl",
+    80
+   ],
+   [
+    "CinematicBackground",
+    80
+   ],
+   [
+    "Navbar",
+    80
+   ],
+   [
+    "motion.nav",
+    80
+   ],
+   [
+    "motion.svg",
+    80
+   ],
+   [
+    "SearchPanel",
+    80
+   ],
+   [
+    "SongDetail",
+    80
+   ],
+   [
+    "GlassFilter",
+    80
+   ]
+  ],
+  "popClick": {
+   "clickPopped": {
+    "t": 36611,
+    "tag": "click-popped-tile",
+    "x": 859,
+    "y": 455
+   },
+   "clickEdge": {
+    "t": 39609,
+    "tag": "click-left-edge (empty space attempt)",
+    "x": 4,
+    "y": 455
+   },
+   "tipAround": [
+    [
+     35020,
+     "No Need For Leavin'"
+    ],
+    [
+     35061,
+     "Mess"
+    ],
+    [
+     35089,
+     "Late Night Vibes"
+    ],
+    [
+     35165,
+     "Spread Thin"
+    ],
+    [
+     35193,
+     "Pearl Handled Pistol"
+    ],
+    [
+     39637,
+     "Slow Jams"
+    ],
+    [
+     40068,
+     ""
+    ]
+   ],
+   "audioPlayAround": [
+    [
+     35020,
+     "mzaf_12204599413403793800.plus.aac.p.m4a"
+    ],
+    [
+     35057,
+     "mzaf_13138111911181161085.plus.aac.p.m4a"
+    ],
+    [
+     35089,
+     "mzaf_9986918474815879974.plus.aac.p.m4a"
+    ],
+    [
+     35160,
+     "mzaf_5268020853091133887.plus.aac.p.m4a"
+    ],
+    [
+     35195,
+     "mzaf_8957879546962040236.plus.aac.p.m4a"
+    ],
+    [
+     39637,
+     "mzaf_4769164994546313007.plus.aac.p.m4a"
+    ],
+    [
+     39853,
+     "mzaf_16500688742521451069.plus.aac.p.m4a"
+    ],
+    [
+     39919,
+     "mzaf_4769164994546313007.plus.aac.p.m4a"
+    ]
+   ],
+   "audioEvAround": [
+    [
+     35030,
+     31,
+     "pause",
+     "mzaf_9503279895525446828.plus.aac.p.m4a"
+    ],
+    [
+     35067,
+     30,
+     "pause",
+     "mzaf_12204599413403793800.plus.aac.p.m4a"
+    ],
+    [
+     35099,
+     33,
+     "pause",
+     "mzaf_13138111911181161085.plus.aac.p.m4a"
+    ],
+    [
+     35169,
+     20,
+     "pause",
+     "mzaf_9986918474815879974.plus.aac.p.m4a"
+    ],
+    [
+     35205,
+     104,
+     "pause",
+     "mzaf_5268020853091133887.plus.aac.p.m4a"
+    ],
+    [
+     39645,
+     105,
+     "pause",
+     "mzaf_8957879546962040236.plus.aac.p.m4a"
+    ],
+    [
+     39868,
+     29,
+     "pause",
+     "mzaf_4769164994546313007.plus.aac.p.m4a"
+    ],
+    [
+     39935,
+     106,
+     "pause",
+     "mzaf_16500688742521451069.plus.aac.p.m4a"
+    ]
+   ]
+  },
+  "timerFire": null,
+  "heap": {},
+  "post": {
+   "act": true,
+   "heapMB": 52
+  },
+  "refresh": null
+ },
+ {
+  "run": "S4_prod_cpu1x_r1",
+  "target": "prod",
+  "cpu": 1,
+  "traced": false,
+  "revealMs": 50534,
+  "settleMs": 55164,
+  "mapsFound": true,
+  "renderers": 2,
+  "reactDomRendererId": 1,
+  "walkMsP95": 0.1,
+  "foreignPointer": 0,
+  "segments": [
+   {
+    "segment": "passive",
+    "commitsTotal": 0,
+    "commitsPerSec": 0,
+    "reactDomCommits": 0,
+    "reactDomCommitsPerSec": 0,
+    "compositesPerDomCommit": {
+     "p50": null,
+     "max": null
+    },
+    "homeCommits": 0,
+    "tooltipChanges": 0,
+    "newAudio": 0,
+    "audioPlayCalls": 0,
+    "audioPlayRejected": 0,
+    "m4aRequestsStarted": 0,
+    "raf": {
+     "n": 1440,
+     "p50": 6.9,
+     "p95": 7.1,
+     "p99": 7.1,
+     "max": 7.5,
+     "over20": 0,
+     "over50": 0,
+     "missed": 0
+    },
+    "webglFramesWithDrawsPerSec": 144,
+    "longTasks": [],
+    "loaf": {
+     "n": 0,
+     "max": 0,
+     "blocking": 0
+    },
+    "cpu": {
+     "renderer": 29.9,
+     "GPU": 53.8
+    }
+   },
+   {
+    "segment": "slow_hover",
+    "commitsTotal": 268,
+    "commitsPerSec": 17.9,
+    "reactDomCommits": 145,
+    "reactDomCommitsPerSec": 9.7,
+    "compositesPerDomCommit": {
+     "p50": 57,
+     "max": 58
+    },
+    "homeCommits": 0,
+    "tooltipChanges": 21,
+    "newAudio": 18,
+    "audioPlayCalls": 22,
+    "audioPlayRejected": 7,
+    "m4aRequestsStarted": 21,
+    "raf": {
+     "n": 2157,
+     "p50": 6.9,
+     "p95": 7.1,
+     "p99": 7.2,
+     "max": 14,
+     "over20": 0,
+     "over50": 0,
+     "missed": 3
+    },
+    "webglFramesWithDrawsPerSec": 143.8,
+    "longTasks": [],
+    "loaf": {
+     "n": 0,
+     "max": 0,
+     "blocking": 0
+    },
+    "cpu": {
+     "renderer": 40.7,
+     "GPU": 61.9
+    }
+   },
+   {
+    "segment": "fast_sweep",
+    "commitsTotal": 1220,
+    "commitsPerSec": 122,
+    "reactDomCommits": 731,
+    "reactDomCommitsPerSec": 73.1,
+    "compositesPerDomCommit": {
+     "p50": 57,
+     "max": 58
+    },
+    "homeCommits": 0,
+    "tooltipChanges": 204,
+    "newAudio": 73,
+    "audioPlayCalls": 225,
+    "audioPlayRejected": 11,
+    "m4aRequestsStarted": 213,
+    "raf": {
+     "n": 1435,
+     "p50": 6.9,
+     "p95": 7.1,
+     "p99": 7.1,
+     "max": 14,
+     "over20": 0,
+     "over50": 0,
+     "missed": 5
+    },
+    "webglFramesWithDrawsPerSec": 143.5,
+    "longTasks": [],
+    "loaf": {
+     "n": 0,
+     "max": 0,
+     "blocking": 0
+    },
+    "cpu": {
+     "renderer": 104.4,
+     "GPU": 88.1
+    }
+   },
+   {
+    "segment": "pop_click",
+    "commitsTotal": 205,
+    "commitsPerSec": 20.5,
+    "reactDomCommits": 108,
+    "reactDomCommitsPerSec": 10.8,
+    "compositesPerDomCommit": {
+     "p50": 58,
+     "max": 104
+    },
+    "homeCommits": 0,
+    "tooltipChanges": 7,
+    "newAudio": 2,
+    "audioPlayCalls": 8,
+    "audioPlayRejected": 0,
+    "m4aRequestsStarted": 7,
+    "raf": {
+     "n": 1305,
+     "p50": 6.9,
+     "p95": 13.8,
+     "p99": 20.8,
+     "max": 90.3,
+     "over20": 26,
+     "over50": 3,
+     "missed": 135
+    },
+    "webglFramesWithDrawsPerSec": 130.5,
+    "longTasks": [
+     [
+      39678,
+      52
+     ]
+    ],
+    "loaf": {
+     "n": 3,
+     "max": 88,
+     "blocking": 8
+    },
+    "cpu": {
+     "renderer": 67.2,
+     "GPU": 117.1
+    }
+   },
+   {
+    "segment": "passive2",
+    "commitsTotal": 240,
+    "commitsPerSec": 16,
+    "reactDomCommits": 120,
+    "reactDomCommitsPerSec": 8,
+    "compositesPerDomCommit": {
+     "p50": 90,
+     "max": 90
+    },
+    "homeCommits": 0,
+    "tooltipChanges": 0,
+    "newAudio": 0,
+    "audioPlayCalls": 0,
+    "audioPlayRejected": 0,
+    "m4aRequestsStarted": 0,
+    "raf": {
+     "n": 2122,
+     "p50": 6.9,
+     "p95": 7.1,
+     "p99": 13.9,
+     "max": 27.6,
+     "over20": 5,
+     "over50": 0,
+     "missed": 39
+    },
+    "webglFramesWithDrawsPerSec": 141.5,
+    "longTasks": [],
+    "loaf": {
+     "n": 0,
+     "max": 0,
+     "blocking": 0
+    },
+    "cpu": {
+     "renderer": 102.9,
+     "GPU": 163.1
+    }
+   }
+  ],
+  "commitsPerTileChangeSlow": 6.9,
+  "audio": {
+   "newAudioTotal60s": 93,
+   "playCalls60s": 255,
+   "m4a": {
+    "requests": 244,
+    "distinct": 102,
+    "bytes": 1549123,
+    "unfinishedAtDump": 10,
+    "failed": 0,
+    "pendingOver10s": 7
+   },
+   "poolAtSweepEnd": {
+    "plus0": {
+     "t": 34732,
+     "size": 111,
+     "loading": 2,
+     "loaded": 109,
+     "error": 0,
+     "playing": 1
+    },
+    "plus10": {
+     "t": 44720,
+     "size": 113,
+     "loading": 2,
+     "loaded": 111,
+     "error": 0,
+     "playing": 1
+    },
+    "plus30": {
+     "t": 64717,
+     "size": 113,
+     "loading": 2,
+     "loaded": 111,
+     "error": 0,
+     "playing": 1
+    },
+    "last": {
+     "t": 70259,
+     "size": 113,
+     "loading": 2,
+     "loaded": 111,
+     "error": 0,
+     "playing": 0
+    }
+   }
+  },
+  "artworkRequestsDuringScript": 486,
+  "atlasUploadsDuringScript": 0,
+  "passiveRenderedComponentsTop": [],
+  "popClick": {
+   "clickPopped": {
+    "t": 36612,
+    "tag": "click-popped-tile",
+    "x": 859,
+    "y": 455
+   },
+   "clickEdge": {
+    "t": 39611,
+    "tag": "click-left-edge (empty space attempt)",
+    "x": 4,
+    "y": 455
+   },
+   "tipAround": [
+    [
+     35015,
+     "No Need For Leavin'"
+    ],
+    [
+     35036,
+     "Mess"
+    ],
+    [
+     35077,
+     "Late Night Vibes"
+    ],
+    [
+     35167,
+     "Spread Thin"
+    ],
+    [
+     35216,
+     "Pearl Handled Pistol"
+    ],
+    [
+     39625,
+     "Slow Jams"
+    ],
+    [
+     40063,
+     ""
+    ]
+   ],
+   "audioPlayAround": [
+    [
+     35012,
+     "mzaf_12204599413403793800.plus.aac.p.m4a"
+    ],
+    [
+     35033,
+     "mzaf_13138111911181161085.plus.aac.p.m4a"
+    ],
+    [
+     35074,
+     "mzaf_9986918474815879974.plus.aac.p.m4a"
+    ],
+    [
+     35165,
+     "mzaf_5268020853091133887.plus.aac.p.m4a"
+    ],
+    [
+     35213,
+     "mzaf_8957879546962040236.plus.aac.p.m4a"
+    ],
+    [
+     39622,
+     "mzaf_4769164994546313007.plus.aac.p.m4a"
+    ],
+    [
+     39798,
+     "mzaf_7439451187192583173.plus.aac.p.m4a"
+    ],
+    [
+     39842,
+     "mzaf_4769164994546313007.plus.aac.p.m4a"
+    ]
+   ],
+   "audioEvAround": [
+    [
+     35016,
+     40,
+     "pause",
+     "mzaf_9503279895525446828.plus.aac.p.m4a"
+    ],
+    [
+     35016,
+     39,
+     "playing",
+     "mzaf_12204599413403793800.plus.aac.p.m4a"
+    ],
+    [
+     35035,
+     39,
+     "pause",
+     "mzaf_12204599413403793800.plus.aac.p.m4a"
+    ],
+    [
+     35036,
+     42,
+     "playing",
+     "mzaf_13138111911181161085.plus.aac.p.m4a"
+    ],
+    [
+     35078,
+     42,
+     "pause",
+     "mzaf_13138111911181161085.plus.aac.p.m4a"
+    ],
+    [
+     35078,
+     30,
+     "playing",
+     "mzaf_9986918474815879974.plus.aac.p.m4a"
+    ],
+    [
+     35170,
+     30,
+     "pause",
+     "mzaf_9986918474815879974.plus.aac.p.m4a"
+    ],
+    [
+     35185,
+     112,
+     "playing",
+     "mzaf_5268020853091133887.plus.aac.p.m4a"
+    ],
+    [
+     35217,
+     112,
+     "pause",
+     "mzaf_5268020853091133887.plus.aac.p.m4a"
+    ],
+    [
+     35229,
+     113,
+     "playing",
+     "mzaf_8957879546962040236.plus.aac.p.m4a"
+    ],
+    [
+     39625,
+     113,
+     "pause",
+     "mzaf_8957879546962040236.plus.aac.p.m4a"
+    ],
+    [
+     39625,
+     38,
+     "playing",
+     "mzaf_4769164994546313007.plus.aac.p.m4a"
+    ],
+    [
+     39806,
+     38,
+     "pause",
+     "mzaf_4769164994546313007.plus.aac.p.m4a"
+    ],
+    [
+     39806,
+     32,
+     "playing",
+     "mzaf_7439451187192583173.plus.aac.p.m4a"
+    ],
+    [
+     39845,
+     32,
+     "pause",
+     "mzaf_7439451187192583173.plus.aac.p.m4a"
+    ],
+    [
+     39845,
+     38,
+     "playing",
+     "mzaf_4769164994546313007.plus.aac.p.m4a"
+    ]
+   ]
+  },
+  "timerFire": null,
+  "heap": {
+   "heap1_idleIntro": 0,
+   "heap2_settledWall": 21,
+   "heap3_after60sScriptPlus10s": 114,
+   "heap4_afterSwitchToWorkout15s": 117
+  },
+  "post": {
+   "act": true,
+   "heapMB": 14
+  },
+  "refresh": {
+   "durationMs": 8159,
+   "fullUploads": 7,
+   "uploadCallMax": 0.1,
+   "raf": {
+    "n": 1134,
+    "p95": 7.1,
+    "max": 104.1,
+    "over50": 2
+   },
+   "longTasks": [],
+   "api": [
+    [
+     200,
+     "MISS",
+     3304
+    ]
+   ],
+   "artworkReqs": 242,
+   "imgSrcSets": 512
+  }
+ },
+ {
+  "run": "S4_prod_cpu1x_r2",
+  "target": "prod",
+  "cpu": 1,
+  "traced": false,
+  "revealMs": 4090,
+  "settleMs": 8197,
+  "mapsFound": true,
+  "renderers": 2,
+  "reactDomRendererId": 1,
+  "walkMsP95": 0.1,
+  "foreignPointer": 0,
+  "segments": [
+   {
+    "segment": "passive",
+    "commitsTotal": 160,
+    "commitsPerSec": 16,
+    "reactDomCommits": 80,
+    "reactDomCommitsPerSec": 8,
+    "compositesPerDomCommit": {
+     "p50": 53,
+     "max": 53
+    },
+    "homeCommits": 0,
+    "tooltipChanges": 0,
+    "newAudio": 0,
+    "audioPlayCalls": 0,
+    "audioPlayRejected": 0,
+    "m4aRequestsStarted": 0,
+    "raf": {
+     "n": 1440,
+     "p50": 6.9,
+     "p95": 7.1,
+     "p99": 7.2,
+     "max": 8.2,
+     "over20": 0,
+     "over50": 0,
+     "missed": 0
+    },
+    "webglFramesWithDrawsPerSec": 144,
+    "longTasks": [],
+    "loaf": {
+     "n": 0,
+     "max": 0,
+     "blocking": 0
+    },
+    "cpu": {
+     "renderer": 32.2,
+     "GPU": 53.2
+    }
+   },
+   {
+    "segment": "slow_hover",
+    "commitsTotal": 298,
+    "commitsPerSec": 19.9,
+    "reactDomCommits": 160,
+    "reactDomCommitsPerSec": 10.7,
+    "compositesPerDomCommit": {
+     "p50": 57,
+     "max": 58
+    },
+    "homeCommits": 0,
+    "tooltipChanges": 20,
+    "newAudio": 18,
+    "audioPlayCalls": 22,
+    "audioPlayRejected": 4,
+    "m4aRequestsStarted": 21,
+    "raf": {
+     "n": 2159,
+     "p50": 6.9,
+     "p95": 7.1,
+     "p99": 7.1,
+     "max": 13.9,
+     "over20": 0,
+     "over50": 0,
+     "missed": 1
+    },
+    "webglFramesWithDrawsPerSec": 143.9,
+    "longTasks": [],
+    "loaf": {
+     "n": 0,
+     "max": 0,
+     "blocking": 0
+    },
+    "cpu": {
+     "renderer": 39.4,
+     "GPU": 63.2
+    }
+   },
+   {
+    "segment": "fast_sweep",
+    "commitsTotal": 784,
+    "commitsPerSec": 78.4,
+    "reactDomCommits": 506,
+    "reactDomCommitsPerSec": 50.6,
+    "compositesPerDomCommit": {
+     "p50": 57,
+     "max": 58
+    },
+    "homeCommits": 0,
+    "tooltipChanges": 209,
+    "newAudio": 73,
+    "audioPlayCalls": 225,
+    "audioPlayRejected": 170,
+    "m4aRequestsStarted": 84,
+    "raf": {
+     "n": 1440,
+     "p50": 6.9,
+     "p95": 7,
+     "p99": 7.1,
+     "max": 7.3,
+     "over20": 0,
+     "over50": 0,
+     "missed": 0
+    },
+    "webglFramesWithDrawsPerSec": 144,
+    "longTasks": [],
+    "loaf": {
+     "n": 0,
+     "max": 0,
+     "blocking": 0
+    },
+    "cpu": {
+     "renderer": 68.6,
+     "GPU": 78.5
+    }
+   },
+   {
+    "segment": "pop_click",
+    "commitsTotal": 90,
+    "commitsPerSec": 9,
+    "reactDomCommits": 55,
+    "reactDomCommitsPerSec": 5.5,
+    "compositesPerDomCommit": {
+     "p50": 90,
+     "max": 104
+    },
+    "homeCommits": 0,
+    "tooltipChanges": 6,
+    "newAudio": 6,
+    "audioPlayCalls": 18,
+    "audioPlayRejected": 13,
+    "m4aRequestsStarted": 8,
+    "raf": {
+     "n": 1328,
+     "p50": 7,
+     "p95": 13.8,
+     "p99": 20.9,
+     "max": 69.5,
+     "over20": 20,
+     "over50": 1,
+     "missed": 113
+    },
+    "webglFramesWithDrawsPerSec": 132.8,
+    "longTasks": [],
+    "loaf": {
+     "n": 2,
+     "max": 70,
+     "blocking": 0
+    },
+    "cpu": {
+     "renderer": 65.9,
+     "GPU": 116.7
+    }
+   },
+   {
+    "segment": "passive2",
+    "commitsTotal": 241,
+    "commitsPerSec": 16.1,
+    "reactDomCommits": 121,
+    "reactDomCommitsPerSec": 8.1,
+    "compositesPerDomCommit": {
+     "p50": 90,
+     "max": 90
+    },
+    "homeCommits": 0,
+    "tooltipChanges": 0,
+    "newAudio": 0,
+    "audioPlayCalls": 0,
+    "audioPlayRejected": 0,
+    "m4aRequestsStarted": 0,
+    "raf": {
+     "n": 2148,
+     "p50": 6.9,
+     "p95": 7.1,
+     "p99": 7.1,
+     "max": 41.7,
+     "over20": 1,
+     "over50": 0,
+     "missed": 12
+    },
+    "webglFramesWithDrawsPerSec": 143.2,
+    "longTasks": [],
+    "loaf": {
+     "n": 0,
+     "max": 0,
+     "blocking": 0
+    },
+    "cpu": {
+     "renderer": 92.6,
+     "GPU": 154.5
+    }
+   }
+  ],
+  "commitsPerTileChangeSlow": 8,
+  "audio": {
+   "newAudioTotal60s": 97,
+   "playCalls60s": 265,
+   "m4a": {
+    "requests": 115,
+    "distinct": 105,
+    "bytes": 3233239,
+    "unfinishedAtDump": 57,
+    "failed": 2,
+    "pendingOver10s": 55
+   },
+   "poolAtSweepEnd": {
+    "plus0": {
+     "t": 34502,
+     "size": 111,
+     "loading": 78,
+     "loaded": 33,
+     "error": 0,
+     "playing": 1
+    },
+    "plus10": {
+     "t": 44505,
+     "size": 117,
+     "loading": 67,
+     "loaded": 50,
+     "error": 0,
+     "playing": 1
+    },
+    "plus30": {
+     "t": 64500,
+     "size": 117,
+     "loading": 56,
+     "loaded": 61,
+     "error": 0,
+     "playing": 1
+    },
+    "last": {
+     "t": 70000,
+     "size": 117,
+     "loading": 54,
+     "loaded": 63,
+     "error": 0,
+     "playing": 1
+    }
+   }
+  },
+  "artworkRequestsDuringScript": 240,
+  "atlasUploadsDuringScript": 0,
+  "passiveRenderedComponentsTop": [],
+  "popClick": {
+   "clickPopped": {
+    "t": 36614,
+    "tag": "click-popped-tile",
+    "x": 859,
+    "y": 455
+   },
+   "clickEdge": {
+    "t": 39601,
+    "tag": "click-left-edge (empty space attempt)",
+    "x": 4,
+    "y": 455
+   },
+   "tipAround": [
+    [
+     35001,
+     "What’s A Little Rain"
+    ],
+    [
+     35056,
+     "Closing Time"
+    ],
+    [
+     35098,
+     "Late Night Vibes"
+    ],
+    [
+     35237,
+     "Safe Place To Break"
+    ],
+    [
+     39611,
+     "10-90 (The Sound of Roses)"
+    ],
+    [
+     39979,
+     ""
+    ]
+   ],
+   "audioPlayAround": [
+    [
+     35000,
+     "mzaf_84020003926495542.plus.aac.p.m4a"
+    ],
+    [
+     35053,
+     "mzaf_16880364356127395094.plus.aac.p.m4a"
+    ],
+    [
+     35095,
+     "mzaf_18264781607006352233.plus.aac.p.m4a"
+    ],
+    [
+     35192,
+     "mzaf_5341341365634469979.plus.aac.p.m4a"
+    ],
+    [
+     35234,
+     "mzaf_12539589320315113559.plus.aac.p.m4a"
+    ],
+    [
+     39614,
+     "mzaf_8180653939451241830.plus.aac.p.m4a"
+    ],
+    [
+     39753,
+     "mzaf_17170083480560412931.plus.aac.p.m4a"
+    ],
+    [
+     39773,
+     "mzaf_2769470736962418844.plus.aac.p.m4a"
+    ],
+    [
+     39795,
+     "mzaf_12229907762849243301.plus.aac.p.m4a"
+    ],
+    [
+     39812,
+     "mzaf_16739108338805965947.plus.aac.p.m4a"
+    ],
+    [
+     39883,
+     "mzaf_4649176658540933465.plus.aac.p.m4a"
+    ],
+    [
+     39927,
+     "mzaf_15877024510364311081.plus.aac.p.m4a"
+    ],
+    [
+     39961,
+     "mzaf_12579493827181604446.plus.aac.p.m4a"
+    ],
+    [
+     40003,
+     "mzaf_8681408848343989569.plus.aac.p.m4a"
+    ],
+    [
+     40034,
+     "mzaf_17187641481075166974.plus.aac.p.m4a"
+    ],
+    [
+     40057,
+     "mzaf_12480012022591508840.plus.aac.p.m4a"
+    ],
+    [
+     40176,
+     "mzaf_5652111636275733022.plus.aac.p.m4a"
+    ],
+    [
+     40340,
+     "mzaf_18418186682884084455.plus.aac.p.m4a"
+    ]
+   ],
+   "audioEvAround": [
+    [
+     35005,
+     40,
+     "pause",
+     "mzaf_15227195710178724632.plus.aac.p.m4a"
+    ],
+    [
+     35005,
+     39,
+     "playing",
+     "mzaf_84020003926495542.plus.aac.p.m4a"
+    ],
+    [
+     35056,
+     39,
+     "pause",
+     "mzaf_84020003926495542.plus.aac.p.m4a"
+    ],
+    [
+     35099,
+     42,
+     "pause",
+     "mzaf_16880364356127395094.plus.aac.p.m4a"
+    ],
+    [
+     35099,
+     30,
+     "playing",
+     "mzaf_18264781607006352233.plus.aac.p.m4a"
+    ],
+    [
+     35195,
+     30,
+     "pause",
+     "mzaf_18264781607006352233.plus.aac.p.m4a"
+    ],
+    [
+     35238,
+     112,
+     "pause",
+     "mzaf_5341341365634469979.plus.aac.p.m4a"
+    ],
+    [
+     39619,
+     113,
+     "pause",
+     "mzaf_12539589320315113559.plus.aac.p.m4a"
+    ],
+    [
+     39756,
+     38,
+     "pause",
+     "mzaf_8180653939451241830.plus.aac.p.m4a"
+    ],
+    [
+     39780,
+     114,
+     "pause",
+     "mzaf_17170083480560412931.plus.aac.p.m4a"
+    ],
+    [
+     39780,
+     4,
+     "playing",
+     "mzaf_2769470736962418844.plus.aac.p.m4a"
+    ],
+    [
+     39798,
+     4,
+     "pause",
+     "mzaf_2769470736962418844.plus.aac.p.m4a"
+    ],
+    [
+     39817,
+     88,
+     "pause",
+     "mzaf_12229907762849243301.plus.aac.p.m4a"
+    ],
+    [
+     39817,
+     11,
+     "playing",
+     "mzaf_16739108338805965947.plus.aac.p.m4a"
+    ],
+    [
+     39890,
+     11,
+     "pause",
+     "mzaf_16739108338805965947.plus.aac.p.m4a"
+    ],
+    [
+     39930,
+     82,
+     "pause",
+     "mzaf_4649176658540933465.plus.aac.p.m4a"
+    ],
+    [
+     39965,
+     107,
+     "pause",
+     "mzaf_15877024510364311081.plus.aac.p.m4a"
+    ],
+    [
+     40006,
+     106,
+     "pause",
+     "mzaf_12579493827181604446.plus.aac.p.m4a"
+    ],
+    [
+     40037,
+     105,
+     "pause",
+     "mzaf_8681408848343989569.plus.aac.p.m4a"
+    ],
+    [
+     40059,
+     115,
+     "pause",
+     "mzaf_17187641481075166974.plus.aac.p.m4a"
+    ],
+    [
+     40179,
+     116,
+     "pause",
+     "mzaf_12480012022591508840.plus.aac.p.m4a"
+    ],
+    [
+     40344,
+     117,
+     "pause",
+     "mzaf_5652111636275733022.plus.aac.p.m4a"
+    ],
+    [
+     43803,
+     79,
+     "playing",
+     "mzaf_18418186682884084455.plus.aac.p.m4a"
+    ]
+   ]
+  },
+  "timerFire": null,
+  "heap": {},
+  "post": {
+   "act": true,
+   "heapMB": 18
+  },
+  "refresh": null
+ },
+ {
+  "run": "S4_prod_cpu1x_r3_traced",
+  "target": "prod",
+  "cpu": 1,
+  "traced": true,
+  "revealMs": 4081,
+  "settleMs": 8173,
+  "mapsFound": true,
+  "renderers": 2,
+  "reactDomRendererId": 1,
+  "walkMsP95": 0.1,
+  "foreignPointer": 0,
+  "segments": [
+   {
+    "segment": "passive",
+    "commitsTotal": 160,
+    "commitsPerSec": 16,
+    "reactDomCommits": 80,
+    "reactDomCommitsPerSec": 8,
+    "compositesPerDomCommit": {
+     "p50": 53,
+     "max": 53
+    },
+    "homeCommits": 0,
+    "tooltipChanges": 0,
+    "newAudio": 0,
+    "audioPlayCalls": 0,
+    "audioPlayRejected": 0,
+    "m4aRequestsStarted": 0,
+    "raf": {
+     "n": 1440,
+     "p50": 6.9,
+     "p95": 7.1,
+     "p99": 7.1,
+     "max": 8.6,
+     "over20": 0,
+     "over50": 0,
+     "missed": 0
+    },
+    "webglFramesWithDrawsPerSec": 144,
+    "longTasks": [],
+    "loaf": {
+     "n": 0,
+     "max": 0,
+     "blocking": 0
+    },
+    "cpu": {
+     "renderer": 0.9,
+     "GPU": 72.6
+    }
+   },
+   {
+    "segment": "slow_hover",
+    "commitsTotal": 150,
+    "commitsPerSec": 10,
+    "reactDomCommits": 86,
+    "reactDomCommitsPerSec": 5.7,
+    "compositesPerDomCommit": {
+     "p50": 57,
+     "max": 58
+    },
+    "homeCommits": 0,
+    "tooltipChanges": 20,
+    "newAudio": 18,
+    "audioPlayCalls": 22,
+    "audioPlayRejected": 13,
+    "m4aRequestsStarted": 21,
+    "raf": {
+     "n": 2158,
+     "p50": 6.9,
+     "p95": 7.1,
+     "p99": 7.1,
+     "max": 13.8,
+     "over20": 0,
+     "over50": 0,
+     "missed": 2
+    },
+    "webglFramesWithDrawsPerSec": 143.9,
+    "longTasks": [],
+    "loaf": {
+     "n": 0,
+     "max": 0,
+     "blocking": 0
+    },
+    "cpu": {
+     "renderer": 33.3,
+     "GPU": 72.6
+    }
+   },
+   {
+    "segment": "fast_sweep",
+    "commitsTotal": 888,
+    "commitsPerSec": 88.8,
+    "reactDomCommits": 557,
+    "reactDomCommitsPerSec": 55.7,
+    "compositesPerDomCommit": {
+     "p50": 57,
+     "max": 58
+    },
+    "homeCommits": 0,
+    "tooltipChanges": 209,
+    "newAudio": 73,
+    "audioPlayCalls": 225,
+    "audioPlayRejected": 138,
+    "m4aRequestsStarted": 79,
+    "raf": {
+     "n": 1439,
+     "p50": 6.9,
+     "p95": 7.1,
+     "p99": 7.1,
+     "max": 13.9,
+     "over20": 0,
+     "over50": 0,
+     "missed": 1
+    },
+    "webglFramesWithDrawsPerSec": 143.9,
+    "longTasks": [],
+    "loaf": {
+     "n": 0,
+     "max": 0,
+     "blocking": 0
+    },
+    "cpu": {
+     "renderer": 68.9,
+     "GPU": 73.9
+    }
+   },
+   {
+    "segment": "pop_click",
+    "commitsTotal": 164,
+    "commitsPerSec": 16.4,
+    "reactDomCommits": 95,
+    "reactDomCommitsPerSec": 9.5,
+    "compositesPerDomCommit": {
+     "p50": 90,
+     "max": 104
+    },
+    "homeCommits": 0,
+    "tooltipChanges": 6,
+    "newAudio": 7,
+    "audioPlayCalls": 20,
+    "audioPlayRejected": 11,
+    "m4aRequestsStarted": 8,
+    "raf": {
+     "n": 1321,
+     "p50": 6.9,
+     "p95": 7.2,
+     "p99": 20.9,
+     "max": 62.6,
+     "over20": 26,
+     "over50": 2,
+     "missed": 120
+    },
+    "webglFramesWithDrawsPerSec": 132.1,
+    "longTasks": [],
+    "loaf": {
+     "n": 3,
+     "max": 63,
+     "blocking": 1
+    },
+    "cpu": {
+     "renderer": 61.8,
+     "GPU": 115.4
+    }
+   },
+   {
+    "segment": "passive2",
+    "commitsTotal": 240,
+    "commitsPerSec": 16,
+    "reactDomCommits": 120,
+    "reactDomCommitsPerSec": 8,
+    "compositesPerDomCommit": {
+     "p50": 90,
+     "max": 90
+    },
+    "homeCommits": 0,
+    "tooltipChanges": 0,
+    "newAudio": 0,
+    "audioPlayCalls": 0,
+    "audioPlayRejected": 0,
+    "m4aRequestsStarted": 0,
+    "raf": {
+     "n": 2156,
+     "p50": 6.9,
+     "p95": 7.1,
+     "p99": 7.2,
+     "max": 13.9,
+     "over20": 0,
+     "over50": 0,
+     "missed": 4
+    },
+    "webglFramesWithDrawsPerSec": 143.7,
+    "longTasks": [],
+    "loaf": {
+     "n": 0,
+     "max": 0,
+     "blocking": 0
+    },
+    "cpu": {
+     "renderer": 90.2,
+     "GPU": 152.6
+    }
+   }
+  ],
+  "commitsPerTileChangeSlow": 4.3,
+  "audio": {
+   "newAudioTotal60s": 98,
+   "playCalls60s": 267,
+   "m4a": {
+    "requests": 109,
+    "distinct": 105,
+    "bytes": 9132287,
+    "unfinishedAtDump": 60,
+    "failed": 1,
+    "pendingOver10s": 59
+   },
+   "poolAtSweepEnd": {
+    "plus0": {
+     "t": 34680,
+     "size": 111,
+     "loading": 56,
+     "loaded": 55,
+     "error": 0,
+     "playing": 1
+    },
+    "plus10": {
+     "t": 44684,
+     "size": 118,
+     "loading": 61,
+     "loaded": 57,
+     "error": 0,
+     "playing": 1
+    },
+    "plus30": {
+     "t": 64680,
+     "size": 118,
+     "loading": 61,
+     "loaded": 57,
+     "error": 0,
+     "playing": 1
+    },
+    "last": {
+     "t": 113692,
+     "size": 118,
+     "loading": 53,
+     "loaded": 65,
+     "error": 0,
+     "playing": 0
+    }
+   }
+  },
+  "artworkRequestsDuringScript": 244,
+  "atlasUploadsDuringScript": 0,
+  "passiveRenderedComponentsTop": [],
+  "popClick": {
+   "clickPopped": {
+    "t": 36612,
+    "tag": "click-popped-tile",
+    "x": 859,
+    "y": 455
+   },
+   "clickEdge": {
+    "t": 39604,
+    "tag": "click-left-edge (empty space attempt)",
+    "x": 4,
+    "y": 455
+   },
+   "tipAround": [
+    [
+     35014,
+     "What’s A Little Rain"
+    ],
+    [
+     35042,
+     "Closing Time"
+    ],
+    [
+     35090,
+     "Late Night Vibes"
+    ],
+    [
+     35208,
+     "Safe Place To Break"
+    ],
+    [
+     39618,
+     "10-90 (The Sound of Roses)"
+    ],
+    [
+     39993,
+     ""
+    ]
+   ],
+   "audioPlayAround": [
+    [
+     35011,
+     "mzaf_84020003926495542.plus.aac.p.m4a"
+    ],
+    [
+     35038,
+     "mzaf_16880364356127395094.plus.aac.p.m4a"
+    ],
+    [
+     35087,
+     "mzaf_18264781607006352233.plus.aac.p.m4a"
+    ],
+    [
+     35164,
+     "mzaf_5341341365634469979.plus.aac.p.m4a"
+    ],
+    [
+     35205,
+     "mzaf_12539589320315113559.plus.aac.p.m4a"
+    ],
+    [
+     39618,
+     "mzaf_8180653939451241830.plus.aac.p.m4a"
+    ],
+    [
+     39758,
+     "mzaf_14023521453987433194.plus.aac.p.m4a"
+    ],
+    [
+     39774,
+     "mzaf_11513381852459586858.plus.aac.p.m4a"
+    ],
+    [
+     39804,
+     "mzaf_2769470736962418844.plus.aac.p.m4a"
+    ],
+    [
+     39818,
+     "mzaf_12229907762849243301.plus.aac.p.m4a"
+    ],
+    [
+     39853,
+     "mzaf_18105841092895159847.plus.aac.p.m4a"
+    ],
+    [
+     39865,
+     "mzaf_12146863413493982667.plus.aac.p.m4a"
+    ],
+    [
+     39917,
+     "mzaf_7439451187192583173.plus.aac.p.m4a"
+    ],
+    [
+     39934,
+     "mzaf_15877024510364311081.plus.aac.p.m4a"
+    ],
+    [
+     39997,
+     "mzaf_12579493827181604446.plus.aac.p.m4a"
+    ],
+    [
+     40013,
+     "mzaf_8681408848343989569.plus.aac.p.m4a"
+    ],
+    [
+     40063,
+     "mzaf_17187641481075166974.plus.aac.p.m4a"
+    ],
+    [
+     40089,
+     "mzaf_12480012022591508840.plus.aac.p.m4a"
+    ],
+    [
+     40218,
+     "mzaf_5652111636275733022.plus.aac.p.m4a"
+    ],
+    [
+     40359,
+     "mzaf_18418186682884084455.plus.aac.p.m4a"
+    ]
+   ],
+   "audioEvAround": [
+    [
+     35013,
+     40,
+     "pause",
+     "mzaf_15227195710178724632.plus.aac.p.m4a"
+    ],
+    [
+     35041,
+     39,
+     "pause",
+     "mzaf_84020003926495542.plus.aac.p.m4a"
+    ],
+    [
+     35041,
+     42,
+     "playing",
+     "mzaf_16880364356127395094.plus.aac.p.m4a"
+    ],
+    [
+     35091,
+     42,
+     "pause",
+     "mzaf_16880364356127395094.plus.aac.p.m4a"
+    ],
+    [
+     35091,
+     30,
+     "playing",
+     "mzaf_18264781607006352233.plus.aac.p.m4a"
+    ],
+    [
+     35168,
+     30,
+     "pause",
+     "mzaf_18264781607006352233.plus.aac.p.m4a"
+    ],
+    [
+     35183,
+     112,
+     "playing",
+     "mzaf_5341341365634469979.plus.aac.p.m4a"
+    ],
+    [
+     35208,
+     112,
+     "pause",
+     "mzaf_5341341365634469979.plus.aac.p.m4a"
+    ],
+    [
+     39620,
+     113,
+     "pause",
+     "mzaf_12539589320315113559.plus.aac.p.m4a"
+    ],
+    [
+     39763,
+     38,
+     "pause",
+     "mzaf_8180653939451241830.plus.aac.p.m4a"
+    ],
+    [
+     39779,
+     114,
+     "pause",
+     "mzaf_14023521453987433194.plus.aac.p.m4a"
+    ],
+    [
+     39779,
+     26,
+     "playing",
+     "mzaf_11513381852459586858.plus.aac.p.m4a"
+    ],
+    [
+     39809,
+     26,
+     "pause",
+     "mzaf_11513381852459586858.plus.aac.p.m4a"
+    ],
+    [
+     39809,
+     4,
+     "playing",
+     "mzaf_2769470736962418844.plus.aac.p.m4a"
+    ],
+    [
+     39823,
+     4,
+     "pause",
+     "mzaf_2769470736962418844.plus.aac.p.m4a"
+    ],
+    [
+     39857,
+     88,
+     "pause",
+     "mzaf_12229907762849243301.plus.aac.p.m4a"
+    ],
+    [
+     39869,
+     63,
+     "pause",
+     "mzaf_18105841092895159847.plus.aac.p.m4a"
+    ],
+    [
+     39889,
+     115,
+     "playing",
+     "mzaf_12146863413493982667.plus.aac.p.m4a"
+    ],
+    [
+     39922,
+     115,
+     "pause",
+     "mzaf_12146863413493982667.plus.aac.p.m4a"
+    ],
+    [
+     39922,
+     108,
+     "playing",
+     "mzaf_7439451187192583173.plus.aac.p.m4a"
+    ],
+    [
+     39939,
+     108,
+     "pause",
+     "mzaf_7439451187192583173.plus.aac.p.m4a"
+    ],
+    [
+     40003,
+     107,
+     "pause",
+     "mzaf_15877024510364311081.plus.aac.p.m4a"
+    ],
+    [
+     40003,
+     106,
+     "playing",
+     "mzaf_12579493827181604446.plus.aac.p.m4a"
+    ],
+    [
+     40018,
+     106,
+     "pause",
+     "mzaf_12579493827181604446.plus.aac.p.m4a"
+    ],
+    [
+     40018,
+     105,
+     "playing",
+     "mzaf_8681408848343989569.plus.aac.p.m4a"
+    ],
+    [
+     40066,
+     105,
+     "pause",
+     "mzaf_8681408848343989569.plus.aac.p.m4a"
+    ],
+    [
+     40094,
+     116,
+     "pause",
+     "mzaf_17187641481075166974.plus.aac.p.m4a"
+    ],
+    [
+     40221,
+     117,
+     "pause",
+     "mzaf_12480012022591508840.plus.aac.p.m4a"
+    ],
+    [
+     40363,
+     118,
+     "pause",
+     "mzaf_5652111636275733022.plus.aac.p.m4a"
+    ],
+    [
+     40363,
+     79,
+     "playing",
+     "mzaf_18418186682884084455.plus.aac.p.m4a"
+    ]
+   ]
+  },
+  "timerFire": {
+   "note": "TimerFire (X) durations on the KADENCE renderer main thread; t aligned to script start assuming trace start = T0-300 ms",
+   "rendererPid": "2568",
+   "passive0to10s": {
+    "n": 0,
+    "perSec": 0,
+    "p50": null,
+    "p95": null,
+    "max": null,
+    "sumMs": 0,
+    "over4ms": 0
+   },
+   "slowHover": {
+    "n": 0,
+    "perSec": 0,
+    "p50": null,
+    "p95": null,
+    "max": null,
+    "sumMs": 0,
+    "over4ms": 0
+   },
+   "sweep": {
+    "n": 0,
+    "perSec": 0,
+    "p50": null,
+    "p95": null,
+    "max": null,
+    "sumMs": 0,
+    "over4ms": 0
+   },
+   "popClick": {
+    "n": 0,
+    "perSec": 0,
+    "p50": null,
+    "p95": null,
+    "max": null,
+    "sumMs": 0,
+    "over4ms": 0
+   },
+   "passive2": {
+    "n": 0,
+    "perSec": 0,
+    "p50": null,
+    "p95": null,
+    "max": null,
+    "sumMs": 0,
+    "over4ms": 0
+   }
+  },
+  "heap": {},
+  "post": {
+   "act": true,
+   "heapMB": 17
+  },
+  "refresh": null
+ },
+ {
+  "run": "S4_prod_cpu4x_r1",
+  "target": "prod",
+  "cpu": 4,
+  "traced": false,
+  "revealMs": 17464,
+  "settleMs": 23211,
+  "mapsFound": true,
+  "renderers": 2,
+  "reactDomRendererId": 1,
+  "walkMsP95": 0.2,
+  "foreignPointer": 0,
+  "segments": [
+   {
+    "segment": "passive",
+    "commitsTotal": 0,
+    "commitsPerSec": 0,
+    "reactDomCommits": 0,
+    "reactDomCommitsPerSec": 0,
+    "compositesPerDomCommit": {
+     "p50": null,
+     "max": null
+    },
+    "homeCommits": 0,
+    "tooltipChanges": 0,
+    "newAudio": 0,
+    "audioPlayCalls": 0,
+    "audioPlayRejected": 0,
+    "m4aRequestsStarted": 0,
+    "raf": {
+     "n": 1429,
+     "p50": 6.9,
+     "p95": 7,
+     "p99": 7.1,
+     "max": 69.4,
+     "over20": 1,
+     "over50": 1,
+     "missed": 11
+    },
+    "webglFramesWithDrawsPerSec": 142.9,
+    "longTasks": [],
+    "loaf": {
+     "n": 1,
+     "max": 79,
+     "blocking": 0
+    },
+    "cpu": {
+     "renderer": 115.3,
+     "GPU": 41.5
+    }
+   },
+   {
+    "segment": "slow_hover",
+    "commitsTotal": 261,
+    "commitsPerSec": 17.4,
+    "reactDomCommits": 149,
+    "reactDomCommitsPerSec": 9.9,
+    "compositesPerDomCommit": {
+     "p50": 57,
+     "max": 58
+    },
+    "homeCommits": 0,
+    "tooltipChanges": 20,
+    "newAudio": 18,
+    "audioPlayCalls": 22,
+    "audioPlayRejected": 5,
+    "m4aRequestsStarted": 21,
+    "raf": {
+     "n": 2000,
+     "p50": 6.9,
+     "p95": 7.1,
+     "p99": 27.8,
+     "max": 62.5,
+     "over20": 45,
+     "over50": 2,
+     "missed": 161
+    },
+    "webglFramesWithDrawsPerSec": 133.3,
+    "longTasks": [
+     [
+      10008,
+      69
+     ]
+    ],
+    "loaf": {
+     "n": 2,
+     "max": 73,
+     "blocking": 18
+    },
+    "cpu": {
+     "renderer": 124.2,
+     "GPU": 46.9
+    }
+   },
+   {
+    "segment": "fast_sweep",
+    "commitsTotal": 800,
+    "commitsPerSec": 80,
+    "reactDomCommits": 518,
+    "reactDomCommitsPerSec": 51.8,
+    "compositesPerDomCommit": {
+     "p50": 57,
+     "max": 58
+    },
+    "homeCommits": 0,
+    "tooltipChanges": 205,
+    "newAudio": 73,
+    "audioPlayCalls": 221,
+    "audioPlayRejected": 144,
+    "m4aRequestsStarted": 84,
+    "raf": {
+     "n": 418,
+     "p50": 27.7,
+     "p95": 41.6,
+     "p99": 41.7,
+     "max": 69.5,
+     "over20": 287,
+     "over50": 2,
+     "missed": 28
+    },
+    "webglFramesWithDrawsPerSec": 41.8,
+    "longTasks": [
+     [
+      26479,
+      55
+     ],
+     [
+      30169,
+      61
+     ]
+    ],
+    "loaf": {
+     "n": 2,
+     "max": 68,
+     "blocking": 13
+    },
+    "cpu": {
+     "renderer": 136,
+     "GPU": 22.1
+    }
+   },
+   {
+    "segment": "pop_click",
+    "commitsTotal": 136,
+    "commitsPerSec": 13.6,
+    "reactDomCommits": 78,
+    "reactDomCommitsPerSec": 7.8,
+    "compositesPerDomCommit": {
+     "p50": 90,
+     "max": 104
+    },
+    "homeCommits": 0,
+    "tooltipChanges": 10,
+    "newAudio": 4,
+    "audioPlayCalls": 16,
+    "audioPlayRejected": 9,
+    "m4aRequestsStarted": 4,
+    "raf": {
+     "n": 850,
+     "p50": 7,
+     "p95": 27.8,
+     "p99": 55.5,
+     "max": 256.9,
+     "over20": 146,
+     "over50": 10,
+     "missed": 589
+    },
+    "webglFramesWithDrawsPerSec": 85,
+    "longTasks": [
+     [
+      39677,
+      229
+     ],
+     [
+      39954,
+      101
+     ],
+     [
+      40062,
+      54
+     ],
+     [
+      40126,
+      157
+     ],
+     [
+      40361,
+      65
+     ],
+     [
+      40522,
+      63
+     ],
+     [
+      40753,
+      66
+     ]
+    ],
+    "loaf": {
+     "n": 8,
+     "max": 254,
+     "blocking": 401
+    },
+    "cpu": {
+     "renderer": 133.1,
+     "GPU": 89.5
+    }
+   },
+   {
+    "segment": "passive2",
+    "commitsTotal": 240,
+    "commitsPerSec": 16,
+    "reactDomCommits": 120,
+    "reactDomCommitsPerSec": 8,
+    "compositesPerDomCommit": {
+     "p50": 90,
+     "max": 90
+    },
+    "homeCommits": 0,
+    "tooltipChanges": 0,
+    "newAudio": 0,
+    "audioPlayCalls": 0,
+    "audioPlayRejected": 0,
+    "m4aRequestsStarted": 0,
+    "raf": {
+     "n": 792,
+     "p50": 13.9,
+     "p95": 34.8,
+     "p99": 41.8,
+     "max": 131.9,
+     "over20": 331,
+     "over50": 3,
+     "missed": 255
+    },
+    "webglFramesWithDrawsPerSec": 52.8,
+    "longTasks": [],
+    "loaf": {
+     "n": 4,
+     "max": 132,
+     "blocking": 17
+    },
+    "cpu": {
+     "renderer": 143,
+     "GPU": 113.8
+    }
+   }
+  ],
+  "commitsPerTileChangeSlow": 7.45,
+  "audio": {
+   "newAudioTotal60s": 95,
+   "playCalls60s": 259,
+   "m4a": {
+    "requests": 109,
+    "distinct": 101,
+    "bytes": 0,
+    "unfinishedAtDump": 58,
+    "failed": 0,
+    "pendingOver10s": 58
+   },
+   "poolAtSweepEnd": {
+    "plus0": {
+     "t": 34932,
+     "size": 111,
+     "loading": 55,
+     "loaded": 56,
+     "error": 0,
+     "playing": 1
+    },
+    "plus10": {
+     "t": 44927,
+     "size": 115,
+     "loading": 58,
+     "loaded": 57,
+     "error": 0,
+     "playing": 1
+    },
+    "plus30": {
+     "t": 64919,
+     "size": 115,
+     "loading": 58,
+     "loaded": 57,
+     "error": 0,
+     "playing": 1
+    },
+    "last": {
+     "t": 69916,
+     "size": 115,
+     "loading": 58,
+     "loaded": 57,
+     "error": 0,
+     "playing": 1
+    }
+   }
+  },
+  "artworkRequestsDuringScript": 240,
+  "atlasUploadsDuringScript": 0,
+  "passiveRenderedComponentsTop": [],
+  "popClick": {
+   "clickPopped": {
+    "t": 36603,
+    "tag": "click-popped-tile",
+    "x": 859,
+    "y": 455
+   },
+   "clickEdge": {
+    "t": 39606,
+    "tag": "click-left-edge (empty space attempt)",
+    "x": 4,
+    "y": 455
+   },
+   "tipAround": [
+    [
+     35032,
+     "Slow Jams"
+    ],
+    [
+     35074,
+     "Closing Time"
+    ],
+    [
+     35116,
+     "NOBLE"
+    ],
+    [
+     35164,
+     "Say It With Your Chest"
+    ],
+    [
+     35206,
+     "What’s A Little Rain"
+    ],
+    [
+     35234,
+     "Closing Time"
+    ],
+    [
+     35282,
+     "Late Night Vibes"
+    ],
+    [
+     35393,
+     "Safe Place To Break"
+    ],
+    [
+     39629,
+     "10-90 (The Sound of Roses)"
+    ],
+    [
+     40358,
+     ""
+    ]
+   ],
+   "audioPlayAround": [
+    [
+     35023,
+     "mzaf_15762042127811297026.plus.aac.p.m4a"
+    ],
+    [
+     35064,
+     "mzaf_16880364356127395094.plus.aac.p.m4a"
+    ],
+    [
+     35111,
+     "mzaf_338451322152082730.plus.aac.p.m4a"
+    ],
+    [
+     35159,
+     "mzaf_15227195710178724632.plus.aac.p.m4a"
+    ],
+    [
+     35194,
+     "mzaf_84020003926495542.plus.aac.p.m4a"
+    ],
+    [
+     35231,
+     "mzaf_16880364356127395094.plus.aac.p.m4a"
+    ],
+    [
+     35274,
+     "mzaf_18264781607006352233.plus.aac.p.m4a"
+    ],
+    [
+     35354,
+     "mzaf_5341341365634469979.plus.aac.p.m4a"
+    ],
+    [
+     35388,
+     "mzaf_12539589320315113559.plus.aac.p.m4a"
+    ],
+    [
+     39624,
+     "mzaf_8180653939451241830.plus.aac.p.m4a"
+    ],
+    [
+     40020,
+     "mzaf_12229907762849243301.plus.aac.p.m4a"
+    ],
+    [
+     40099,
+     "mzaf_4649176658540933465.plus.aac.p.m4a"
+    ],
+    [
+     40171,
+     "mzaf_12579493827181604446.plus.aac.p.m4a"
+    ],
+    [
+     40333,
+     "mzaf_12480012022591508840.plus.aac.p.m4a"
+    ],
+    [
+     40409,
+     "mzaf_5652111636275733022.plus.aac.p.m4a"
+    ],
+    [
+     40564,
+     "mzaf_18418186682884084455.plus.aac.p.m4a"
+    ]
+   ],
+   "audioEvAround": [
+    [
+     35002,
+     45,
+     "pause",
+     "mzaf_15686377650559226497.plus.aac.p.m4a"
+    ],
+    [
+     35002,
+     44,
+     "playing",
+     "mzaf_17049481393345385135.plus.aac.p.m4a"
+    ],
+    [
+     35037,
+     44,
+     "pause",
+     "mzaf_17049481393345385135.plus.aac.p.m4a"
+    ],
+    [
+     35080,
+     43,
+     "pause",
+     "mzaf_15762042127811297026.plus.aac.p.m4a"
+    ],
+    [
+     35081,
+     42,
+     "playing",
+     "mzaf_16880364356127395094.plus.aac.p.m4a"
+    ],
+    [
+     35125,
+     42,
+     "pause",
+     "mzaf_16880364356127395094.plus.aac.p.m4a"
+    ],
+    [
+     35125,
+     41,
+     "playing",
+     "mzaf_338451322152082730.plus.aac.p.m4a"
+    ],
+    [
+     35172,
+     41,
+     "pause",
+     "mzaf_338451322152082730.plus.aac.p.m4a"
+    ],
+    [
+     35172,
+     40,
+     "playing",
+     "mzaf_15227195710178724632.plus.aac.p.m4a"
+    ],
+    [
+     35209,
+     40,
+     "pause",
+     "mzaf_15227195710178724632.plus.aac.p.m4a"
+    ],
+    [
+     35209,
+     39,
+     "playing",
+     "mzaf_84020003926495542.plus.aac.p.m4a"
+    ],
+    [
+     35243,
+     39,
+     "pause",
+     "mzaf_84020003926495542.plus.aac.p.m4a"
+    ],
+    [
+     35243,
+     42,
+     "playing",
+     "mzaf_16880364356127395094.plus.aac.p.m4a"
+    ],
+    [
+     35288,
+     42,
+     "pause",
+     "mzaf_16880364356127395094.plus.aac.p.m4a"
+    ],
+    [
+     35289,
+     30,
+     "playing",
+     "mzaf_18264781607006352233.plus.aac.p.m4a"
+    ],
+    [
+     35368,
+     30,
+     "pause",
+     "mzaf_18264781607006352233.plus.aac.p.m4a"
+    ],
+    [
+     35412,
+     112,
+     "pause",
+     "mzaf_5341341365634469979.plus.aac.p.m4a"
+    ],
+    [
+     39632,
+     113,
+     "pause",
+     "mzaf_12539589320315113559.plus.aac.p.m4a"
+    ],
+    [
+     40061,
+     38,
+     "pause",
+     "mzaf_8180653939451241830.plus.aac.p.m4a"
+    ],
+    [
+     40119,
+     88,
+     "pause",
+     "mzaf_12229907762849243301.plus.aac.p.m4a"
+    ],
+    [
+     40287,
+     82,
+     "pause",
+     "mzaf_4649176658540933465.plus.aac.p.m4a"
+    ],
+    [
+     40288,
+     106,
+     "playing",
+     "mzaf_12579493827181604446.plus.aac.p.m4a"
+    ],
+    [
+     40350,
+     106,
+     "pause",
+     "mzaf_12579493827181604446.plus.aac.p.m4a"
+    ],
+    [
+     40431,
+     114,
+     "pause",
+     "mzaf_12480012022591508840.plus.aac.p.m4a"
+    ],
+    [
+     40597,
+     115,
+     "pause",
+     "mzaf_5652111636275733022.plus.aac.p.m4a"
+    ],
+    [
+     40597,
+     79,
+     "playing",
+     "mzaf_18418186682884084455.plus.aac.p.m4a"
+    ]
+   ]
+  },
+  "timerFire": null,
+  "heap": {},
+  "post": {
+   "act": true,
+   "heapMB": 19
+  },
+  "refresh": null
+ },
+ {
+  "run": "pilot_prod_cpu1x",
+  "target": "prod",
+  "cpu": 1,
+  "traced": false,
+  "revealMs": 4572,
+  "settleMs": 9140,
+  "mapsFound": true,
+  "renderers": 2,
+  "reactDomRendererId": 1,
+  "walkMsP95": 0.1,
+  "foreignPointer": 0,
+  "segments": [
+   {
+    "segment": "passive",
+    "commitsTotal": 160,
+    "commitsPerSec": 16,
+    "reactDomCommits": 80,
+    "reactDomCommitsPerSec": 8,
+    "compositesPerDomCommit": {
+     "p50": 53,
+     "max": 53
+    },
+    "homeCommits": 0,
+    "tooltipChanges": 0,
+    "newAudio": 0,
+    "audioPlayCalls": 0,
+    "audioPlayRejected": 0,
+    "m4aRequestsStarted": 0,
+    "raf": {
+     "n": 1440,
+     "p50": 6.9,
+     "p95": 7.1,
+     "p99": 7.2,
+     "max": 8.3,
+     "over20": 0,
+     "over50": 0,
+     "missed": 0
+    },
+    "webglFramesWithDrawsPerSec": 144,
+    "longTasks": [],
+    "loaf": {
+     "n": 0,
+     "max": 0,
+     "blocking": 0
+    },
+    "cpu": {
+     "renderer": 17.9,
+     "GPU": 35.6
+    }
+   },
+   {
+    "segment": "slow_hover",
+    "commitsTotal": 160,
+    "commitsPerSec": 10.7,
+    "reactDomCommits": 91,
+    "reactDomCommitsPerSec": 6.1,
+    "compositesPerDomCommit": {
+     "p50": 57,
+     "max": 58
+    },
+    "homeCommits": 0,
+    "tooltipChanges": 21,
+    "newAudio": 18,
+    "audioPlayCalls": 22,
+    "audioPlayRejected": 15,
+    "m4aRequestsStarted": 21,
+    "raf": {
+     "n": 2154,
+     "p50": 6.9,
+     "p95": 7,
+     "p99": 7.2,
+     "max": 27.7,
+     "over20": 3,
+     "over50": 0,
+     "missed": 7
+    },
+    "webglFramesWithDrawsPerSec": 143.6,
+    "longTasks": [],
+    "loaf": {
+     "n": 0,
+     "max": 0,
+     "blocking": 0
+    },
+    "cpu": {
+     "renderer": 24.6,
+     "GPU": 46.1
+    }
+   },
+   {
+    "segment": "fast_sweep",
+    "commitsTotal": 835,
+    "commitsPerSec": 83.5,
+    "reactDomCommits": 530,
+    "reactDomCommitsPerSec": 53,
+    "compositesPerDomCommit": {
+     "p50": 57,
+     "max": 58
+    },
+    "homeCommits": 0,
+    "tooltipChanges": 204,
+    "newAudio": 73,
+    "audioPlayCalls": 225,
+    "audioPlayRejected": 145,
+    "m4aRequestsStarted": 90,
+    "raf": {
+     "n": 1439,
+     "p50": 6.9,
+     "p95": 7,
+     "p99": 7.1,
+     "max": 13.9,
+     "over20": 0,
+     "over50": 0,
+     "missed": 1
+    },
+    "webglFramesWithDrawsPerSec": 143.9,
+    "longTasks": [],
+    "loaf": {
+     "n": 0,
+     "max": 0,
+     "blocking": 0
+    },
+    "cpu": {
+     "renderer": 58.4,
+     "GPU": 63.6
+    }
+   },
+   {
+    "segment": "pop_click",
+    "commitsTotal": 119,
+    "commitsPerSec": 11.9,
+    "reactDomCommits": 65,
+    "reactDomCommitsPerSec": 6.5,
+    "compositesPerDomCommit": {
+     "p50": 90,
+     "max": 103
+    },
+    "homeCommits": 0,
+    "tooltipChanges": 7,
+    "newAudio": 2,
+    "audioPlayCalls": 6,
+    "audioPlayRejected": 2,
+    "m4aRequestsStarted": 2,
+    "raf": {
+     "n": 1290,
+     "p50": 6.9,
+     "p95": 7.1,
+     "p99": 20.9,
+     "max": 257.3,
+     "over20": 15,
+     "over50": 5,
+     "missed": 150
+    },
+    "webglFramesWithDrawsPerSec": 129,
+    "longTasks": [],
+    "loaf": {
+     "n": 6,
+     "max": 257,
+     "blocking": 3
+    },
+    "cpu": {
+     "renderer": 49.2,
+     "GPU": 91.6
+    }
+   },
+   {
+    "segment": "passive2",
+    "commitsTotal": 240,
+    "commitsPerSec": 16,
+    "reactDomCommits": 120,
+    "reactDomCommitsPerSec": 8,
+    "compositesPerDomCommit": {
+     "p50": 90,
+     "max": 90
+    },
+    "homeCommits": 0,
+    "tooltipChanges": 0,
+    "newAudio": 0,
+    "audioPlayCalls": 0,
+    "audioPlayRejected": 0,
+    "m4aRequestsStarted": 0,
+    "raf": {
+     "n": 2114,
+     "p50": 6.9,
+     "p95": 7.1,
+     "p99": 13.8,
+     "max": 54.5,
+     "over20": 9,
+     "over50": 1,
+     "missed": 46
+    },
+    "webglFramesWithDrawsPerSec": 140.9,
+    "longTasks": [],
+    "loaf": {
+     "n": 1,
+     "max": 57,
+     "blocking": 0
+    },
+    "cpu": {
+     "renderer": 75.9,
+     "GPU": 123.1
+    }
+   }
+  ],
+  "commitsPerTileChangeSlow": 4.33,
+  "audio": {
+   "newAudioTotal60s": 93,
+   "playCalls60s": 253,
+   "m4a": {
+    "requests": 213,
+    "distinct": 99,
+    "bytes": 88741046,
+    "unfinishedAtDump": 1,
+    "failed": 111,
+    "pendingOver10s": 0
+   },
+   "poolAtSweepEnd": {
+    "plus0": {
+     "t": 34705,
+     "size": 111,
+     "loading": 55,
+     "loaded": 56,
+     "error": 0,
+     "playing": 1
+    },
+    "plus10": {
+     "t": 44701,
+     "size": 113,
+     "loading": 35,
+     "loaded": 78,
+     "error": 0,
+     "playing": 1
+    },
+    "plus30": {
+     "t": 64705,
+     "size": 113,
+     "loading": 1,
+     "loaded": 112,
+     "error": 0,
+     "playing": 1
+    },
+    "last": {
+     "t": 69703,
+     "size": 113,
+     "loading": 1,
+     "loaded": 112,
+     "error": 0,
+     "playing": 1
+    }
+   }
+  },
+  "artworkRequestsDuringScript": 243,
+  "atlasUploadsDuringScript": 0,
+  "passiveRenderedComponentsTop": [],
+  "popClick": {
+   "clickPopped": {
+    "t": 36609,
+    "tag": "click-popped-tile",
+    "x": 859,
+    "y": 455
+   },
+   "clickEdge": {
+    "t": 39599,
+    "tag": "click-left-edge (empty space attempt)",
+    "x": 4,
+    "y": 455
+   },
+   "tipAround": [
+    [
+     35004,
+     "No Need For Leavin'"
+    ],
+    [
+     35032,
+     "Mess"
+    ],
+    [
+     35074,
+     "Late Night Vibes"
+    ],
+    [
+     35143,
+     "Spread Thin"
+    ],
+    [
+     35185,
+     "Pearl Handled Pistol"
+    ],
+    [
+     39615,
+     "Slow Jams"
+    ],
+    [
+     39997,
+     ""
+    ]
+   ],
+   "audioPlayAround": [
+    [
+     35001,
+     "mzaf_12204599413403793800.plus.aac.p.m4a"
+    ],
+    [
+     35028,
+     "mzaf_13138111911181161085.plus.aac.p.m4a"
+    ],
+    [
+     35070,
+     "mzaf_9986918474815879974.plus.aac.p.m4a"
+    ],
+    [
+     35139,
+     "mzaf_5268020853091133887.plus.aac.p.m4a"
+    ],
+    [
+     35181,
+     "mzaf_8957879546962040236.plus.aac.p.m4a"
+    ],
+    [
+     39616,
+     "mzaf_4769164994546313007.plus.aac.p.m4a"
+    ]
+   ],
+   "audioEvAround": [
+    [
+     35003,
+     40,
+     "pause",
+     "mzaf_9503279895525446828.plus.aac.p.m4a"
+    ],
+    [
+     35003,
+     39,
+     "playing",
+     "mzaf_12204599413403793800.plus.aac.p.m4a"
+    ],
+    [
+     35030,
+     39,
+     "pause",
+     "mzaf_12204599413403793800.plus.aac.p.m4a"
+    ],
+    [
+     35030,
+     42,
+     "playing",
+     "mzaf_13138111911181161085.plus.aac.p.m4a"
+    ],
+    [
+     35072,
+     42,
+     "pause",
+     "mzaf_13138111911181161085.plus.aac.p.m4a"
+    ],
+    [
+     35072,
+     30,
+     "playing",
+     "mzaf_9986918474815879974.plus.aac.p.m4a"
+    ],
+    [
+     35142,
+     30,
+     "pause",
+     "mzaf_9986918474815879974.plus.aac.p.m4a"
+    ],
+    [
+     35183,
+     112,
+     "pause",
+     "mzaf_5268020853091133887.plus.aac.p.m4a"
+    ],
+    [
+     39628,
+     113,
+     "pause",
+     "mzaf_8957879546962040236.plus.aac.p.m4a"
+    ],
+    [
+     39628,
+     38,
+     "playing",
+     "mzaf_4769164994546313007.plus.aac.p.m4a"
+    ]
+   ]
+  },
+  "timerFire": null,
+  "heap": {},
+  "post": {
+   "act": true,
+   "heapMB": 19
+  },
+  "refresh": null
+ }
+]

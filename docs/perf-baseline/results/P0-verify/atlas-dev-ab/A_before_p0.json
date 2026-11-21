@@ -1,0 +1,25 @@
+{
+ "run": "A_before_p0",
+ "url": "http://localhost:3000/",
+ "entry": {
+  "fullUploads": 8,
+  "maxUploadCallMs": 4.5,
+  "imgSrcSets": 512,
+  "uniqueUrls": 243,
+  "loaded": 512,
+  "errored": 0
+ },
+ "search": {
+  "opened": true,
+  "fullUploads": 3,
+  "imgSrcSets": 269,
+  "uniqueUrls": 256,
+  "loaded": 269,
+  "errored": 0,
+  "sizeVariants": [
+   "600x600",
+   "256x256"
+  ]
+ },
+ "capturedAt": "2026-11-13T07:50:58.871Z"
+}

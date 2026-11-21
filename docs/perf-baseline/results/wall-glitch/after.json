@@ -1,0 +1,165 @@
+{
+ "run": "after",
+ "url": "http://localhost:3000/",
+ "viewport": {
+  "w": 1762,
+  "h": 908
+ },
+ "revealMs": 1109,
+ "darkShareOverTime": [
+  [
+   61,
+   0.639
+  ],
+  [
+   821,
+   0.29
+  ],
+  [
+   1348,
+   0.2
+  ],
+  [
+   1876,
+   0.226
+  ],
+  [
+   2403,
+   0.234
+  ],
+  [
+   2931,
+   0.239
+  ],
+  [
+   3449,
+   0.263
+  ],
+  [
+   3974,
+   0.252
+  ],
+  [
+   4490,
+   0.253
+  ],
+  [
+   5017,
+   0.254
+  ],
+  [
+   5533,
+   0.254
+  ],
+  [
+   6047,
+   0.255
+  ],
+  [
+   6573,
+   0.254
+  ],
+  [
+   7088,
+   0.254
+  ],
+  [
+   7615,
+   0.254
+  ],
+  [
+   8141,
+   0.254
+  ],
+  [
+   8669,
+   0.254
+  ],
+  [
+   9198,
+   0.254
+  ],
+  [
+   9725,
+   0.254
+  ],
+  [
+   10249,
+   0.254
+  ],
+  [
+   10775,
+   0.254
+  ],
+  [
+   11303,
+   0.254
+  ],
+  [
+   11828,
+   0.254
+  ],
+  [
+   12352,
+   0.254
+  ],
+  [
+   12881,
+   0.254
+  ],
+  [
+   13407,
+   0.254
+  ],
+  [
+   13920,
+   0.254
+  ],
+  [
+   14448,
+   0.254
+  ],
+  [
+   14974,
+   0.254
+  ],
+  [
+   15503,
+   0.254
+  ]
+ ],
+ "flicker": {
+  "still": {
+   "frames": 362,
+   "frameMsP50": 6.9,
+   "nearPointer": {
+    "total": 0,
+    "framesWithFlicker": 0,
+    "maxPerFrame": 0,
+    "pixelsBlinking3plus": 0
+   },
+   "topLeft": {
+    "total": 0,
+    "framesWithFlicker": 0,
+    "maxPerFrame": 0,
+    "pixelsBlinking3plus": 0
+   }
+  },
+  "moving": {
+   "frames": 299,
+   "frameMsP50": 7.9,
+   "nearPointer": {
+    "total": 37970,
+    "framesWithFlicker": 138,
+    "maxPerFrame": 551,
+    "pixelsBlinking3plus": 4317
+   },
+   "topLeft": {
+    "total": 242,
+    "framesWithFlicker": 0,
+    "maxPerFrame": 20,
+    "pixelsBlinking3plus": 3
+   }
+  }
+ }
+}

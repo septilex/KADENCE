@@ -1,0 +1,307 @@
+[
+ {
+  "id": "pilot_warm_hip-hop-central",
+  "phase": "pilot",
+  "target": "hip-hop-central",
+  "vibe": "hip-hop-central",
+  "sweep": false,
+  "cold": false,
+  "recorded": false,
+  "traced": false,
+  "activation": false,
+  "cacheState": "no-request",
+  "inputDeliveryMs": 3230,
+  "previewFile": null,
+  "previewSrcSetMs": null,
+  "previewReqStartMs": null,
+  "previewFirstByteMs": null,
+  "previewReqStatus": null,
+  "dimStartMs": 70,
+  "dimFullMs": 327,
+  "loadedMetadataMs": null,
+  "loadedDataMs": null,
+  "canplayMs": null,
+  "playCallMs": null,
+  "playCallMuted": null,
+  "playCallActivation": null,
+  "playResolvedMs": null,
+  "playRejected": null,
+  "playingEventMs": null,
+  "firstPresentedFrameMs": null,
+  "firstPresentedLuma": null,
+  "previewLayerVisibleMs": 375,
+  "firstVisibleMotionMs": null,
+  "previewFramesPresentedInDwell": 0,
+  "previewMediaAdvanceSec": 0,
+  "frozenVisibleMs": 167,
+  "previewVisibleMs": 736,
+  "playOutcome": "no-preview-src",
+  "handoff": {
+   "reached": false,
+   "fullSrcSet": 114,
+   "fullLoadedMeta": 134,
+   "fullSeeking": 137,
+   "fullSeeked": null,
+   "fullSeekFramePresented": null,
+   "fullPlayCall": 272,
+   "fullWaitingEvents": 1,
+   "fullBytesDuringDwell": 786432,
+   "fullFromCache": false
+  },
+  "maxActivePlayingVideos": 3,
+  "rafDuringDwell": {
+   "n": 820,
+   "p50": 13.4,
+   "p95": 21,
+   "p99": 48.6,
+   "max": 208.4,
+   "over20": 104,
+   "over50": 7
+  },
+  "longAnimationFrames": {
+   "n": 8,
+   "max": 215,
+   "blockingTotal": 34,
+   "top": [
+    {
+     "at": 77,
+     "ms": 215,
+     "blocking": 0,
+     "styleLayout": 0,
+     "scripts": []
+    },
+    {
+     "at": 7337,
+     "ms": 110,
+     "blocking": 0,
+     "styleLayout": 1,
+     "scripts": []
+    },
+    {
+     "at": -61,
+     "ms": 84,
+     "blocking": 34,
+     "styleLayout": 5,
+     "scripts": [
+      [
+       57,
+       "#document.onpointerout",
+       "dispatchContinuousEvent",
+       "node_modules_next_dist_compiled_react-dom_058-ah~._.js",
+       0
+      ],
+      [
+       11,
+       "DOMWindow.onmousemove",
+       "MagneticChromeText.useEffect.handleMouseMove",
+       "_03_are6._.js",
+       10
+      ]
+     ]
+    }
+   ]
+  },
+  "longTasks": {
+   "n": 1,
+   "max": 73,
+   "list": [
+    [
+     -61,
+     73
+    ]
+   ]
+  },
+  "network": {
+   "videoByFile": {
+    "Loser_preview_3s.mp4": {
+     "requests": 2,
+     "bytes": 0,
+     "fromCache": 1,
+     "canceled": 1,
+     "firstStart": 36,
+     "firstByte": 63
+    },
+    "Loser_30s.mp4": {
+     "requests": 1,
+     "bytes": 786432,
+     "fromCache": 0,
+     "canceled": 1,
+     "firstStart": 115,
+     "firstByte": 130
+    },
+    "God Mode_preview_3s.mp4": {
+     "requests": 2,
+     "bytes": 705125,
+     "fromCache": 1,
+     "canceled": 1,
+     "firstStart": 1064,
+     "firstByte": 1080
+    },
+    "God Mode_30s.mp4": {
+     "requests": 1,
+     "bytes": 17301504,
+     "fromCache": 0,
+     "canceled": 1,
+     "firstStart": 1133,
+     "firstByte": 1198
+    }
+   },
+   "videoRequests": [
+    {
+     "file": "Loser_preview_3s.mp4",
+     "start": 36,
+     "firstByte": 63,
+     "end": 108,
+     "status": 206,
+     "range": "bytes=0-",
+     "contentRange": null,
+     "fromDiskCache": false,
+     "servedFromCache": false,
+     "bytes": 0,
+     "canceled": true,
+     "failed": "net::ERR_ABORTED"
+    },
+    {
+     "file": "Loser_preview_3s.mp4",
+     "start": 109,
+     "firstByte": 116,
+     "end": 116,
+     "status": 206,
+     "range": "bytes=688128-",
+     "contentRange": null,
+     "fromDiskCache": true,
+     "servedFromCache": false,
+     "bytes": 0,
+     "canceled": false,
+     "failed": null
+    },
+    {
+     "file": "Loser_30s.mp4",
+     "start": 115,
+     "firstByte": 130,
+     "end": 521,
+     "status": 206,
+     "range": "bytes=0-",
+     "contentRange": null,
+     "fromDiskCache": false,
+     "servedFromCache": false,
+     "bytes": 786432,
+     "canceled": true,
+     "failed": "net::ERR_ABORTED"
+    },
+    {
+     "file": "God Mode_preview_3s.mp4",
+     "start": 1064,
+     "firstByte": 1080,
+     "end": 1130,
+     "status": 206,
+     "range": "bytes=0-",
+     "contentRange": null,
+     "fromDiskCache": false,
+     "servedFromCache": false,
+     "bytes": 0,
+     "canceled": true,
+     "failed": "net::ERR_ABORTED"
+    },
+    {
+     "file": "God Mode_preview_3s.mp4",
+     "start": 1130,
+     "firstByte": 1180,
+     "end": 1278,
+     "status": 206,
+     "range": "bytes=2097152-",
+     "contentRange": null,
+     "fromDiskCache": true,
+     "servedFromCache": false,
+     "bytes": 705125,
+     "canceled": false,
+     "failed": null
+    },
+    {
+     "file": "God Mode_30s.mp4",
+     "start": 1133,
+     "firstByte": 1198,
+     "end": 1676,
+     "status": 206,
+     "range": "bytes=0-",
+     "contentRange": null,
+     "fromDiskCache": false,
+     "servedFromCache": false,
+     "bytes": 17301504,
+     "canceled": true,
+     "failed": "net::ERR_ABORTED"
+    }
+   ],
+   "api": [
+    {
+     "path": "/api/songs",
+     "start": 99,
+     "end": 3767,
+     "status": 200,
+     "bytes": 658714,
+     "xVercelCache": null
+    },
+    {
+     "path": "/api/songs",
+     "start": 1185,
+     "end": 1263,
+     "status": 200,
+     "bytes": 59207,
+     "xVercelCache": null
+    }
+   ],
+   "artworkRequests": 19
+  },
+  "leave": {
+   "srcRemovedMs": null,
+   "dimGoneMs": 6,
+   "stillPlayingAt1s": false,
+   "endState": {
+    "containerOp": 0,
+    "previewPaused": 1,
+    "fullPaused": 1,
+    "globePaused": 0,
+    "activePlaying": 1
+   },
+   "videoRequestsInFlightAtLeave": []
+  },
+  "sweepDetail": null,
+  "decoders": {
+   "0DE508BF6019F0275DBB63D05635C466": {
+    "kVideoDecoderName": "D3D11VideoDecoder",
+    "kFrameUrl": "http://localhost:3000/",
+    "kResolution": "1920x788",
+    "kAudioDecoderName": "FFmpegAudioDecoder",
+    "kIsVideoDecryptingDemuxerStream": "false",
+    "kIsPlatformVideoDecoder": "true"
+   },
+   "4D739F56A57B48250E105F9BA7EC2C63": {
+    "kVideoDecoderName": "D3D11VideoDecoder",
+    "kFrameUrl": "http://localhost:3000/",
+    "kAudioDecoderName": "FFmpegAudioDecoder",
+    "kIsVideoDecryptingDemuxerStream": "false",
+    "kIsPlatformVideoDecoder": "true"
+   },
+   "1D8CE1004CB1C8DC02CDE0500DC03FE7": {
+    "kVideoDecoderName": "D3D11VideoDecoder",
+    "kFrameUrl": "http://localhost:3000/",
+    "kResolution": "1920x1080",
+    "kAudioDecoderName": "FFmpegAudioDecoder",
+    "kIsVideoDecryptingDemuxerStream": "false",
+    "kIsPlatformVideoDecoder": "true"
+   },
+   "11ADD842D904AB2EDFC735BB4FC0B05B": {
+    "kVideoDecoderName": "D3D11VideoDecoder",
+    "kFrameUrl": "http://localhost:3000/",
+    "kResolution": "1920x1080",
+    "kAudioDecoderName": "FFmpegAudioDecoder",
+    "kIsVideoDecryptingDemuxerStream": "false",
+    "kIsPlatformVideoDecoder": "true"
+   }
+  },
+  "mediaErrors": 0,
+  "gpuProcessCpuSec": 23.189,
+  "gpuProcessCpuPct": 147.1,
+  "foreignPointerEvents": 23
+ }
+]

@@ -1,0 +1,462 @@
+[
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/38/86/d0/3886d08d-1e96-dc45-d4fd-9138fc7748a3/mzaf_13976698916373719684.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/0d/10/fb/0d10fb82-d588-f2e7-a480-1b369220841e/mzaf_11656489326699716174.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/c3/4f/05/c34f05ad-a808-02f2-f9e5-0498074409c0/mzaf_5540489679460986146.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/d6/2a/50/d62a5014-0e04-d40e-72d8-cddc5bc501bf/mzaf_3871066630737918595.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/dc/81/c7/dc81c7ee-1281-0295-5fa4-b97d5e98d7a9/mzaf_9068167591667222307.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/f2/5a/c8/f25ac8f7-8da0-2475-ac31-d5abdd13a762/mzaf_5430588392884652321.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/ed/7c/cd/ed7ccd78-868a-b7ac-e595-176745af545f/mzaf_16496204194293289016.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/33/c7/56/33c7560f-22b1-57b8-fd77-857e56746af6/mzaf_2657754448874097337.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/10/88/76/1088763f-663f-1002-b3bd-523d6afd72fb/mzaf_16152877956527801231.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/b5/c3/75/b5c37509-dc75-d119-567e-33ea7daad36f/mzaf_12937627790261614944.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/97/be/7b/97be7bba-d923-dced-543c-d1b00dd36284/mzaf_10389895759264450866.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/59/bf/da/59bfdad8-9f18-8f35-ab5d-fe6e15ce0014/mzaf_4866361653294806690.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/9a/b8/7b/9ab87b47-d974-1ad9-74ac-cb4b13b1e5f6/mzaf_4557361008487214760.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/5f/37/be/5f37be34-5729-45b4-8ed1-5b7bd70b8a68/mzaf_17466306567367397119.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/f0/30/f7/f030f790-79f0-1782-5bfc-71e1e549fd76/mzaf_3574278654860705709.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/8e/e6/2d/8ee62d11-7963-0125-0145-02d2a9a0fa4a/mzaf_7552902506270401766.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/20/da/f1/20daf12c-4e8f-bc03-d548-c4968cb405fd/mzaf_11939350127905472767.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/ca/f9/11/caf911f4-6ea5-6889-37ec-8d2a3d050fce/mzaf_11121553984364330632.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/d9/7f/2e/d97f2ebc-3fd1-fa85-9b8d-9249f73ebf6f/mzaf_8098887887991559135.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/4c/99/8f/4c998fbc-f14b-77fa-763e-7abb1aa5c827/mzaf_6227345267769534237.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/7d/90/6e/7d906e5b-21dd-7018-0248-5ab9ae076df9/mzaf_345381605834479386.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/b0/66/68/b0666828-8c40-779e-63c4-f37ed7f41e13/mzaf_12631225498025883929.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/20/fd/bf/20fdbfea-297a-a489-dc7c-050724b95d6c/mzaf_11603927997771136673.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/fc/a4/98/fca4989d-896b-10a9-14f7-c53a9dec10f9/mzaf_2011935242880714005.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/40/77/42/407742f7-63c9-9e85-198e-6c401d2685ab/mzaf_10249254133635306936.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/0d/0c/c1/0d0cc1d2-721c-b874-c48b-ba8e4ff6acf4/mzaf_6594986693650047825.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/f9/8e/74/f98e7496-ea83-eeb9-4c72-8908c02bb7f7/mzaf_2956503408456785522.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/e0/7b/3c/e07b3c13-2f3a-3b11-5921-c82cbcf6989b/mzaf_11092745646116208633.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/00/87/1c/00871cd6-9a64-717a-2072-d19c49f94682/mzaf_4402448724622500589.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/31/2e/ba/312eba81-6662-23e1-47d9-c5d53f039bab/mzaf_1740037884913778088.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/bf/35/6a/bf356a8b-cfdc-b720-1863-57486b3ede27/mzaf_2846594556843939188.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/5a/88/c7/5a88c714-e2b4-fca0-e9b7-ccbe6ea212ae/mzaf_9293011909645434793.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/da/99/bc/da99bc76-f863-24f7-e3ff-b8a36d26ca85/mzaf_11105260007472184367.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/4d/cb/d5/4dcbd5f7-6124-b8ae-ee5c-8aa7f3d3fe43/mzaf_16810653706060450690.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/02/df/4f/02df4fd3-a88e-85be-d2f0-4a56519973cc/mzaf_10606188004921054726.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/b5/9a/39/b59a3994-b828-7a79-bb18-1fd5347ea2db/mzaf_3280324809056679072.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/53/ff/21/53ff21ff-863f-e365-310e-b8074a1914bf/mzaf_2948955518984413477.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/f9/b5/a0/f9b5a006-98d3-a698-700f-fab30e678bdd/mzaf_5620088644273021967.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/a9/e9/27/a9e927d4-1d72-c81a-597b-b64c27774e18/mzaf_2947413251516853820.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/ce/d9/7b/ced97bce-b868-1f7c-24a7-91cd2395b6a3/mzaf_6445405390718677074.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/03/95/c3/0395c3a4-368a-3aa5-06f8-f9e0ebd553a4/mzaf_1960951393962288235.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/6f/3d/61/6f3d6126-55d0-a16f-a625-d40b585bb6bd/mzaf_11958705097972568166.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/27/42/90/274290d7-75b2-672a-1c51-10bcb2299541/mzaf_13403168993781897089.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/69/d7/68/69d7687b-8478-7e5b-7651-36db762b8e7e/mzaf_1036599824602524922.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/3c/02/64/3c026405-6d86-cd5e-7889-1c9bcd25acc1/mzaf_11735485064364765638.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/e6/35/16/e63516b2-f326-8bb3-c1d0-8edac4bf50cf/mzaf_16955893839904360258.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/6c/91/8c/6c918c2c-a5c5-1e11-2b93-ddac43aa555b/mzaf_2639323881431918366.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/94/15/98/941598ae-7248-357a-1e07-be7d50ea7b08/mzaf_11251795343892643096.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/36/d7/0a/36d70a77-509a-67fb-b3d5-e01e99d2e90a/mzaf_7698374945203761967.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/a0/5c/53/a05c5335-c205-1b7a-fc7d-84e0b9b5c818/mzaf_17509308486135733021.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/0a/d7/c4/0ad7c4e4-52f3-0b37-19dc-b2113a0ff957/mzaf_7490637556707629186.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/8a/a8/89/8aa889d1-3b03-ecc1-36c8-c86578e0dc54/mzaf_16366771986992083410.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/60/d2/b4/60d2b42e-5996-4d3b-fa7f-fca431e02282/mzaf_6174324960705642806.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/00/97/fc/0097fca8-4b00-5e08-26e1-93449d01e144/mzaf_9614130657962701449.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/4d/37/21/4d3721c7-8a0c-7822-fdb6-fde2a8205af0/mzaf_2577653053419047848.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/04/bf/3d/04bf3dbf-306d-d80c-0949-f788cf751062/mzaf_17068320108304824509.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/64/82/3a/64823a0b-4c4a-96bb-3e6a-f84534f6a1db/mzaf_3198488482946229380.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/db/7f/83/db7f83fb-937f-3c33-82ef-78edc37788c9/mzaf_5318721976173938039.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/0d/a6/f0/0da6f0f2-0145-676d-9f9c-d28c7e08f258/mzaf_2658965377541339594.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/c3/c6/c6/c3c6c652-2f19-1511-c8e9-e9caf9b6b4ac/mzaf_8110172512846397285.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/40/eb/e4/40ebe4ff-4fc7-bf69-3ce1-2cf8da97fc94/mzaf_98592928812732269.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/c9/24/96/c9249688-ffdc-40c1-d56e-d84ee8537ed7/mzaf_15473080214798193650.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/21/c7/4b/21c74b01-ce87-8f95-0885-9fdb81d815e1/mzaf_1620414057540558282.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/47/5c/0f/475c0f2a-7d3d-8383-01e4-2762aafdb877/mzaf_5868278298317089445.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/e4/09/80/e4098082-076e-7adb-85f5-0d46990ff6fd/mzaf_825528592315617060.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/03/f4/d5/03f4d5de-1c09-33eb-7852-279a71ac989f/mzaf_15614695934438135653.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/bf/1c/a0/bf1ca046-96d1-4966-6e6b-91043c8892ec/mzaf_17513482988660177511.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/3f/d3/e8/3fd3e8d6-e00c-f134-a3fe-ffab2b9953ec/mzaf_209554628220201500.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/d3/e5/19/d3e519e1-cf58-f040-9ec6-345b1221f6e9/mzaf_5316303283240253709.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/2b/f9/c2/2bf9c254-f7dc-10a7-a844-f13692cde98e/mzaf_15064402925873272508.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/00/84/2c/00842cc6-5f43-3769-8eab-f1dd42c0ba96/mzaf_7591766208162955902.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/bd/39/59/bd3959be-5d34-a700-4743-daa85dcc38ed/mzaf_5666910328921884537.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/23/92/7f/23927fd8-fef0-cbbe-69ef-733efa3cd5f3/mzaf_7504460031229093645.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/79/4f/12/794f12c7-ad58-3e3b-2a18-dac59066ca62/mzaf_4197894327616906390.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/98/a0/25/98a0258e-860c-ca64-c1da-5097a13bbee0/mzaf_4467877503117423111.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/af/a1/65/afa165a0-aa72-da94-287b-c7c811e77d56/mzaf_17453034886326393469.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/60/a6/94/60a694cd-97e1-a179-6bbd-fb02a17b428d/mzaf_15545491265317388280.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/17/b4/8f/17b48f9a-0b93-6bb8-fe1d-3a16623c2cfb/mzaf_9560252727299052414.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/e0/8c/82/e08c82bb-2cb2-8ed5-4a5a-0bcb615c0b8d/mzaf_13953440925500167646.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/2b/09/d0/2b09d002-eb39-20e8-6516-241c940aac8d/mzaf_2681231828238645518.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/83/09/5e/83095ea1-83bf-ecdc-3b75-358c350fca51/mzaf_15560849688086702972.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/40/d6/ad/40d6ad31-66e8-2385-cb64-a8115140ac1e/mzaf_12501327980583891859.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/e9/4d/02/e94d0230-11ee-ef94-d2cf-a5d547bd73f4/mzaf_554140808559155562.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/6a/9b/26/6a9b2674-c8e9-3aa8-b075-a2ccc6b950c5/mzaf_17262420035756291929.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/67/10/16/67101606-3869-ca44-6c03-e13d6322cb51/mzaf_1135399237022217274.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/b3/9b/ca/b39bca57-2627-1aec-77af-cbf551205394/mzaf_4430383240210492712.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/be/9b/35/be9b35f7-e564-fafa-8586-146e2f7b7320/mzaf_7128424125938593552.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/45/2b/ea/452bead6-c7f5-82d4-f5f7-ec876014b4cc/mzaf_2905911853279084717.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/9b/4a/e3/9b4ae3a2-43ee-dd7b-0474-3b7e914513cf/mzaf_10743675123561433132.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/87/8a/62/878a62f4-048c-d977-2a6f-a7a5b30a608d/mzaf_7142756228278497817.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/a3/a0/a6/a3a0a6b5-4715-b872-1aff-21e42634d9cd/mzaf_7224423421767640589.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  },
+  {
+    "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/21/4e/c3/214ec337-5c13-fdbf-e7dd-2738f2f9d3e2/mzaf_5009421294700453120.plus.aac.p.m4a",
+    "status": 200,
+    "cors": "*"
+  }
+]

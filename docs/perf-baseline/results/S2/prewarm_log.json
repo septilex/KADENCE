@@ -1,0 +1,178 @@
+{
+ "purpose": "Warm the clean profile HTTP cache before warm-cache S2 trials. fetch() from a same-origin page (favicon.ico) so the cache partition matches the app.",
+ "finishedAt": "2026-11-11T07:20:47.742Z",
+ "jobs": [
+  {
+   "url": "/videos/Beat It_preview_3s.mp4",
+   "status": 200,
+   "bytes": 1640167,
+   "cc": "public, max-age=31536000, immutable",
+   "ct": "video/mp4",
+   "ms": 19,
+   "kBps": 84301
+  },
+  {
+   "url": "/videos/Radhimaa_preview_3s.mp4",
+   "status": 200,
+   "bytes": 3057104,
+   "cc": "public, max-age=31536000, immutable",
+   "ct": "video/mp4",
+   "ms": 16,
+   "kBps": 186591
+  },
+  {
+   "url": "/videos/Alaakaa Loova_preview_3s.mp4",
+   "status": 200,
+   "bytes": 2420890,
+   "cc": "public, max-age=31536000, immutable",
+   "ct": "video/mp4",
+   "ms": 13,
+   "kBps": 181858
+  },
+  {
+   "url": "/videos/Loser_preview_3s.mp4",
+   "status": 200,
+   "bytes": 691466,
+   "cc": "public, max-age=31536000, immutable",
+   "ct": "video/mp4",
+   "ms": 7,
+   "kBps": 96466
+  },
+  {
+   "url": "/videos/Kiss Kiss Bang Bang_preview_3s.mp4",
+   "status": 200,
+   "bytes": 2878911,
+   "cc": "public, max-age=31536000, immutable",
+   "ct": "video/mp4",
+   "ms": 15,
+   "kBps": 187429
+  },
+  {
+   "url": "/videos/Yeshanagula_preview_3s.mp4",
+   "status": 200,
+   "bytes": 2346193,
+   "cc": "public, max-age=31536000, immutable",
+   "ct": "video/mp4",
+   "ms": 14,
+   "kBps": 163657
+  },
+  {
+   "url": "/videos/Sunflower_preview_3s.mp4",
+   "status": 200,
+   "bytes": 1504044,
+   "cc": "public, max-age=31536000, immutable",
+   "ct": "video/mp4",
+   "ms": 10,
+   "kBps": 146879
+  },
+  {
+   "url": "/videos/One Of The Girls_preview_3s.mp4",
+   "status": 200,
+   "bytes": 862450,
+   "cc": "public, max-age=31536000, immutable",
+   "ct": "video/mp4",
+   "ms": 6,
+   "kBps": 140373
+  },
+  {
+   "url": "/videos/Big Dawgs_preview_3s.mp4",
+   "status": 200,
+   "bytes": 3544194,
+   "cc": "public, max-age=31536000, immutable",
+   "ct": "video/mp4",
+   "ms": 898,
+   "kBps": 3854
+  },
+  {
+   "url": "/videos/Pavazha Malli_preview_3s.mp4",
+   "status": 200,
+   "bytes": 3403905,
+   "cc": "public, max-age=31536000, immutable",
+   "ct": "video/mp4",
+   "ms": 274,
+   "kBps": 12132
+  },
+  {
+   "url": "/videos/Baby Won't You Tell Me_preview_3s.mp4",
+   "status": 200,
+   "bytes": 1244612,
+   "cc": "public, max-age=31536000, immutable",
+   "ct": "video/mp4",
+   "ms": 9,
+   "kBps": 135049
+  },
+  {
+   "url": "/videos/Monica_preview_3s.mp4",
+   "status": 200,
+   "bytes": 2901331,
+   "cc": "public, max-age=31536000, immutable",
+   "ct": "video/mp4",
+   "ms": 15,
+   "kBps": 188889
+  },
+  {
+   "url": "/videos/Gehra Hua_preview_3s.mp4",
+   "status": 200,
+   "bytes": 1047108,
+   "cc": "public, max-age=31536000, immutable",
+   "ct": "video/mp4",
+   "ms": 8,
+   "kBps": 127821
+  },
+  {
+   "url": "/videos/Dynamite_preview_3s.mp4",
+   "status": 200,
+   "bytes": 1167261,
+   "cc": "public, max-age=31536000, immutable",
+   "ct": "video/mp4",
+   "ms": 8,
+   "kBps": 142488
+  },
+  {
+   "url": "/videos/God Mode_preview_3s.mp4",
+   "status": 200,
+   "bytes": 3195132,
+   "cc": "public, max-age=31536000, immutable",
+   "ct": "video/mp4",
+   "ms": 17,
+   "kBps": 183544
+  },
+  {
+   "url": "/videos/Loser_30s.mp4",
+   "status": 200,
+   "bytes": 6758015,
+   "cc": "public, max-age=31536000, immutable",
+   "ct": "video/mp4",
+   "ms": 1399,
+   "kBps": 4717
+  },
+  {
+   "url": "/videos/One Of The Girls_30s.mp4",
+   "status": 200,
+   "bytes": 8924990,
+   "cc": "public, max-age=31536000, immutable",
+   "ct": "video/mp4",
+   "ms": 41,
+   "kBps": 212581
+  },
+  {
+   "url": "/videos/Gehra Hua_30s.mp4",
+   "status": 200,
+   "bytes": 9683934,
+   "cc": "public, max-age=31536000, immutable",
+   "ct": "video/mp4",
+   "ms": 8505,
+   "kBps": 1112
+  },
+  {
+   "url": "/videos/God Mode_30s.mp4",
+   "range": "bytes=0-5242879",
+   "status": 206,
+   "bytes": 5242880,
+   "cc": "public, max-age=31536000, immutable",
+   "ct": "video/mp4",
+   "ms": 13168,
+   "kBps": 389
+  }
+ ]
+}

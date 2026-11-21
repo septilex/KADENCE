@@ -1,0 +1,4320 @@
+{
+  "base": "https://kadence-musicz.vercel.app",
+  "browser": {
+    "protocolVersion": "1.3",
+    "product": "Chrome/157.0.8103.79",
+    "revision": "@52886f99c599c22139930531da30c7c8be9f38a",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+    "jsVersion": "15.7.112.43"
+  },
+  "buttons": [
+    {
+      "id": "",
+      "text": "Enable preview sound"
+    },
+    {
+      "id": "",
+      "text": "discover"
+    },
+    {
+      "id": "",
+      "text": "search"
+    },
+    {
+      "id": "",
+      "text": "library"
+    },
+    {
+      "id": "",
+      "text": ""
+    },
+    {
+      "id": "explore-dev-universe-btn",
+      "text": "✦CREATOR'S PICKExplore Dev's Universe79 Handpicked Tracks"
+    },
+    {
+      "id": "vibe-global-top-50",
+      "text": ""
+    },
+    {
+      "id": "vibe-viral-50",
+      "text": ""
+    },
+    {
+      "id": "vibe-new-music-friday",
+      "text": ""
+    },
+    {
+      "id": "vibe-hip-hop-central",
+      "text": ""
+    },
+    {
+      "id": "vibe-pop-rising",
+      "text": ""
+    },
+    {
+      "id": "vibe-dance-hits",
+      "text": ""
+    },
+    {
+      "id": "vibe-mood-booster",
+      "text": ""
+    },
+    {
+      "id": "vibe-late-night",
+      "text": ""
+    },
+    {
+      "id": "vibe-workout",
+      "text": ""
+    },
+    {
+      "id": "vibe-chill-hits",
+      "text": ""
+    },
+    {
+      "id": "vibe-top-telugu",
+      "text": ""
+    },
+    {
+      "id": "vibe-top-tamil",
+      "text": ""
+    },
+    {
+      "id": "vibe-top-hindi",
+      "text": ""
+    },
+    {
+      "id": "vibe-top-kpop",
+      "text": ""
+    },
+    {
+      "id": "vibe-dev-special",
+      "text": "★👑 Creator's Pick✨ Dev's UniverseCurated by Dev• 80 handpicked tracks"
+    }
+  ],
+  "trials": [
+    {
+      "phase": "first-visit",
+      "id": "vibe-global-top-50",
+      "start": 10142.90000000596,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Beat%20It_preview_3s.mp4",
+          "t": 10343,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Beat%20It_preview_3s.mp4",
+          "t": 10343.29999999702,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Beat%20It_preview_3s.mp4",
+          "t": 10343.29999999702,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Beat%20It_preview_3s.mp4",
+          "t": 10345.40000000596,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Beat%20It_preview_3s.mp4",
+          "t": 10506,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Beat%20It_preview_3s.mp4",
+          "t": 10506,
+          "muted": true
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/Beat%20It_30s.mp4",
+          "t": 13272.70000000298,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/Beat%20It_30s.mp4",
+          "t": 13275.10000000894,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/Beat%20It_30s.mp4",
+          "t": 13336.20000000298,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 4.456949,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 110
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Beat%20It_preview_3s.mp4",
+          "time": 2.951021,
+          "paused": false,
+          "muted": true,
+          "ready": 4,
+          "frames": 72
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/Beat%20It_30s.mp4",
+          "time": 3.158103,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 80
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-viral-50",
+      "start": 13895.5,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Radhimaa_preview_3s.mp4",
+          "t": 13948.79999999702,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Radhimaa_preview_3s.mp4",
+          "t": 13948.79999999702,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Radhimaa_preview_3s.mp4",
+          "t": 13948.90000000596,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Radhimaa_preview_3s.mp4",
+          "t": 13950.70000000298,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Radhimaa_preview_3s.mp4",
+          "t": 13998.60000000894,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Radhimaa_preview_3s.mp4",
+          "t": 13998.60000000894,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 4.794409,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 120
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Radhimaa_preview_3s.mp4",
+          "time": 0.012764,
+          "paused": false,
+          "muted": true,
+          "ready": 4,
+          "frames": 77
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/Radhimaa_30s.mp4",
+          "time": 3,
+          "paused": true,
+          "muted": false,
+          "ready": 1,
+          "frames": 20
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-new-music-friday",
+      "start": 17609,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Alaakaa%20Loova_preview_3s.mp4",
+          "t": 17677.60000000894,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Alaakaa%20Loova_preview_3s.mp4",
+          "t": 17677.79999999702,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Alaakaa%20Loova_preview_3s.mp4",
+          "t": 17677.90000000596,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Alaakaa%20Loova_preview_3s.mp4",
+          "t": 17690,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Alaakaa%20Loova_preview_3s.mp4",
+          "t": 17735.70000000298,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Alaakaa%20Loova_preview_3s.mp4",
+          "t": 17735.70000000298,
+          "muted": true
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/Alaakaa%20Loova_30s.mp4",
+          "t": 20598.90000000596,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/Alaakaa%20Loova_30s.mp4",
+          "t": 20599.40000000596,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/Alaakaa%20Loova_30s.mp4",
+          "t": 20660.90000000596,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 5.190127,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 128
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Alaakaa%20Loova_preview_3s.mp4",
+          "time": 0.013021,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 77
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/Alaakaa%20Loova_30s.mp4",
+          "time": 3.217569,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 47
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-hip-hop-central",
+      "start": 21275.29999999702,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Loser_preview_3s.mp4",
+          "t": 21312.90000000596,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Loser_preview_3s.mp4",
+          "t": 21313,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Loser_preview_3s.mp4",
+          "t": 21313,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Loser_preview_3s.mp4",
+          "t": 21315.5,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Loser_preview_3s.mp4",
+          "t": 21343.20000000298,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Loser_preview_3s.mp4",
+          "t": 21343.20000000298,
+          "muted": true
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/Loser_30s.mp4",
+          "t": 24224.29999999702,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/Loser_30s.mp4",
+          "t": 24224.79999999702,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/Loser_30s.mp4",
+          "t": 24285.60000000894,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 5.550329,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 137
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Loser_preview_3s.mp4",
+          "time": 0.02,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 77
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/Loser_30s.mp4",
+          "time": 3.245365,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 83
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-pop-rising",
+      "start": 24924.70000000298,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Kiss%20Kiss%20Bang%20Bang_preview_3s.mp4",
+          "t": 24960.20000000298,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Kiss%20Kiss%20Bang%20Bang_preview_3s.mp4",
+          "t": 24960.40000000596,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Kiss%20Kiss%20Bang%20Bang_preview_3s.mp4",
+          "t": 24960.40000000596,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Kiss%20Kiss%20Bang%20Bang_preview_3s.mp4",
+          "t": 24961.90000000596,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Kiss%20Kiss%20Bang%20Bang_preview_3s.mp4",
+          "t": 24989.40000000596,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Kiss%20Kiss%20Bang%20Bang_preview_3s.mp4",
+          "t": 24989.40000000596,
+          "muted": true
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/Kiss%20Kiss%20Bang%20Bang_30s.mp4",
+          "t": 27883.20000000298,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/Kiss%20Kiss%20Bang%20Bang_30s.mp4",
+          "t": 27883.70000000298,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/Kiss%20Kiss%20Bang%20Bang_30s.mp4",
+          "t": 27944.90000000596,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 5.91767,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 147
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Kiss%20Kiss%20Bang%20Bang_preview_3s.mp4",
+          "time": 0.0033,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 77
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/Kiss%20Kiss%20Bang%20Bang_30s.mp4",
+          "time": 3.219008,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 82
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-dance-hits",
+      "start": 28554.90000000596,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Yeshanagula_preview_3s.mp4",
+          "t": 28585.60000000894,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Yeshanagula_preview_3s.mp4",
+          "t": 28585.79999999702,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Yeshanagula_preview_3s.mp4",
+          "t": 28585.79999999702,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Yeshanagula_preview_3s.mp4",
+          "t": 28588,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Yeshanagula_preview_3s.mp4",
+          "t": 28622.40000000596,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Yeshanagula_preview_3s.mp4",
+          "t": 28622.40000000596,
+          "muted": true
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/Yeshanagula_30s.mp4",
+          "t": 31507.90000000596,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/Yeshanagula_30s.mp4",
+          "t": 31508.40000000596,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/Yeshanagula_30s.mp4",
+          "t": 31569.5,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 6.267803,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 155
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Yeshanagula_preview_3s.mp4",
+          "time": 0.001341,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 76
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/Yeshanagula_30s.mp4",
+          "time": 3.229696,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 82
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-mood-booster",
+      "start": 32209.10000000894,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Sunflower_preview_3s.mp4",
+          "t": 32241.10000000894,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Sunflower_preview_3s.mp4",
+          "t": 32241.29999999702,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Sunflower_preview_3s.mp4",
+          "t": 32241.29999999702,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Sunflower_preview_3s.mp4",
+          "t": 32243.10000000894,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Sunflower_preview_3s.mp4",
+          "t": 32266.79999999702,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Sunflower_preview_3s.mp4",
+          "t": 32266.79999999702,
+          "muted": true
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/Sunflower_30s.mp4",
+          "t": 35167.10000000894,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/Sunflower_30s.mp4",
+          "t": 35167.60000000894,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/Sunflower_30s.mp4",
+          "t": 35228.5,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 6.656274,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 164
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Sunflower_preview_3s.mp4",
+          "time": 0.017474,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 77
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/Sunflower_30s.mp4",
+          "time": 3.224458,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 55
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-late-night",
+      "start": 35834.70000000298,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/One%20Of%20The%20Girls_preview_3s.mp4",
+          "t": 35934.20000000298,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/One%20Of%20The%20Girls_preview_3s.mp4",
+          "t": 35934.29999999702,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/One%20Of%20The%20Girls_preview_3s.mp4",
+          "t": 35934.29999999702,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/One%20Of%20The%20Girls_preview_3s.mp4",
+          "t": 35935.40000000596,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/One%20Of%20The%20Girls_preview_3s.mp4",
+          "t": 35981.40000000596,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/One%20Of%20The%20Girls_preview_3s.mp4",
+          "t": 35981.40000000596,
+          "muted": true
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/One%20Of%20The%20Girls_30s.mp4",
+          "t": 38853.90000000596,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/One%20Of%20The%20Girls_30s.mp4",
+          "t": 38854.29999999702,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/One%20Of%20The%20Girls_30s.mp4",
+          "t": 38922.60000000894,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 7.076049,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 175
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/One%20Of%20The%20Girls_preview_3s.mp4",
+          "time": 0.009683,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 77
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/One%20Of%20The%20Girls_30s.mp4",
+          "time": 3.22115,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 15
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-workout",
+      "start": 39542.70000000298,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Big%20Dawgs_preview_3s.mp4",
+          "t": 39576,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Big%20Dawgs_preview_3s.mp4",
+          "t": 39576.10000000894,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Big%20Dawgs_preview_3s.mp4",
+          "t": 39576.20000000298,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Big%20Dawgs_preview_3s.mp4",
+          "t": 39580,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Big%20Dawgs_preview_3s.mp4",
+          "t": 39601.10000000894,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Big%20Dawgs_preview_3s.mp4",
+          "t": 39601.10000000894,
+          "muted": true
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/Big%20Dawgs_30s.mp4",
+          "t": 42493.20000000298,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/Big%20Dawgs_30s.mp4",
+          "t": 42493.79999999702,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/Big%20Dawgs_30s.mp4",
+          "t": 42554.29999999702,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 7.434121,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 183
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Big%20Dawgs_preview_3s.mp4",
+          "time": 0.007212,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 77
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/Big%20Dawgs_30s.mp4",
+          "time": 3.238976,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 82
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-chill-hits",
+      "start": 43181.60000000894,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Pavazha%20Malli_preview_3s.mp4",
+          "t": 43269.10000000894,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Pavazha%20Malli_preview_3s.mp4",
+          "t": 43269.70000000298,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Pavazha%20Malli_preview_3s.mp4",
+          "t": 43269.70000000298,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Pavazha%20Malli_preview_3s.mp4",
+          "t": 43273,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Pavazha%20Malli_preview_3s.mp4",
+          "t": 43336,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Pavazha%20Malli_preview_3s.mp4",
+          "t": 43336,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 7.831784,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 193
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Pavazha%20Malli_preview_3s.mp4",
+          "time": 0.031568,
+          "paused": false,
+          "muted": true,
+          "ready": 4,
+          "frames": 77
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/Pavazha%20Malli_30s.mp4",
+          "time": 3,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 37
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-top-telugu",
+      "start": 46847.40000000596,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Baby%20Won't%20You%20Tell%20Me_preview_3s.mp4",
+          "t": 46930.60000000894,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Baby%20Won't%20You%20Tell%20Me_preview_3s.mp4",
+          "t": 46930.79999999702,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Baby%20Won't%20You%20Tell%20Me_preview_3s.mp4",
+          "t": 46930.79999999702,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Baby%20Won't%20You%20Tell%20Me_preview_3s.mp4",
+          "t": 46932.5,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Baby%20Won't%20You%20Tell%20Me_preview_3s.mp4",
+          "t": 46989,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Baby%20Won't%20You%20Tell%20Me_preview_3s.mp4",
+          "t": 46989,
+          "muted": true
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/Baby%20Won't%20You%20Tell%20Me_30s.mp4",
+          "t": 49853.5,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/Baby%20Won't%20You%20Tell%20Me_30s.mp4",
+          "t": 49854.5,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/Baby%20Won't%20You%20Tell%20Me_30s.mp4",
+          "t": 49914.20000000298,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 8.190271,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 202
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Baby%20Won't%20You%20Tell%20Me_preview_3s.mp4",
+          "time": 0.011034,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 77
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/Baby%20Won't%20You%20Tell%20Me_30s.mp4",
+          "time": 3.214358,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 36
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-top-tamil",
+      "start": 50505.5,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Monica_preview_3s.mp4",
+          "t": 50531.60000000894,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Monica_preview_3s.mp4",
+          "t": 50531.60000000894,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Monica_preview_3s.mp4",
+          "t": 50531.60000000894,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Monica_preview_3s.mp4",
+          "t": 50533.5,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Monica_preview_3s.mp4",
+          "t": 50554.20000000298,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Monica_preview_3s.mp4",
+          "t": 50554.20000000298,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 8.549295,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 211
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Monica_preview_3s.mp4",
+          "time": 0.08262,
+          "paused": false,
+          "muted": true,
+          "ready": 4,
+          "frames": 78
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/Monica_30s.mp4",
+          "time": 3,
+          "paused": true,
+          "muted": false,
+          "ready": 1,
+          "frames": 0
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-top-hindi",
+      "start": 54128.20000000298,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Gehra%20Hua_preview_3s.mp4",
+          "t": 54154.60000000894,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Gehra%20Hua_preview_3s.mp4",
+          "t": 54154.70000000298,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Gehra%20Hua_preview_3s.mp4",
+          "t": 54154.70000000298,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Gehra%20Hua_preview_3s.mp4",
+          "t": 54155.5,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Gehra%20Hua_preview_3s.mp4",
+          "t": 54178.79999999702,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Gehra%20Hua_preview_3s.mp4",
+          "t": 54178.79999999702,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 8.910651,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 219
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Gehra%20Hua_preview_3s.mp4",
+          "time": 0.081233,
+          "paused": false,
+          "muted": true,
+          "ready": 4,
+          "frames": 78
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/Gehra%20Hua_30s.mp4",
+          "time": 3,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 76
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-top-kpop",
+      "start": 57758.70000000298,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Dynamite_preview_3s.mp4",
+          "t": 57780.5,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Dynamite_preview_3s.mp4",
+          "t": 57780.60000000894,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Dynamite_preview_3s.mp4",
+          "t": 57780.60000000894,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Dynamite_preview_3s.mp4",
+          "t": 57782.10000000894,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Dynamite_preview_3s.mp4",
+          "t": 57804.60000000894,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Dynamite_preview_3s.mp4",
+          "t": 57804.60000000894,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 9.277846,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 228
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Dynamite_preview_3s.mp4",
+          "time": 0.081505,
+          "paused": false,
+          "muted": true,
+          "ready": 4,
+          "frames": 79
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/Dynamite_30s.mp4",
+          "time": 0,
+          "paused": true,
+          "muted": false,
+          "ready": 0,
+          "frames": 0
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-dev-special",
+      "start": 61381.70000000298,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/God%20Mode_preview_3s.mp4",
+          "t": 61409.5,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/God%20Mode_preview_3s.mp4",
+          "t": 61409.60000000894,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/God%20Mode_preview_3s.mp4",
+          "t": 61409.60000000894,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/God%20Mode_preview_3s.mp4",
+          "t": 61410.60000000894,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/God%20Mode_preview_3s.mp4",
+          "t": 61512.10000000894,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/God%20Mode_preview_3s.mp4",
+          "t": 61512.10000000894,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 9.625547,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 236
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/God%20Mode_preview_3s.mp4",
+          "time": 0.070109,
+          "paused": false,
+          "muted": true,
+          "ready": 4,
+          "frames": 79
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/God%20Mode_30s.mp4",
+          "time": 3,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 76
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-global-top-50",
+      "start": 65023.60000000894,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Beat%20It_preview_3s.mp4",
+          "t": 65051.90000000596,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Beat%20It_preview_3s.mp4",
+          "t": 65052.90000000596,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Beat%20It_preview_3s.mp4",
+          "t": 65074.29999999702,
+          "muted": false
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/Beat%20It_30s.mp4",
+          "t": 67975.70000000298,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/Beat%20It_30s.mp4",
+          "t": 67977.20000000298,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/Beat%20It_30s.mp4",
+          "t": 68037.40000000596,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 10.001716,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 245
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Beat%20It_preview_3s.mp4",
+          "time": 0.014799,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 77
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/Beat%20It_30s.mp4",
+          "time": 3.23987,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 82
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-viral-50",
+      "start": 68651.90000000596,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Radhimaa_preview_3s.mp4",
+          "t": 68677.29999999702,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Radhimaa_preview_3s.mp4",
+          "t": 68678.79999999702,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Radhimaa_preview_3s.mp4",
+          "t": 68700,
+          "muted": false
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/Radhimaa_30s.mp4",
+          "t": 71600,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/Radhimaa_30s.mp4",
+          "t": 71600.40000000596,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/Radhimaa_30s.mp4",
+          "t": 71661.40000000596,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 10.366943,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 254
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Radhimaa_preview_3s.mp4",
+          "time": 0.034636,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 77
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/Radhimaa_30s.mp4",
+          "time": 3.2203,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 82
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-new-music-friday",
+      "start": 72283.60000000894,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Alaakaa%20Loova_preview_3s.mp4",
+          "t": 72313.40000000596,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Alaakaa%20Loova_preview_3s.mp4",
+          "t": 72315.20000000298,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Alaakaa%20Loova_preview_3s.mp4",
+          "t": 72338.90000000596,
+          "muted": false
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/Alaakaa%20Loova_30s.mp4",
+          "t": 75224.29999999702,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/Alaakaa%20Loova_30s.mp4",
+          "t": 75224.70000000298,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/Alaakaa%20Loova_30s.mp4",
+          "t": 75286,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 10.721195,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 262
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Alaakaa%20Loova_preview_3s.mp4",
+          "time": 0.015324,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 77
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/Alaakaa%20Loova_30s.mp4",
+          "time": 3.248686,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 48
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-hip-hop-central",
+      "start": 75915,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Loser_preview_3s.mp4",
+          "t": 75944.5,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Loser_preview_3s.mp4",
+          "t": 75945.70000000298,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Loser_preview_3s.mp4",
+          "t": 75963.29999999702,
+          "muted": false
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/Loser_30s.mp4",
+          "t": 78867.20000000298,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/Loser_30s.mp4",
+          "t": 78867.5,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/Loser_30s.mp4",
+          "t": 78938.40000000596,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 11.069291,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 270
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Loser_preview_3s.mp4",
+          "time": 0.004096,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 77
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/Loser_30s.mp4",
+          "time": 3.224758,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 82
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-pop-rising",
+      "start": 79535.10000000894,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Kiss%20Kiss%20Bang%20Bang_preview_3s.mp4",
+          "t": 79555.90000000596,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Kiss%20Kiss%20Bang%20Bang_preview_3s.mp4",
+          "t": 79560.10000000894,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Kiss%20Kiss%20Bang%20Bang_preview_3s.mp4",
+          "t": 79586.90000000596,
+          "muted": false
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/Kiss%20Kiss%20Bang%20Bang_30s.mp4",
+          "t": 82473.70000000298,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/Kiss%20Kiss%20Bang%20Bang_30s.mp4",
+          "t": 82474.20000000298,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/Kiss%20Kiss%20Bang%20Bang_30s.mp4",
+          "t": 82535.90000000596,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 11.428476,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 280
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Kiss%20Kiss%20Bang%20Bang_preview_3s.mp4",
+          "time": 0.007496,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 77
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/Kiss%20Kiss%20Bang%20Bang_30s.mp4",
+          "time": 3.241884,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 83
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-dance-hits",
+      "start": 83156.70000000298,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Yeshanagula_preview_3s.mp4",
+          "t": 83180,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Yeshanagula_preview_3s.mp4",
+          "t": 83181.29999999702,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Yeshanagula_preview_3s.mp4",
+          "t": 83211.70000000298,
+          "muted": false
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/Yeshanagula_30s.mp4",
+          "t": 86105,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/Yeshanagula_30s.mp4",
+          "t": 86105.5,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/Yeshanagula_30s.mp4",
+          "t": 86166.60000000894,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 11.791783,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 288
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Yeshanagula_preview_3s.mp4",
+          "time": 0.001377,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 77
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/Yeshanagula_30s.mp4",
+          "time": 3.219517,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 82
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-mood-booster",
+      "start": 86774.79999999702,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Sunflower_preview_3s.mp4",
+          "t": 86797.20000000298,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Sunflower_preview_3s.mp4",
+          "t": 86798.29999999702,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Sunflower_preview_3s.mp4",
+          "t": 86821.10000000894,
+          "muted": false
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/Sunflower_30s.mp4",
+          "t": 89708.90000000596,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/Sunflower_30s.mp4",
+          "t": 89709.29999999702,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/Sunflower_30s.mp4",
+          "t": 89770.5,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 12.149586,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 296
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Sunflower_preview_3s.mp4",
+          "time": 0.009139,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 77
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/Sunflower_30s.mp4",
+          "time": 3.250871,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 56
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-late-night",
+      "start": 90406.60000000894,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/One%20Of%20The%20Girls_preview_3s.mp4",
+          "t": 90428.5,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/One%20Of%20The%20Girls_preview_3s.mp4",
+          "t": 90429.40000000596,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/One%20Of%20The%20Girls_preview_3s.mp4",
+          "t": 90453.10000000894,
+          "muted": false
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/One%20Of%20The%20Girls_30s.mp4",
+          "t": 93354.10000000894,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/One%20Of%20The%20Girls_30s.mp4",
+          "t": 93354.60000000894,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/One%20Of%20The%20Girls_30s.mp4",
+          "t": 93415.70000000298,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 12.520527,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 306
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/One%20Of%20The%20Girls_preview_3s.mp4",
+          "time": 0.008103,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 77
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/One%20Of%20The%20Girls_30s.mp4",
+          "time": 3.238082,
+          "paused": false,
+          "muted": false,
+          "ready": 3,
+          "frames": 15
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-workout",
+      "start": 94023.60000000894,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Big%20Dawgs_preview_3s.mp4",
+          "t": 94046.60000000894,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Big%20Dawgs_preview_3s.mp4",
+          "t": 94048,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Big%20Dawgs_preview_3s.mp4",
+          "t": 94072.60000000894,
+          "muted": false
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/Big%20Dawgs_30s.mp4",
+          "t": 96957.60000000894,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/Big%20Dawgs_30s.mp4",
+          "t": 96958.10000000894,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/Big%20Dawgs_30s.mp4",
+          "t": 97019.40000000596,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 12.877788,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 315
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Big%20Dawgs_preview_3s.mp4",
+          "time": 0.015548,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 77
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/Big%20Dawgs_30s.mp4",
+          "time": 3.245573,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 83
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-chill-hits",
+      "start": 97642.10000000894,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Pavazha%20Malli_preview_3s.mp4",
+          "t": 97665.40000000596,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Pavazha%20Malli_preview_3s.mp4",
+          "t": 97671.60000000894,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Pavazha%20Malli_preview_3s.mp4",
+          "t": 97695.90000000596,
+          "muted": false
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/Pavazha%20Malli_30s.mp4",
+          "t": 100588.5,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/Pavazha%20Malli_30s.mp4",
+          "t": 100589.60000000894,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/Pavazha%20Malli_30s.mp4",
+          "t": 100650.79999999702,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 13.235225,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 323
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Pavazha%20Malli_preview_3s.mp4",
+          "time": 0.006224,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 77
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/Pavazha%20Malli_30s.mp4",
+          "time": 3.222673,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 43
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-top-telugu",
+      "start": 101258.5,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Baby%20Won't%20You%20Tell%20Me_preview_3s.mp4",
+          "t": 101282.29999999702,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Baby%20Won't%20You%20Tell%20Me_preview_3s.mp4",
+          "t": 101283.5,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Baby%20Won't%20You%20Tell%20Me_preview_3s.mp4",
+          "t": 101312.5,
+          "muted": false
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/Baby%20Won't%20You%20Tell%20Me_30s.mp4",
+          "t": 104192.10000000894,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/Baby%20Won't%20You%20Tell%20Me_30s.mp4",
+          "t": 104193.29999999702,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/Baby%20Won't%20You%20Tell%20Me_30s.mp4",
+          "t": 104254.90000000596,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 13.593364,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 331
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Baby%20Won't%20You%20Tell%20Me_preview_3s.mp4",
+          "time": 0.008261,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 77
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/Baby%20Won't%20You%20Tell%20Me_30s.mp4",
+          "time": 3.264019,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 37
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-top-tamil",
+      "start": 104901.60000000894,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Monica_preview_3s.mp4",
+          "t": 104924.10000000894,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Monica_preview_3s.mp4",
+          "t": 104925.29999999702,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Monica_preview_3s.mp4",
+          "t": 104951.10000000894,
+          "muted": false
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 13.955345,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 339
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Monica_preview_3s.mp4",
+          "time": 0.032795,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 77
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/Monica_30s.mp4",
+          "time": 3,
+          "paused": true,
+          "muted": false,
+          "ready": 1,
+          "frames": 0
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-top-hindi",
+      "start": 108537.90000000596,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Gehra%20Hua_preview_3s.mp4",
+          "t": 108567,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Gehra%20Hua_preview_3s.mp4",
+          "t": 108567.70000000298,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Gehra%20Hua_preview_3s.mp4",
+          "t": 108590.70000000298,
+          "muted": false
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/Gehra%20Hua_30s.mp4",
+          "t": 111491,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/Gehra%20Hua_30s.mp4",
+          "t": 111491.60000000894,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/Gehra%20Hua_30s.mp4",
+          "t": 111552.60000000894,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 14.317514,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 349
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Gehra%20Hua_preview_3s.mp4",
+          "time": 0.013124,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 77
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/Gehra%20Hua_30s.mp4",
+          "time": 3.232234,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 82
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-top-kpop",
+      "start": 112163.79999999702,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Dynamite_preview_3s.mp4",
+          "t": 112190.20000000298,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Dynamite_preview_3s.mp4",
+          "t": 112191.10000000894,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Dynamite_preview_3s.mp4",
+          "t": 112216.40000000596,
+          "muted": false
+        },
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/Dynamite_30s.mp4",
+          "t": 115101.20000000298,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/Dynamite_30s.mp4",
+          "t": 115101.5,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/Dynamite_30s.mp4",
+          "t": 115163.29999999702,
+          "muted": true
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 14.68059,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 358
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/Dynamite_preview_3s.mp4",
+          "time": 0.003116,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 77
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/Dynamite_30s.mp4",
+          "time": 3.243752,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 54
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-dev-special",
+      "start": 115800.70000000298,
+      "events": [
+        {
+          "event": "play",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/God%20Mode_preview_3s.mp4",
+          "t": 115834.60000000894,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/God%20Mode_preview_3s.mp4",
+          "t": 115835.5,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/God%20Mode_preview_3s.mp4",
+          "t": 115859.79999999702,
+          "muted": false
+        }
+      ],
+      "videos": [
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+          "time": 15.039926,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 366
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/hover-v1/God%20Mode_preview_3s.mp4",
+          "time": 0.029148,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 77
+        },
+        {
+          "src": "https://kadence-musicz.vercel.app/videos/God%20Mode_30s.mp4",
+          "time": 3,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 76
+        }
+      ],
+      "active": true
+    }
+  ],
+  "errors": [
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 ()",
+      "timestamp": 1794978434322.085,
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=global-top-50",
+      "networkRequestId": "9376.330"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 ()",
+      "timestamp": 1794978468862.353,
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=chill-hits",
+      "networkRequestId": "9376.456"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 ()",
+      "timestamp": 1794978471970.824,
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=top-telugu",
+      "networkRequestId": "9376.459"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 ()",
+      "timestamp": 1794978476263.814,
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=top-tamil",
+      "networkRequestId": "9376.463"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 ()",
+      "timestamp": 1794978480234.634,
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=top-hindi",
+      "networkRequestId": "9376.467"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 ()",
+      "timestamp": 1794978485958.084,
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=top-kpop",
+      "networkRequestId": "9376.470"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 ()",
+      "timestamp": 1794978489999.628,
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=global-top-50",
+      "networkRequestId": "9376.488"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 ()",
+      "timestamp": 1794978531318.396,
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=top-tamil",
+      "networkRequestId": "9376.531"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 ()",
+      "timestamp": 1794978533338.368,
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=top-hindi",
+      "networkRequestId": "9376.545"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 ()",
+      "timestamp": 1794978537556.462,
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=top-kpop",
+      "networkRequestId": "9376.549"
+    }
+  ],
+  "failedRequests": [
+    {
+      "requestId": "E195C7A590BF8CF5734468035F07B6AC",
+      "timestamp": 69455.107913,
+      "type": "Document",
+      "errorText": "net::ERR_BLOCKED_BY_RESPONSE",
+      "canceled": false,
+      "blockedReason": "other"
+    },
+    {
+      "requestId": "6CB679B1C4F0FF70A3B5E15A2A150869",
+      "timestamp": 69458.952429,
+      "type": "Document",
+      "errorText": "net::ERR_BLOCKED_BY_RESPONSE",
+      "canceled": false,
+      "blockedReason": "other"
+    },
+    {
+      "requestId": "9376.339",
+      "timestamp": 69467.355316,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.343",
+      "timestamp": 69468.556797,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.347",
+      "timestamp": 69472.232979,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.357",
+      "timestamp": 69475.470931,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.370",
+      "timestamp": 69475.921158,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.373",
+      "timestamp": 69478.706146,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.383",
+      "timestamp": 69479.565081,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.395",
+      "timestamp": 69482.718372,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.396",
+      "timestamp": 69483.196373,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.330",
+      "timestamp": 69485.360892,
+      "type": "Fetch",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.399",
+      "timestamp": 69486.827573,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.413",
+      "timestamp": 69489.328548,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.424",
+      "timestamp": 69490.480009,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.427",
+      "timestamp": 69493.349419,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.440",
+      "timestamp": 69494.186968,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.443",
+      "timestamp": 69497.333281,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.454",
+      "timestamp": 69497.829291,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.457",
+      "timestamp": 69501.493816,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.460",
+      "timestamp": 69504.149124,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.461",
+      "timestamp": 69505.146679,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.464",
+      "timestamp": 69507.665002,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.465",
+      "timestamp": 69508.768999,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.468",
+      "timestamp": 69512.392562,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.471",
+      "timestamp": 69516.026839,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.456",
+      "timestamp": 69518.365878,
+      "type": "Fetch",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.474",
+      "timestamp": 69519.647028,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.489",
+      "timestamp": 69521.915582,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.459",
+      "timestamp": 69522.015678,
+      "type": "Fetch",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.490",
+      "timestamp": 69523.283368,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.463",
+      "timestamp": 69525.649547,
+      "type": "Fetch",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.492",
+      "timestamp": 69525.729135,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.493",
+      "timestamp": 69526.907834,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.495",
+      "timestamp": 69528.979607,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.467",
+      "timestamp": 69529.273912,
+      "type": "Fetch",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.496",
+      "timestamp": 69530.551975,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.470",
+      "timestamp": 69532.898495,
+      "type": "Fetch",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.498",
+      "timestamp": 69533.572703,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.499",
+      "timestamp": 69534.168154,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.501",
+      "timestamp": 69536.280996,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.502",
+      "timestamp": 69537.794362,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.504",
+      "timestamp": 69539.802966,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.488",
+      "timestamp": 69540.166713,
+      "type": "Fetch",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.505",
+      "timestamp": 69541.417161,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.507",
+      "timestamp": 69543.423846,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.508",
+      "timestamp": 69545.045553,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.510",
+      "timestamp": 69548.66317,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.512",
+      "timestamp": 69552.277589,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.515",
+      "timestamp": 69555.899376,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.528",
+      "timestamp": 69557.813281,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.529",
+      "timestamp": 69559.528667,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.542",
+      "timestamp": 69562.730777,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.543",
+      "timestamp": 69563.16369,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.546",
+      "timestamp": 69565.198577,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.547",
+      "timestamp": 69566.800553,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.550",
+      "timestamp": 69569.263976,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.551",
+      "timestamp": 69570.426723,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "9376.553",
+      "timestamp": 69574.058358,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    }
+  ],
+  "requests": [
+    {
+      "url": "https://kadence-musicz.vercel.app/",
+      "status": 200,
+      "type": "Document"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/_next/static/immutable/chunks/0px6udwry7_9_.css",
+      "status": 200,
+      "type": "Stylesheet"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/kadence-horizontal-logo.png",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/kadence-chrome-logo.png",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://local.adguard.org/?ts=1794971468942&type=content-script&dmn=kadence-musicz.vercel.app&url=https%3A%2F%2Fkadence-musicz.vercel.app%2F&app=brave.exe&css=3&js=1&rel=1&rji=1&sbe=0",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "https://local.adguard.org/?ts=1794971468942&name=AdGuard%20Assistant&name=AdGuard%20Extra&name=AdGuard%20Popup%20Blocker&name=In-Page%20Side%20Assistant%20%28Gemini%20Edition%29&type=user-script",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/01-global-top-50.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/02-viral-50.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&family=Syncopate:wght@700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Syne:wght@400;500;600;700;800&display=swap",
+      "status": 200,
+      "type": "Stylesheet"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/04-hip-hop-central.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/03-new-music-friday.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/05-pop-rising.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/06-dance-hits.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/07-mood-booster.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB2aWV3Qm94PSIwIDAgMzUgMzYiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8ZyBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTY0LjAwMDAwMCwgLTIxOS4wMDAwMDApIj4KICAgICAgICA8ZyBpZD0iMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDAuMDAwMDAwLCAxOTAuMDAwMDAwKSI+CiAgICAgICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEyNC41MDAwMDAsIDI5LjQxNDA2MikiPgogICAgICAgICAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC40NTM2NTYsIDAuMjI2ODI4KSI+CiAgICAgICAgICAgICAgICAgICAgPGc+CiAgICAgICAgICAgICAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGgKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBkPSJNMTYuNzE1NzQ5MiwwIEMxMS40OTA5MTk1LDAgNS4xODg0Njg3NywxLjI2NTU4MzUxIDUuMTI2MjAxMTRlLTA2LDQuMDUxMjIyMzkgQzUuMTI2MjAxMTRlLTA2LDEwLjA2NzQ0OTUgLTAuMDcxNjEzNjMyNCwyNS4wNTU2OTI1IDE2LjcxNTc0OTIsMzUuMjk2Njc5OCBDMzMuNTAzNDgzLDI1LjA1NTY5MjUgMzMuNDMyMjM1NCwxMC4wNjc0NDk1IDMzLjQzMjIzNTQsNC4wNTEyMjIzOSBDMjguMjQzNDAwNiwxLjI2NTU4MzUxIDIxLjk0MDk0OTksMCAxNi43MTU3NDkyLDAgTDE2LjcxNTc0OTIsMCBaIgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGlkPSJQYXRoIgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGZpbGw9IiM2OEJDNzEiPjwvcGF0aD4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik0xNi42OTg2NzQzLDM1LjI4NjI1ODIgQy0wLjA3MTU2NTA2MDUsMjUuMDQ1NTI2OCA1LjEyNjIwMTEzZS0wNiwxMC4wNjU0MDkxIDUuMTI2MjAxMTNlLTA2LDQuMDUxMjIyMzkgQzUuMTgyODE4MDIsMS4yNjg2MTczNCAxMS40NzcxOTI5LDAuMDAyNzU4NDkxMjQgMTYuNjk4Njc0Myw0LjUwMzc4MzExZS0wNiBMMTYuNjk4Njc0MywzNS4yODYyNjE3IFoiIGlkPSJDb21iaW5lZC1TaGFwZSIgZmlsbD0iIzY3QjI3OSI+PC9wYXRoPgogICAgICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBkPSJNMTYuMTA2MDI0NywyMy41NTEwOTQgTDI2LjIxNDMxNTUsOS41MTgwMTg2OSBDMjUuNDczNjAwNSw4LjkwNjQ3MjQ5IDI0LjgyMzg4NzYsOS4zMzgwODkxNiAyNC40NjYyMjgxLDkuNjcyMjQ0IEwyNC40NTMxNzc0LDkuNjczMzE1MDEgTDE2LjAyNDg5ODcsMTguNzA0NDIwOCBMMTIuODQ5MzQ3NywxNC43NjgxMDUzIEMxMS4zMzQ0MDkxLDEyLjk2NTI0IDkuMjc0ODY4NjYsMTQuMzQwNDE1NyA4Ljc5Mzc1NjYyLDE0LjcwMzg0NDggTDE2LjEwNjAyNDcsMjMuNTUxMDk0IgogICAgICAgICAgICAgICAgICAgICAgICAgICAgaWQ9IkZpbGwtMTEiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBmaWxsPSIjRkZGRkZGIj48L3BhdGg+CiAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgPC9nPgo8L3N2Zz4K",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/_next/static/immutable/chunks/11iw_yf-gytqw.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/_next/static/immutable/chunks/0qo9axh7m8v_o.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/_next/static/immutable/chunks/08l_g22nsp98j.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/_next/static/immutable/chunks/39ch0ie8jlf60.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/_next/static/immutable/chunks/01h09-a_ijyld.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/_next/static/immutable/chunks/1ziqb91wo0drn.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/_next/static/immutable/chunks/0lk5g22ry84im.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/_next/static/immutable/chunks/turbopack-3xd-7z66s-4wg.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/_next/static/immutable/chunks/2omrkb51uy34f.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "https://fonts.gstatic.com/l/font?kit=UcCB3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfU5NJeWUdIOjBeTGbXZdND2M&skey=c491285d6722e4fa&v=v20",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/syne/v24/8vIH7w4qzmVxm2BL9A.woff2",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "url": "https://fonts.gstatic.com/l/font?kit=V8mloQDjQSkFtoMM3T6r8E7mF71Q-gOoraIAEj7oUSkoFDG70JFMnmBvY_Q8kCxH&skey=c04ef52a878abc32&v=v22",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "url": "https://gemini.google.com/",
+      "status": 200,
+      "type": "Document"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/11-top-telugu.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/10-chill-hits.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/09-workout.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/14-top-k-pop.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/12-top-tamil.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/13-top-hindi.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/08-late-night.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/",
+      "status": 200,
+      "type": "Document"
+    },
+    {
+      "url": "https://local.adguard.org/?ts=1794971468942&type=content-script&dmn=kadence-musicz.vercel.app&url=https%3A%2F%2Fkadence-musicz.vercel.app%2F&app=brave.exe&css=3&js=1&rel=1&rji=1&sbe=0",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "https://local.adguard.org/?ts=1794971468942&name=AdGuard%20Assistant&name=AdGuard%20Extra&name=AdGuard%20Popup%20Blocker&name=In-Page%20Side%20Assistant%20%28Gemini%20Edition%29&type=user-script",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/_next/static/immutable/chunks/0px6udwry7_9_.css",
+      "status": 200,
+      "type": "Stylesheet"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/kadence-chrome-logo.png",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/kadence-horizontal-logo.png",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&family=Syncopate:wght@700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Syne:wght@400;500;600;700;800&display=swap",
+      "status": 200,
+      "type": "Stylesheet"
+    },
+    {
+      "url": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB2aWV3Qm94PSIwIDAgMzUgMzYiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8ZyBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTY0LjAwMDAwMCwgLTIxOS4wMDAwMDApIj4KICAgICAgICA8ZyBpZD0iMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDAuMDAwMDAwLCAxOTAuMDAwMDAwKSI+CiAgICAgICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEyNC41MDAwMDAsIDI5LjQxNDA2MikiPgogICAgICAgICAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC40NTM2NTYsIDAuMjI2ODI4KSI+CiAgICAgICAgICAgICAgICAgICAgPGc+CiAgICAgICAgICAgICAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGgKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBkPSJNMTYuNzE1NzQ5MiwwIEMxMS40OTA5MTk1LDAgNS4xODg0Njg3NywxLjI2NTU4MzUxIDUuMTI2MjAxMTRlLTA2LDQuMDUxMjIyMzkgQzUuMTI2MjAxMTRlLTA2LDEwLjA2NzQ0OTUgLTAuMDcxNjEzNjMyNCwyNS4wNTU2OTI1IDE2LjcxNTc0OTIsMzUuMjk2Njc5OCBDMzMuNTAzNDgzLDI1LjA1NTY5MjUgMzMuNDMyMjM1NCwxMC4wNjc0NDk1IDMzLjQzMjIzNTQsNC4wNTEyMjIzOSBDMjguMjQzNDAwNiwxLjI2NTU4MzUxIDIxLjk0MDk0OTksMCAxNi43MTU3NDkyLDAgTDE2LjcxNTc0OTIsMCBaIgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGlkPSJQYXRoIgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGZpbGw9IiM2OEJDNzEiPjwvcGF0aD4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik0xNi42OTg2NzQzLDM1LjI4NjI1ODIgQy0wLjA3MTU2NTA2MDUsMjUuMDQ1NTI2OCA1LjEyNjIwMTEzZS0wNiwxMC4wNjU0MDkxIDUuMTI2MjAxMTNlLTA2LDQuMDUxMjIyMzkgQzUuMTgyODE4MDIsMS4yNjg2MTczNCAxMS40NzcxOTI5LDAuMDAyNzU4NDkxMjQgMTYuNjk4Njc0Myw0LjUwMzc4MzExZS0wNiBMMTYuNjk4Njc0MywzNS4yODYyNjE3IFoiIGlkPSJDb21iaW5lZC1TaGFwZSIgZmlsbD0iIzY3QjI3OSI+PC9wYXRoPgogICAgICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBkPSJNMTYuMTA2MDI0NywyMy41NTEwOTQgTDI2LjIxNDMxNTUsOS41MTgwMTg2OSBDMjUuNDczNjAwNSw4LjkwNjQ3MjQ5IDI0LjgyMzg4NzYsOS4zMzgwODkxNiAyNC40NjYyMjgxLDkuNjcyMjQ0IEwyNC40NTMxNzc0LDkuNjczMzE1MDEgTDE2LjAyNDg5ODcsMTguNzA0NDIwOCBMMTIuODQ5MzQ3NywxNC43NjgxMDUzIEMxMS4zMzQ0MDkxLDEyLjk2NTI0IDkuMjc0ODY4NjYsMTQuMzQwNDE1NyA4Ljc5Mzc1NjYyLDE0LjcwMzg0NDggTDE2LjEwNjAyNDcsMjMuNTUxMDk0IgogICAgICAgICAgICAgICAgICAgICAgICAgICAgaWQ9IkZpbGwtMTEiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBmaWxsPSIjRkZGRkZGIj48L3BhdGg+CiAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgPC9nPgo8L3N2Zz4K",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/syne/v24/8vIH7w4qzmVxm2BL9A.woff2",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/spacegrotesk/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4Cw.woff2",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/01-global-top-50.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/02-viral-50.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/03-new-music-friday.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/04-hip-hop-central.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/07-mood-booster.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/_next/static/immutable/chunks/1ziqb91wo0drn.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/06-dance-hits.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://gemini.google.com/",
+      "status": 200,
+      "type": "Document"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/_next/static/immutable/chunks/2omrkb51uy34f.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/_next/static/immutable/chunks/turbopack-3xd-7z66s-4wg.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/_next/static/immutable/chunks/08l_g22nsp98j.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/_next/static/immutable/chunks/01h09-a_ijyld.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/_next/static/immutable/chunks/39ch0ie8jlf60.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/05-pop-rising.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/_next/static/immutable/chunks/0lk5g22ry84im.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/globe.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/_next/static/immutable/chunks/0qo9axh7m8v_o.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/_next/static/immutable/chunks/11iw_yf-gytqw.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/08-late-night.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/09-workout.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/14-top-k-pop.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/11-top-telugu.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/13-top-hindi.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/12-top-tamil.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/images/vibes/10-chill-hits.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/favicon.ico?favicon.3fpu2ql9ns1a0.ico",
+      "status": 200,
+      "type": "Other"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/God%20Mode_preview_3s.mp4",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Beat%20It_preview_3s.mp4",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Radhimaa_preview_3s.mp4",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Beat%20It_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Alaakaa%20Loova_preview_3s.mp4",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=global-top-50",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Loser_preview_3s.mp4",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Kiss%20Kiss%20Bang%20Bang_preview_3s.mp4",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Yeshanagula_preview_3s.mp4",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Sunflower_preview_3s.mp4",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/One%20Of%20The%20Girls_preview_3s.mp4",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Big%20Dawgs_preview_3s.mp4",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Pavazha%20Malli_preview_3s.mp4",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Baby%20Won't%20You%20Tell%20Me_preview_3s.mp4",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Beat%20It_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Monica_preview_3s.mp4",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Gehra%20Hua_preview_3s.mp4",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Beat%20It_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Radhimaa_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/favicon.ico?favicon.3fpu2ql9ns1a0.ico",
+      "status": 200,
+      "type": "Other"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Dynamite_preview_3s.mp4",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=viral-50",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Radhimaa_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/df/70/4d/df704d21-87db-5a27-d696-ed86dd0975db/cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/7d/74/13/7d7413d4-dd08-ae8c-206d-b602faf7b162/artwork.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/e0/1f/87/e01f878e-8217-05a3-816d-51616691025d/721967916332.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/78/15/e0/7815e01e-818c-57f6-3b67-890504c3d5a1/artwork.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/81/31/4d/81314d5e-cf4d-9c72-5fef-bacaf0ccc1af/artwork.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/d6/2f/9b/d62f9b8e-4923-8bd3-0cd9-5910ffa9919c/8721465996869.png/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/3f/42/67/3f426748-3745-481b-dfe8-ca5f3afb73a4/artwork.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Alaakaa%20Loova_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=new-music-friday",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Alaakaa%20Loova_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/fd/e7/ef/fde7efaf-0a34-1c0d-a8aa-a0c297916aba/26UMGIM21566.rgb.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/f9/aa/69/f9aa6992-40ca-a756-85ca-b27c48f7c720/26UMGIM02802.rgb.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/7c/de/5e/7cde5e7a-612d-9714-d34c-1eb234c85ebb/810129961546.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/41/c3/e8/41c3e832-58d1-9b4f-5465-c4294a519e4f/cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/4c/2a/d6/4c2ad69e-0d13-cf60-05db-3fd55c60428e/820200122551.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/3c/bd/01/3cbd01ad-1bbd-14b5-fb72-1d61c101d49d/821530642238.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0a/1d/22/0a1d2283-4c21-52f7-0896-5e53300e3edb/820233588508.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/72/3c/0e/723c0ea3-b4fc-72a8-f981-05ddf0ed7914/196874763216.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/65/9c/7c/659c7ce9-3b71-ca97-b004-30d817f6d31a/cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/6e/be/7c/6ebe7c68-41b3-3775-329f-ca169c837357/075679549129.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/84/17/c4/8417c44b-3398-3966-0f6a-5576cc0d2e43/1200220230044.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/49/5c/03/495c0327-3236-6d71-505d-f910398d1644/5026854876542.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Alaakaa%20Loova_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Loser_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=hip-hop-central",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Loser_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/46/01/ee/4601ee85-23f0-0c25-6d23-461b59c882ad/25UMGIM96879.rgb.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/dc/b2/b4/dcb2b4e7-43f9-53bf-d68e-5656926c6ef3/70114.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/16/67/4d/16674d50-a339-71bf-0aea-dc93b7dd8570/196874541357.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/81/a5/da/81a5da52-698d-9a4d-a832-740096d798d7/artwork.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/f6/f5/3b/f6f53be9-e2ff-1321-62c4-2134bf0a51f3/26UMGIM63538.rgb.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/7d/82/9d/7d829d48-7548-84d4-7c3c-7c85f77bf888/artwork.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/fd/00/5c/fd005c0b-2d47-24eb-0297-83673fee4108/artwork.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/cc/9c/d6/cc9cd603-af1c-00cb-1fb5-8d0556b58e39/artwork.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/11/04/4d/11044d57-4d81-6934-8e0f-e47e56a626cf/artwork.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Loser_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Kiss%20Kiss%20Bang%20Bang_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=pop-rising",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/ba/8c/d9/ba8cd968-5658-5149-596c-6c8140a4c06a/196874217917.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/e4/b4/79/e4b47929-76a2-14b1-8629-36ff3746d04b/26UMGIM39599.rgb.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/34/87/82/348782bf-5424-b72e-fa18-6c51bacd41e5/7300349970648.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/99/cf/bb/99cfbbec-a59e-215a-7a37-8b724551b919/26UM1IM37485.rgb.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/3c/0a/64/3c0a64e7-76bd-ec47-c2f3-1efd5a1dfa24/artwork.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/9a/d8/e5/9ad8e58a-9b1b-eed0-4baa-63e203f982ee/4550759303342_cover.png/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/1d/1b/f9/1d1bf9b1-44c6-9a6c-6ffb-c158488c06ce/26UMGIM39303.rgb.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/98/ea/b4/98eab461-f7d0-c5db-00ad-fcd3ecb5ed03/075679581648.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/cc/21/ed/cc21eddd-91ad-982a-0243-70b3f1160e6e/17849.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Kiss%20Kiss%20Bang%20Bang_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Kiss%20Kiss%20Bang%20Bang_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Yeshanagula_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=dance-hits",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Yeshanagula_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/6c/f0/80/6cf080a0-3abd-9f70-541d-c0ea71f8cb7b/8721466803579.png/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/6d/20/d5/6d20d590-14b6-a122-bbe9-e42b1f98c519/823375445852_Cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/4b/c9/ec/4bc9ec55-2ae8-c84f-7a1f-ba2e53dec11e/196874068311.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/23/60/82/23608266-802a-b183-e61c-31927f1285ee/663918846995.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/3e/2a/b9/3e2ab937-0ea6-c02b-3c57-afe28f9aa2a2/198704984693_Cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/62/02/5b/62025bbe-c0af-5ade-4012-b232705463de/810168086156.png/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/fa/94/ab/fa94ab05-075b-f263-21ae-217a464f0f54/artwork.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/ea/6d/fd/ea6dfd65-dae6-fc24-bd94-4d0030d14332/612891163957.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/2b/66/b2/2b66b26c-ab23-faa1-c4ee-06fa2cce8f76/26UM1IM00558.rgb.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/3a/29/1d/3a291d86-6f99-c77b-5e01-f6a957c1f935/8721555335257.png/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/c5/66/60/c566605f-51c5-f4eb-1e2a-ef60afa8d7d8/8721555285057.png/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Sunflower_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=mood-booster",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Sunflower_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/c5/b9/9f/c5b99fd2-b069-9f38-c46e-4171bbc34e29/26UMGIM22963.rgb.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/19/bc/8e/19bc8efc-f236-2bde-0947-f0b29bc89ed3/ANTCD-A0000021643.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/1e/95/4a/1e954a6d-0ad6-40ef-bfdd-986f7b273828/26UM1IM03548.rgb.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/b5/8a/ee/b58aee99-898b-cafb-6ee8-7ca742c7e43b/859748702222_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/ed/46/bf/ed46bf4e-7cb9-965a-54f3-03059977fe6c/075679589293.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/3c/ee/94/3cee9455-4ee9-8d00-29ef-e515455ac8bb/859742368295_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/8f/fe/d4/8ffed4b9-817c-e167-ad47-23867fe44792/6152011937968.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/73/fd/95/73fd959c-8a6e-15eb-c115-d3c90dca71f9/26UMGIM91915.rgb.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/a9/fb/e0/a9fbe08f-b514-1a98-367c-d3dfb3126f80/6095927369396.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/17/bb/c5/17bbc5ec-fdb4-8bb3-18e9-c0255dde48b9/6152013129163.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Sunflower_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/One%20Of%20The%20Girls_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=late-night",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/One%20Of%20The%20Girls_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/5b/8b/98/5b8b9853-3530-4ac8-3c6f-5f7e42d9efc3/4550796082293_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/94/8c/3c/948c3c1e-8971-d9d8-52ea-e922939d14c8/4550796082316_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/17/e1/23/17e123e8-b831-1e56-3af8-4f8f865ea06c/1058365.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/cb/31/2d/cb312d20-2f38-565a-acab-6c13ea0ee4f7/885000799358.png/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/b7/af/1f/b7af1f33-162e-0648-bebb-2c2110043d91/artwork.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/ab/6e/34/ab6e3478-a6c1-1ea6-94c2-f248ca0c5b6a/artwork.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/3c/a0/0c/3ca00c67-f63b-0c16-5fc1-9b1efb29b17c/artwork.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/28/18/06/28180674-198d-f768-22b8-dbee890de904/0.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/b9/22/da/b922da42-0747-d1e1-2b41-7e402dcdac20/artwork.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/39/b9/03/39b9032d-f234-3593-396b-190922b1a634/820233718738.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/bf/8e/40/bf8e40b2-7b76-5226-8fc2-4a830f2d5e52/artwork.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/d2/6b/76/d26b76f9-86af-e8d9-cf1a-3a92c0da3f13/artwork.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/One%20Of%20The%20Girls_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Big%20Dawgs_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=workout",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Big%20Dawgs_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/4c/b6/e5/4cb6e5b1-2db0-88c0-f025-b79cad3b8fab/196873832111.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/7e/fb/0b/7efb0b1b-8e34-5bd0-99ee-eafc83b8d5c7/054391217349.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/5b/e2/d7/5be2d7df-ba22-057e-0b3c-c8daa6996194/196874062043.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/76/28/e7/7628e7b8-0268-f529-6ca8-d5bffb1f2d9e/4099964214482.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/52/de/5d/52de5d72-19f6-bc0e-a6e6-005b35e8fd7b/4099964238297.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/97/22/39/972239bb-3ba8-2d57-d2d4-004e3f4e18be/5063907079420_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/72/1d/0f/721d0f57-7fb0-385c-7b60-b8647c45d782/artwork.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/7d/89/98/7d89980a-24a9-44ce-b216-4f1c0b696c4a/093624822059.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/a1/ba/64/a1ba6484-f462-1b88-ddff-d4c014d5f265/196874018361.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/23/79/d7/2379d711-52c2-19fe-abf1-a4f4f6538c4b/199316583212_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Big%20Dawgs_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Pavazha%20Malli_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=chill-hits",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Pavazha%20Malli_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Baby%20Won't%20You%20Tell%20Me_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=top-telugu",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Baby%20Won't%20You%20Tell%20Me_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Baby%20Won't%20You%20Tell%20Me_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Monica_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=top-tamil",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Monica_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Gehra%20Hua_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Gehra%20Hua_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=top-hindi",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Dynamite_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/God%20Mode_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=top-kpop",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=dev-special",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/God%20Mode_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/2d/1d/e3/2d1de350-7e06-da0f-510e-7cb2d97c930d/8905936010821.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/d4/c4/38/d4c43885-7866-3ac4-e323-b9ca6a7621ec/cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/9e/87/71/9e87717f-a454-d49f-ee04-783ab4a9e453/cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/50/80/71/50807159-497a-2f04-f599-a838b87e3e45/824296497593_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/8a/df/59/8adf5988-95e3-2e34-028f-b7cd9f931555/cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/4c/68/77/4c6877fa-9fe9-0f99-8e4a-7605823563d5/886449014118.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/e4/ff/cb/e4ffcbed-9a7d-7377-c9b3-4bf7b23380db/8903431029829_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music118/v4/07/f1/72/07f1723c-aa5b-1e20-581d-e2008a93c879/8903431668158_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/6d/0a/50/6d0a502a-757e-dc44-3c55-1c1822916fbb/098787153767.png/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/6b/2c/76/6b2c7678-8423-0fc2-0602-05fa196e79b5/8903431857637_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/4c/16/13/4c161318-5bf1-ea55-774d-2f55e2361d10/8902894623179_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/f9/3d/a2/f93da293-d63e-dcd3-f218-94afb2c71dec/cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Beat%20It_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=global-top-50",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Beat%20It_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Beat%20It_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Radhimaa_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Radhimaa_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Radhimaa_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Alaakaa%20Loova_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Alaakaa%20Loova_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Alaakaa%20Loova_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Loser_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Loser_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Loser_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Kiss%20Kiss%20Bang%20Bang_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Kiss%20Kiss%20Bang%20Bang_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Kiss%20Kiss%20Bang%20Bang_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Yeshanagula_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Yeshanagula_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Yeshanagula_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Sunflower_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Sunflower_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Sunflower_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/One%20Of%20The%20Girls_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/One%20Of%20The%20Girls_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Big%20Dawgs_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Big%20Dawgs_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Pavazha%20Malli_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Pavazha%20Malli_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=chill-hits",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/56/c3/c0/56c3c0d5-ce13-0ff1-1840-ac7e7bb08616/850077888168.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/a6/72/21/a67221dd-863f-b81c-ffa0-478c72d20fbd/5059449404479.png/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/25/85/97/25859703-d8c0-aff9-5561-f6170e0699b3/26UMGIM02802.rgb.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/ea/98/f2/ea98f2b8-5131-29ae-2064-997234ef13bc/093624812647.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/fb/79/4d/fb794d6b-34da-6d49-921e-17e3381a5d6e/054391221506.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/56/bd/6a/56bd6af1-8726-c85d-0957-fc0cee3f7e9e/5059449394152.png/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/65/c6/f6/65c6f691-bd12-f1d9-6ebe-4765ae4d80a8/075679551535.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/53/c3/bf/53c3bffd-319b-5e8d-f6c0-dba7d837674d/4550796082255_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/1a/cd/9b/1acd9bad-40e2-c906-5614-03edf8e929a1/26UMGIM07556.rgb.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/5f/51/9f/5f519f49-44c1-6aeb-f289-5b14c677abb1/26UM1IM17017.rgb.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Baby%20Won't%20You%20Tell%20Me_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Baby%20Won't%20You%20Tell%20Me_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Baby%20Won't%20You%20Tell%20Me_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Monica_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=top-telugu",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/e6/1a/1e/e61a1e59-4af1-e6f2-b031-cf630a303077/196874208366.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/9e/e6/d5/9ee6d5b8-4577-3c35-f27e-16d8a9771860/8903431167842_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/30/c3/9c/30c39c32-ecd4-60cd-993d-3aed229df575/8903431171863_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/45/0f/e3/450fe3c1-5758-595a-d676-28aaae0e9f2d/8903431195500_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/b4/fe/c1/b4fec12a-4cc7-0258-2267-7928b911a544/8903431198327_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/88/72/8d/88728dbd-e5fd-741e-b9d3-e588b74c2eaa/8903431216212_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/35/67/25/35672538-cc61-6f3e-1c15-78dd2781dd65/1200214263140.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/d9/e5/9f/d9e59f7c-8d06-6788-2467-5c86519ab0f6/8903431199829_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/af/fd/ce/affdce53-3304-7479-2e11-3724cdd42224/1200214333102.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/80/af/7f/80af7fee-1d0f-1691-c072-aa771b9a326f/8903431198310_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=top-tamil",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Monica_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Gehra%20Hua_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=top-hindi",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Gehra%20Hua_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Gehra%20Hua_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/Dynamite_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/api/songs?vibe=top-kpop",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Dynamite_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/Dynamite_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/hover-v1/God%20Mode_preview_3s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://kadence-musicz.vercel.app/videos/God%20Mode_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    }
+  ]
+}

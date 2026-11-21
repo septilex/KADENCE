@@ -1,0 +1,3478 @@
+{
+  "base": "http://localhost:3000",
+  "browser": {
+    "protocolVersion": "1.3",
+    "product": "Chrome/158.0.8127.42",
+    "revision": "@bd6d26d1bced03c17a98baa86d2cd3425d543d1",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.0.0 Safari/537.36",
+    "jsVersion": "15.8.62.31"
+  },
+  "buttons": [
+    {
+      "id": "",
+      "text": "discover"
+    },
+    {
+      "id": "",
+      "text": "search"
+    },
+    {
+      "id": "",
+      "text": "library"
+    },
+    {
+      "id": "",
+      "text": ""
+    },
+    {
+      "id": "explore-dev-universe-btn",
+      "text": "✦CREATOR'S PICKExplore Dev's Universe79 Handpicked Tracks"
+    },
+    {
+      "id": "vibe-global-top-50",
+      "text": ""
+    },
+    {
+      "id": "vibe-viral-50",
+      "text": ""
+    },
+    {
+      "id": "vibe-new-music-friday",
+      "text": ""
+    },
+    {
+      "id": "vibe-hip-hop-central",
+      "text": ""
+    },
+    {
+      "id": "vibe-pop-rising",
+      "text": ""
+    },
+    {
+      "id": "vibe-dance-hits",
+      "text": ""
+    },
+    {
+      "id": "vibe-mood-booster",
+      "text": ""
+    },
+    {
+      "id": "vibe-late-night",
+      "text": ""
+    },
+    {
+      "id": "vibe-workout",
+      "text": ""
+    },
+    {
+      "id": "vibe-chill-hits",
+      "text": ""
+    },
+    {
+      "id": "vibe-top-telugu",
+      "text": ""
+    },
+    {
+      "id": "vibe-top-tamil",
+      "text": ""
+    },
+    {
+      "id": "vibe-top-hindi",
+      "text": ""
+    },
+    {
+      "id": "vibe-top-kpop",
+      "text": ""
+    },
+    {
+      "id": "vibe-dev-special",
+      "text": "★👑 Creator's Pick✨ Dev's UniverseCurated by Dev• 80 handpicked tracks"
+    }
+  ],
+  "trials": [
+    {
+      "phase": "first-visit",
+      "id": "vibe-global-top-50",
+      "start": 7208.199999999721,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Beat%20It_30s.mp4",
+          "t": 7235.699999999721,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "http://localhost:3000/videos/Beat%20It_30s.mp4",
+          "t": 7238,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Beat%20It_30s.mp4",
+          "t": 7238.0999999996275,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Beat%20It_30s.mp4",
+          "t": 7777.899999999907,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Beat%20It_30s.mp4",
+          "t": 7777.899999999907,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/Beat%20It_30s.mp4",
+          "t": 7781.5,
+          "muted": true
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/Beat%20It_30s.mp4",
+          "t": 8149.899999999907
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 5.6205,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 140,
+          "dropped": 31
+        },
+        {
+          "src": "http://localhost:3000/videos/Beat%20It_30s.mp4",
+          "time": 0.794979,
+          "paused": false,
+          "muted": true,
+          "ready": 4,
+          "frames": 23,
+          "dropped": 6
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-viral-50",
+      "start": 8748.69999999972,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Radhimaa_30s.mp4",
+          "t": 8765.399999999907,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "http://localhost:3000/videos/Radhimaa_30s.mp4",
+          "t": 8766.19999999972,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Radhimaa_30s.mp4",
+          "t": 8766.19999999972,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/Radhimaa_30s.mp4",
+          "t": 8884.099999999627,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Radhimaa_30s.mp4",
+          "t": 8886.299999999814,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Radhimaa_30s.mp4",
+          "t": 8886.399999999907,
+          "muted": true
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/Radhimaa_30s.mp4",
+          "t": 9212
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 5.9678,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 149,
+          "dropped": 32
+        },
+        {
+          "src": "http://localhost:3000/videos/Radhimaa_30s.mp4",
+          "time": 0.980737,
+          "paused": false,
+          "muted": true,
+          "ready": 4,
+          "frames": 28,
+          "dropped": 5
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-new-music-friday",
+      "start": 10277.5,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Alaakaa%20Loova_30s.mp4",
+          "t": 10292.799999999814,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "http://localhost:3000/videos/Alaakaa%20Loova_30s.mp4",
+          "t": 10293.799999999814,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Alaakaa%20Loova_30s.mp4",
+          "t": 10293.799999999814,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/Alaakaa%20Loova_30s.mp4",
+          "t": 10400.19999999972,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Alaakaa%20Loova_30s.mp4",
+          "t": 10400.899999999907,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Alaakaa%20Loova_30s.mp4",
+          "t": 10400.899999999907,
+          "muted": true
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/Alaakaa%20Loova_30s.mp4",
+          "t": 10718.899999999907
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 6.3193,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 157,
+          "dropped": 32
+        },
+        {
+          "src": "http://localhost:3000/videos/Alaakaa%20Loova_30s.mp4",
+          "time": 1.000683,
+          "paused": false,
+          "muted": true,
+          "ready": 4,
+          "frames": 28,
+          "dropped": 5
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-hip-hop-central",
+      "start": 11811.099999999627,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Loser_30s.mp4",
+          "t": 11826,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "http://localhost:3000/videos/Loser_30s.mp4",
+          "t": 11826.799999999814,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Loser_30s.mp4",
+          "t": 11826.799999999814,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/Loser_30s.mp4",
+          "t": 11908,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Loser_30s.mp4",
+          "t": 11908.299999999814,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Loser_30s.mp4",
+          "t": 11908.299999999814,
+          "muted": true
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/Loser_30s.mp4",
+          "t": 12232.69999999972
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 6.6561,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 165,
+          "dropped": 32
+        },
+        {
+          "src": "http://localhost:3000/videos/Loser_30s.mp4",
+          "time": 1.017035,
+          "paused": false,
+          "muted": true,
+          "ready": 4,
+          "frames": 29,
+          "dropped": 5
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-pop-rising",
+      "start": 13345.899999999907,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Kiss%20Kiss%20Bang%20Bang_30s.mp4",
+          "t": 13364.69999999972,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "http://localhost:3000/videos/Kiss%20Kiss%20Bang%20Bang_30s.mp4",
+          "t": 13365.599999999627,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Kiss%20Kiss%20Bang%20Bang_30s.mp4",
+          "t": 13365.599999999627,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/Kiss%20Kiss%20Bang%20Bang_30s.mp4",
+          "t": 13567.399999999907,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Kiss%20Kiss%20Bang%20Bang_30s.mp4",
+          "t": 13568.599999999627,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Kiss%20Kiss%20Bang%20Bang_30s.mp4",
+          "t": 13568.599999999627,
+          "muted": true
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/Kiss%20Kiss%20Bang%20Bang_30s.mp4",
+          "t": 13892.299999999814
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 7.0116,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 174,
+          "dropped": 32
+        },
+        {
+          "src": "http://localhost:3000/videos/Kiss%20Kiss%20Bang%20Bang_30s.mp4",
+          "time": 0.894476,
+          "paused": false,
+          "muted": true,
+          "ready": 4,
+          "frames": 26,
+          "dropped": 5
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-dance-hits",
+      "start": 14879.799999999814,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Yeshanagula_30s.mp4",
+          "t": 14893.599999999627,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "http://localhost:3000/videos/Yeshanagula_30s.mp4",
+          "t": 14894.399999999907,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Yeshanagula_30s.mp4",
+          "t": 14894.5,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/Yeshanagula_30s.mp4",
+          "t": 14954.69999999972,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Yeshanagula_30s.mp4",
+          "t": 14963.599999999627,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Yeshanagula_30s.mp4",
+          "t": 14963.599999999627,
+          "muted": true
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/Yeshanagula_30s.mp4",
+          "t": 14979.799999999814
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 7.364,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 183,
+          "dropped": 32
+        },
+        {
+          "src": "http://localhost:3000/videos/Yeshanagula_30s.mp4",
+          "time": 1.015282,
+          "paused": false,
+          "muted": true,
+          "ready": 4,
+          "frames": 28,
+          "dropped": 0
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-mood-booster",
+      "start": 16420.799999999814,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Sunflower_30s.mp4",
+          "t": 16435.5,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "http://localhost:3000/videos/Sunflower_30s.mp4",
+          "t": 16436.299999999814,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Sunflower_30s.mp4",
+          "t": 16436.399999999907,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/Sunflower_30s.mp4",
+          "t": 16537.299999999814,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Sunflower_30s.mp4",
+          "t": 16537.799999999814,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Sunflower_30s.mp4",
+          "t": 16537.799999999814,
+          "muted": true
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/Sunflower_30s.mp4",
+          "t": 16870.799999999814
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 7.717,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 191,
+          "dropped": 32
+        },
+        {
+          "src": "http://localhost:3000/videos/Sunflower_30s.mp4",
+          "time": 1.001271,
+          "paused": false,
+          "muted": true,
+          "ready": 4,
+          "frames": 29,
+          "dropped": 5
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-late-night",
+      "start": 17940.5,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/One%20Of%20The%20Girls_30s.mp4",
+          "t": 17967.599999999627,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "http://localhost:3000/videos/One%20Of%20The%20Girls_30s.mp4",
+          "t": 17968.899999999907,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/One%20Of%20The%20Girls_30s.mp4",
+          "t": 17968.899999999907,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/One%20Of%20The%20Girls_30s.mp4",
+          "t": 18069.899999999907,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/One%20Of%20The%20Girls_30s.mp4",
+          "t": 18070.5,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/One%20Of%20The%20Girls_30s.mp4",
+          "t": 18070.5,
+          "muted": true
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/One%20Of%20The%20Girls_30s.mp4",
+          "t": 18399
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 8.074,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 199,
+          "dropped": 35
+        },
+        {
+          "src": "http://localhost:3000/videos/One%20Of%20The%20Girls_30s.mp4",
+          "time": 0.991714,
+          "paused": false,
+          "muted": true,
+          "ready": 4,
+          "frames": 29,
+          "dropped": 5
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-workout",
+      "start": 19475.799999999814,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Big%20Dawgs_30s.mp4",
+          "t": 19490.19999999972,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "http://localhost:3000/videos/Big%20Dawgs_30s.mp4",
+          "t": 19491.19999999972,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Big%20Dawgs_30s.mp4",
+          "t": 19491.19999999972,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/Big%20Dawgs_30s.mp4",
+          "t": 19607.19999999972,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Big%20Dawgs_30s.mp4",
+          "t": 19608.099999999627,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Big%20Dawgs_30s.mp4",
+          "t": 19608.099999999627,
+          "muted": true
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/Big%20Dawgs_30s.mp4",
+          "t": 19925.799999999814
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 8.4262,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 208,
+          "dropped": 35
+        },
+        {
+          "src": "http://localhost:3000/videos/Big%20Dawgs_30s.mp4",
+          "time": 0.996484,
+          "paused": false,
+          "muted": true,
+          "ready": 4,
+          "frames": 29,
+          "dropped": 5
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-chill-hits",
+      "start": 21011.099999999627,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Pavazha%20Malli_30s.mp4",
+          "t": 21026,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "http://localhost:3000/videos/Pavazha%20Malli_30s.mp4",
+          "t": 21026.69999999972,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Pavazha%20Malli_30s.mp4",
+          "t": 21026.69999999972,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/Pavazha%20Malli_30s.mp4",
+          "t": 21142.19999999972,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Pavazha%20Malli_30s.mp4",
+          "t": 21142.69999999972,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Pavazha%20Malli_30s.mp4",
+          "t": 21142.69999999972,
+          "muted": true
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/Pavazha%20Malli_30s.mp4",
+          "t": 21460.599999999627
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 8.7811,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 216,
+          "dropped": 35
+        },
+        {
+          "src": "http://localhost:3000/videos/Pavazha%20Malli_30s.mp4",
+          "time": 0.99729,
+          "paused": false,
+          "muted": true,
+          "ready": 4,
+          "frames": 28,
+          "dropped": 5
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-top-telugu",
+      "start": 22543.599999999627,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Baby%20Won't%20You%20Tell%20Me_30s.mp4",
+          "t": 22557.899999999907,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "http://localhost:3000/videos/Baby%20Won't%20You%20Tell%20Me_30s.mp4",
+          "t": 22559.69999999972,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Baby%20Won't%20You%20Tell%20Me_30s.mp4",
+          "t": 22559.799999999814,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/Baby%20Won't%20You%20Tell%20Me_30s.mp4",
+          "t": 22673.5,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Baby%20Won't%20You%20Tell%20Me_30s.mp4",
+          "t": 22673.899999999907,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Baby%20Won't%20You%20Tell%20Me_30s.mp4",
+          "t": 22673.899999999907,
+          "muted": true
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/Baby%20Won't%20You%20Tell%20Me_30s.mp4",
+          "t": 23009.399999999907
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 9.1318,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 225,
+          "dropped": 35
+        },
+        {
+          "src": "http://localhost:3000/videos/Baby%20Won't%20You%20Tell%20Me_30s.mp4",
+          "time": 0.982627,
+          "paused": false,
+          "muted": true,
+          "ready": 4,
+          "frames": 28,
+          "dropped": 5
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-top-tamil",
+      "start": 24089.19999999972,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Monica_30s.mp4",
+          "t": 24113.799999999814,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "http://localhost:3000/videos/Monica_30s.mp4",
+          "t": 24116.299999999814,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Monica_30s.mp4",
+          "t": 24116.299999999814,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/Monica_30s.mp4",
+          "t": 24376.69999999972,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Monica_30s.mp4",
+          "t": 24377.599999999627,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Monica_30s.mp4",
+          "t": 24377.599999999627,
+          "muted": true
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/Monica_30s.mp4",
+          "t": 24724.899999999907
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 9.4922,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 233,
+          "dropped": 35
+        },
+        {
+          "src": "http://localhost:3000/videos/Monica_30s.mp4",
+          "time": 0.856723,
+          "paused": false,
+          "muted": true,
+          "ready": 4,
+          "frames": 25,
+          "dropped": 5
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-top-hindi",
+      "start": 25653.599999999627,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Gehra%20Hua_30s.mp4",
+          "t": 25675.599999999627,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "http://localhost:3000/videos/Gehra%20Hua_30s.mp4",
+          "t": 25680.5,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Gehra%20Hua_30s.mp4",
+          "t": 25680.5,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/Gehra%20Hua_30s.mp4",
+          "t": 25839.19999999972,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Gehra%20Hua_30s.mp4",
+          "t": 25839.799999999814,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Gehra%20Hua_30s.mp4",
+          "t": 25839.799999999814,
+          "muted": true
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/Gehra%20Hua_30s.mp4",
+          "t": 26182.299999999814
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 9.8554,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 242,
+          "dropped": 35
+        },
+        {
+          "src": "http://localhost:3000/videos/Gehra%20Hua_30s.mp4",
+          "time": 0.940727,
+          "paused": false,
+          "muted": true,
+          "ready": 4,
+          "frames": 27,
+          "dropped": 5
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-top-kpop",
+      "start": 27191.899999999907,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Dynamite_30s.mp4",
+          "t": 27205.5,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "http://localhost:3000/videos/Dynamite_30s.mp4",
+          "t": 27206.299999999814,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Dynamite_30s.mp4",
+          "t": 27206.299999999814,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/Dynamite_30s.mp4",
+          "t": 27329.399999999907,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Dynamite_30s.mp4",
+          "t": 27330.299999999814,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Dynamite_30s.mp4",
+          "t": 27330.299999999814,
+          "muted": true
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/Dynamite_30s.mp4",
+          "t": 27676.099999999627
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 10.2082,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 251,
+          "dropped": 35
+        },
+        {
+          "src": "http://localhost:3000/videos/Dynamite_30s.mp4",
+          "time": 0.981869,
+          "paused": false,
+          "muted": true,
+          "ready": 4,
+          "frames": 28,
+          "dropped": 5
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "vibe-dev-special",
+      "start": 28722.799999999814,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+          "t": 28754,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+          "t": 28755.399999999907,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+          "t": 28755.399999999907,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+          "t": 29043.5,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+          "t": 29043.5,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+          "t": 29047.099999999627,
+          "muted": true
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+          "t": 29383.19999999972
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 10.5702,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 259,
+          "dropped": 35
+        },
+        {
+          "src": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+          "time": 0.800736,
+          "paused": false,
+          "muted": true,
+          "ready": 4,
+          "frames": 23,
+          "dropped": 4
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "first-visit",
+      "id": "explore-dev-universe-btn",
+      "start": 30265.299999999814,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+          "t": 30400.5,
+          "muted": false
+        },
+        {
+          "event": "rejected",
+          "src": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+          "t": 30401.299999999814,
+          "name": "NotAllowedError"
+        },
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+          "t": 30401.299999999814,
+          "muted": true
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+          "t": 30441.299999999814,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+          "t": 30446.799999999814,
+          "muted": true
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+          "t": 30446.799999999814,
+          "muted": true
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+          "t": 30460.599999999627
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 11.0292,
+          "paused": true,
+          "muted": true,
+          "ready": 4,
+          "frames": 270,
+          "dropped": 35
+        },
+        {
+          "src": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+          "time": 1.021145,
+          "paused": false,
+          "muted": true,
+          "ready": 4,
+          "frames": 29,
+          "dropped": 0
+        }
+      ],
+      "active": false
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-global-top-50",
+      "start": 31919.799999999814,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Beat%20It_30s.mp4",
+          "t": 31932.69999999972,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/Beat%20It_30s.mp4",
+          "t": 31989.099999999627,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Beat%20It_30s.mp4",
+          "t": 32006.299999999814,
+          "muted": false
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/Beat%20It_30s.mp4",
+          "t": 32024.799999999814
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 11.3884,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 279,
+          "dropped": 35
+        },
+        {
+          "src": "http://localhost:3000/videos/Beat%20It_30s.mp4",
+          "time": 0.814721,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 24,
+          "dropped": 0
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-viral-50",
+      "start": 33446.19999999972,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Radhimaa_30s.mp4",
+          "t": 33461.59999999963,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/Radhimaa_30s.mp4",
+          "t": 33516.39999999991,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Radhimaa_30s.mp4",
+          "t": 33520.299999999814,
+          "muted": false
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/Radhimaa_30s.mp4",
+          "t": 33544.5
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 11.7436,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 288,
+          "dropped": 35
+        },
+        {
+          "src": "http://localhost:3000/videos/Radhimaa_30s.mp4",
+          "time": 1.023312,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 29,
+          "dropped": 1
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-new-music-friday",
+      "start": 34974,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Alaakaa%20Loova_30s.mp4",
+          "t": 34987.59999999963,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/Alaakaa%20Loova_30s.mp4",
+          "t": 35038.59999999963,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Alaakaa%20Loova_30s.mp4",
+          "t": 35047.69999999972,
+          "muted": false
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/Alaakaa%20Loova_30s.mp4",
+          "t": 35065.299999999814
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 12.0952,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 296,
+          "dropped": 35
+        },
+        {
+          "src": "http://localhost:3000/videos/Alaakaa%20Loova_30s.mp4",
+          "time": 1.011233,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 28,
+          "dropped": 0
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-hip-hop-central",
+      "start": 36496.09999999963,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Loser_30s.mp4",
+          "t": 36510,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/Loser_30s.mp4",
+          "t": 36578.89999999991,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Loser_30s.mp4",
+          "t": 36588.5,
+          "muted": false
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/Loser_30s.mp4",
+          "t": 36605.5
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 12.4382,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 304,
+          "dropped": 35
+        },
+        {
+          "src": "http://localhost:3000/videos/Loser_30s.mp4",
+          "time": 0.984871,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 28,
+          "dropped": 0
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-pop-rising",
+      "start": 38024.799999999814,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Kiss%20Kiss%20Bang%20Bang_30s.mp4",
+          "t": 38070,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/Kiss%20Kiss%20Bang%20Bang_30s.mp4",
+          "t": 38185.59999999963,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Kiss%20Kiss%20Bang%20Bang_30s.mp4",
+          "t": 38215.19999999972,
+          "muted": false
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/Kiss%20Kiss%20Bang%20Bang_30s.mp4",
+          "t": 38273.09999999963
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 12.8249,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 314,
+          "dropped": 35
+        },
+        {
+          "src": "http://localhost:3000/videos/Kiss%20Kiss%20Bang%20Bang_30s.mp4",
+          "time": 0.949485,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 27,
+          "dropped": 2
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-dance-hits",
+      "start": 39601.69999999972,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Yeshanagula_30s.mp4",
+          "t": 39647.5,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/Yeshanagula_30s.mp4",
+          "t": 39795.299999999814,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Yeshanagula_30s.mp4",
+          "t": 39829.19999999972,
+          "muted": false
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/Yeshanagula_30s.mp4",
+          "t": 39866.59999999963
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 13.2101,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 323,
+          "dropped": 35
+        },
+        {
+          "src": "http://localhost:3000/videos/Yeshanagula_30s.mp4",
+          "time": 0.920437,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 27,
+          "dropped": 0
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-mood-booster",
+      "start": 41163.299999999814,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Sunflower_30s.mp4",
+          "t": 41176.299999999814,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/Sunflower_30s.mp4",
+          "t": 41258.799999999814,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Sunflower_30s.mp4",
+          "t": 41266.69999999972,
+          "muted": false
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/Sunflower_30s.mp4",
+          "t": 41279
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 13.5576,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 331,
+          "dropped": 35
+        },
+        {
+          "src": "http://localhost:3000/videos/Sunflower_30s.mp4",
+          "time": 0.976294,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 28,
+          "dropped": 0
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-late-night",
+      "start": 42674.09999999963,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/One%20Of%20The%20Girls_30s.mp4",
+          "t": 42688,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/One%20Of%20The%20Girls_30s.mp4",
+          "t": 42746.89999999991,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/One%20Of%20The%20Girls_30s.mp4",
+          "t": 42757.19999999972,
+          "muted": false
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/One%20Of%20The%20Girls_30s.mp4",
+          "t": 42770.39999999991
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 13.9009,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 340,
+          "dropped": 35
+        },
+        {
+          "src": "http://localhost:3000/videos/One%20Of%20The%20Girls_30s.mp4",
+          "time": 0.994484,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 28,
+          "dropped": 0
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-workout",
+      "start": 44205.69999999972,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Big%20Dawgs_30s.mp4",
+          "t": 44223.19999999972,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/Big%20Dawgs_30s.mp4",
+          "t": 44307.69999999972,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Big%20Dawgs_30s.mp4",
+          "t": 44323.69999999972,
+          "muted": false
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/Big%20Dawgs_30s.mp4",
+          "t": 44350.299999999814
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 14.2632,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 348,
+          "dropped": 35
+        },
+        {
+          "src": "http://localhost:3000/videos/Big%20Dawgs_30s.mp4",
+          "time": 0.964367,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 27,
+          "dropped": 0
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-chill-hits",
+      "start": 45780.299999999814,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Pavazha%20Malli_30s.mp4",
+          "t": 45806.39999999991,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/Pavazha%20Malli_30s.mp4",
+          "t": 45899.799999999814,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Pavazha%20Malli_30s.mp4",
+          "t": 45917.799999999814,
+          "muted": false
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/Pavazha%20Malli_30s.mp4",
+          "t": 45937.19999999972
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 14.6206,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 356,
+          "dropped": 35
+        },
+        {
+          "src": "http://localhost:3000/videos/Pavazha%20Malli_30s.mp4",
+          "time": 0.962358,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 28,
+          "dropped": 0
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-top-telugu",
+      "start": 47314.799999999814,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Baby%20Won't%20You%20Tell%20Me_30s.mp4",
+          "t": 47326.799999999814,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/Baby%20Won't%20You%20Tell%20Me_30s.mp4",
+          "t": 47381.19999999972,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Baby%20Won't%20You%20Tell%20Me_30s.mp4",
+          "t": 47388.89999999991,
+          "muted": false
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/Baby%20Won't%20You%20Tell%20Me_30s.mp4",
+          "t": 47402.5
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 14.9583,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 365,
+          "dropped": 35
+        },
+        {
+          "src": "http://localhost:3000/videos/Baby%20Won't%20You%20Tell%20Me_30s.mp4",
+          "time": 1.006752,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 29,
+          "dropped": 0
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-top-tamil",
+      "start": 48841.59999999963,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Monica_30s.mp4",
+          "t": 48854.39999999991,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/Monica_30s.mp4",
+          "t": 48922.799999999814,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Monica_30s.mp4",
+          "t": 48930.39999999991,
+          "muted": false
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/Monica_30s.mp4",
+          "t": 48950.299999999814
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 15.3045,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 373,
+          "dropped": 35
+        },
+        {
+          "src": "http://localhost:3000/videos/Monica_30s.mp4",
+          "time": 1.020449,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 29,
+          "dropped": 0
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-top-hindi",
+      "start": 50375.09999999963,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Gehra%20Hua_30s.mp4",
+          "t": 50390.59999999963,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/Gehra%20Hua_30s.mp4",
+          "t": 50480,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Gehra%20Hua_30s.mp4",
+          "t": 50493.09999999963,
+          "muted": false
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/Gehra%20Hua_30s.mp4",
+          "t": 50505.69999999972
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 15.6582,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 382,
+          "dropped": 35
+        },
+        {
+          "src": "http://localhost:3000/videos/Gehra%20Hua_30s.mp4",
+          "time": 0.979405,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 29,
+          "dropped": 0
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-top-kpop",
+      "start": 51923.19999999972,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/Dynamite_30s.mp4",
+          "t": 51936.299999999814,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/Dynamite_30s.mp4",
+          "t": 51991.299999999814,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/Dynamite_30s.mp4",
+          "t": 51999.299999999814,
+          "muted": false
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/Dynamite_30s.mp4",
+          "t": 52013.19999999972
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 16.0213,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 390,
+          "dropped": 35
+        },
+        {
+          "src": "http://localhost:3000/videos/Dynamite_30s.mp4",
+          "time": 1.002997,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 28,
+          "dropped": 0
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "vibe-dev-special",
+      "start": 53453.59999999963,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+          "t": 53466.89999999991,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+          "t": 53536.799999999814,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+          "t": 53548.89999999991,
+          "muted": false
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+          "t": 53571.09999999963
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 16.383,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 399,
+          "dropped": 35
+        },
+        {
+          "src": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+          "time": 1.009328,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 29,
+          "dropped": 0
+        }
+      ],
+      "active": true
+    },
+    {
+      "phase": "activated",
+      "id": "explore-dev-universe-btn",
+      "start": 54981.299999999814,
+      "events": [
+        {
+          "event": "play",
+          "src": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+          "t": 54992.5,
+          "muted": false
+        },
+        {
+          "event": "resolved",
+          "src": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+          "t": 55033.09999999963,
+          "muted": false
+        },
+        {
+          "event": "frame",
+          "src": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+          "t": 55042.89999999991,
+          "muted": false
+        },
+        {
+          "event": "visible",
+          "src": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+          "t": 55069.09999999963
+        }
+      ],
+      "videos": [
+        {
+          "src": "http://localhost:3000/videos/globe-hq.mp4",
+          "time": 16.7265,
+          "paused": true,
+          "muted": false,
+          "ready": 4,
+          "frames": 407,
+          "dropped": 35
+        },
+        {
+          "src": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+          "time": 1.014882,
+          "paused": false,
+          "muted": false,
+          "ready": 4,
+          "frames": 29,
+          "dropped": 0
+        }
+      ],
+      "active": true
+    }
+  ],
+  "errors": [
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+      "timestamp": 1795238180423.211,
+      "url": "http://localhost:3000/api/songs?vibe=viral-50",
+      "networkRequestId": "2312.359"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+      "timestamp": 1795238182411.124,
+      "url": "http://localhost:3000/api/songs?vibe=pop-rising",
+      "networkRequestId": "2312.379"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+      "timestamp": 1795238183937.927,
+      "url": "http://localhost:3000/api/songs?vibe=dance-hits",
+      "networkRequestId": "2312.381"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+      "timestamp": 1795238185482.77,
+      "url": "http://localhost:3000/api/songs?vibe=mood-booster",
+      "networkRequestId": "2312.383"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+      "timestamp": 1795238187026.257,
+      "url": "http://localhost:3000/api/songs?vibe=late-night",
+      "networkRequestId": "2312.385"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+      "timestamp": 1795238188554.056,
+      "url": "http://localhost:3000/api/songs?vibe=workout",
+      "networkRequestId": "2312.387"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+      "timestamp": 1795238190071.106,
+      "url": "http://localhost:3000/api/songs?vibe=chill-hits",
+      "networkRequestId": "2312.389"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+      "timestamp": 1795238191615.008,
+      "url": "http://localhost:3000/api/songs?vibe=top-telugu",
+      "networkRequestId": "2312.391"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+      "timestamp": 1795238193265.945,
+      "url": "http://localhost:3000/api/songs?vibe=top-tamil",
+      "networkRequestId": "2312.393"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+      "timestamp": 1795238194783.477,
+      "url": "http://localhost:3000/api/songs?vibe=top-hindi",
+      "networkRequestId": "2312.395"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+      "timestamp": 1795238196264.805,
+      "url": "http://localhost:3000/api/songs?vibe=top-kpop",
+      "networkRequestId": "2312.397"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+      "timestamp": 1795238202508.421,
+      "url": "http://localhost:3000/api/songs?vibe=viral-50",
+      "networkRequestId": "2312.416"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+      "timestamp": 1795238207619.26,
+      "url": "http://localhost:3000/api/songs?vibe=pop-rising",
+      "networkRequestId": "2312.420"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+      "timestamp": 1795238208886.279,
+      "url": "http://localhost:3000/api/songs?vibe=dance-hits",
+      "networkRequestId": "2312.422"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+      "timestamp": 1795238210223.949,
+      "url": "http://localhost:3000/api/songs?vibe=mood-booster",
+      "networkRequestId": "2312.424"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+      "timestamp": 1795238213296.436,
+      "url": "http://localhost:3000/api/songs?vibe=workout",
+      "networkRequestId": "2312.428"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+      "timestamp": 1795238217613.935,
+      "url": "http://localhost:3000/api/songs?vibe=top-telugu",
+      "networkRequestId": "2312.440"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+      "timestamp": 1795238217898.208,
+      "url": "http://localhost:3000/api/songs?vibe=top-tamil",
+      "networkRequestId": "2312.442"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+      "timestamp": 1795238219530.235,
+      "url": "http://localhost:3000/api/songs?vibe=top-hindi",
+      "networkRequestId": "2312.444"
+    },
+    {
+      "source": "network",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+      "timestamp": 1795238220979.828,
+      "url": "http://localhost:3000/api/songs?vibe=top-kpop",
+      "networkRequestId": "2312.453"
+    }
+  ],
+  "failedRequests": [
+    {
+      "requestId": "2312.344",
+      "timestamp": 2327.669913,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.358",
+      "timestamp": 2329.193991,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.360",
+      "timestamp": 2330.746366,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.362",
+      "timestamp": 2332.261978,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.378",
+      "timestamp": 2333.78982,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.380",
+      "timestamp": 2335.337753,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.382",
+      "timestamp": 2336.859801,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.384",
+      "timestamp": 2338.387509,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.386",
+      "timestamp": 2339.91879,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.388",
+      "timestamp": 2341.458041,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.390",
+      "timestamp": 2343.007286,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.392",
+      "timestamp": 2344.570228,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.394",
+      "timestamp": 2346.102733,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.396",
+      "timestamp": 2347.646667,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.359",
+      "timestamp": 2348.156614,
+      "type": "Fetch",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.398",
+      "timestamp": 2349.191313,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.412",
+      "timestamp": 2350.834036,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.413",
+      "timestamp": 2352.358031,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.379",
+      "timestamp": 2352.749813,
+      "type": "Fetch",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.415",
+      "timestamp": 2353.888411,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.381",
+      "timestamp": 2354.281985,
+      "type": "Fetch",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.417",
+      "timestamp": 2355.420273,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.383",
+      "timestamp": 2355.824887,
+      "type": "Fetch",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.418",
+      "timestamp": 2356.932389,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.385",
+      "timestamp": 2357.361504,
+      "type": "Fetch",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.419",
+      "timestamp": 2358.523567,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.387",
+      "timestamp": 2358.911731,
+      "type": "Fetch",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.421",
+      "timestamp": 2360.081417,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.389",
+      "timestamp": 2360.433842,
+      "type": "Fetch",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.423",
+      "timestamp": 2361.59914,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.391",
+      "timestamp": 2361.945706,
+      "type": "Fetch",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.425",
+      "timestamp": 2363.114745,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.393",
+      "timestamp": 2363.496663,
+      "type": "Fetch",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.427",
+      "timestamp": 2364.712876,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.395",
+      "timestamp": 2365.095721,
+      "type": "Fetch",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.437",
+      "timestamp": 2366.248836,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.397",
+      "timestamp": 2366.596088,
+      "type": "Fetch",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.439",
+      "timestamp": 2367.761704,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.441",
+      "timestamp": 2369.287273,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.443",
+      "timestamp": 2370.828636,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.452",
+      "timestamp": 2372.356304,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.416",
+      "timestamp": 2372.853588,
+      "type": "Fetch",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.454",
+      "timestamp": 2373.906181,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    },
+    {
+      "requestId": "2312.455",
+      "timestamp": 2375.421379,
+      "type": "Media",
+      "errorText": "net::ERR_ABORTED",
+      "canceled": true
+    }
+  ],
+  "requests": [
+    {
+      "url": "http://localhost:3000/",
+      "status": 200,
+      "type": "Document"
+    },
+    {
+      "url": "http://localhost:3000/kadence-horizontal-logo.png",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/kadence-chrome-logo.png",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/01-global-top-50.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/app_globals_0yg4wg8plh8sv.css",
+      "status": 200,
+      "type": "Stylesheet"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/02-viral-50.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/03-new-music-friday.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/04-hip-hop-central.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/05-pop-rising.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/06-dance-hits.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/07-mood-booster.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/%5Bturbopack%5D_browser_dev_hmr-client_hmr-client_ts_0fb9-gqu7_t97._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/1daa_next_dist_compiled_react-dom_cjs_react-dom-client_development_0mp0cp_t-ezj9.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/1q96_modules_next_dist_compiled_react-dom_cjs_react-dom_development_1sqry0_53krp4.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_0grqycjrj6mju._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_164kp-67asdr9._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/node_modules_next_dist_compiled_next-devtools_index_090k2jmam7qwg.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/node_modules_next_dist_compiled_1amofcmz--cdp._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/node_modules_next_dist_client_1165-soo5tfpf._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/node_modules_next_dist_05y3oi5z9mc_3._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/_1anvha4rlo79g._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/node_modules_%40swc_helpers_cjs_1r9vbqwj2323d._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/_219uq1sj0q91c._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/turbopack-_11q0wbt2n0d9y._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/node_modules_next_dist_20wefz_f1k6jn._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/_0psy9yddhq__q._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/_1xihbol0muwae._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/node_modules_0t6gmgmyo5k_-._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/_1jk79mcwn301o._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/videos/globe-hq.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&family=Syncopate:wght@700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Syne:wght@400;500;600;700;800&display=swap",
+      "status": 200,
+      "type": "Stylesheet"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/08-late-night.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/09-workout.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/10-chill-hits.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/12-top-tamil.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/11-top-telugu.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/13-top-hindi.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/14-top-k-pop.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/syne/v24/8vIH7w4qzmVxm2BL9A.woff2",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/spacegrotesk/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4Cw.woff2",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/%5Bturbopack%5D_browser_dev_hmr-client_hmr-client_ts_1mojsayzyj2p6._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/favicon.ico?favicon.2vob68tjqpejf.ico",
+      "status": 200,
+      "type": "Other"
+    },
+    {
+      "url": "http://localhost:3000/",
+      "status": 200,
+      "type": "Document"
+    },
+    {
+      "url": "http://localhost:3000/kadence-horizontal-logo.png",
+      "status": 304,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/kadence-chrome-logo.png",
+      "status": 304,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/01-global-top-50.webp",
+      "status": 304,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/02-viral-50.webp",
+      "status": 304,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/03-new-music-friday.webp",
+      "status": 304,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/04-hip-hop-central.webp",
+      "status": 304,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/app_globals_0yg4wg8plh8sv.css",
+      "status": 200,
+      "type": "Stylesheet"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/05-pop-rising.webp",
+      "status": 304,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/06-dance-hits.webp",
+      "status": 304,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/07-mood-booster.webp",
+      "status": 304,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/%5Bturbopack%5D_browser_dev_hmr-client_hmr-client_ts_0fb9-gqu7_t97._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/1daa_next_dist_compiled_react-dom_cjs_react-dom-client_development_0mp0cp_t-ezj9.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/1q96_modules_next_dist_compiled_react-dom_cjs_react-dom_development_1sqry0_53krp4.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_0grqycjrj6mju._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/node_modules_next_dist_compiled_next-devtools_index_090k2jmam7qwg.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_164kp-67asdr9._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/node_modules_next_dist_compiled_1amofcmz--cdp._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/node_modules_next_dist_client_1165-soo5tfpf._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/node_modules_next_dist_05y3oi5z9mc_3._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/node_modules_%40swc_helpers_cjs_1r9vbqwj2323d._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/_1anvha4rlo79g._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&family=Syncopate:wght@700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Syne:wght@400;500;600;700;800&display=swap",
+      "status": 200,
+      "type": "Stylesheet"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/turbopack-_11q0wbt2n0d9y._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/_219uq1sj0q91c._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/_0psy9yddhq__q._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/node_modules_next_dist_20wefz_f1k6jn._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/spacegrotesk/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4Cw.woff2",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/syne/v24/8vIH7w4qzmVxm2BL9A.woff2",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/08-late-night.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/videos/globe-hq.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/09-workout.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/10-chill-hits.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/_1xihbol0muwae._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/11-top-telugu.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/12-top-tamil.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/13-top-hindi.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/_1jk79mcwn301o._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/node_modules_0t6gmgmyo5k_-._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/images/vibes/14-top-k-pop.webp",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/%5Bturbopack%5D_browser_dev_hmr-client_hmr-client_ts_1mojsayzyj2p6._.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "url": "http://localhost:3000/videos/Beat%20It_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/api/songs?vibe=global-top-50",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/61/96/2e/61962ee3-368e-1330-56e1-390c3b6ebf7a/5026854959283.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/16/51/6f/16516f1d-60e9-33e6-6030-29c561ccc208/8718521120580.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/a1/ba/64/a1ba6484-f462-1b88-ddff-d4c014d5f265/196874018361.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/09/0d/7b/090d7b27-a62b-2d71-b10b-606b33779e50/543290.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/ee/f4/5e/eef45eda-672c-338a-29c6-67bb63fd14bd/7333591476620.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/22/54/a4/2254a4e9-3df0-ff86-3ab6-b9911f18b021/artwork.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/bf/0b/29/bf0b299d-19d0-fe3c-c9e2-49a7f49bea93/285.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/03/c6/b2/03c6b27d-eb64-b450-f9b8-c5408a0caef0/269.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/13/a1/17/13a1175b-1590-af72-4c2d-dc5d98f2ec06/885288563665.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/6e/84/3a/6e843a6c-cfff-f2ae-cc87-0bbfe39d34ae/280.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/bd/bd/a5/bdbda59c-780f-26cd-ec9f-22f17f06f80d/282.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/eb/7a/66/eb7a6690-1395-63f1-c345-0607232feaea/PHS5041.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/videos/Radhimaa_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/videos/Alaakaa%20Loova_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/api/songs?vibe=viral-50",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "http://localhost:3000/videos/Loser_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/api/songs?vibe=hip-hop-central",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/dc/b2/b4/dcb2b4e7-43f9-53bf-d68e-5656926c6ef3/70114.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/36/a0/83/36a083db-4824-4552-9424-f758a89ef1b4/4550796331766_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/d8/90/55/d89055d8-ad57-0f05-9628-b7568a776dd6/26UM1IM32442.rgb.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/f6/f5/3b/f6f53be9-e2ff-1321-62c4-2134bf0a51f3/26UMGIM63538.rgb.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/31/fe/0b/31fe0b85-77ca-98bc-c05f-aae58e0665c9/196875002437.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/79/e9/64/79e9648f-5c16-50cd-cf16-bde484d05574/7d564f30-2b63-4426-98e5-35bdfcf9e220.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/98/a6/00/98a60013-f0d7-e8c5-3cc2-0578ba3b72a5/26UM1IM32442.rgb.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/api/songs?vibe=new-music-friday",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/1b/48/0b/1b480bdc-0be9-3ff8-56ab-abb734695af6/885288840919.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/c8/3d/63/c83d6377-6c6b-049f-71b3-308580aa3aeb/70447.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/34/e9/68/34e9680c-152b-9fc6-07e7-8f253e76d8f2/810090098852_Cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/91/e4/05/91e405dd-f8ec-37dc-3aac-f54563c3fadb/26CRGIM57642.rgb.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/fd/e7/ef/fde7efaf-0a34-1c0d-a8aa-a0c297916aba/26UMGIM21566.rgb.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/7c/de/5e/7cde5e7a-612d-9714-d34c-1eb234c85ebb/810129961546.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/3f/3b/0c/3f3b0c93-e084-02b7-988e-aa9d724a5662/26UMGIM47571.rgb.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/videos/Kiss%20Kiss%20Bang%20Bang_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/api/songs?vibe=pop-rising",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "http://localhost:3000/videos/Yeshanagula_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/api/songs?vibe=dance-hits",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "http://localhost:3000/videos/Sunflower_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/api/songs?vibe=mood-booster",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "http://localhost:3000/videos/One%20Of%20The%20Girls_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/api/songs?vibe=late-night",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "http://localhost:3000/videos/Big%20Dawgs_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/api/songs?vibe=workout",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "http://localhost:3000/videos/Pavazha%20Malli_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/api/songs?vibe=chill-hits",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "http://localhost:3000/videos/Baby%20Won't%20You%20Tell%20Me_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/api/songs?vibe=top-telugu",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "http://localhost:3000/videos/Monica_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/api/songs?vibe=top-tamil",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "http://localhost:3000/videos/Gehra%20Hua_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/api/songs?vibe=top-hindi",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "http://localhost:3000/videos/Dynamite_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/api/songs?vibe=top-kpop",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/api/songs?vibe=dev-special",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/50/80/71/50807159-497a-2f04-f599-a838b87e3e45/824296497593_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/d4/c4/38/d4c43885-7866-3ac4-e323-b9ca6a7621ec/cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/2d/1d/e3/2d1de350-7e06-da0f-510e-7cb2d97c930d/8905936010821.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/4c/16/13/4c161318-5bf1-ea55-774d-2f55e2361d10/8902894623179_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music118/v4/07/f1/72/07f1723c-aa5b-1e20-581d-e2008a93c879/8903431668158_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/f9/3d/a2/f93da293-d63e-dcd3-f218-94afb2c71dec/cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/e4/ff/cb/e4ffcbed-9a7d-7377-c9b3-4bf7b23380db/8903431029829_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/6b/2c/76/6b2c7678-8423-0fc2-0602-05fa196e79b5/8903431857637_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/4c/68/77/4c6877fa-9fe9-0f99-8e4a-7605823563d5/886449014118.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/6d/0a/50/6d0a502a-757e-dc44-3c55-1c1822916fbb/098787153767.png/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/8a/df/59/8adf5988-95e3-2e34-028f-b7cd9f931555/cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/9e/87/71/9e87717f-a454-d49f-ee04-783ab4a9e453/cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/videos/Beat%20It_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/favicon.ico?favicon.2vob68tjqpejf.ico",
+      "status": 200,
+      "type": "Other"
+    },
+    {
+      "url": "http://localhost:3000/videos/Radhimaa_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/api/songs?vibe=viral-50",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "http://localhost:3000/videos/Alaakaa%20Loova_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/videos/Loser_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/videos/Kiss%20Kiss%20Bang%20Bang_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/__nextjs_font/geist-latin.woff2",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "url": "http://localhost:3000/api/songs?vibe=pop-rising",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "http://localhost:3000/videos/Yeshanagula_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/api/songs?vibe=dance-hits",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "http://localhost:3000/videos/Sunflower_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/api/songs?vibe=mood-booster",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "http://localhost:3000/videos/One%20Of%20The%20Girls_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/videos/Big%20Dawgs_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/api/songs?vibe=workout",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "http://localhost:3000/api/songs?vibe=late-night",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/bf/8e/40/bf8e40b2-7b76-5226-8fc2-4a830f2d5e52/artwork.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/3c/a0/0c/3ca00c67-f63b-0c16-5fc1-9b1efb29b17c/artwork.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/f8/08/75/f8087513-11aa-f82e-220f-cf0d18d4258b/artwork.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/17/e1/23/17e123e8-b831-1e56-3af8-4f8f865ea06c/1058365.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/e8/10/c7/e810c7c1-fdd8-f42b-43df-6ca43def382a/4896010757753.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/d2/6b/76/d26b76f9-86af-e8d9-cf1a-3a92c0da3f13/artwork.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/81/28/40/812840c9-de57-a2ab-6395-4178923e7dea/4550796570707_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/videos/Pavazha%20Malli_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/39/b9/03/39b9032d-f234-3593-396b-190922b1a634/820233718738.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/videos/Baby%20Won't%20You%20Tell%20Me_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/api/songs?vibe=top-telugu",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "http://localhost:3000/videos/Monica_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/api/songs?vibe=top-tamil",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "http://localhost:3000/videos/Gehra%20Hua_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/api/songs?vibe=top-hindi",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "http://localhost:3000/api/songs?vibe=chill-hits",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/a7/d6/1d/a7d61d71-283f-ee97-020b-f70a4f4f4661/4550796537137_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/54/cf/24/54cf24de-7c28-683d-1d04-979b0d8e6007/5059449382692.png/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/fb/51/a3/fb51a330-6d28-bd91-7614-2e69f690a465/4550796082392_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/13/35/91/133591e7-4c96-948f-f2bb-ee90faa05bb2/196874996546.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/30/c6/b9/30c6b955-7785-0c88-0a86-f3600ee87837/859728023811_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/8e/09/10/8e0910ee-5873-82f3-2d82-0c5b502c7f09/4550796495338_cover.jpg/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/56/bd/6a/56bd6af1-8726-c85d-0957-fc0cee3f7e9e/5059449394152.png/256x256bb.jpg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "url": "http://localhost:3000/videos/Dynamite_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/api/songs?vibe=top-kpop",
+      "status": 503,
+      "type": "Fetch"
+    },
+    {
+      "url": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    },
+    {
+      "url": "http://localhost:3000/videos/God%20Mode_30s.mp4",
+      "status": 206,
+      "type": "Media"
+    }
+  ]
+}
