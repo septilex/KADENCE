@@ -41,3 +41,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local media archive (several GB; see artwork-library/README.md)
+/artwork-library/
