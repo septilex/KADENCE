@@ -41,7 +41,7 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     number: '02',
     badge: 'HOT',
     numberColor: '#4d0040',
-    tileImage: '/images/vibes/02-viral-50.webp',
+    tileImage: '/images/vibes/04-viral-50.webp',
     membranePreset: 'punchy',
   },
   {
@@ -55,7 +55,7 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     number: '03',
     badge: 'NEW',
     numberColor: '#001a66',
-    tileImage: '/images/vibes/03-new-music-friday.webp',
+    tileImage: '/images/vibes/02-new-music-friday.webp',
     membranePreset: 'glossy',
   },
   {
@@ -68,7 +68,7 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     bgClass: 'rgba(255, 179, 0, 0.05)',
     number: '04',
     numberColor: '#3d2800',
-    tileImage: '/images/vibes/04-hip-hop-central.webp',
+    tileImage: '/images/vibes/03-hip-hop-central.webp',
     membranePreset: 'energetic',
   },
   {
@@ -81,7 +81,7 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     bgClass: 'rgba(255, 255, 255, 0.05)',
     number: '05',
     numberColor: '#808090',
-    tileImage: '/images/vibes/05-pop-rising.webp',
+    tileImage: '/images/vibes/06-pop-rising.webp',
     membranePreset: 'energetic',
   },
   {
@@ -94,7 +94,7 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     bgClass: 'rgba(51, 0, 255, 0.05)',
     number: '06',
     numberColor: '#0d0045',
-    tileImage: '/images/vibes/06-dance-hits.webp',
+    tileImage: '/images/vibes/07-dance-hits.webp',
     membranePreset: 'punchy',
   },
   {
@@ -107,7 +107,7 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     bgClass: 'rgba(119, 255, 0, 0.05)',
     number: '07',
     numberColor: '#1a3d00',
-    tileImage: '/images/vibes/07-mood-booster.webp',
+    tileImage: '/images/vibes/08-mood-booster.webp',
     membranePreset: 'energetic',
   },
   {
@@ -120,7 +120,7 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     bgClass: 'rgba(153, 0, 255, 0.05)',
     number: '08',
     numberColor: '#2a0055',
-    tileImage: '/images/vibes/08-late-night.webp',
+    tileImage: '/images/vibes/09-late-night.webp',
     membranePreset: 'cinematic',
   },
   {
@@ -133,7 +133,7 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     bgClass: 'rgba(255, 102, 0, 0.05)',
     number: '09',
     numberColor: '#3d1500',
-    tileImage: '/images/vibes/09-workout.webp',
+    tileImage: '/images/vibes/10-workout.webp',
     membranePreset: 'elastic',
   },
   {
@@ -146,7 +146,7 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     bgClass: 'rgba(0, 179, 255, 0.05)',
     number: '10',
     numberColor: '#003355',
-    tileImage: '/images/vibes/10-chill-hits.webp',
+    tileImage: '/images/vibes/11-chill-hits.webp',
     membranePreset: 'dreamy',
   },
   {
@@ -173,7 +173,7 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     number: '11',
     badge: 'REGIONAL',
     numberColor: '#003d20',
-    tileImage: '/images/vibes/11-top-telugu.webp',
+    tileImage: '/images/vibes/12-top-telugu.webp',
     membranePreset: 'energetic',
   },
   {
@@ -187,7 +187,7 @@ export const VIBE_CONFIGS: VibeConfig[] = [
     number: '12',
     badge: 'REGIONAL',
     numberColor: '#400015',
-    tileImage: '/images/vibes/12-top-tamil.webp',
+    tileImage: '/images/vibes/05-top-tamil.webp',
     membranePreset: 'punchy',
   },
   {

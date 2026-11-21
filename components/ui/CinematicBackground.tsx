@@ -1,6 +1,7 @@
 'use client'
 import { motion, AnimatePresence } from 'framer-motion'
 import { SongNode } from '@/lib/types'
+import { getOptimizedArtworkUrl } from '@/lib/artwork'
 
 interface CinematicBackgroundProps {
   song: SongNode | null
@@ -12,18 +13,19 @@ export function CinematicBackground({ song }: CinematicBackgroundProps) {
       <AnimatePresence>
         {song && (
           <motion.div
-            key={song.id}
-            initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: 1, scale: 1 }}
+            key="cinematic-background"
+            data-cinematic-layer
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
             className="absolute inset-0 w-full h-full bg-[#050508]"
           >
             {/* Huge Artwork */}
             <div 
               className="absolute inset-0 w-full h-full opacity-75"
               style={{
-                backgroundImage: `url(${song.albumArt})`,
+                backgroundImage: `url(${getOptimizedArtworkUrl(song.albumArt, 256)})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 filter: 'blur(9px) brightness(1.1)',

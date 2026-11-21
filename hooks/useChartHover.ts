@@ -6,8 +6,8 @@ import { useUIStore } from '@/store/uiStore'
 
 
 // How long the cursor must dwell on a card before prefetching begins.
-// 150ms filters out rapid cursor sweeps without noticeable lag for intentional hovers.
-const PREFETCH_DEBOUNCE_MS = 150
+// Let the foreground video start before chart and artwork requests compete for bandwidth.
+const PREFETCH_DEBOUNCE_MS = 1500
 
 
 export function useChartHover() {
@@ -33,7 +33,7 @@ export function useChartHover() {
     hoveredVibeRef.current = vibeId
     setHoveredVibe(vibeId)
 
-    // ── Prefetch (debounced 150ms) ───────────────────────────────────────────
+    // ── Prefetch (after playback startup) ───────────────────────────────────────────
     if (vibeService.isCached(vibeId)) return
 
     if (prefetchDebounceRef.current) clearTimeout(prefetchDebounceRef.current)

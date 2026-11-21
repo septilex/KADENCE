@@ -23,7 +23,7 @@ export interface PictureBox {
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
 
 /** Measures the picture area of a playing video. Resolves to null if it cannot be read. */
-export async function measurePicture(video: HTMLVideoElement, isCancelled: () => boolean): Promise<PictureBox | null> {
+export async function measurePicture(video: HTMLVideoElement, isCancelled: () => boolean, samples = SAMPLES): Promise<PictureBox | null> {
   const vw = video.videoWidth, vh = video.videoHeight
   if (!vw || !vh || typeof document === 'undefined') return null
   const w = CANVAS_W
@@ -37,7 +37,7 @@ export async function measurePicture(video: HTMLVideoElement, isCancelled: () =>
   const rowMax = new Uint8Array(h)
   const colMax = new Uint8Array(w)
   try {
-    for (let i = 0; i < SAMPLES; i++) {
+    for (let i = 0; i < samples; i++) {
       if (i > 0) await sleep(SAMPLE_GAP_MS)
       if (isCancelled() || video.paused || video.readyState < 2) return null
       ctx.drawImage(video, 0, 0, w, h)
