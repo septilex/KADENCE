@@ -13,6 +13,7 @@ import { JellyField } from '@/lib/jellyField'
 import { WallPicker, LENS_RADIUS, LENS_INTENSITY, PARALLAX_STRENGTH } from '@/lib/wallPicking'
 
 interface NodeFieldProps {
+  enabled: boolean
   songs: SongNode[]
   currentVibe: Vibe | null
   hoveredId?: string | null
@@ -247,7 +248,7 @@ const fragmentShader = /* glsl */`
   }
 `;
 
-export function NodeField({ songs, currentVibe, selectedId, onHover, onSelect }: NodeFieldProps) {
+export function NodeField({ songs, currentVibe, selectedId, onHover, onSelect, enabled }: NodeFieldProps) {
   const { camera, gl, size } = useThree()
   const meshRef = useRef<THREE.InstancedMesh>(null)
 
@@ -417,6 +418,16 @@ export function NodeField({ songs, currentVibe, selectedId, onHover, onSelect }:
   // The same deformed surface is used for hover, mouse clicks and first touch taps.
   useEffect(() => {
     const el = gl.domElement
+    if (!enabled) {
+      rawMouseNDC.current.set(-10, -10)
+      lastHoverId.current = null
+      lastHoverVisualIdx.current = -1
+      activePopId.current = null
+      hoverStartTime.current = null
+      prevMouseActiveRef.current = false
+      el.style.cursor = 'default'
+      return
+    }
     const updateRect = () => { domRectRef.current = el.getBoundingClientRect() }
     updateRect()
     const observer = new ResizeObserver(updateRect)
@@ -461,7 +472,7 @@ export function NodeField({ songs, currentVibe, selectedId, onHover, onSelect }:
       el.removeEventListener('pointercancel', onLeave)
       el.removeEventListener('click', onClick)
     }
-  }, [gl, camera, dims, picker, onHover, onSelect, songs, texIndices])
+  }, [gl, camera, dims, picker, onHover, onSelect, songs, texIndices, enabled])
 
   useEffect(() => () => geometry.dispose(), [geometry])
   useEffect(() => () => {

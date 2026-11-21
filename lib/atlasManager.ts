@@ -45,6 +45,7 @@ export class AtlasManager {
   private lastFlushTime = 0
   private flushTimer: ReturnType<typeof setTimeout> | null = null
   private preparingCritical = false
+  private streaming: Promise<void> = Promise.resolve()
 
   /** Clock shared with the wall shader (seconds). */
   public now(): number {
@@ -259,9 +260,12 @@ export class AtlasManager {
     const critical = new Promise<void>((resolve) => { criticalDone = resolve })
     const timeout = setTimeout(criticalDone, CRITICAL_TIMEOUT_MS)
 
-    void this.runQueue(order, songs, gen, (position) => {
+    this.streaming = this.runQueue(order, songs, gen, (position) => {
       // A newer chart took over: release whoever is awaiting this one.
       if (gen !== this.generation) { criticalDone(); return }
+      // Once the deadline reveals the wall, late artwork is background work.
+      // It must not put Home back into loading or re-render it for each cover.
+      if (!this.preparingCritical) return
       if (position >= totalCritical) return
       loadedCount++
       onProgress(loadedCount / totalCritical)
@@ -310,13 +314,20 @@ export class AtlasManager {
     if (typeof document === 'undefined') return
     this.init()
     const gen = this.generation
-    const slotCount = Math.min(songs.length, TEXTURE_DEPTH)
-    const todo = this.loadOrder(slotCount).filter((slot) => {
-      const url = songs[slot]?.albumArt ? getOptimizedArtworkUrl(songs[slot].albumArt, 256) : ''
-      const existing = this.slots.get(slot)
-      return !existing || existing.url !== url
+    // Entry, NodeField and background loading all call this. Slot dedup alone
+    // doesn't bound concurrency: separate queues used to start 16 new slots each.
+    const task = this.streaming.then(async () => {
+      if (gen !== this.generation) return
+      const slotCount = Math.min(songs.length, TEXTURE_DEPTH)
+      const todo = this.loadOrder(slotCount).filter((slot) => {
+        const url = songs[slot]?.albumArt ? getOptimizedArtworkUrl(songs[slot].albumArt, 256) : ''
+        const existing = this.slots.get(slot)
+        return !existing || existing.url !== url
+      })
+      if (todo.length > 0) await this.runQueue(todo, songs, gen)
     })
-    if (todo.length > 0) await this.runQueue(todo, songs, gen)
+    this.streaming = task
+    await task
   }
 
   /** Background streaming of the remaining artwork after the destination is visible. */
